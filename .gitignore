@@ -168,3 +168,18 @@ gradle-app.setting
 *.hprof
 
 # End of https://www.toptal.com/developers/gitignore/api/java,intellij,gradle
+
+HELP.md
+*.env
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### IntelliJ IDEA ###
+.idea
+.jpb
+*.iml
+*.ipr
+!**/src/main/**/out/
+!**/src/test/**/out/
