@@ -183,3 +183,5 @@ build/
 *.ipr
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+**/src/main/resources/static/docs/
