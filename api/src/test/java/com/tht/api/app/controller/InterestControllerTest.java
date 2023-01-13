@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @WebMvcTest(InterestController.class)
 class InterestControllerTest extends ControllerTestConfig {
 
-    private static final String DEFAULT_URL = "/interest";
+    private static final String DEFAULT_URL = "/interests";
 
     @MockBean
     InterestFacade interestFacade;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/interest")
+@RequestMapping("/interests")
 public class InterestController {
 
     private final InterestFacade interestFacade;
