@@ -1,7 +1,7 @@
 package com.tht.api.app.controller;
 
-import com.tht.api.app.facade.InterestFacade;
-import com.tht.api.app.facade.response.InterestResponse;
+import com.tht.api.app.facade.interest.InterestFacade;
+import com.tht.api.app.facade.interest.response.InterestResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
 package com.tht.api.app.controller;
 
-import com.tht.api.app.facade.InterestFacade;
+import com.tht.api.app.facade.interest.InterestFacade;
 import java.net.URI;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
