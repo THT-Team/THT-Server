@@ -20,8 +20,6 @@ public abstract class ControllerTestConfig {
     @Autowired
     protected WebApplicationContext ctx;
 
-//    protected RestDocumentationContextProvider restDocumentation;
-
     @Autowired
     protected ObjectMapper objectMapper;
 
