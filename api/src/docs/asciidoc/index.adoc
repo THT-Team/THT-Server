@@ -12,7 +12,10 @@ backtony.github.io(부제)
 operation::guide-rest-docs[snippets='http-request,path-parameters,http-response']
 
 
-
 [[Interest-Controller]]
 == Interest API
 operation::interest-docs[snippets='http-request,http-response']
+
+[[Ideal-Types-Controller]]
+== Interest API
+operation::ideal-types-docs[snippets='http-request,http-response']
