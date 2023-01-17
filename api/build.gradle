@@ -38,6 +38,9 @@ dependencies {
 
 	//h2
 	implementation 'com.h2database:h2'
+	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+	implementation 'com.mysql:mysql-connector-j:8.0.31'
+
 
 	//spring rest docs
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor:'+asciidocVersion
