@@ -1,6 +1,6 @@
 package com.tht.api.app.service;
 
-import com.tht.api.app.facade.response.InterestResponse;
+import com.tht.api.app.facade.interest.response.InterestResponse;
 import com.tht.api.app.repository.meta.InterestRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

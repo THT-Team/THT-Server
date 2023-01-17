@@ -1,7 +1,7 @@
 package com.tht.api.app.controller;
 
-import com.tht.api.app.facade.interest.InterestFacade;
-import com.tht.api.app.facade.interest.response.InterestResponse;
+import com.tht.api.app.facade.idealtype.IdealTypeFacade;
+import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/interests")
-public class InterestController {
+@RequestMapping("/ideal-types")
+public class IdealTypeController {
 
-    private final InterestFacade interestFacade;
+    private final IdealTypeFacade idealTypeFacade;
 
     @GetMapping
-    public ResponseEntity<List<InterestResponse>> getInterestList() {
-        return ResponseEntity.ok(interestFacade.getInterestList());
+    public ResponseEntity<List<IdealTypeResponse>> getInterestList() {
+        return ResponseEntity.ok(idealTypeFacade.getIdealTypeList());
     }
 }

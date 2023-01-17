@@ -1,6 +1,7 @@
-package com.tht.api.app.facade;
+package com.tht.api.app.facade.interest;
 
-import com.tht.api.app.facade.response.InterestResponse;
+import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.interest.response.InterestResponse;
 import com.tht.api.app.service.InterestService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

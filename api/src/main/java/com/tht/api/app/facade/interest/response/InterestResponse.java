@@ -1,4 +1,4 @@
-package com.tht.api.app.facade.response;
+package com.tht.api.app.facade.interest.response;
 
 public interface InterestResponse {
 
