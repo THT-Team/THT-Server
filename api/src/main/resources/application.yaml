@@ -1,7 +1,6 @@
 spring:
     config:
-        import:
-            classpath: security/application-security.yaml
+        import: security/application-security.yaml
     jpa:
         show-sql: true
         hibernate:

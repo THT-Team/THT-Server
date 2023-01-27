@@ -13,7 +13,7 @@ public class Interest {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idx;
 
     @Column(name = "name")
     private String name;
