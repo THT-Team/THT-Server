@@ -2,7 +2,7 @@ package com.tht.api.app.facade.interest.response;
 
 public interface InterestResponse {
 
-    Integer getId();
+    Integer getIdx();
 
     String getName();
 

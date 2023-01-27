@@ -12,7 +12,7 @@ import jakarta.persistence.Table;
 public class IdealType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer idx;
 
     @Column(name = "name")
     private String name;
