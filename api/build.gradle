@@ -11,7 +11,7 @@ plugins {
 
 group = 'com.tht'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
+sourceCompatibility = 17
 
 configurations {
 	asciidoctorExtensions // dependencies 에서 적용한 것 추가
