@@ -1,11 +1,14 @@
-= REST Docs 문서 만들기 (글의 제목)
-backtony.github.io(부제)
+= 👋🏻 THT-Server
+API REST Docs 문서
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs // 문서에 표기되는 코드들의 하이라이팅을 highlightjs를 사용
 :toc: left // toc (Table Of Contents)를 문서의 좌측에 두기
 :toclevels: 2
 :sectlinks:
+
+---
+
 
 [[Interest-Controller]]
 == Interest API
