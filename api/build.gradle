@@ -63,6 +63,13 @@ asciidoctor {
 	inputs.dir snippetsDir
 }
 
+bootJar {
+	dependsOn asciidoctor // (3)
+	from ("${asciidoctor.outputDir}") { // (4)
+		into 'static/docs'
+	}
+}
+
 // static/docs 폴더 비우기
 asciidoctor.doFirst {
 	delete file('src/main/resources/static/docs/')
