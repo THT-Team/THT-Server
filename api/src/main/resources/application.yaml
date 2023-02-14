@@ -5,3 +5,7 @@ spring:
         show-sql: true
         hibernate:
             ddl-auto: none
+    thymeleaf:
+        prefix: classpath:static/
+        suffix: .html
+        cache: false

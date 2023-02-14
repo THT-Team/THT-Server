@@ -7,15 +7,10 @@ backtony.github.io(부제)
 :toclevels: 2
 :sectlinks:
 
-[[Rest-Docs-test-API]]
-== Rest 테스트
-operation::guide-rest-docs[snippets='http-request,path-parameters,http-response']
-
-
 [[Interest-Controller]]
 == Interest API
 operation::interest-docs[snippets='http-request,http-response']
 
 [[Ideal-Types-Controller]]
-== Interest API
+== Ideal-Types API
 operation::ideal-types-docs[snippets='http-request,http-response']
