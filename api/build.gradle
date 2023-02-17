@@ -49,6 +49,10 @@ dependencies {
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+	// https://mvnrepository.com/artifact/org.springframework/spring-webflux
+	implementation 'org.springframework:spring-webflux'
+
 }
 
 
