@@ -1,0 +1,14 @@
+package com.tht.api.app.config.aligo;
+
+public abstract class AligoConst {
+    public static final String API_KEY = "ckuo7x3g4vzvcady6efjac4rmrn5pqro";
+    public static final String USER_ID = "tht221202";
+    public static final String SENDER = "010-4246-9529";
+
+    public static final String SMS_SEND_URL = "https://apis.aligo.in/send/";
+    public static final Integer SMS_SENDiNG_SUCCESS_CODE = 1;
+
+    private AligoConst(){
+        throw new NullPointerException("AligoConst is const abstract class");
+    }
+}

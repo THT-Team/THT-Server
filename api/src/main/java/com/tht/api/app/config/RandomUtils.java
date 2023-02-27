@@ -27,16 +27,16 @@ public class RandomUtils {
         final int scarceDigitSize = digits - (int) (Math.log10(randomNumber) + 1);
 
         return (int) (randomNumber * Math.pow(10, scarceDigitSize))
-            + supplementNumber(scarceDigitSize);
+            + getSupplementNumber(scarceDigitSize);
     }
 
-    private int supplementNumber(final int digits) {
-        int result = 0;
+    private int getSupplementNumber(final int digits) {
+        StringBuilder supplementNumber = new StringBuilder();
 
-        for (int i = 1; i <= digits; i++) {
-            result += i * Math.pow(10, (double) i - 1);
+        for (int i = 0; i < digits; i++) {
+            supplementNumber.append(getNumberOfDigits(1));
         }
 
-        return result;
+        return Integer.parseInt(supplementNumber.toString());
     }
 }
