@@ -1,5 +1,6 @@
 package com.tht.api.app.controller;
 
+import static org.mockito.BDDMockito.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -7,6 +8,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 
 import com.tht.api.app.facade.join.UserJoinFacade;
+import com.tht.api.app.facade.join.response.AuthNumberResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -28,6 +30,8 @@ class UserJoinControllerTest extends ControllerTestConfig {
 
         //given
         String phoneNumber = "01012345678";
+        when(userJoinFacade.issueAuthenticationNumber(anyString())).thenReturn(
+            new AuthNumberResponse("01012345678", 314215));
 
         ResultActions resultActions = mockMvc.perform(
             RestDocumentationRequestBuilders.get("/user/certification/phone-number/{phone-number}",
