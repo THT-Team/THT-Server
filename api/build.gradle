@@ -53,6 +53,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.springframework/spring-webflux
 	implementation 'org.springframework:spring-webflux'
 
+	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
+
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
 }
 
 
