@@ -14,18 +14,18 @@ import org.springframework.util.MultiValueMap;
 public abstract class MultiValueMapConverter {
 
     public static MultiValueMap<String, String> convert(final ObjectMapper objectMapper,
-        final Object dto) { // (2)
+        final Object dto) {
 
         try {
             MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-            Map<String, String> map = objectMapper.convertValue(dto, new TypeReference<>() {}); // (3)
+            Map<String, String> map = objectMapper.convertValue(dto, new TypeReference<>() {});
 
-            params.setAll(map); // (4)
+            params.setAll(map);
 
             return params;
         } catch (Exception e) {
-            log.error("Url Parameter 변환중 오류가 발생했습니다. requestDto={}", dto, e);
-            throw new IllegalStateException("Url Parameter 변환중 오류가 발생했습니다.");
+            log.error("Parameter 변환중 오류가 발생했습니다. requestDto={}", dto, e);
+            throw new IllegalStateException("Parameter 변환중 오류가 발생했습니다.");
         }
 
     }
