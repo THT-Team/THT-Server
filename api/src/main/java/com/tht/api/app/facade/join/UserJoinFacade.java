@@ -1,9 +1,9 @@
 package com.tht.api.app.facade.join;
 
 import com.tht.api.app.config.RandomUtils;
+import com.tht.api.app.config.aligo.AligoUtils;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.join.response.AuthNumberResponse;
-import com.tht.api.app.config.aligo.AligoUtils;
 import lombok.RequiredArgsConstructor;
 
 @Facade
