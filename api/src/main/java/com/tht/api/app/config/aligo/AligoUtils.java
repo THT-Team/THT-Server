@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tht.api.app.config.MultiValueMapConverter;
 import com.tht.api.app.config.WebClientConfig;
 import com.tht.api.app.config.aligo.request.SmsAuthNumberRequest;
+import com.tht.api.exception.custom.AligoException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -51,7 +52,6 @@ public class AligoUtils {
         );
     }
 
-    //fixme Exception refactoring
     private static void validateResultCode(final Object resultCode, final String message) {
         if (resultCode.getClass().equals(String.class)){
             return;
@@ -62,7 +62,7 @@ public class AligoUtils {
 
     private static void resultCodeTypeToLong(final Long resultCode, final String message) {
         if ((!AligoConst.SMS_SENDiNG_SUCCESS_CODE.equals(resultCode))) {
-            throw new NullPointerException("알리고 문자 전송 에러\n" + message);
+            throw AligoException.of(message);
         }
     }
 }
