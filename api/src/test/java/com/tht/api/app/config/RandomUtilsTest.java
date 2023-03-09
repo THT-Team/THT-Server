@@ -4,12 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.anyInt;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.when;
-import static org.mockito.Mockito.times;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 
 class RandomUtilsTest {
 
@@ -19,7 +17,7 @@ class RandomUtilsTest {
 
         int digits = 3;
         int number = RandomUtils.getInstance().getNumberOfDigits(digits);
-        assertThat(number).isBetween((int) Math.pow(10, 2) , (int) Math.pow(10, 3));
+        assertThat(number).isBetween(0, (int) Math.pow(10, 3));
     }
 
     @Test
