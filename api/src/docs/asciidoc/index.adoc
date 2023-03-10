@@ -7,13 +7,17 @@ API REST Docs 문서
 :toclevels: 2
 :sectlinks:
 
----
+'''
 
 
 [[Interest-Controller]]
-== Interest API
+== 관심사 리스트 조회 API
 operation::interest-docs[snippets='http-request,http-response']
 
 [[Ideal-Types-Controller]]
-== Ideal-Types API
-operation::ideal-types-docs[snippets='http-request,http-response']
+== 이상형 리스트 조회 API
+operation::ideal-types-docs[snippets='curl-request,http-request,http-response,httpie-request,request-body,response-body']
+
+[[User-Join-Controller]]
+== 유저 핸드폰 번호 인증  API
+operation::user-certification-number-docs[snippets='curl-request,http-request,http-response,httpie-request,path-parameters,request-body,response-body,response-fields']
