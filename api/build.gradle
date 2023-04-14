@@ -24,7 +24,6 @@ sourceCompatibility = '17'
 targetCompatibility = '17'
 
 configurations {
-//	asciidoctorExtensions // dependencies 에서 적용한 것 추가
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -76,7 +75,6 @@ dependencies {
 
 
 test {
-//	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
