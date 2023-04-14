@@ -1,11 +1,20 @@
+buildscript {
+	ext {
+		restdocsApiSpecVersion = '0.17.1' // restdocsApiSpecVersion 버전 변수 설정
+	}
+}
+
 plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.0'
 	id 'io.spring.dependency-management' version '1.1.0'
 
-	// gradle 7.0 이상부터는 jvm 사용
-	id "org.asciidoctor.jvm.convert" version "3.3.2"
-//	id "org.asciidoctor.convert" version "1.5.9.2"
+	//restdocs-api-spec → restdocs extension  포함함
+	id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+
+	//swagger generator 플러그인 추가
+	id 'org.hidetake.swagger.generator' version '2.18.2'
+
 }
 
 
@@ -15,7 +24,7 @@ sourceCompatibility = '17'
 targetCompatibility = '17'
 
 configurations {
-	asciidoctorExtensions // dependencies 에서 적용한 것 추가
+//	asciidoctorExtensions // dependencies 에서 적용한 것 추가
 	compileOnly {
 		extendsFrom annotationProcessor
 	}
@@ -23,11 +32,6 @@ configurations {
 
 repositories {
 	mavenCentral()
-}
-
-ext {
-	snippetsDir = file('build/generated-snippets')
-	asciidocVersion = "3.0.0"
 }
 
 dependencies {
@@ -39,13 +43,20 @@ dependencies {
 
 	//h2
 	implementation 'com.h2database:h2'
+
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	implementation 'com.mysql:mysql-connector-j:8.0.31'
 
 
 	//spring rest docs
-	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor:'+asciidocVersion
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+    // restdocs-api-spec 의존성 추가
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
+
+	// Swagger ui - https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
+//	implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'  → 이거 안됨
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
@@ -59,39 +70,36 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
+	implementation 'org.hibernate.validator:hibernate-validator'
+
 }
 
 
 test {
-	outputs.dir snippetsDir
+//	outputs.dir snippetsDir
 	useJUnitPlatform()
 }
 
-asciidoctor {
-	dependsOn test
-	configurations 'asciidoctorExtensions' // 위에서 작성한 configuration 적용
-	inputs.dir snippetsDir
+// Task 및 설정 추가
+// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
+tasks.withType(GenerateSwaggerUI) {
+	dependsOn 'openapi3'
 }
 
-bootJar {
-	dependsOn asciidoctor // (3)
-	from ("${asciidoctor.outputDir}") { // (4)
-		into 'static/docs'
-	}
+
+//openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
+bootJar{
+	dependsOn(':openapi3')
 }
 
-// static/docs 폴더 비우기
-asciidoctor.doFirst {
-	delete file('src/main/resources/static/docs/')
-}
+openapi3 {
+	server = "http://tht-talk.store"
+	title = "THT API 문서"
+	description = "Spring REST Docs with SwaggerUI."
+	version = "0.0.1"
+	outputFileNamePrefix = 'open-api-3.0.1'
+	format = 'json'
 
-task copyDocument(type: Copy) {
-	dependsOn asciidoctor
-
-	from file("build/docs/asciidoc/")
-	into file("src/main/resources/static/docs")
-}
-
-build {
-	dependsOn copyDocument
+	// src/main/resources/static/docs/open-api-3.0.1.json 생성
+	outputDirectory = 'src/main/resources/static/docs'
 }
