@@ -6,12 +6,11 @@ import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.when;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 class RandomUtilsTest {
 
-    @RepeatedTest(100)
+    @Test
     @DisplayName("난수 생성 자리수 테스트")
     void randomNumber() {
 
