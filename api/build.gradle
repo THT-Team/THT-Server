@@ -95,6 +95,7 @@ tasks.withType(GenerateSwaggerUI) {
 
 //openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
 bootJar{
+	delete file('src/main/resources/static/docs/')
 	dependsOn(':openapi3')
 }
 
