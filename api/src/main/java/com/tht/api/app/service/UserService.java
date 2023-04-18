@@ -16,4 +16,8 @@ public class UserService {
     public User createUser(User request) {
         return userRepository.save(request);
     }
+
+    public boolean isExistUserName(final String nickName) {
+        return userRepository.existsByUsername(nickName);
+    }
 }

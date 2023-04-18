@@ -44,7 +44,7 @@ public record UserSignUpRequest (
                 .username(username)
                 .passwordHash(password)
                 .email(email)
-                .phone(phoneNumber)
+                .phoneNumber(phoneNumber)
                 .gender(gender)
                 .preferGender(preferGender)
                 .build();

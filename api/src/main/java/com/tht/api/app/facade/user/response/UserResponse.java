@@ -1,4 +1,4 @@
-package com.tht.api.app.facade.user;
+package com.tht.api.app.facade.user.response;
 
 import com.tht.api.app.entity.user.Gender;
 import com.tht.api.app.entity.user.User;

@@ -18,6 +18,6 @@ public class Auditable {
     @Column(name = "created_at")
     private LocalDateTime createdAt = LocalDateTime.now();
 
-    @Column(name = "lastModified_at")
+    @Column(name = "last_modified_at")
     private LocalDateTime lastModifiedAt = LocalDateTime.now();
 }

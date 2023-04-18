@@ -1,5 +1,9 @@
 package com.tht.api.exception.custom;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AligoException extends RuntimeException {
 
     public AligoException(final String message){ super(message);}
