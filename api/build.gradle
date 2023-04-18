@@ -95,8 +95,14 @@ tasks.withType(GenerateSwaggerUI) {
 
 //openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
 bootJar{
-	delete file('src/main/resources/static/docs/')
 	dependsOn(':openapi3')
+
+	delete file('src/main/resources/static/docs/')
+	copy {
+		from "build/resources/main/static/docs"
+		into "src/main/resources/static/docs/"
+
+	}
 }
 
 openapi3 {
@@ -108,5 +114,5 @@ openapi3 {
 	format = 'json'
 
 	// src/main/resources/static/docs/open-api-3.0.1.json 생성
-	outputDirectory = 'src/main/resources/static/docs'
+	outputDirectory = 'build/resources/main/static/docs'
 }
