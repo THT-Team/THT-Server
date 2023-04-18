@@ -8,7 +8,7 @@ public class RestDocsController {
 
     @GetMapping("/")
     public String getRestDocsHello() {
-        return "docs/index.html";
+        return "redirect:/docs/swagger";
     }
 
 }
