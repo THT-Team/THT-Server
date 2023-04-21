@@ -3,7 +3,7 @@ package com.tht.api.app.controller;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserResponse;
-import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,28 +17,28 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/user")
-public class UserController {
+@RequestMapping("/users/join")
+public class UserJoinController {
 
-    private final UserFacade userFacade;
+    private final UserJoinFacade userJoinFacade;
 
     @GetMapping("/certification/phone-number/{phone-number}")
     ResponseEntity<AuthNumberResponse> getCertificationNumber(
         @PathVariable(name = "phone-number") String phoneNumber) {
 
-        return ResponseEntity.ok(userFacade.issueAuthenticationNumber(phoneNumber));
+        return ResponseEntity.ok(userJoinFacade.issueAuthenticationNumber(phoneNumber));
     }
 
     @GetMapping("/nick-name/duplicate-check/{nick-name}")
     ResponseEntity<UserNickNameValidResponse> validDuplicateNickname(@PathVariable(name = "nick-name") final String nickName) {
-        return ResponseEntity.ok(userFacade.checkDuplicateNickName(nickName));
+        return ResponseEntity.ok(userJoinFacade.checkDuplicateNickName(nickName));
     }
 
     @PostMapping("/signup")
     public ResponseEntity<UserResponse> createUser(@RequestBody UserSignUpRequest request) {
-        request.validate();
-        UserResponse user = userFacade.createUser(request);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+
+        userJoinFacade.signUp(request);
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
 }

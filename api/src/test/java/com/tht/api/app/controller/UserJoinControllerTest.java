@@ -13,7 +13,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -26,11 +26,12 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(UserController.class)
-class UserControllerTest extends ControllerTestConfig {
+@WebMvcTest(UserJoinController.class)
+class UserJoinControllerTest extends ControllerTestConfig {
 
+   private static final String DEFAULT_URL = "/users/join";
     @MockBean
-    UserFacade userFacade;
+    UserJoinFacade userJoinFacade;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -41,12 +42,12 @@ class UserControllerTest extends ControllerTestConfig {
 
         //given
         String phoneNumber = "01012345678";
-        when(userFacade.issueAuthenticationNumber(anyString())).thenReturn(
+        when(userJoinFacade.issueAuthenticationNumber(anyString())).thenReturn(
             new AuthNumberResponse("01012345678", 314215));
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/user/certification/phone-number/{phone-number}",
+            RestDocumentationRequestBuilders.get(DEFAULT_URL + "/certification/phone-number/{phone-number}",
                     phoneNumber)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -79,12 +80,12 @@ class UserControllerTest extends ControllerTestConfig {
 
         //given
         String nickName = "test 닉네임";
-        when(userFacade.checkDuplicateNickName(anyString()))
+        when(userJoinFacade.checkDuplicateNickName(anyString()))
             .thenReturn(new UserNickNameValidResponse(true));
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/user/nick-name/duplicate-check/{nick-name}",
+            RestDocumentationRequestBuilders.get(DEFAULT_URL + "/nick-name/duplicate-check/{nick-name}",
                     nickName)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
