@@ -13,8 +13,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
-    public User createUser(User request) {
-        return userRepository.save(request);
+    public User createUser(final User user) {
+        return userRepository.save(user);
     }
 
     public boolean isExistUserName(final String nickName) {
