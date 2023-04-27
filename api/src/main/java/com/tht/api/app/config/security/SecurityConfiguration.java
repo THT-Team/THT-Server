@@ -2,6 +2,7 @@ package com.tht.api.app.config.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,13 +17,14 @@ public class SecurityConfiguration {
 
         httpSecurity
             .csrf().disable();
-//            .formLogin().disable();
 
         return httpSecurity
             .authorizeHttpRequests(
                 authorize -> authorize
                     .requestMatchers("/users/join/**").permitAll()
                     .requestMatchers("/login").permitAll()
+                    .requestMatchers(HttpMethod.GET,  "/ideal-types").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/interests").permitAll()
                     .anyRequest().authenticated()
             )
             .httpBasic(Customizer.withDefaults())

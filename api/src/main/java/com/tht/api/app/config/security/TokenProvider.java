@@ -1,39 +1,70 @@
 package com.tht.api.app.config.security;
 
 import com.tht.api.app.entity.user.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
-import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.util.Date;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@Slf4j
 public class TokenProvider {
 
-    @Value("${jwt.secret-key}")
-    private static String jwtSecretKey;
-    private static final long ACCESS_TOKEN_VALID_PERIOD = 1000L * 60 * 30;
-    private static final long REFRESH_TOKEN_VALID_PERIOD = 1000L * 60 * 60 * 24 * 8;
+    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 8;
+    private final Key jwtSecretKey;
 
+    public TokenProvider(@Value("${jwt.secret-key}") String secretKey) {
+        byte[] keyBytes = Decoders.BASE64.decode(secretKey);
+        jwtSecretKey = Keys.hmacShaKeyFor(keyBytes);
+    }
 
-    public static String generateJWT(final User userInfo) {
+    public TokenResponse generateJWT(final User userInfo) {
         final Date now = new Date();
         final Date accessTokenExpireIn = new Date(now.getTime() + ACCESS_TOKEN_VALID_PERIOD);
-        final Date refreshTokenExpireIn = new Date(now.getTime() + REFRESH_TOKEN_VALID_PERIOD);
 
         final String accessToken = Jwts.builder()
-            .setSubject("authorization") // 토큰 용도
-            .claim("number", userInfo.getPhoneNumber()) // Claims 설정
+            .setSubject("authorization")
+            .claim("userUuid", userInfo.getUserUuid())
             .claim("role", userInfo.getUserRole())
-            .setExpiration(accessTokenExpireIn) // 토큰 만료 시간 설정
-            .signWith(Keys.hmacShaKeyFor(
-                jwtSecretKey.getBytes(StandardCharsets.UTF_8))) // HS256과 Key로 Sign
-            .compact(); // 토큰 생성
+            .setExpiration(accessTokenExpireIn)
+            .signWith(jwtSecretKey, SignatureAlgorithm.HS256) // HS512 + Key 로 Sign
+            .compact();
 
-        return null;
+        return TokenResponse.of(accessToken,accessTokenExpireIn.getTime());
+    }
+
+    public boolean validateToken(final String token) {
+        try {
+            Jwts.parserBuilder().setSigningKey(jwtSecretKey).build().parseClaimsJws(token);
+            return true;
+        } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
+            log.error("잘못된 JWT 서명입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("만료된 JWT 토큰입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.error("지원되지 않는 JWT 토큰입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("JWT 토큰이 잘못되었습니다.");
+        }
+        return false;
+    }
+
+    public Claims parseClaims(final String accessToken) {
+        try {
+            return Jwts.parserBuilder().setSigningKey(jwtSecretKey).build()
+                .parseClaimsJws(accessToken)
+                .getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 }
