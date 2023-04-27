@@ -1,4 +1,4 @@
-package com.tht.api.app.entity.user;
+package com.tht.api.app.entity.enums;
 
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import java.util.Arrays;

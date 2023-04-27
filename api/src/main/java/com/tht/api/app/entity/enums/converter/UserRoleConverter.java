@@ -1,5 +1,6 @@
-package com.tht.api.app.entity.user;
+package com.tht.api.app.entity.enums.converter;
 
+import com.tht.api.app.entity.enums.UserRole;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 import java.util.Objects;

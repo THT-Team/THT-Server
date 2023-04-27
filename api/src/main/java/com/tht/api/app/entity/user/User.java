@@ -1,31 +1,33 @@
 package com.tht.api.app.entity.user;
 
 import com.tht.api.app.entity.Auditable;
+import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.converter.GenderConverter;
+import com.tht.api.app.entity.enums.UserRole;
+import com.tht.api.app.entity.enums.converter.UserRoleConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.Lob;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.w3c.dom.stylesheets.LinkStyle;
+import lombok.ToString;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
 @Getter
-public final class User extends Auditable {
+@ToString
+public class User extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,8 +40,8 @@ public final class User extends Auditable {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "password_hash")
-    private String passwordHash;
+    @Column(name = "birth_day")
+    private LocalDate birthDay;
 
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -69,14 +71,14 @@ public final class User extends Auditable {
 
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
-        final String passwordHash, final String phoneNumber,
+        final LocalDate birthDay, final String phoneNumber,
         final String email, final String introduction, final Gender gender,
         final Gender preferGender, final UserRole userRole) {
 
         this.idx = idx;
         this.userUuid = userUuid;
         this.username = username;
-        this.passwordHash = passwordHash;
+        this.birthDay = birthDay;
         this.phoneNumber = phoneNumber;
         this.email = email;
         this.introduction = introduction;
@@ -85,14 +87,14 @@ public final class User extends Auditable {
         this.userRole = userRole;
     }
 
-    public static User createNewUser(final String username, final String passwordHash,
+    public static User createNewUser(final String username, final LocalDate birthDay,
         final String phoneNumber, final String email, final String introduction,
         final Gender gender, final Gender preferGender) {
 
         return User.builder()
             .username(username)
             .userUuid(generateUuid())
-            .passwordHash(passwordHash)
+            .birthDay(birthDay)
             .phoneNumber(phoneNumber)
             .email(email)
             .introduction(introduction)
@@ -103,7 +105,7 @@ public final class User extends Auditable {
     }
 
     private static String generateUuid() {
-        return LocalDateTime.now() + UUID.randomUUID().toString();
+        return LocalDateTime.now().getMinute() + UUID.randomUUID().toString();
     }
 
 }
