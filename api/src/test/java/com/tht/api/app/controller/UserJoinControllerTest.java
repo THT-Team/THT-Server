@@ -31,6 +31,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -154,26 +155,30 @@ class UserJoinControllerTest extends ControllerTestConfig {
                             fieldWithPath("gender").description("성별"),
                             fieldWithPath("preferGender").description("선호 성별"),
                             fieldWithPath("deviceKey").description("유저 디바이스 키"),
+
                             fieldWithPath("agreement").description("약관 동의 내역"),
                             fieldWithPath("agreement.serviceUseAgree").description("서비스 약관 동의"),
                             fieldWithPath("agreement.personalPrivacyInfoAgree").description(
                                 "개인정보 이용 약관 동의"),
                             fieldWithPath("agreement.locationServiceAgree").description("위치 동의 내역"),
                             fieldWithPath("agreement.marketingAgree").description("마케팅 동의 내역"),
+
                             fieldWithPath("locationRequest").description("유저 위치 정보"),
                             fieldWithPath("locationRequest.address").description("주소"),
                             fieldWithPath("locationRequest.regionCode").description("자치구 코드"),
                             fieldWithPath("locationRequest.lat").description("위도 좌표"),
                             fieldWithPath("locationRequest.lon").description("경도 좌표"),
-                            fieldWithPath("photoList").description("유저 사진 url 리스트"),
-                            fieldWithPath("interestList").description("유저 관심사 idx 리스트"),
-                            fieldWithPath("idealTypeList").description("유저 이상형 idx 리스트")
+
+                            fieldWithPath("photoList").type(JsonFieldType.ARRAY).description("유저 사진 url 리스트 - String Array"),
+                            fieldWithPath("interestList").description("유저 관심사 idx 리스트 - String Array"),
+                            fieldWithPath("idealTypeList").description("유저 이상형 idx 리스트 - String Array")
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
                             fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
                         )
                         .responseSchema(Schema.schema("UserSignUpResponse"))
+                        .requestSchema(Schema.schema("UserSignUpRequest"))
                         .build()
                 ))
         );
