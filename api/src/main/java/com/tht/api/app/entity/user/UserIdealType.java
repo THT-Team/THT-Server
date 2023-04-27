@@ -1,40 +1,44 @@
 package com.tht.api.app.entity.user;
 
-import com.tht.api.app.entity.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@Table(name = "user_ideal_type")
 @NoArgsConstructor
-public final class UserDeviceKey extends Auditable {
+public class UserIdealType {
 
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idx")
     private Long idx;
 
     @Column(name = "user_uuid")
     private String userUuid;
 
-    @Column(name = "device_key")
-    private String deviceKey;
+    @Column(name = "ideal_type_idx")
+    private Long idealTypeIdx;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserDeviceKey(String userUuid, String deviceKey) {
+    public UserIdealType(final Long idx, final String userUuid, final Long idealTypeIdx) {
+        this.idx = idx;
         this.userUuid = userUuid;
-        this.deviceKey = deviceKey;
+        this.idealTypeIdx = idealTypeIdx;
     }
 
-    public static UserDeviceKey create(final String userUuid, final String deviceKey) {
-        return UserDeviceKey.builder()
+    public static UserIdealType create(final String userUuid, final Long idealTypeIdx) {
+        return UserIdealType.builder()
             .userUuid(userUuid)
-            .deviceKey(deviceKey)
+            .idealTypeIdx(idealTypeIdx)
             .build();
     }
 }

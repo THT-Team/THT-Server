@@ -13,8 +13,7 @@ public class UserAgreementService {
 
     private final UserAgreementRepository userAgreementRepository;
 
-    public UserAgreement create(final UserAgreement userAgreement, final String userUuid) {
-        userAgreement.setUserUuid(userUuid);
+    public UserAgreement create(final UserAgreement userAgreement) {
         return userAgreementRepository.save(userAgreement);
     }
 }

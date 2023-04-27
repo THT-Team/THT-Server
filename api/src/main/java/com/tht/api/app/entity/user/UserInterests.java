@@ -1,40 +1,44 @@
 package com.tht.api.app.entity.user;
 
-import com.tht.api.app.entity.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@Table(name = "user_interests")
 @NoArgsConstructor
-public final class UserDeviceKey extends Auditable {
+public class UserInterests {
 
     @Id
-    @Column(name = "idx")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idx")
     private Long idx;
 
     @Column(name = "user_uuid")
     private String userUuid;
 
-    @Column(name = "device_key")
-    private String deviceKey;
+    @Column(name = "interest_idx")
+    private Long interestIdx;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserDeviceKey(String userUuid, String deviceKey) {
+    public UserInterests(final Long idx, final String userUuid, final Long interestIdx) {
+        this.idx = idx;
         this.userUuid = userUuid;
-        this.deviceKey = deviceKey;
+        this.interestIdx = interestIdx;
     }
 
-    public static UserDeviceKey create(final String userUuid, final String deviceKey) {
-        return UserDeviceKey.builder()
+    public static UserInterests create(final String userUuid, final Long interestIdx) {
+        return UserInterests.builder()
             .userUuid(userUuid)
-            .deviceKey(deviceKey)
+            .interestIdx(interestIdx)
             .build();
     }
 }

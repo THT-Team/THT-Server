@@ -3,10 +3,11 @@ package com.tht.api.app.entity.user;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -21,6 +22,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserAgreement {
 
     @Id
+    @Column(name = "idx")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
     @Column(name = "user_uuid")
@@ -47,34 +50,29 @@ public class UserAgreement {
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserAgreement(final Long idx, final boolean serviceUseAgree,
+    public UserAgreement(final Long idx, final String userUuid, final boolean serviceUseAgree,
         final boolean personalPrivacyInfoAgree, final boolean locationServiceAgree,
         final boolean marketingAgree) {
 
         this.idx = idx;
+        this.userUuid = userUuid;
         this.serviceUseAgree = serviceUseAgree;
         this.personalPrivacyInfoAgree = personalPrivacyInfoAgree;
         this.locationServiceAgree = locationServiceAgree;
         this.marketingAgree = marketingAgree;
     }
 
-    public static UserAgreement create(final boolean serviceUseAgree,
+    public static UserAgreement create(final String userUuid, final boolean serviceUseAgree,
         final boolean personalPrivacyInfoAgree, final boolean locationServiceAgree,
         final boolean marketingAgree) {
 
         return UserAgreement.builder()
+            .userUuid(userUuid)
             .serviceUseAgree(serviceUseAgree)
             .personalPrivacyInfoAgree(personalPrivacyInfoAgree)
             .locationServiceAgree(locationServiceAgree)
             .marketingAgree(marketingAgree)
             .build();
-    }
-
-    public void setUserUuid(final String userUuid) {
-        if (Objects.nonNull(this.userUuid)) {
-            throw new IllegalArgumentException(idx + " : 유저 약관동의테이블에 이미 user uuid 가 존재합니다.");
-        }
-        this.userUuid = userUuid;
     }
 
 }
