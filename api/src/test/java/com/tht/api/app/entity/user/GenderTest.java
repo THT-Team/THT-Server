@@ -3,6 +3,7 @@ package com.tht.api.app.entity.user;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;

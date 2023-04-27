@@ -2,6 +2,8 @@ package com.tht.api.app.entity.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.converter.GenderConverter;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -31,8 +31,8 @@ class RandomUtilsTest {
         //when
         int number = randomUtils.getFullNumberOfDigits(digits);
 
-        System.out.println("number = " + number);
         assertThat(String.valueOf(number)).hasSize(digits);
+        assertThat(number).isEqualTo(111111);
     }
 
 }
