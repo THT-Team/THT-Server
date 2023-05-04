@@ -1,4 +1,4 @@
-package com.tht.api.app.config;
+package com.tht.api.app.config.utils;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.anyInt;

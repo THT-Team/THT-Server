@@ -1,4 +1,4 @@
-package com.tht.api.app.config;
+package com.tht.api.app.config.utils;
 
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
