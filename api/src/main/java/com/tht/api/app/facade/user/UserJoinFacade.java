@@ -1,10 +1,12 @@
 package com.tht.api.app.facade.user;
 
-import com.tht.api.app.config.RandomUtils;
+import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.config.aligo.AligoUtils;
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.config.security.TokenResponse;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.user.request.UserLoginRequest;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
@@ -63,4 +65,9 @@ public class UserJoinFacade {
         return tokenProvider.generateJWT(user).toResponse();
     }
 
+    public TokenResponse login(final UserLoginRequest request) {
+
+        final User user = userService.findByPhoneNumber(request.phoneNumber());
+        return tokenProvider.generateJWT(user);
+    }
 }

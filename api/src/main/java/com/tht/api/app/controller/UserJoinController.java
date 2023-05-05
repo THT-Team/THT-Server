@@ -1,10 +1,12 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.config.security.TokenResponse;
+import com.tht.api.app.facade.user.UserJoinFacade;
+import com.tht.api.app.facade.user.request.UserLoginRequest;
+import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
-import com.tht.api.app.facade.user.UserJoinFacade;
-import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -43,4 +45,10 @@ public class UserJoinController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.signUp(request));
     }
+
+    @PostMapping("/login")
+    public ResponseEntity<TokenResponse> normalLogin(@RequestBody @Valid UserLoginRequest request) {
+        return ResponseEntity.ok(userJoinFacade.login(request));
+    }
+
 }

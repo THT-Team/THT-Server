@@ -1,5 +1,6 @@
 package com.tht.api.app.config.security;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -7,10 +8,14 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+    private final JwtFilter jwtFilter;
 
     private static final String[] PERMIT_URL_ARRAY = {
         /* swagger v2 */
@@ -44,18 +49,12 @@ public class SecurityConfiguration {
                     .requestMatchers(HttpMethod.GET, "/ideal-types").permitAll()
                     .requestMatchers(HttpMethod.GET, "/interests").permitAll()
                     .anyRequest().authenticated()
+
+                    .and()
+                    .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
             )
             .httpBasic(Customizer.withDefaults())
             .build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService() {
-//        UserDetails user = User.withUsername("user")
-//            .password("password")
-//            .roles("USER")
-//            .build();
-//
-//        return new InMemoryUserDetailsManager(user);
-//    }
 }
