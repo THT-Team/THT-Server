@@ -1,6 +1,6 @@
 package com.tht.api.app.facade.user.request;
 
-import com.tht.api.app.config.CustomDateFormatUtils;
+import com.tht.api.app.config.utils.CustomDateFormatUtils;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserAgreement;

@@ -9,7 +9,7 @@ import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.security.TokenResponse;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
-import com.tht.api.app.fixture.UserSignUpRequestFixture;
+import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import com.tht.api.app.service.UserAgreementService;
 import com.tht.api.app.service.UserDeviceKeyService;
 import com.tht.api.app.service.UserIdealTypeService;

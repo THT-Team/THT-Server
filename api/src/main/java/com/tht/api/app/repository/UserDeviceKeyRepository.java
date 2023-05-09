@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserDeviceKeyRepository extends JpaRepository<UserDeviceKey, Long> {
 
+    boolean existsByUserUuidAndDeviceKey(final String userUuid, final String deviceKey);
 }

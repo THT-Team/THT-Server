@@ -1,6 +1,8 @@
 package com.tht.api.app.config.security;
 
+import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.User;
+import com.tht.api.app.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -10,21 +12,31 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import java.security.Key;
+import java.util.Collection;
 import java.util.Date;
-import lombok.extern.slf4j.Slf4j;
+import java.util.stream.Stream;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 @Component
-@Slf4j
 public class TokenProvider {
 
     private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 8;
     private final Key jwtSecretKey;
+    private final UserService userService;
 
-    public TokenProvider(@Value("${jwt.secret-key}") String secretKey) {
+    public TokenProvider(@Value("${jwt.secret-key}") String secretKey,
+        final UserService userService) {
+
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         jwtSecretKey = Keys.hmacShaKeyFor(keyBytes);
+
+        this.userService = userService;
     }
 
     public TokenResponse generateJWT(final User userInfo) {
@@ -36,7 +48,7 @@ public class TokenProvider {
             .claim("userUuid", userInfo.getUserUuid())
             .claim("role", userInfo.getUserRole())
             .setExpiration(accessTokenExpireIn)
-            .signWith(jwtSecretKey, SignatureAlgorithm.HS256) // HS512 + Key 로 Sign
+            .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();
 
         return TokenResponse.of(accessToken,accessTokenExpireIn.getTime());
@@ -47,13 +59,13 @@ public class TokenProvider {
             Jwts.parserBuilder().setSigningKey(jwtSecretKey).build().parseClaimsJws(token);
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
-            log.error("잘못된 JWT 서명입니다.");
+            LogWriteUtils.logInfo(String.format("exception : %s, message : 잘못된 JWT 서명입니다.", e.getClass().getName()));
         } catch (ExpiredJwtException e) {
-            log.error("만료된 JWT 토큰입니다.");
+            LogWriteUtils.logInfo(String.format("exception : %s, message : 만료된 JWT 토큰입니다.", e.getClass().getName()));
         } catch (UnsupportedJwtException e) {
-            log.error("지원되지 않는 JWT 토큰입니다.");
+            LogWriteUtils.logInfo(String.format("exception : %s, message : 지원되지 않는 JWT 토큰입니다.", e.getClass().getName()));
         } catch (IllegalArgumentException e) {
-            log.error("JWT 토큰이 잘못되었습니다.");
+            LogWriteUtils.logInfo(String.format("exception : %s, message : JWT 토큰이 잘못되었습니다.", e.getClass().getName()));
         }
         return false;
     }
@@ -66,5 +78,26 @@ public class TokenProvider {
         } catch (ExpiredJwtException e) {
             return e.getClaims();
         }
+    }
+
+    public Authentication getAuthentication(final String token) {
+        // 토큰 복호화
+        Claims claims = parseClaims(token);
+        LogWriteUtils.logInfo("token_claims : " + claims.toString());
+
+        if (claims.get("role") == null) {
+            throw new BadCredentialsException("권한 정보가 없는 토큰입니다.");
+        }
+
+        // 클레임에서 권한 정보 가져오기
+        final Collection<? extends GrantedAuthority> authorities = Stream.of(
+                claims.get("role").toString())
+            .map(SimpleGrantedAuthority::new)
+            .toList();
+
+        final String userUuid = claims.get("userUuid").toString();
+        final User user = userService.findByUserUuidForAuthToken(userUuid);
+
+        return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);
     }
 }

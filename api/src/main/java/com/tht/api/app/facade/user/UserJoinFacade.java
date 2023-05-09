@@ -1,8 +1,8 @@
 package com.tht.api.app.facade.user;
 
-import com.tht.api.app.config.RandomUtils;
 import com.tht.api.app.config.aligo.AligoUtils;
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
@@ -18,9 +18,7 @@ import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Facade
 @Transactional
 @RequiredArgsConstructor
@@ -58,9 +56,7 @@ public class UserJoinFacade {
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
         userDeviceKeyService.create(request.makeDeviceKeyToEntity(user.getUserUuid()));
 
-        log.info("\n[신규 회원가입] " + user);
-
-        return tokenProvider.generateJWT(user).toResponse();
+        return tokenProvider.generateJWT(user).toSignUpResponse();
     }
 
 }

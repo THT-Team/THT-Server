@@ -1,13 +1,12 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.facade.user.UserJoinFacade;
+import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
-import com.tht.api.app.facade.user.UserJoinFacade;
-import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/join")
@@ -43,4 +41,5 @@ public class UserJoinController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.signUp(request));
     }
+
 }

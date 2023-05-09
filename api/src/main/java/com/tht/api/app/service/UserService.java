@@ -1,9 +1,11 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.repository.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +27,22 @@ public class UserService {
                 "username");
         }
 
+        LogWriteUtils.logInfo("new_user : " + user);
         return userRepository.save(user);
     }
 
     public boolean isExistUserName(final String nickName) {
         return userRepository.existsByUsername(nickName);
     }
+
+    public User findByPhoneNumber(final String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 번호입니다."));
+    }
+
+    public User findByUserUuidForAuthToken(final String userUuid) {
+        return userRepository.findByUserUuid(userUuid)
+            .orElseThrow(() -> new BadCredentialsException("존재하지 않는 회원번호 입니다."));
+    }
+
 }
