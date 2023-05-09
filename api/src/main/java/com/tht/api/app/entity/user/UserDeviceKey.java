@@ -1,5 +1,6 @@
 package com.tht.api.app.entity.user;
 
+import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.Auditable;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -32,6 +33,10 @@ public final class UserDeviceKey extends Auditable {
     }
 
     public static UserDeviceKey create(final String userUuid, final String deviceKey) {
+        LogWriteUtils.logInfo(
+            "UserDeviceKey_create : " + "{userUuid : " + userUuid + ", deviceKey : " + deviceKey
+                + "}");
+
         return UserDeviceKey.builder()
             .userUuid(userUuid)
             .deviceKey(deviceKey)

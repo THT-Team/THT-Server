@@ -1,4 +1,4 @@
-package com.tht.api.app.controller;
+package com.tht.api.app.controller.config;
 
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -22,7 +22,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
-@Import({TokenProvider.class})
+@Import({TokenProviderConfig.class})
 @MockBean(JpaMetamodelMappingContext.class)
 @ExtendWith({RestDocumentationExtension.class})
 public abstract class ControllerTestConfig {
@@ -32,6 +32,9 @@ public abstract class ControllerTestConfig {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @Autowired
+    protected TokenProvider tokenProvider;
 
     protected MockMvc mockMvc;
 

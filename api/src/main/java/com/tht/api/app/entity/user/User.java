@@ -2,8 +2,8 @@ package com.tht.api.app.entity.user;
 
 import com.tht.api.app.entity.Auditable;
 import com.tht.api.app.entity.enums.Gender;
-import com.tht.api.app.entity.enums.converter.GenderConverter;
 import com.tht.api.app.entity.enums.UserRole;
+import com.tht.api.app.entity.enums.converter.GenderConverter;
 import com.tht.api.app.entity.enums.converter.UserRoleConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -68,7 +68,6 @@ public class User extends Auditable {
 //    @Column(name = "last_login_at")
 //    private LocalDateTime lastLoginAt;
 
-
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
         final LocalDate birthDay, final String phoneNumber,
@@ -107,5 +106,4 @@ public class User extends Auditable {
     private static String generateUuid() {
         return LocalDateTime.now().getMinute() + UUID.randomUUID().toString();
     }
-
 }

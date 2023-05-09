@@ -10,6 +10,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.idealtype.IdealTypeFacade;
 import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import java.util.List;
@@ -23,7 +24,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(IdealTypeController.class)
-class IdealTypeControllerTest extends ControllerTestConfig{
+class IdealTypeControllerTest extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/ideal-types";
 

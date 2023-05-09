@@ -13,20 +13,19 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
-import com.tht.api.app.fixture.UserSignUpRequestFixture;
+import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -41,9 +40,6 @@ class UserJoinControllerTest extends ControllerTestConfig {
     private static final String DEFAULT_URL = "/users/join";
     @MockBean
     UserJoinFacade userJoinFacade;
-
-    @Autowired
-    ObjectMapper objectMapper;
 
     @Test
     @DisplayName("유저 번호 인증 발급 docs")

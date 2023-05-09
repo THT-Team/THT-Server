@@ -33,7 +33,7 @@ public class SecurityConfiguration {
         "/",    // root 와 현결해놓음
         /* 회원가입 */
         "/users/join/**",
-        "/login"
+        "/users/login/**",
     };
 
     @Bean

@@ -3,7 +3,7 @@ package com.tht.api.app.facade.user.request;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.tht.api.app.entity.user.UserProfilePhoto;
-import com.tht.api.app.fixture.UserSignUpRequestFixture;
+import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

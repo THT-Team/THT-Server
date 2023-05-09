@@ -10,6 +10,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.interest.InterestFacade;
 import com.tht.api.app.facade.interest.response.InterestResponse;
 import java.util.List;

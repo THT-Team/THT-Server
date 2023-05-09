@@ -1,12 +1,10 @@
 package com.tht.api.app.facade.user;
 
-import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.config.aligo.AligoUtils;
 import com.tht.api.app.config.security.TokenProvider;
-import com.tht.api.app.config.security.TokenResponse;
+import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
-import com.tht.api.app.facade.user.request.UserLoginRequest;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
@@ -20,9 +18,7 @@ import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Facade
 @Transactional
 @RequiredArgsConstructor
@@ -60,14 +56,7 @@ public class UserJoinFacade {
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
         userDeviceKeyService.create(request.makeDeviceKeyToEntity(user.getUserUuid()));
 
-        log.info("\n[신규 회원가입] " + user);
-
-        return tokenProvider.generateJWT(user).toResponse();
+        return tokenProvider.generateJWT(user).toSignUpResponse();
     }
 
-    public TokenResponse login(final UserLoginRequest request) {
-
-        final User user = userService.findByPhoneNumber(request.phoneNumber());
-        return tokenProvider.generateJWT(user);
-    }
 }

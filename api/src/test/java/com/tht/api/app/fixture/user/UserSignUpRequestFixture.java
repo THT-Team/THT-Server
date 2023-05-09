@@ -1,4 +1,4 @@
-package com.tht.api.app.fixture;
+package com.tht.api.app.fixture.user;
 
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.facade.user.request.UserAgreementRequest;

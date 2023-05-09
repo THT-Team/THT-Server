@@ -1,5 +1,6 @@
 package com.tht.api.app.config.security;
 
+import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
 
 public record TokenResponse(
@@ -11,7 +12,11 @@ public record TokenResponse(
         return new TokenResponse(accessToken, accessTokenExpiresIn);
     }
 
-    public UserSignUpResponse toResponse() {
+    public UserSignUpResponse toSignUpResponse() {
         return new UserSignUpResponse(accessToken, accessTokenExpiresIn);
+    }
+
+    public UserLoginResponse toLoginResponse() {
+        return new UserLoginResponse(accessToken, accessTokenExpiresIn);
     }
 }

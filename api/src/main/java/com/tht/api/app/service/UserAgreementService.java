@@ -1,5 +1,6 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserAgreement;
 import com.tht.api.app.repository.UserAgreementRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ public class UserAgreementService {
     private final UserAgreementRepository userAgreementRepository;
 
     public UserAgreement create(final UserAgreement userAgreement) {
+        LogWriteUtils.logInfo("new_user_agreement_info : " + userAgreement);
         return userAgreementRepository.save(userAgreement);
     }
 }
