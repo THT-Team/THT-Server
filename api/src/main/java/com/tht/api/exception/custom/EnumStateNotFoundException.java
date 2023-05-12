@@ -20,4 +20,8 @@ public class EnumStateNotFoundException extends RuntimeException {
         return new EnumStateNotFoundException(String.format("유저 권한 목록에 %s가 존재하지 않습니다.", findUserRole));
     }
 
+    public static EnumStateNotFoundException ofSNSType(final String findSnsType) {
+
+        return new EnumStateNotFoundException(String.format("%s 는 유효하지 않은 SNS 타입입니다.", findSnsType));
+    }
 }

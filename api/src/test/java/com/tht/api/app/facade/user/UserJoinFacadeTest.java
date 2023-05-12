@@ -1,9 +1,11 @@
 package com.tht.api.app.facade.user;
 
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.verify;
 import static org.mockito.BDDMockito.when;
+import static org.mockito.Mockito.times;
 
 import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.security.TokenResponse;
@@ -17,6 +19,7 @@ import com.tht.api.app.service.UserInterestsService;
 import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
+import com.tht.api.app.service.UserSnsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +44,8 @@ class UserJoinFacadeTest {
     UserIdealTypeService userIdealTypeService;
     @Mock
     UserDeviceKeyService userDeviceKeyService;
-
+    @Mock
+    UserSnsService userSnsService;
     @Mock
     TokenProvider tokenProvider;
 
@@ -78,6 +82,26 @@ class UserJoinFacadeTest {
         //디바이스 키
         verify(userDeviceKeyService).create(request.makeDeviceKeyToEntity(any()));
 
+        verify(userSnsService, times(0)).create(anyString(), any(), anyString());
+
     }
 
+    @Test
+    @DisplayName("SNS 유저 회원가입시 흐름 테스트")
+    void userJoinFacadeSNSTest() {
+
+        //give
+        UserSignUpRequest request = UserSignUpRequestFixture.ofSNSType("KAKAO");
+        User user = mock(User.class);
+        when(user.getUserUuid()).thenReturn("user-uuid-test");
+        when(userService.createUser(any())).thenReturn(user);
+        when(tokenProvider.generateJWT(any())).thenReturn(new TokenResponse("", 1L));
+
+        //when
+        userJoinFacade.signUp(request);
+
+        //then
+        verify(userSnsService).create(anyString(), any(), anyString());
+
+    }
 }

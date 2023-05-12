@@ -16,6 +16,7 @@ import com.tht.api.app.service.UserInterestsService;
 import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
+import com.tht.api.app.service.UserSnsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
@@ -25,6 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class UserJoinFacade {
     private static final int DIGITS_OF_AUTH_NUMBER = 6;
 
+    private final TokenProvider tokenProvider;
     private final UserService userService;
     private final UserAgreementService userAgreementService;
     private final UserLocationInfoService userLocationInfoService;
@@ -32,8 +34,7 @@ public class UserJoinFacade {
     private final UserInterestsService userInterestsService;
     private final UserIdealTypeService userIdealTypeService;
     private final UserDeviceKeyService userDeviceKeyService;
-    private final TokenProvider tokenProvider;
-
+    private final UserSnsService userSnsService;
 
     public AuthNumberResponse issueAuthenticationNumber(final String phoneNumber) {
 
@@ -55,6 +56,10 @@ public class UserJoinFacade {
         userInterestsService.createOf(request.makeUserInterestsList(user.getUserUuid()));
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
         userDeviceKeyService.create(request.makeDeviceKeyToEntity(user.getUserUuid()));
+
+        if (request.snsType().isSns()) {
+            userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId());
+        }
 
         return tokenProvider.generateJWT(user).toSignUpResponse();
     }
