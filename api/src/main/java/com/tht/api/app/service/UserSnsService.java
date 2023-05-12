@@ -3,7 +3,10 @@ package com.tht.api.app.service;
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.UserSns;
 import com.tht.api.app.repository.UserSnsRepository;
+import com.tht.api.app.repository.mapper.UserSnsMapper;
 import com.tht.api.exception.custom.EntityStateException;
+import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,4 +25,15 @@ public class UserSnsService {
 
         userSnsRepository.save(UserSns.create(userUuid, snsType, snsUniqueId));
     }
+
+    public List<String> findAllByPhoneNumber(final String phoneNumber) {
+
+        final Optional<List<UserSnsMapper>> userSnsList = userSnsRepository.findAllByPhoneNumber(
+            phoneNumber);
+
+        return userSnsList.map(
+                sns -> sns.stream().map(userSns -> userSns.getSnsType().name()).toList())
+            .orElseGet(List::of);
+    }
+
 }

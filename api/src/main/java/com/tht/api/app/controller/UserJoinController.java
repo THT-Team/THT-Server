@@ -1,6 +1,7 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.facade.user.UserJoinFacade;
+import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
@@ -36,9 +37,15 @@ public class UserJoinController {
         return ResponseEntity.ok(userJoinFacade.checkDuplicateNickName(nickName));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<UserSignUpResponse> createUser(@RequestBody @Valid UserSignUpRequest request) {
+    @GetMapping("/exist/user-info/{phone-number}")
+    ResponseEntity<UserSignUpInfoResponse> getUserSignUpInfo(
+        @PathVariable(name = "phone-number") final String phoneNumber) {
+        return ResponseEntity.ok(userJoinFacade.getUserSignUpInfo(phoneNumber));
+    }
 
+    @PostMapping("/signup")
+    public ResponseEntity<UserSignUpResponse> createUser(
+        @RequestBody @Valid UserSignUpRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.signUp(request));
     }
 

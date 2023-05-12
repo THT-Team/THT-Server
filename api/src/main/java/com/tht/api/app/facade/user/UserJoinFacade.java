@@ -5,6 +5,7 @@ import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
@@ -18,12 +19,14 @@ import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Facade
 @Transactional
 @RequiredArgsConstructor
 public class UserJoinFacade {
+
     private static final int DIGITS_OF_AUTH_NUMBER = 6;
 
     private final TokenProvider tokenProvider;
@@ -38,7 +41,8 @@ public class UserJoinFacade {
 
     public AuthNumberResponse issueAuthenticationNumber(final String phoneNumber) {
 
-        final int authNumber = RandomUtils.getInstance().getFullNumberOfDigits(DIGITS_OF_AUTH_NUMBER);
+        final int authNumber = RandomUtils.getInstance()
+            .getFullNumberOfDigits(DIGITS_OF_AUTH_NUMBER);
         AligoUtils.sendAuthNumber(phoneNumber, String.valueOf(authNumber));
 
         return new AuthNumberResponse(phoneNumber, authNumber);
@@ -64,4 +68,11 @@ public class UserJoinFacade {
         return tokenProvider.generateJWT(user).toSignUpResponse();
     }
 
+    public UserSignUpInfoResponse getUserSignUpInfo(final String phoneNumber) {
+
+        final boolean isSignUp = userService.isExistUser(phoneNumber);
+        final List<String> userSignUpList = userSnsService.findAllByPhoneNumber(phoneNumber);
+
+        return UserSignUpInfoResponse.of(isSignUp, userSignUpList);
+    }
 }

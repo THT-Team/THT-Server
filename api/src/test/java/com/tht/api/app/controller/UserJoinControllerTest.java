@@ -19,6 +19,7 @@ import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
+import com.tht.api.app.fixture.user.UserSignUpInfoResponseFixture;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import java.util.LinkedList;
 import java.util.List;
@@ -259,5 +260,44 @@ class UserJoinControllerTest extends ControllerTestConfig {
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
+    }
+
+    @Test
+    @DisplayName("유저 회원가입 정보 조회 api test - docs")
+    void getUserSignUpInfo() throws Exception {
+
+        //given
+        String nickName = "test 닉네임";
+        when(userJoinFacade.getUserSignUpInfo(anyString()))
+            .thenReturn(UserSignUpInfoResponseFixture.make());
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.get(
+                    DEFAULT_URL + "/exist/user-info/{phone-number}",
+                    nickName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 회원가입 정보 조회",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저")
+                        .description("유저 회원가입 정보 조회")
+                        .pathParameters(parameterWithName("phone-number").description("핸드폰 번호"))
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("isSignUp").description("가입 여부"),
+                            fieldWithPath("typeList").description("가입한 계정 타입")
+
+                        )
+                        .responseSchema(Schema.schema("UserSignUpInfoResponse"))
+                        .build()
+                )
+            ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
