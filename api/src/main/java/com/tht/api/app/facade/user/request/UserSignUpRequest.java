@@ -2,6 +2,7 @@ package com.tht.api.app.facade.user.request;
 
 import com.tht.api.app.config.utils.CustomDateFormatUtils;
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserAgreement;
 import com.tht.api.app.entity.user.UserDeviceKey;
@@ -15,8 +16,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.util.StringUtils;
 
-public record UserSignUpRequest (
+public record UserSignUpRequest(
 
     @NotBlank(message = "phoneNumber 는 비어있을 수 없습니다.") String phoneNumber,
     @NotBlank(message = "username 는 비어있을 수 없습니다.") String username,
@@ -38,15 +40,26 @@ public record UserSignUpRequest (
 
     @Size(max = 3, message = "이상형은 최대 3개를 골라주세요")
     @NotNull(message = "idealTypeList 는 null 이어서는 안됩니다.")
-    List<Long> idealTypeList
-){
+    List<Long> idealTypeList,
+
+    @NotNull SNSType snsType,
+
+    String snsUniqueId
+
+) {
+
+    public UserSignUpRequest {
+        if (snsType.isSns()) {
+            validateSnsUniqueId(snsType, snsUniqueId);
+        }
+    }
 
     public UserSignUpRequest(final String phoneNumber, final String username, final String email,
         final String birthDay, final String gender, final String preferGender,
         final String introduction, final String deviceKey,
         final UserAgreementRequest agreement, final UserLocationRequest locationRequest,
         final List<String> photoList, final List<Long> interestList,
-        final List<Long> idealTypeList) {
+        final List<Long> idealTypeList, final String snsType, final String snsUniqueId) {
 
         this(phoneNumber,
             username,
@@ -60,8 +73,16 @@ public record UserSignUpRequest (
             locationRequest,
             photoList,
             interestList,
-            idealTypeList);
+            idealTypeList,
+            SNSType.valueOf(snsType),
+            snsUniqueId
+        );
+    }
 
+    private void validateSnsUniqueId(final SNSType snsType, final String snsUniqueId) {
+        if (!StringUtils.hasText(snsUniqueId)) {
+            throw new IllegalArgumentException(snsType.name() + "는 sns unique id 가 필수값입니다.");
+        }
     }
 
     public User toEntity() {

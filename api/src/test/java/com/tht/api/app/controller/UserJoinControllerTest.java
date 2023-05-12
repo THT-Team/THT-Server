@@ -165,9 +165,16 @@ class UserJoinControllerTest extends ControllerTestConfig {
                             fieldWithPath("locationRequest.lat").description("위도 좌표"),
                             fieldWithPath("locationRequest.lon").description("경도 좌표"),
 
-                            fieldWithPath("photoList").type(JsonFieldType.ARRAY).description("유저 사진 url 리스트 - String Array"),
-                            fieldWithPath("interestList").description("유저 관심사 idx 리스트 - String Array"),
-                            fieldWithPath("idealTypeList").description("유저 이상형 idx 리스트 - String Array")
+                            fieldWithPath("photoList").type(JsonFieldType.ARRAY)
+                                .description("유저 사진 url 리스트 - String Array"),
+                            fieldWithPath("interestList").description(
+                                "유저 관심사 idx 리스트 - String Array"),
+                            fieldWithPath("idealTypeList").description(
+                                "유저 이상형 idx 리스트 - String Array"),
+
+                            fieldWithPath("snsType").type(JsonFieldType.STRING)
+                                .description("회원가입 타입 - NORMAL, KAKAO, NAVER, GOOGLE"),
+                            fieldWithPath("snsUniqueId").description("sns 고유 id 값")
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
@@ -188,7 +195,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_interest_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1L,2L,3L,4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1L, 2L, 3L, 4L));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 
@@ -209,7 +216,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_idealType_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1L,2L,3L,4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1L, 2L, 3L, 4L));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 
@@ -226,7 +233,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,4})
+    @ValueSource(ints = {1, 4})
     @DisplayName("유저 일반 회원가입 api test(실패) - 사진은 필수 2장 최대 3장")
     void normalUserJoin_photo_fail(final int size) throws Exception {
 
