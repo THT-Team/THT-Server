@@ -4,10 +4,10 @@ spring:
     jpa:
         hibernate:
             ddl-auto: none
-#        show-sql: true
         properties:
             hibernate:
                 format_sql: true
+#        show-sql: true
 
     thymeleaf:
         prefix: classpath:static/
@@ -23,10 +23,5 @@ springdoc:
 
 logging:
     level:
-        org:
-            hibernate:
-                SQL: debug
-                type:
-                    descriptor:
-                        sql:
-                            BasicBinder: trace
+        org.hibernate.SQL: debug
+        org.hibernate.orm.jdbc.bind: trace

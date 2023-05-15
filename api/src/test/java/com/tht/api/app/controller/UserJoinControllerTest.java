@@ -19,6 +19,7 @@ import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
+import com.tht.api.app.fixture.user.UserSignUpInfoResponseFixture;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import java.util.LinkedList;
 import java.util.List;
@@ -165,9 +166,16 @@ class UserJoinControllerTest extends ControllerTestConfig {
                             fieldWithPath("locationRequest.lat").description("위도 좌표"),
                             fieldWithPath("locationRequest.lon").description("경도 좌표"),
 
-                            fieldWithPath("photoList").type(JsonFieldType.ARRAY).description("유저 사진 url 리스트 - String Array"),
-                            fieldWithPath("interestList").description("유저 관심사 idx 리스트 - String Array"),
-                            fieldWithPath("idealTypeList").description("유저 이상형 idx 리스트 - String Array")
+                            fieldWithPath("photoList").type(JsonFieldType.ARRAY)
+                                .description("유저 사진 url 리스트 - String Array"),
+                            fieldWithPath("interestList").description(
+                                "유저 관심사 idx 리스트 - String Array"),
+                            fieldWithPath("idealTypeList").description(
+                                "유저 이상형 idx 리스트 - String Array"),
+
+                            fieldWithPath("snsType").type(JsonFieldType.STRING)
+                                .description("회원가입 타입 - NORMAL, KAKAO, NAVER, GOOGLE"),
+                            fieldWithPath("snsUniqueId").description("sns 고유 id 값")
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
@@ -188,7 +196,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_interest_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1L,2L,3L,4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1L, 2L, 3L, 4L));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 
@@ -209,7 +217,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_idealType_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1L,2L,3L,4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1L, 2L, 3L, 4L));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 
@@ -226,7 +234,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {1,4})
+    @ValueSource(ints = {1, 4})
     @DisplayName("유저 일반 회원가입 api test(실패) - 사진은 필수 2장 최대 3장")
     void normalUserJoin_photo_fail(final int size) throws Exception {
 
@@ -252,5 +260,44 @@ class UserJoinControllerTest extends ControllerTestConfig {
 
         resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
 
+    }
+
+    @Test
+    @DisplayName("유저 회원가입 정보 조회 api test - docs")
+    void getUserSignUpInfo() throws Exception {
+
+        //given
+        String nickName = "test 닉네임";
+        when(userJoinFacade.getUserSignUpInfo(anyString()))
+            .thenReturn(UserSignUpInfoResponseFixture.make());
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.get(
+                    DEFAULT_URL + "/exist/user-info/{phone-number}",
+                    nickName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 회원가입 정보 조회",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저")
+                        .description("유저 회원가입 이력 조회")
+                        .pathParameters(parameterWithName("phone-number").description("핸드폰 번호"))
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("isSignUp").description("가입 여부"),
+                            fieldWithPath("typeList").description("가입한 계정 타입 [NORMAL, KAKAO, NAVER, GOOGLE]")
+
+                        )
+                        .responseSchema(Schema.schema("UserSignUpInfoResponse"))
+                        .build()
+                )
+            ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

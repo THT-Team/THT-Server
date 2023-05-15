@@ -45,4 +45,7 @@ public class UserService {
             .orElseThrow(() -> new BadCredentialsException("존재하지 않는 회원번호 입니다."));
     }
 
+    public boolean isExistUser(final String phoneNumber) {
+        return userRepository.existsByPhoneNumber(phoneNumber);
+    }
 }

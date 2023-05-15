@@ -13,6 +13,15 @@ public class LogWriteUtils {
         log.info(message);
     }
 
+    public static void createInfo(final Object entity) {
+        log.info(String.format("{"
+            + "method : create, "
+            + "entity_name : %s, "
+            + "params : %s"
+            + "}", entity.getClass().getSimpleName(), entity)
+        );
+    }
+
     public static void logError(final String message){
         log.error(message);
     }

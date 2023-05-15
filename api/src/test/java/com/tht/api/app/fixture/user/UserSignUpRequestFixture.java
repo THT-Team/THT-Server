@@ -1,6 +1,7 @@
 package com.tht.api.app.fixture.user;
 
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.facade.user.request.UserAgreementRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
@@ -34,29 +35,39 @@ public class UserSignUpRequestFixture {
 
     private final static List<Long> idealTypeList = List.of(1L,2L,3L);
 
+    private final static SNSType snsType = SNSType.NORMAL;
+
+    private static final String snsUniqueId = "snsUniqueId";
+
     private UserSignUpRequestFixture() {}
 
     public static UserSignUpRequest make() {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList);
+            idealTypeList, snsType.name(), snsUniqueId);
     }
 
     public static UserSignUpRequest ofInterest(final List<Long> interestList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList);
+            idealTypeList, snsType.name(), snsUniqueId);
     }
 
     public static UserSignUpRequest ofIdealType(final List<Long> idealTypeList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList);
+            idealTypeList, snsType.name(), snsUniqueId);
     }
 
     public static UserSignUpRequest ofPhoto(final List<String> photoList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList);
+            idealTypeList, snsType.name(), snsUniqueId);
+    }
+
+    public static UserSignUpRequest ofSNSType(final String snsType) {
+        return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
+            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            idealTypeList, snsType, snsUniqueId);
     }
 }
