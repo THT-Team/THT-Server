@@ -70,9 +70,8 @@ public class UserJoinFacade {
 
     public UserSignUpInfoResponse getUserSignUpInfo(final String phoneNumber) {
 
-        final boolean isSignUp = userService.isExistUser(phoneNumber);
         final List<String> userSignUpList = userSnsService.findAllByPhoneNumber(phoneNumber);
 
-        return UserSignUpInfoResponse.of(isSignUp, userSignUpList);
+        return UserSignUpInfoResponse.of(userSignUpList);
     }
 }

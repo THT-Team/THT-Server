@@ -285,12 +285,12 @@ class UserJoinControllerTest extends ControllerTestConfig {
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("유저")
-                        .description("유저 회원가입 정보 조회")
+                        .description("유저 회원가입 이력 조회")
                         .pathParameters(parameterWithName("phone-number").description("핸드폰 번호"))
                         .requestFields()
                         .responseFields(
                             fieldWithPath("isSignUp").description("가입 여부"),
-                            fieldWithPath("typeList").description("가입한 계정 타입")
+                            fieldWithPath("typeList").description("가입한 계정 타입 [NORMAL, KAKAO, NAVER, GOOGLE]")
 
                         )
                         .responseSchema(Schema.schema("UserSignUpInfoResponse"))

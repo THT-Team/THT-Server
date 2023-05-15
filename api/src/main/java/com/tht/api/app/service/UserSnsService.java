@@ -32,7 +32,7 @@ public class UserSnsService {
             phoneNumber);
 
         return userSnsList.map(
-                sns -> sns.stream().map(userSns -> userSns.getSnsType().name()).toList())
+                sns -> sns.stream().map(userSns -> userSns.snsType().name()).toList())
             .orElseGet(List::of);
     }
 

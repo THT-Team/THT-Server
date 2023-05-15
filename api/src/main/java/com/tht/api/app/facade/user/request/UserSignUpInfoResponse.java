@@ -10,17 +10,25 @@ public record UserSignUpInfoResponse(
     List<String> typeList
 ) {
 
-    public static UserSignUpInfoResponse of(final boolean isSignUp, final List<String> snsTypes) {
+    public static UserSignUpInfoResponse of(final List<String> snsTypes) {
 
-        return new UserSignUpInfoResponse(isSignUp, fitSignUpType(isSignUp, snsTypes));
+        return new UserSignUpInfoResponse(!snsTypes.isEmpty(), fitSignUpType(snsTypes));
     }
 
-    private static List<String> fitSignUpType(boolean isSignUp, List<String> snsTypes) {
-        if (isSignUp) {
-            return Stream.of(List.of(SNSType.NORMAL.name()), snsTypes)
+    private static List<String> fitSignUpType(final List<String> snsTypes) {
+
+        if (snsTypes.isEmpty()) {
+            return snsTypes;
+        }
+
+        if (snsTypes.contains(SNSType.NORMAL.name())) {
+            return Stream.of(snsTypes)
                 .flatMap(Collection::stream)
                 .toList();
         }
-        return snsTypes;
+
+        return Stream.of(List.of(SNSType.NORMAL.name()), snsTypes)
+            .flatMap(Collection::stream)
+            .toList();
     }
 }
