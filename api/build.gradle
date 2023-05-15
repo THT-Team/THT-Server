@@ -41,7 +41,6 @@ dependencies {
 
 	implementation 'com.querydsl:querydsl-core:5.0.0'
 	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-	implementation 'com.querydsl:querydsl-apt:5.0.0:jakarta'
 
 	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
@@ -95,6 +94,21 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+}
+
+// querydsl QClass 파일 생성 위치를 지정
+def querydslDir = "$buildDir/generated/querydsl"
+
+sourceSets {
+	main.java.srcDirs += [ querydslDir ]
+}
+
+tasks.withType(JavaCompile) {
+	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
+}
+
+clean {
+	delete file(querydslDir)
 }
 
 // Task 및 설정 추가
