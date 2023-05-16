@@ -45,7 +45,7 @@ class UserLoginControllerTest extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.post(DEFAULT_URL + "/normal")
+            RestDocumentationRequestBuilders.post(DEFAULT_URL )
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(requestBody)

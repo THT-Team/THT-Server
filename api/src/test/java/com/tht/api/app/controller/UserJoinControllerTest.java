@@ -16,11 +16,13 @@ import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
+import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
 import com.tht.api.app.fixture.user.UserSignUpInfoResponseFixture;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
+import com.tht.api.app.fixture.user.UserSnsSignUpRequestFixture;
 import java.util.LinkedList;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -291,7 +293,6 @@ class UserJoinControllerTest extends ControllerTestConfig {
                         .responseFields(
                             fieldWithPath("isSignUp").description("가입 여부"),
                             fieldWithPath("typeList").description("가입한 계정 타입 [NORMAL, KAKAO, NAVER, GOOGLE]")
-
                         )
                         .responseSchema(Schema.schema("UserSignUpInfoResponse"))
                         .build()
@@ -299,5 +300,76 @@ class UserJoinControllerTest extends ControllerTestConfig {
             ));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("SNS 유저 아이디 통합 가입 api test - docs")
+    void integratedUserJoin() throws Exception {
+
+        //give
+        UserSnsSignUpRequest make = UserSnsSignUpRequestFixture.makeSNSType();
+        String requestBody = objectMapper.writeValueAsString(make);
+
+        when(userJoinFacade.integratedSnsId(any())).thenReturn(new UserSignUpResponse("token", 1L));
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.post(DEFAULT_URL + "/signup/sns")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        ).andDo(
+            document("유저 SNS 아이디 통합 가입",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저")
+                        .description("유저 일반 회원가입")
+                        .requestFields(
+                            fieldWithPath("phoneNumber").description("전화번호"),
+                            fieldWithPath("deviceKey").description("유저 디바이스 키"),
+
+                            fieldWithPath("snsType").type(JsonFieldType.STRING)
+                                .description("회원가입 타입 - KAKAO, NAVER, GOOGLE"),
+                            fieldWithPath("snsUniqueId").description("sns 고유 id 값"),
+                            fieldWithPath("email").description("sns email")
+                        )
+                        .responseFields(
+                            fieldWithPath("accessToken").description("액세스 토큰"),
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                        )
+                        .responseSchema(Schema.schema("UserSignUpResponse"))
+                        .requestSchema(Schema.schema("UserSignUpResponse"))
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isCreated());
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"NORMAL", " ", "df"})
+    @DisplayName("SNS 유저 아이디 통합 가입 api test - 유효하지 않은 SNS Type 값 필터링")
+    void integratedUserJoin_fail(final String type) throws Exception {
+
+        //give
+        String requestBody =
+            "{\"phoneNumber\":\"01012341234\",\"deviceKey\":\"device-key\",\"snsType\":\"" + type
+                + "\",\"snsUniqueId\":\"sns unique id\"}";
+
+        when(userJoinFacade.integratedSnsId(any())).thenReturn(new UserSignUpResponse("token", 1L));
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.post(DEFAULT_URL + "/signup/sns")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isBadRequest());
+
     }
 }

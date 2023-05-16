@@ -5,7 +5,6 @@ import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserAgreement;
-import com.tht.api.app.entity.user.UserDeviceKey;
 import com.tht.api.app.entity.user.UserIdealType;
 import com.tht.api.app.entity.user.UserInterests;
 import com.tht.api.app.entity.user.UserLocationInfo;
@@ -116,9 +115,5 @@ public record UserSignUpRequest(
     public List<UserIdealType> makeUserIdealTypeList(final String userUuid) {
         return idealTypeList.stream().map(idx -> UserIdealType.create(userUuid, idx))
             .toList();
-    }
-
-    public UserDeviceKey makeDeviceKeyToEntity(final String userUuid) {
-        return UserDeviceKey.create(userUuid, deviceKey);
     }
 }

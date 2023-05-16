@@ -10,25 +10,23 @@ public record UserSignUpInfoResponse(
     List<String> typeList
 ) {
 
-    public static UserSignUpInfoResponse of(final List<String> snsTypes) {
+    public static UserSignUpInfoResponse ofEnum(final List<SNSType> snsTypes) {
 
         return new UserSignUpInfoResponse(!snsTypes.isEmpty(), fitSignUpType(snsTypes));
     }
 
-    private static List<String> fitSignUpType(final List<String> snsTypes) {
+    private static List<String> fitSignUpType(final List<SNSType> snsTypes) {
 
-        if (snsTypes.isEmpty()) {
-            return snsTypes;
+        if (snsTypes.isEmpty() || snsTypes.contains(SNSType.NORMAL)) {
+            return getStrings(snsTypes);
         }
 
-        if (snsTypes.contains(SNSType.NORMAL.name())) {
-            return Stream.of(snsTypes)
-                .flatMap(Collection::stream)
-                .toList();
-        }
-
-        return Stream.of(List.of(SNSType.NORMAL.name()), snsTypes)
+        return getStrings(Stream.of(List.of(SNSType.NORMAL), snsTypes)
             .flatMap(Collection::stream)
-            .toList();
+            .toList());
+    }
+
+    private static List<String> getStrings(final List<SNSType> snsTypes) {
+        return snsTypes.stream().map(SNSType::name).toList();
     }
 }

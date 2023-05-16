@@ -3,6 +3,7 @@ package com.tht.api.app.controller;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
+import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
@@ -49,4 +50,9 @@ public class UserJoinController {
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.signUp(request));
     }
 
+    @PostMapping("/signup/sns")
+    public ResponseEntity<UserSignUpResponse> integratedUser(
+        @RequestBody @Valid UserSnsSignUpRequest request) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.integratedSnsId(request));
+    }
 }

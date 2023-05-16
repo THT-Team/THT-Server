@@ -15,7 +15,8 @@ class UserSnsTest {
         String user_uuid = "user uuid";
         SNSType google = SNSType.GOOGLE;
         String sns_unique_id = "sns unique id";
-        UserSns userSns = UserSns.create(user_uuid, google, sns_unique_id);
+        String email = "email@email.com";
+        UserSns userSns = UserSns.create(user_uuid, google, sns_unique_id, email);
 
         assertThat(userSns.getUserUuid()).isEqualTo(user_uuid);
         assertThat(userSns.getSnsUniqueId()).isEqualTo(sns_unique_id);
