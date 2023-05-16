@@ -10,6 +10,7 @@ import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.fixture.user.UserSnsMapperFixture;
 import com.tht.api.app.repository.UserSnsRepository;
 import com.tht.api.exception.custom.EntityStateException;
+import com.tht.api.exception.custom.UserCustomException;
 import java.util.List;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;
@@ -72,5 +73,31 @@ class UserSnsServiceTest {
 
         assertThat(userSnsService.findAllByPhoneNumber("DAsf"))
             .contains(values);
+    }
+
+    @Test
+    @DisplayName("가입한 snsType 과 고유 아이디로 유저 uuid 찾기 (성공)")
+    void findUserUuidBySnsIdKey() {
+
+        String value = "yes";
+
+        when(userSnsRepository.findUserUuidBySnsIdKey(any(), anyString())).thenReturn(
+            Optional.of(value));
+
+        assertThat(userSnsService.findUserUuidBySnsIdKey(SNSType.NORMAL, ""))
+            .isEqualTo(value);
+    }
+
+    @Test
+    @DisplayName("가입한 snsType 과 고유 아이디로 유저 uuid 찾기 (싪패)")
+    void findUserUuidBySnsIdKey_fail() {
+
+
+        when(userSnsRepository.findUserUuidBySnsIdKey(any(), anyString())).thenReturn(
+            Optional.empty());
+
+        assertThatThrownBy(() -> userSnsService.findUserUuidBySnsIdKey(SNSType.NORMAL, ""))
+            .isInstanceOf(UserCustomException.class)
+            .hasMessageContaining("해당 SNS ID가 존재하지 않습니다.");
     }
 }
