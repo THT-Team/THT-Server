@@ -38,20 +38,27 @@ public class UserSns extends Auditable {
     @Column(name = "sns_unique_id")
     private String snsUniqueId;
 
+    @Column(name = "email")
+    private String email;
+
     @Builder
-    private UserSns(final String userUuid, final SNSType snsType, final String snsUniqueId) {
+    private UserSns(final String userUuid, final SNSType snsType, final String snsUniqueId,
+        final String email) {
+
         this.userUuid = userUuid;
         this.snsType = snsType;
         this.snsUniqueId = snsUniqueId;
+        this.email = email;
     }
 
     public static UserSns create(final String userUuid, final SNSType snsType,
-        final String snsUniqueId) {
+        final String snsUniqueId, final String email) {
 
         final UserSns userSns = UserSns.builder()
             .userUuid(userUuid)
             .snsType(snsType)
             .snsUniqueId(snsUniqueId)
+            .email(email)
             .build();
 
         LogWriteUtils.createInfo(userSns);

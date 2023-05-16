@@ -1,17 +1,21 @@
 package com.tht.api.app.facade.user;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.any;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.verify;
 import static org.mockito.BDDMockito.when;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.times;
 
 import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.security.TokenResponse;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
+import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
+import com.tht.api.app.fixture.user.UserSnsSignUpRequestFixture;
 import com.tht.api.app.service.UserAgreementService;
 import com.tht.api.app.service.UserDeviceKeyService;
 import com.tht.api.app.service.UserIdealTypeService;
@@ -20,6 +24,7 @@ import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
+import com.tht.api.exception.custom.UserCustomException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -80,9 +85,9 @@ class UserJoinFacadeTest {
         //이상형
         verify(userIdealTypeService).createOf(request.makeUserIdealTypeList(any()));
         //디바이스 키
-        verify(userDeviceKeyService).create(request.makeDeviceKeyToEntity(any()));
+        verify(userDeviceKeyService).create(anyString(), anyString());
 
-        verify(userSnsService, times(0)).create(anyString(), any(), anyString());
+        verify(userSnsService, times(0)).create(anyString(), any(), anyString(), anyString());
 
     }
 
@@ -101,7 +106,53 @@ class UserJoinFacadeTest {
         userJoinFacade.signUp(request);
 
         //then
-        verify(userSnsService).create(anyString(), any(), anyString());
+        verify(userSnsService).create(anyString(), any(), anyString(), anyString());
+
+    }
+
+    @Test
+    @DisplayName("유저 SNS 회원가입 통합")
+    void integratedUserId() {
+
+        User mock = mock(User.class);
+        when(userService.findByPhoneNumber(anyString())).thenReturn(mock);
+        when(mock.getUserUuid()).thenReturn("");
+
+        when(userSnsService.isExistIntegratedUserInfo(anyString(), any(), anyString())).thenReturn(
+            false);
+        doNothing().when(userSnsService).create(anyString(), any(), anyString(), anyString());
+        when(tokenProvider.generateJWT(any())).thenReturn(new TokenResponse("", 1L));
+
+        //when
+        userJoinFacade.integratedSnsId(UserSnsSignUpRequestFixture.makeSNSType());
+
+        //then
+        verify(userSnsService).isExistIntegratedUserInfo(anyString(), any(), anyString());
+
+        //save
+        verify(userSnsService).create(anyString(), any(), anyString(), anyString());
+    }
+
+    @Test
+    @DisplayName("유저 SNS 회원가입 통합 시 중복회원 예외 처리")
+    void integratedUserId_duplicateCase() {
+
+        User mock = mock(User.class);
+        when(userService.findByPhoneNumber(anyString())).thenReturn(mock);
+        when(mock.getUserUuid()).thenReturn("1234");
+        when(mock.getPhoneNumber()).thenReturn("1234");
+
+        when(userSnsService.isExistIntegratedUserInfo(anyString(), any(), anyString())).thenReturn(
+            true);
+
+        //when
+        UserSnsSignUpRequest make = UserSnsSignUpRequestFixture.makeSNSType();
+
+        assertThatThrownBy(
+            () -> userJoinFacade.integratedSnsId(make))
+            .isInstanceOf(UserCustomException.class)
+            .hasMessageContaining("1234 : 해당번호로 가입된 " + make.snsType().name()
+                + " 이 존재하거나, 해당 SNS 고유 아이디로 가입한 이력이 존재합니다.");
 
     }
 }

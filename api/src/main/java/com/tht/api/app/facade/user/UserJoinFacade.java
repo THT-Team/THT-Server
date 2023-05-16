@@ -7,6 +7,7 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
+import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
@@ -18,6 +19,7 @@ import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
+import com.tht.api.exception.custom.UserCustomException;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -59,10 +61,11 @@ public class UserJoinFacade {
         userProfilePhotoService.createOf(request.makeUserProfilePhotoList(user.getUserUuid()));
         userInterestsService.createOf(request.makeUserInterestsList(user.getUserUuid()));
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
-        userDeviceKeyService.create(request.makeDeviceKeyToEntity(user.getUserUuid()));
+        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
 
         if (request.snsType().isSns()) {
-            userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId());
+            userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
+                request.email());
         }
 
         return tokenProvider.generateJWT(user).toSignUpResponse();
@@ -70,8 +73,22 @@ public class UserJoinFacade {
 
     public UserSignUpInfoResponse getUserSignUpInfo(final String phoneNumber) {
 
-        final List<String> userSignUpList = userSnsService.findAllByPhoneNumber(phoneNumber);
+        return UserSignUpInfoResponse.ofEnum(userSnsService.findAllByPhoneNumber(phoneNumber));
+    }
 
-        return UserSignUpInfoResponse.of(userSignUpList);
+    public UserSignUpResponse integratedSnsId(final UserSnsSignUpRequest request) {
+
+        final User user = userService.findByPhoneNumber(request.phoneNumber());
+
+        if (userSnsService.isExistIntegratedUserInfo(user.getUserUuid(), request.snsType(),
+            request.snsUniqueId())) {
+            throw UserCustomException.duplicateIntegrated(user.getPhoneNumber(), request.snsType());
+        }
+
+        userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
+            request.email());
+        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
+
+        return tokenProvider.generateJWT(user).toSignUpResponse();
     }
 }

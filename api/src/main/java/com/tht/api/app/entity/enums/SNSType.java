@@ -10,7 +10,22 @@ public enum SNSType {
     NAVER,
     GOOGLE;
 
+//    @JsonCreator
     public static SNSType toConverter(final String name) {
+        return Arrays.stream(SNSType.values())
+            .filter(snsType -> snsType.name().equals(name))
+            .findFirst()
+            .orElseThrow(
+                () -> EnumStateNotFoundException.ofSNSType(name)
+            );
+    }
+
+    public static SNSType toSNSConverter(final String name) {
+
+        if (SNSType.NORMAL.name().equals(name)) {
+            throw EnumStateNotFoundException.ofSNSTypeNotNormal();
+        }
+
         return Arrays.stream(SNSType.values())
             .filter(snsType -> snsType.name().equals(name))
             .findFirst()

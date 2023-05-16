@@ -18,22 +18,27 @@ public class UserSnsService {
 
     private final UserSnsRepository userSnsRepository;
 
-    public void create(final String userUuid, final SNSType snsType, final String snsUniqueId) {
+    public void create(final String userUuid, final SNSType snsType, final String snsUniqueId,
+        final String email) {
+
         if (userSnsRepository.existsBySnsTypeAndSnsUniqueId(snsType, snsUniqueId)) {
-            throw new EntityStateException("해당 " +snsType.name() + " 계정이 이미 존재합니다.");
+            throw new EntityStateException("해당 " + snsType.name() + " 계정이 이미 존재합니다.");
         }
 
-        userSnsRepository.save(UserSns.create(userUuid, snsType, snsUniqueId));
+        userSnsRepository.save(UserSns.create(userUuid, snsType, snsUniqueId, email));
     }
 
-    public List<String> findAllByPhoneNumber(final String phoneNumber) {
+    public List<SNSType> findAllByPhoneNumber(final String phoneNumber) {
 
         final Optional<List<UserSnsMapper>> userSnsList = userSnsRepository.findAllByPhoneNumber(
             phoneNumber);
 
-        return userSnsList.map(
-                sns -> sns.stream().map(userSns -> userSns.snsType().name()).toList())
+        return userSnsList.map(mappers -> mappers.stream().map(UserSnsMapper::snsType).toList())
             .orElseGet(List::of);
     }
 
+    public boolean isExistIntegratedUserInfo(final String userUuid, final SNSType snsType, final String snsUniqueId) {
+
+        return userSnsRepository.existsByUserUuidAndSnsTypeOrSnsTypeAndSnsUniqueId(userUuid, snsType, snsType, snsUniqueId);
+    }
 }

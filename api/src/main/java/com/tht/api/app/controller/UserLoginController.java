@@ -19,7 +19,7 @@ public class UserLoginController {
 
     private final UserLoginFacade userLoginFacade;
 
-    @PostMapping("/normal")
+    @PostMapping
     public ResponseEntity<UserLoginResponse> normalLogin(@RequestBody @Valid UserLoginRequest request) {
         return ResponseEntity.ok(userLoginFacade.login(request));
     }
