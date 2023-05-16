@@ -11,7 +11,7 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class UserRepositoryCustomImpl implements UserRepositoryCustom {
+public class UserSNSRepositoryCustomImpl implements UserSNSRepositoryCustom {
 
     private static final QUserSns userSns = QUserSns.userSns;
     private static final QUser user = QUser.user;
@@ -31,6 +31,23 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
             .leftJoin(userSns).on(user.userUuid.eq(userSns.userUuid))
             .where(user.phoneNumber.eq(phoneNumber))
             .fetch());
+    }
+
+    @Override
+    public Optional<String> findUserUuidBySnsIdKey(final SNSType snsType,
+        final String snsUniqueId) {
+
+        return Optional.ofNullable(
+            queryFactory.select(
+                    user.userUuid
+                )
+                .from(user)
+                .leftJoin(userSns).on(user.userUuid.eq(userSns.userUuid))
+                .where(userSns.snsType.eq(snsType)
+                    .and(userSns.snsUniqueId.eq(snsUniqueId))
+                )
+                .fetchOne()
+        );
     }
 
 }

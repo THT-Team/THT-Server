@@ -2,10 +2,10 @@ package com.tht.api.app.repository;
 
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.UserSns;
-import com.tht.api.app.repository.querydsl.UserRepositoryCustom;
+import com.tht.api.app.repository.querydsl.UserSNSRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserSnsRepository extends JpaRepository<UserSns, Long>, UserRepositoryCustom {
+public interface UserSnsRepository extends JpaRepository<UserSns, Long>, UserSNSRepositoryCustom {
 
     boolean existsBySnsTypeAndSnsUniqueId(final SNSType snsType, final String snsUniqueId);
 

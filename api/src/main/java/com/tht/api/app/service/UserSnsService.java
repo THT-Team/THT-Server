@@ -5,6 +5,7 @@ import com.tht.api.app.entity.user.UserSns;
 import com.tht.api.app.repository.UserSnsRepository;
 import com.tht.api.app.repository.mapper.UserSnsMapper;
 import com.tht.api.exception.custom.EntityStateException;
+import com.tht.api.exception.custom.UserCustomException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -40,5 +41,10 @@ public class UserSnsService {
     public boolean isExistIntegratedUserInfo(final String userUuid, final SNSType snsType, final String snsUniqueId) {
 
         return userSnsRepository.existsByUserUuidAndSnsTypeOrSnsTypeAndSnsUniqueId(userUuid, snsType, snsType, snsUniqueId);
+    }
+
+    public String findUserUuidBySnsIdKey(final SNSType snsType, final String snsUniqueId) {
+        return userSnsRepository.findUserUuidBySnsIdKey(snsType, snsUniqueId)
+            .orElseThrow(UserCustomException::notExist);
     }
 }
