@@ -1,6 +1,5 @@
 package com.tht.api.app.service;
 
-import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.repository.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
@@ -27,7 +26,6 @@ public class UserService {
                 "username");
         }
 
-        LogWriteUtils.logInfo("new_user : " + user);
         return userRepository.save(user);
     }
 
@@ -37,7 +35,7 @@ public class UserService {
 
     public User findByPhoneNumber(final String phoneNumber) {
         return userRepository.findByPhoneNumber(phoneNumber)
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저 번호입니다."));
+            .orElseThrow(() -> new BadCredentialsException("존재하지 않는 유저 번호입니다."));
     }
 
     public User findByUserUuidForAuthToken(final String userUuid) {
@@ -45,7 +43,4 @@ public class UserService {
             .orElseThrow(() -> new BadCredentialsException("존재하지 않는 회원번호 입니다."));
     }
 
-    public boolean isExistUser(final String phoneNumber) {
-        return userRepository.existsByPhoneNumber(phoneNumber);
-    }
 }

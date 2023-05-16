@@ -18,4 +18,8 @@ public class UserCustomException extends RuntimeException {
                 + " 이 존재하거나, 해당 SNS 고유 아이디로 가입한 이력이 존재합니다.");
     }
 
+    public static UserCustomException notExist() {
+        return new UserCustomException("해당 SNS ID가 존재하지 않습니다.");
+    }
+
 }

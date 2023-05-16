@@ -1,5 +1,6 @@
 package com.tht.api.app.entity.user;
 
+import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.Auditable;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.UserRole;
@@ -90,7 +91,7 @@ public class User extends Auditable {
         final String phoneNumber, final String email, final String introduction,
         final Gender gender, final Gender preferGender) {
 
-        return User.builder()
+        final User user = User.builder()
             .username(username)
             .userUuid(generateUuid())
             .birthDay(birthDay)
@@ -101,6 +102,10 @@ public class User extends Auditable {
             .preferGender(preferGender)
             .userRole(UserRole.NORMAL)
             .build();
+
+        LogWriteUtils.createInfo(user);
+
+        return user;
     }
 
     private static String generateUuid() {
