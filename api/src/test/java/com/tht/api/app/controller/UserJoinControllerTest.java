@@ -176,7 +176,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
                                 "유저 이상형 idx 리스트 - String Array"),
 
                             fieldWithPath("snsType").type(JsonFieldType.STRING)
-                                .description("회원가입 타입 - NORMAL, KAKAO, NAVER, GOOGLE"),
+                                .description("회원가입 타입 - [NORMAL, KAKAO, NAVER, GOOGLE]"),
                             fieldWithPath("snsUniqueId").description("sns 고유 id 값")
                         )
                         .responseFields(
@@ -319,13 +319,13 @@ class UserJoinControllerTest extends ControllerTestConfig {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(requestBody)
         ).andDo(
-            document("유저 SNS 아이디 통합 가입",
+            document("유저 SNS 아이디 통합 회원 가입",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("유저")
-                        .description("유저 일반 회원가입")
+                        .description("유저 SNS 아이디 통합 회원 가입")
                         .requestFields(
                             fieldWithPath("phoneNumber").description("전화번호"),
                             fieldWithPath("deviceKey").description("유저 디바이스 키"),

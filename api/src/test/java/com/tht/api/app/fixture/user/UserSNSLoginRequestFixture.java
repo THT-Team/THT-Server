@@ -10,8 +10,8 @@ public class UserSNSLoginRequestFixture {
 
     private static final String email = "email@email.com";
     private static final SNSType naver = SNSType.NAVER;
-    private static final String snsUniqueId = "id";
-    private static final String deviceKey = "device-test-key";
+    private static final String snsUniqueId = "sns unique id";
+    private static final String deviceKey = "device-key";
 
     public static UserSNSLoginRequest make() {
         return new UserSNSLoginRequest(email, naver.name(), snsUniqueId, deviceKey);

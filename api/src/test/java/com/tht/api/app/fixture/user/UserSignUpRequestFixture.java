@@ -31,9 +31,23 @@ public class UserSignUpRequestFixture {
 
     private final static List<String> photoList = List.of("url1", "url2", "url3");
 
-    private final static List<Long> interestList = List.of(1L, 2L, 3L);
+    private final static List<Long> interestList;
 
-    private final static List<Long> idealTypeList = List.of(1L,2L,3L);
+    static {
+        long image_url1 = 1L;
+        long image_url2 = 2L;
+        long image_url3 = 3L;
+        interestList = List.of(image_url1, image_url2, image_url3);
+    }
+
+    private final static List<Long> idealTypeList;
+
+    static {
+        long image_url1 = 1L;
+        long image_url2 = 2L;
+        long image_url3 = 3L;
+        idealTypeList = List.of(image_url1, image_url2, image_url3);
+    }
 
     private final static SNSType snsType = SNSType.NORMAL;
 
