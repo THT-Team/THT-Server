@@ -103,7 +103,7 @@ class UserLoginControllerTest extends ControllerTestConfig {
                         .description("유저 SNS 로그인")
                         .requestFields(
                             fieldWithPath("email").description("유저 email"),
-                            fieldWithPath("snsType").description("유저 snsType [KAKAO, NAVER, KAKAO]"),
+                            fieldWithPath("snsType").description("유저 snsType [KAKAO, NAVER, GOOGLE]"),
                             fieldWithPath("snsUniqueId").description("유저 sns 고유 Id 일련번호"),
                             fieldWithPath("deviceKey").description("유저 디바이스 키")
                         )
