@@ -94,13 +94,13 @@ class UserLoginControllerTest extends ControllerTestConfig {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(requestBody)
         ).andDo(
-            document("유저 일반 로그인 docs",
+            document("유저 SNS 로그인 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("유저")
-                        .description("유저 일반 로그인")
+                        .description("유저 SNS 로그인")
                         .requestFields(
                             fieldWithPath("email").description("유저 email"),
                             fieldWithPath("snsType").description("유저 snsType [KAKAO, NAVER, KAKAO]"),
