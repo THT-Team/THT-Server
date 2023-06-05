@@ -1,6 +1,5 @@
 package com.tht.api.app.config.security;
 
-import com.tht.api.app.config.utils.LogWriteUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -37,8 +36,6 @@ public class JwtFilter extends OncePerRequestFilter  {
     }
 
     private String getParseJwt(final String headerAuth) {
-
-        LogWriteUtils.logInfo("auth token : " + headerAuth);
 
         if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer")) {
             return headerAuth.substring(7);
