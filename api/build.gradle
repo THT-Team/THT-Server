@@ -52,6 +52,9 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+	//mongo
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
 	//h2
 	implementation 'com.h2database:h2'
 
