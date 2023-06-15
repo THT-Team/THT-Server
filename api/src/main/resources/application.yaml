@@ -23,5 +23,12 @@ springdoc:
 
 logging:
     level:
-        org.hibernate.SQL: debug
-        org.hibernate.orm.jdbc.bind: trace
+        org:
+            hibernate:
+                SQL: DEBUG
+                orm.jdbc.bind: TRACE
+            springframework:
+                data:
+                    mongodb:
+                        core:
+                            MongoTemplate: DEBUG
