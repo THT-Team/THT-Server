@@ -8,7 +8,7 @@ import static org.mockito.BDDMockito.when;
 
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.fixture.user.UserSnsMapperFixture;
-import com.tht.api.app.repository.UserSnsRepository;
+import com.tht.api.app.repository.user.UserSnsRepository;
 import com.tht.api.exception.custom.EntityStateException;
 import com.tht.api.exception.custom.UserCustomException;
 import java.util.List;

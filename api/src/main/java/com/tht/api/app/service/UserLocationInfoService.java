@@ -2,7 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserLocationInfo;
-import com.tht.api.app.repository.UserLocationInfoRepository;
+import com.tht.api.app.repository.user.UserLocationInfoRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
