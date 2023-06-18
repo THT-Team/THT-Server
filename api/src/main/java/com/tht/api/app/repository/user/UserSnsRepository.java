@@ -1,8 +1,8 @@
-package com.tht.api.app.repository;
+package com.tht.api.app.repository.user;
 
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.UserSns;
-import com.tht.api.app.repository.querydsl.UserSNSRepositoryCustom;
+import com.tht.api.app.repository.user.querydsl.UserSNSRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserSnsRepository extends JpaRepository<UserSns, Long>, UserSNSRepositoryCustom {

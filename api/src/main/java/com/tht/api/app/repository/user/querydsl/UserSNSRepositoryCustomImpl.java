@@ -1,4 +1,4 @@
-package com.tht.api.app.repository.querydsl;
+package com.tht.api.app.repository.user.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.SNSType;
