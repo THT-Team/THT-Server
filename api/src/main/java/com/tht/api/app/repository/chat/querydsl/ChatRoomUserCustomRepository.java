@@ -7,4 +7,5 @@ public interface ChatRoomUserCustomRepository {
 
     List<ChatRoomPreviewMapper> findAllByUserUuidInActive(final String userUuid);
 
+    void updateChatRoomUserInActive(final long chatRoomIdx, final String userUuid);
 }
