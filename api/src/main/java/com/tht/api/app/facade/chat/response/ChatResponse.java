@@ -1,6 +1,6 @@
 package com.tht.api.app.facade.chat.response;
 
-import com.tht.api.app.entity.ChatHistory;
+import com.tht.api.app.entity.chat.ChatHistory;
 import java.time.LocalDateTime;
 
 public record ChatResponse(

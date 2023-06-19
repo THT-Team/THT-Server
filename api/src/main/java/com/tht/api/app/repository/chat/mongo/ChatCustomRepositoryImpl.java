@@ -4,6 +4,7 @@ import static org.springframework.data.mongodb.core.query.Criteria.where;
 
 import com.mongodb.BasicDBObject;
 import com.tht.api.app.entity.chat.ChatHistory;
+import com.tht.api.app.repository.mapper.ChatHistoryMapper;
 import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +43,7 @@ public class ChatCustomRepositoryImpl implements ChatCustomRepository{
     }
 
     @Override
-    public List<ChatHistory> findAllCurrentMsgIn(final List<Long> chatRoomIdxList) {
-
-        //todo. null 값이 들어가면 메세지 넣어주자
+    public List<ChatHistoryMapper> findAllCurrentMsgIn(final List<Long> chatRoomIdxList) {
 
         MatchOperation matchOperation = Aggregation.match(
             where("room_idx").in(chatRoomIdxList)
@@ -60,16 +59,16 @@ public class ChatCustomRepositoryImpl implements ChatCustomRepository{
                     .append("sender_name", "$sender_name")
                     .append("sender_uuid", "$sender_uuid")
                     .append("created_at", "$created_at")
-            ).as("info");
+            ).as("chatHistory");
 
         ProjectionOperation projectOperation = Aggregation.project().and(
-            ArrayOperators.ArrayElemAt.arrayOf("info").elementAt(0)).as("info");
+            ArrayOperators.ArrayElemAt.arrayOf("chatHistory").elementAt(0)).as("chatHistory");
 
         Aggregation aggregation = Aggregation.newAggregation(
             matchOperation, sortOperation, groupOperation, projectOperation
         );
 
-        return mongoTemplate.aggregate(aggregation, "chat_history", ChatHistory.class)
+        return mongoTemplate.aggregate(aggregation, "chat_history", ChatHistoryMapper.class)
             .getMappedResults();
     }
 
