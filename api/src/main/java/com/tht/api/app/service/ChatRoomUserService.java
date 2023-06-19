@@ -17,4 +17,8 @@ public class ChatRoomUserService {
     public List<ChatRoomPreviewMapper> findMyChatRoomPreviewInfo(final String userUuid) {
         return chatRoomUserRepository.findAllByUserUuidInActive(userUuid);
     }
+
+    public void outChatRoom(final long chatRoomIdx, final String userUuid) {
+        chatRoomUserRepository.updateChatRoomUserInActive(chatRoomIdx, userUuid);
+    }
 }
