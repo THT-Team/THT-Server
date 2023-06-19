@@ -1,4 +1,4 @@
-package com.tht.api.app.entity;
+package com.tht.api.app.entity.chat;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;

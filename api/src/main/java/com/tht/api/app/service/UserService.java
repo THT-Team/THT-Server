@@ -1,7 +1,7 @@
 package com.tht.api.app.service;
 
 import com.tht.api.app.entity.user.User;
-import com.tht.api.app.repository.UserRepository;
+import com.tht.api.app.repository.user.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;

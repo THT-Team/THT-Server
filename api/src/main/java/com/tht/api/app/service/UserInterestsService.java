@@ -2,7 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserInterests;
-import com.tht.api.app.repository.UserInterestsRepository;
+import com.tht.api.app.repository.user.UserInterestsRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

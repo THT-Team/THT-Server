@@ -2,7 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.UserSns;
-import com.tht.api.app.repository.UserSnsRepository;
+import com.tht.api.app.repository.user.UserSnsRepository;
 import com.tht.api.app.repository.mapper.UserSnsMapper;
 import com.tht.api.exception.custom.EntityStateException;
 import com.tht.api.exception.custom.UserCustomException;

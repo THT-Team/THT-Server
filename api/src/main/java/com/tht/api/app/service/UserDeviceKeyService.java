@@ -1,7 +1,7 @@
 package com.tht.api.app.service;
 
 import com.tht.api.app.entity.user.UserDeviceKey;
-import com.tht.api.app.repository.UserDeviceKeyRepository;
+import com.tht.api.app.repository.user.UserDeviceKeyRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -100,7 +100,8 @@ test {
 }
 
 // querydsl QClass 파일 생성 위치를 지정
-def querydslDir = "$buildDir/generated/querydsl"
+//def querydslDir = "$buildDir/generated/querydsl"
+def querydslDir = "src/main/generated"
 
 sourceSets {
 	main.java.srcDirs += [ querydslDir ]

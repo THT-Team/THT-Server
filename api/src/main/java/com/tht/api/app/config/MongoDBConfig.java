@@ -12,7 +12,7 @@ import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
-@EnableMongoRepositories("com.tht.api.app.repository.chat")
+@EnableMongoRepositories("com.tht.api.app.repository.chat.mongo")
 @EnableMongoAuditing
 public class MongoDBConfig {
 

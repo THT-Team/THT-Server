@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.fixture.user.UserFixture;
-import com.tht.api.app.repository.UserRepository;
+import com.tht.api.app.repository.user.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
 import java.util.Optional;
 import org.junit.jupiter.api.DisplayName;

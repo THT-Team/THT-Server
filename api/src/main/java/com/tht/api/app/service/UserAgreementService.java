@@ -2,7 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserAgreement;
-import com.tht.api.app.repository.UserAgreementRepository;
+import com.tht.api.app.repository.user.UserAgreementRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

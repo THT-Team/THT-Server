@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.times;
 import static org.mockito.BDDMockito.verify;
 import static org.mockito.BDDMockito.when;
 
-import com.tht.api.app.repository.UserDeviceKeyRepository;
+import com.tht.api.app.repository.user.UserDeviceKeyRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

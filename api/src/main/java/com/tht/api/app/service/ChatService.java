@@ -1,7 +1,8 @@
 package com.tht.api.app.service;
 
-import com.tht.api.app.entity.ChatHistory;
-import com.tht.api.app.repository.chat.ChatRepository;
+import com.tht.api.app.entity.chat.ChatHistory;
+import com.tht.api.app.repository.chat.mongo.ChatRepository;
+import com.tht.api.app.repository.mapper.ChatHistoryMapper;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,5 +19,11 @@ public class ChatService {
         final int size) {
 
         return chatRepository.findAllCursorPagingBy(chatRoomId, chatIdx, size);
+    }
+
+    public List<ChatHistory> findAllCurrentMessageIn(final List<Long> chatRoomIdxList) {
+
+        return chatRepository.findAllCurrentMsgIn(chatRoomIdxList).stream()
+            .map(ChatHistoryMapper::chatHistory).toList();
     }
 }

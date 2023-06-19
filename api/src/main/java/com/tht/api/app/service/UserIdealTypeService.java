@@ -2,7 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserIdealType;
-import com.tht.api.app.repository.UserIdealTypeRepository;
+import com.tht.api.app.repository.user.UserIdealTypeRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

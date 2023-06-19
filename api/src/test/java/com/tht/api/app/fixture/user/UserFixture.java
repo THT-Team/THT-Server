@@ -1,6 +1,7 @@
 package com.tht.api.app.fixture.user;
 
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.UserRole;
 import com.tht.api.app.entity.user.User;
 import java.time.LocalDate;
 import lombok.AccessLevel;
@@ -21,5 +22,12 @@ public class UserFixture {
         return User.createNewUser(username, birthDay, phoneNumber, email, introduction, gender,
             preferGender
         );
+    }
+
+    public static User make(final String userUuid, final String userRole) {
+
+        return new User(1L, userUuid, username, birthDay, phoneNumber, email, introduction, gender,
+            preferGender, UserRole.valueOf(userRole));
+
     }
 }
