@@ -59,7 +59,7 @@ class ChatFacadeTest {
         String userUuid = "userUuid";
 
         //when
-        chatFacade.findMyRoom(userUuid);
+        chatFacade.findMyRoomList(userUuid);
 
         //then
         verify(chatRoomUserService).findMyChatRoomPreviewInfo(userUuid);

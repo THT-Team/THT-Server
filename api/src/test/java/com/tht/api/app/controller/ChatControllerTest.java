@@ -87,7 +87,7 @@ class ChatControllerTest extends ControllerTestConfig {
     void getChatRooms() throws Exception {
 
         //given
-        when(chatFacade.findMyRoom(anyString())).thenReturn(ChatRoomResponseFixture.makeList());
+        when(chatFacade.findMyRoomList(anyString())).thenReturn(ChatRoomResponseFixture.makeList());
 
         //then
         ResultActions resultActions = mockMvc.perform(
