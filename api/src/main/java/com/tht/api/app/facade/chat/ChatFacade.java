@@ -63,4 +63,9 @@ public class ChatFacade {
         return index;
     }
 
+    @Transactional
+    public void outChatting(final long chatRoomIdx, final String userUuid) {
+
+        chatRoomUserService.outChatRoom(chatRoomIdx, userUuid);
+    }
 }

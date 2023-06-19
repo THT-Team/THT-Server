@@ -47,6 +47,7 @@ public class TokenProvider {
             .setSubject("authorization")
             .claim("userUuid", userInfo.getUserUuid())
             .claim("role", userInfo.getUserRole())
+            .claim("username", userInfo.getUsername())
             .setExpiration(accessTokenExpireIn)
             .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();

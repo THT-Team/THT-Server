@@ -6,6 +6,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -24,7 +26,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -44,7 +45,7 @@ class ChatControllerTest extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/chat/history")
+            get("/chat/history")
                 .queryParam("roomNo", "1")
                 .queryParam("chatIdx", ChatHistoryResponseFixture.getChatIdx())
                 .queryParam("size", "100")
@@ -91,7 +92,7 @@ class ChatControllerTest extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/chat/rooms")
+            get("/chat/rooms")
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
         ).andDo(
             document("채팅",
@@ -110,6 +111,39 @@ class ChatControllerTest extends ControllerTestConfig {
                             fieldWithPath("[].messageTime").description("메세지 전송 시간")
                         )
                         .responseSchema(Schema.schema("ChatRoomResponse"))
+                        .build()
+                )
+            ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("유저 채팅방 나가기 api test - docs")
+    void outChatRoom() throws Exception {
+
+        //given
+        long chatRoomIdx = 13;
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            post("/chat/out/room/{chat-room-idx}", chatRoomIdx)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("채팅",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("채팅")
+                        .description("채팅방 리스트 나가기")
+                        .pathParameters(parameterWithName("chat-room-idx").description("채팅방 idx"))
+                        .requestFields()
+                        .responseFields()
                         .build()
                 )
             ));

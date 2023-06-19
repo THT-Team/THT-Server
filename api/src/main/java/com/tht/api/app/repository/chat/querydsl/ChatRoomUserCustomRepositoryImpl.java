@@ -54,4 +54,14 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
             .fetch();
     }
 
+    @Override
+    public void updateChatRoomUserInActive(final long chatRoomIdx, final String userUuid) {
+
+        queryFactory.update(chatRoomUser)
+            .set(chatRoomUser.state, EntityState.INACTIVE)
+            .where(chatRoomUser.chatRoomIdx.eq(chatRoomIdx)
+                .and(chatRoomUser.userUuid.eq(userUuid)))
+            .execute();
+    }
+
 }
