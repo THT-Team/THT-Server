@@ -140,7 +140,7 @@ class ChatControllerTest extends ControllerTestConfig {
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("채팅")
-                        .description("채팅방 리스트 나가기")
+                        .description("채팅방 나가기")
                         .pathParameters(parameterWithName("chat-room-idx").description("채팅방 idx"))
                         .requestFields()
                         .responseFields()
