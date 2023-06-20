@@ -4,6 +4,7 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.chat.ChatFacade;
 import com.tht.api.app.facade.chat.response.ChatResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
+import com.tht.api.app.facade.chat.response.ChatRoomResponse;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,7 +35,7 @@ public class ChatController {
     public ResponseEntity<List<ChatRoomPreviewResponse>> findMyChatRoom(
         @AuthenticationPrincipal final User user) {
 
-        return ResponseEntity.ok(chatFacade.findMyRoom(user.getUserUuid()));
+        return ResponseEntity.ok(chatFacade.findMyRoomList(user.getUserUuid()));
     }
 
     @PostMapping("chat/out/room/{chat-room-idx}")
@@ -45,5 +46,12 @@ public class ChatController {
 
         chatFacade.outChatting(chatRoomIdx, user.getUserUuid());
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("chat/room/{chat-room-idx}")
+    public ResponseEntity<ChatRoomResponse> findDetailChatRoom(
+        @PathVariable(name = "chat-room-idx") final long chatRoomIdx) {
+
+        return ResponseEntity.ok(chatFacade.findMyRoomDetail(chatRoomIdx));
     }
 }

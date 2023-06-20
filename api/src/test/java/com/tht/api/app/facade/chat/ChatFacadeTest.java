@@ -9,6 +9,10 @@ import static org.mockito.Mockito.verify;
 
 import com.tht.api.app.entity.chat.ChatHistory;
 import com.tht.api.app.facade.chat.response.ChatResponse;
+import com.tht.api.app.facade.chat.response.ChatRoomResponse;
+import com.tht.api.app.fixture.chat.ChatRoomMapperFixture;
+import com.tht.api.app.repository.mapper.ChatRoomMapper;
+import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.ChatService;
 import java.util.List;
@@ -24,9 +28,10 @@ class ChatFacadeTest {
 
     @Mock
     ChatService chatService;
-
     @Mock
     ChatRoomUserService chatRoomUserService;
+    @Mock
+    ChatRoomService chatRoomService;
 
     @InjectMocks
     ChatFacade chatFacade;
@@ -59,10 +64,26 @@ class ChatFacadeTest {
         String userUuid = "userUuid";
 
         //when
-        chatFacade.findMyRoom(userUuid);
+        chatFacade.findMyRoomList(userUuid);
 
         //then
         verify(chatRoomUserService).findMyChatRoomPreviewInfo(userUuid);
         verify(chatService).findAllCurrentMessageIn(List.of());
+    }
+
+    @Test
+    @DisplayName("채팅방 상세조회 반환값 테스트")
+    void returnResponseTypeAtFindRoomDetail() {
+
+        ChatRoomMapper mapper = ChatRoomMapperFixture.make();
+        when(chatRoomService.findDetailInfoById(anyLong())).thenReturn(
+            mapper);
+
+        ChatRoomResponse response = chatFacade.findMyRoomDetail(1);
+
+        assertThat(response.chatRoomIdx()).isEqualTo(mapper.chatRoomIdx());
+        assertThat(response.talkIssue()).isEqualTo(mapper.talkIssue());
+        assertThat(response.talkSubject()).isEqualTo(mapper.talkSubject());
+        assertThat(response.startDate()).isEqualTo(mapper.startDate());
     }
 }

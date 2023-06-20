@@ -88,7 +88,7 @@ class ChatControllerTest extends ControllerTestConfig {
     void getChatRooms() throws Exception {
 
         //given
-        when(chatFacade.findMyRoom(anyString())).thenReturn(ChatRoomResponseFixture.makeList());
+        when(chatFacade.findMyRoomList(anyString())).thenReturn(ChatRoomResponseFixture.makePreviewResponseList());
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -144,6 +144,43 @@ class ChatControllerTest extends ControllerTestConfig {
                         .pathParameters(parameterWithName("chat-room-idx").description("채팅방 idx"))
                         .requestFields()
                         .responseFields()
+                        .build()
+                )
+            ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("유저 채팅방 상세조회 api test - docs")
+    void getDetailRoomInfo() throws Exception {
+
+        //given
+        long chatRoomIdx = 13;
+        when(chatFacade.findMyRoomDetail(anyLong())).thenReturn(ChatRoomResponseFixture.make());
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            get("/chat/room/{chat-room-idx}", chatRoomIdx)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("채팅",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("채팅")
+                        .description("채팅방 정보 상세 조회")
+                        .pathParameters(parameterWithName("chat-room-idx").description("채팅방 idx"))
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("chatRoomIdx").description("채팅방 idx"),
+                            fieldWithPath("talkSubject").description("대화 주제"),
+                            fieldWithPath("talkIssue").description("대화 주제 파생질문"),
+                            fieldWithPath("startDate").description("재화 시작일")
+                        )
                         .build()
                 )
             ));
