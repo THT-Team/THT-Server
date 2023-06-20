@@ -52,7 +52,7 @@ class ChatControllerTest extends ControllerTestConfig {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(
-            document("채팅",
+            document("채팅 내역 리스트 조회 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
@@ -95,7 +95,7 @@ class ChatControllerTest extends ControllerTestConfig {
             get("/chat/rooms")
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
         ).andDo(
-            document("채팅",
+            document("유저 채팅방 리스트 조회 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
@@ -134,7 +134,7 @@ class ChatControllerTest extends ControllerTestConfig {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(
-            document("채팅",
+            document("채팅방 나가기 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
@@ -166,7 +166,7 @@ class ChatControllerTest extends ControllerTestConfig {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(
-            document("채팅",
+            document("채팅방 상세조회 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
