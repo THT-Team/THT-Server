@@ -1,4 +1,4 @@
-package com.tht.api.app.entity.chat;
+package com.tht.api.app.entity.meta;
 
 import com.tht.api.app.entity.Auditable;
 import jakarta.persistence.Column;
@@ -7,18 +7,15 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.ToString;
 
 @Entity
-@ToString
-@Table(name = "chat_room")
-public class ChatRoom extends Auditable {
-
+@Table(name = "talk_keyword")
+public class TalkKeyword extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx")
-    private Long idx;
+    private Integer idx;
 
-    @Column(name = "daily_falling_idx")
-    private Long dailyFallingIdx;
+    @Column
+    private String keyword;
+
 }

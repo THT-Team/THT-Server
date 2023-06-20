@@ -5,7 +5,9 @@ import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.chat.group.ChatRoomPreviewMapperGroup;
 import com.tht.api.app.facade.chat.response.ChatResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
+import com.tht.api.app.facade.chat.response.ChatRoomResponse;
 import com.tht.api.app.repository.mapper.ChatRoomPreviewMapper;
+import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.ChatService;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ChatFacade {
 
     private final ChatService chatService;
+    private final ChatRoomService chatRoomService;
     private final ChatRoomUserService chatRoomUserService;
 
     @Transactional
@@ -30,7 +33,7 @@ public class ChatFacade {
             .toList();
     }
 
-    public List<ChatRoomPreviewResponse> findMyRoom(final String userUuid) {
+    public List<ChatRoomPreviewResponse> findMyRoomList(final String userUuid) {
 
         final ChatRoomPreviewMapperGroup mapperGroup = ChatRoomPreviewMapperGroup.of(
             chatRoomUserService.findMyChatRoomPreviewInfo(userUuid));
@@ -67,5 +70,11 @@ public class ChatFacade {
     public void outChatting(final long chatRoomIdx, final String userUuid) {
 
         chatRoomUserService.outChatRoom(chatRoomIdx, userUuid);
+    }
+
+    public ChatRoomResponse findMyRoomDetail(final long chatRoomIdx) {
+
+        chatRoomService.existBy(chatRoomIdx);
+        return ChatRoomResponse.of(chatRoomService.findDetailInfoById(chatRoomIdx));
     }
 }
