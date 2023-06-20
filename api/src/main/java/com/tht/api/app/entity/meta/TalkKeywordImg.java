@@ -9,16 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "talk_keyword")
-public class TalkKeyword extends Auditable {
+@Table(name = "talk_keyword_img")
+public class TalkKeywordImg extends Auditable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
 
-    @Column(name = "talk_keyword_img_idx")
-    private Integer talkKeywordImgIdx;
+    @Column(name = "img_url")
+    private String imgUrl;
 
     @Column
-    private String keyword;
-
+    private String name;
 }
