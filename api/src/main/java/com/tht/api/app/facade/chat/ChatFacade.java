@@ -75,6 +75,7 @@ public class ChatFacade {
     public ChatRoomResponse findMyRoomDetail(final long chatRoomIdx) {
 
         chatRoomService.existBy(chatRoomIdx);
+
         return ChatRoomResponse.of(chatRoomService.findDetailInfoById(chatRoomIdx));
     }
 }
