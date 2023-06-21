@@ -1,6 +1,7 @@
 package com.tht.api.exception;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.tht.api.exception.custom.AligoException;
 import com.tht.api.exception.custom.EntityStateException;
@@ -12,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -58,6 +60,15 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.badRequest().body(
             ErrorResponse.of(BAD_REQUEST, e.getCause().getCause().getMessage(), request)
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final HttpRequestMethodNotSupportedException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+            ErrorResponse.of(NOT_FOUND,  e.getMessage(), request)
         );
     }
 
