@@ -11,7 +11,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.tht.api.app.controller.config.ControllerTestConfig;
-import com.tht.api.app.facade.main.MainScreenFacade;
+import com.tht.api.app.facade.main.DailyFallingFacade;
 import com.tht.api.app.fixture.main.DailyFallingResponseFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,18 +21,18 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(MainScreenController.class)
-class MainScreenControllerTest extends ControllerTestConfig {
+@WebMvcTest(DailyFallingController.class)
+class DailyFallingControllerTest extends ControllerTestConfig {
 
     @MockBean
-    MainScreenFacade mainScreenFacade;
+    DailyFallingFacade dailyFallingFacade;
 
     @Test
     @DisplayName("오늘의 폴링 주제 리스트 조회 api - docs")
     void getDailyFallingList() throws Exception {
 
         //give
-        when(mainScreenFacade.getDailyFallingList()).thenReturn(DailyFallingResponseFixture.makeList());
+        when(dailyFallingFacade.getDailyFallingList()).thenReturn(DailyFallingResponseFixture.makeList());
 
         //then
         ResultActions resultActions = mockMvc.perform(
