@@ -28,16 +28,16 @@ public class UserIdealType {
     private String userUuid;
 
     @Column(name = "ideal_type_idx")
-    private Long idealTypeIdx;
+    private Integer idealTypeIdx;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserIdealType(final Long idx, final String userUuid, final Long idealTypeIdx) {
+    public UserIdealType(final Long idx, final String userUuid, final Integer idealTypeIdx) {
         this.idx = idx;
         this.userUuid = userUuid;
         this.idealTypeIdx = idealTypeIdx;
     }
 
-    public static UserIdealType create(final String userUuid, final Long idealTypeIdx) {
+    public static UserIdealType create(final String userUuid, final Integer idealTypeIdx) {
         return UserIdealType.builder()
             .userUuid(userUuid)
             .idealTypeIdx(idealTypeIdx)
