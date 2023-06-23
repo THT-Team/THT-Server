@@ -12,7 +12,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.idealtype.IdealTypeFacade;
-import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
+import com.tht.api.app.fixture.meta.IdealTypeFixture;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,8 +37,7 @@ class IdealTypeControllerTest extends ControllerTestConfig {
 
         //given
         when(idealTypeFacade.getIdealTypeList()).thenReturn(
-            List.of(new IdealTypeResponse(1, "이상형 명칭", "emoji code")
-            ));
+            List.of(IdealTypeFixture.responseMake()));
 
         //then
         ResultActions resultActions = mockMvc.perform(
