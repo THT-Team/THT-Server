@@ -1,8 +1,9 @@
 package com.tht.api.app.config;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,9 +14,9 @@ class CustomDateFormatUtilsTest {
     @DisplayName("CustomDateFormatter yyyy-MM-dd HH:mm:ss 포매터 테스트")
     void getDateTimeInstance() {
         String day = "1997-11-11 23:11:03";
-        LocalDateTime date = LocalDateTime.of(1997, 11, 11,23,11,3);
+        LocalDateTime date = LocalDateTime.of(1997, 11, 11, 23, 11, 3);
 
-        Assertions.assertThat(LocalDateTime.parse(day, CustomDateFormatUtils.getDateTimeInstance()))
+        assertThat(LocalDateTime.parse(day, CustomDateFormatUtils.getDateTimeInstance()))
             .isEqualTo(date);
     }
 
@@ -25,7 +26,7 @@ class CustomDateFormatUtilsTest {
         String day = "1997.11.11";
         LocalDate date = LocalDate.of(1997, 11, 11);
 
-        Assertions.assertThat(LocalDate.parse(day, CustomDateFormatUtils.getDotDateInstance()))
+        assertThat(LocalDate.parse(day, CustomDateFormatUtils.getDotDateInstance()))
             .isEqualTo(date);
     }
 
@@ -35,7 +36,7 @@ class CustomDateFormatUtilsTest {
         String day = "19971111";
         LocalDate date = LocalDate.of(1997, 11, 11);
 
-        Assertions.assertThat(LocalDate.parse(day, CustomDateFormatUtils.getNoHyphenDateInstance()))
+        assertThat(LocalDate.parse(day, CustomDateFormatUtils.getNoHyphenDateInstance()))
             .isEqualTo(date);
     }
 }

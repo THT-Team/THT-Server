@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface DailyFallingCustomRepository {
 
-    List<DailyFallingMapper> findAllDailyFallingInfo();
+    List<DailyFallingMapper> findAllDailyFallingInfo(final Integer activeTableIdx);
 }

@@ -19,7 +19,6 @@ import com.tht.api.app.repository.mapper.QMainScreenUserInfoMapper;
 import com.tht.api.app.repository.mapper.QUserDailyFallingMapper;
 import com.tht.api.app.repository.mapper.QUserProfilePhotoMapper;
 import com.tht.api.app.repository.mapper.UserDailyFallingMapper;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +55,8 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             .on(userDailyFalling.dailyFallingIdx.eq(dailyFalling.idx)
                 .and(dailyFalling.state.eq(EntityState.ACTIVE)))
             .where(userDailyFalling.state.eq(EntityState.ACTIVE)
-                .and(dailyFalling.activeDay.eq(LocalDate.now())))
+//                .and(dailyFalling.activeDay.eq(LocalDate.now())) fixme.
+            )
             .orderBy(userDailyFalling.createdAt.desc())
             .fetchFirst());
     }

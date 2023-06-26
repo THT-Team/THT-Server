@@ -1,21 +1,22 @@
 package com.tht.api.app.facade.main.response;
 
-import com.tht.api.app.repository.mapper.DailyFallingMapper;
+import com.tht.api.app.config.utils.UnixTimeUtils;
+import java.time.LocalDateTime;
+import java.util.List;
 
 public record DailyFallingResponse(
-
-    long idx,
-    String keyword,
-    String keywordImgUrl,
-    String talkIssue
+    long expirationUnixTime,
+    List<DailyFallingTopicResponse> fallingTopicList
 ) {
 
-    public static DailyFallingResponse of(final DailyFallingMapper mapper) {
-        return new DailyFallingResponse(
-            mapper.idx(),
-            mapper.keyword(),
-            mapper.keywordImgUrl(),
-            mapper.talkIssue()
-        );
+    public static DailyFallingResponse empty() {
+        return new DailyFallingResponse(-1, List.of());
+    }
+
+    public static DailyFallingResponse of(final LocalDateTime endDateTime,
+        final List<DailyFallingTopicResponse> topicResponses) {
+
+        return new DailyFallingResponse(UnixTimeUtils.convertUnixTimeForUTC(endDateTime),
+            topicResponses);
     }
 }

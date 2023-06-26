@@ -3,7 +3,6 @@ package com.tht.api.app.controller;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.main.DailyFallingFacade;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +18,7 @@ public class DailyFallingController {
     private final DailyFallingFacade dailyFallingFacade;
 
     @GetMapping("/falling/daily-keyword")
-    public ResponseEntity<List<DailyFallingResponse>> getDailyFallingList() {
+    public ResponseEntity<DailyFallingResponse> getDailyFallingList() {
 
         return ResponseEntity.ok(dailyFallingFacade.getDailyFallingList());
     }
