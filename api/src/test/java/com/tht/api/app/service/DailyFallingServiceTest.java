@@ -1,7 +1,6 @@
 package com.tht.api.app.service;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -27,10 +26,10 @@ class DailyFallingServiceTest {
     @DisplayName("오늘의 주제가 존재하지 않을 때 exception")
     void doNotExist() {
 
-        when(dailyFallingRepository.existsByIdxAndActiveDay(anyLong(), any())).thenReturn(false);
+        when(dailyFallingRepository.existsById(anyLong())).thenReturn(false);
 
         assertThatThrownBy(() -> dailyFallingService.existByIdxAndActiveToday(1))
             .isInstanceOf(EntityStateException.class)
-            .hasMessageContaining("해당 겂에 해당하는 DailyFalling 가(이) 존재하지 않거나 지난 폴링 주제어 입니다.");
+            .hasMessageContaining("해당 겂에 해당하는 DailyFalling 가(이) 존재하지 않습니다.");
     }
 }

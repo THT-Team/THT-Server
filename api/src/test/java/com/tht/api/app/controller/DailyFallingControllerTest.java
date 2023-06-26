@@ -10,6 +10,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.main.DailyFallingFacade;
 import com.tht.api.app.fixture.main.DailyFallingResponseFixture;
@@ -32,7 +33,8 @@ class DailyFallingControllerTest extends ControllerTestConfig {
     void getDailyFallingList() throws Exception {
 
         //give
-        when(dailyFallingFacade.getDailyFallingList()).thenReturn(DailyFallingResponseFixture.makeList());
+        when(dailyFallingFacade.getDailyFallingList())
+            .thenReturn(DailyFallingResponseFixture.make());
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -41,20 +43,26 @@ class DailyFallingControllerTest extends ControllerTestConfig {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(
-            document("오늘의 폴링 주제 리스트 조회 docs",
+            document("오늘의 폴링 토픽 리스트 조회 docs",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("메인")
-                        .description("오늘의 폴링 주제 리스트 조회")
+                        .description("오늘의 폴링 토픽 리스트 조회")
                         .requestFields()
                         .responseFields(
-                            fieldWithPath("[].idx").description("폴링 주제어 idx"),
-                            fieldWithPath("[].keyword").description("폴링 주제어"),
-                            fieldWithPath("[].keywordImgUrl").description("폴링 주제어 이미지 url"),
-                            fieldWithPath("[].talkIssue").description("주제어 파생 질문")
+                            fieldWithPath("expirationUnixTime").description(
+                                "폴링 주제어 만료시간 [존재하지 않으면 -1]"),
+                            fieldWithPath("fallingTopicList").description(
+                                "폴링 주제어 라수투 [존재하지 않으면 빈 리스트 [] "),
+                            fieldWithPath("fallingTopicList[].idx").description("폴링 주제어 idx"),
+                            fieldWithPath("fallingTopicList[].keyword").description("폴링 주제어"),
+                            fieldWithPath("fallingTopicList[].keywordImgUrl").description(
+                                "폴링 주제어 이미지 url"),
+                            fieldWithPath("fallingTopicList[].talkIssue").description("주제어 파생 질문")
                         )
+                        .responseSchema(Schema.schema("DailyFallingResponse"))
                         .build()
                 )
             ));
