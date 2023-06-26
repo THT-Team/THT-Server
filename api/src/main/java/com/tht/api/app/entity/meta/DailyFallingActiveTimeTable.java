@@ -7,21 +7,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
+import lombok.Getter;
 
 @Entity
-@Table(name = "talk_keyword")
-public class TalkKeyword extends Auditable {
+@Getter
+@Table(name = "daily_falling_active_time_table")
+public class DailyFallingActiveTimeTable extends Auditable {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
 
-    @Column(name = "talk_keyword_img_idx")
-    private Integer talkKeywordImgIdx;
+    @Column(name = "start_date_time")
+    private LocalDateTime startDateTime;
 
-    @Column
-    private String keyword;
+    @Column(name = "end_date_time")
+    private LocalDateTime endDateTime;
 
-    @Column(name = "talk_issue")
-    private String talkIssue;
 }

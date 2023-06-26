@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "daily_falling")
@@ -20,9 +19,7 @@ public class DailyFalling extends Auditable {
     @Column(name = "talk_keyword_idx")
     private Integer talkKeywordIdx;
 
-    @Column(name = "talk_issue")
-    private String talkIssue;
+    @Column(name = "active_time_table_idx")
+    private Integer activeTimeTableIdx;
 
-    @Column(name = "active_day")
-    private LocalDate activeDay;
 }
