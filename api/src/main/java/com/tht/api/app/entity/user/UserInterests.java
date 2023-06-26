@@ -28,16 +28,16 @@ public class UserInterests {
     private String userUuid;
 
     @Column(name = "interest_idx")
-    private Long interestIdx;
+    private Integer interestIdx;
 
     @Builder(access = AccessLevel.PRIVATE)
-    public UserInterests(final Long idx, final String userUuid, final Long interestIdx) {
+    public UserInterests(final Long idx, final String userUuid, final Integer interestIdx) {
         this.idx = idx;
         this.userUuid = userUuid;
         this.interestIdx = interestIdx;
     }
 
-    public static UserInterests create(final String userUuid, final Long interestIdx) {
+    public static UserInterests create(final String userUuid, final Integer interestIdx) {
         return UserInterests.builder()
             .userUuid(userUuid)
             .interestIdx(interestIdx)

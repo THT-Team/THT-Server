@@ -198,7 +198,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_interest_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1L, 2L, 3L, 4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1, 2, 3, 4));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 
@@ -219,7 +219,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
     void normalUserJoin_idealType_fail() throws Exception {
 
         //give
-        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1L, 2L, 3L, 4L));
+        UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1, 2, 3, 4));
         String requestBody = objectMapper.writeValueAsString(make);
         when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
 

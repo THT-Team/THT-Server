@@ -35,11 +35,11 @@ public record UserSignUpRequest(
 
     @Size(max = 3, message = "관심사는 최대 3개를 골라주세요")
     @NotNull(message = "interestList 는 null 이어서는 안됩니다.")
-    List<Long> interestList,
+    List<Integer> interestList,
 
     @Size(max = 3, message = "이상형은 최대 3개를 골라주세요")
     @NotNull(message = "idealTypeList 는 null 이어서는 안됩니다.")
-    List<Long> idealTypeList,
+    List<Integer> idealTypeList,
 
     @NotNull SNSType snsType,
 
@@ -57,8 +57,8 @@ public record UserSignUpRequest(
         final String birthDay, final String gender, final String preferGender,
         final String introduction, final String deviceKey,
         final UserAgreementRequest agreement, final UserLocationRequest locationRequest,
-        final List<String> photoList, final List<Long> interestList,
-        final List<Long> idealTypeList, final String snsType, final String snsUniqueId) {
+        final List<String> photoList, final List<Integer> interestList,
+        final List<Integer> idealTypeList, final String snsType, final String snsUniqueId) {
 
         this(phoneNumber,
             username,

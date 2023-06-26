@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public class ErrorResponse {
+
     private final LocalDateTime timestamp;
     private final int status;
     private final String error;
@@ -30,6 +31,16 @@ public class ErrorResponse {
         return ErrorResponse.builder()
             .status(httpStatus.value())
             .error(httpStatus.getReasonPhrase())
+            .message(message)
+            .path(httpServletRequest.getRequestURI())
+            .build();
+    }
+
+    public static ErrorResponse of(final int httpStatus, final String reasonParse,
+        final String message, final HttpServletRequest httpServletRequest) {
+        return ErrorResponse.builder()
+            .status(httpStatus)
+            .error(reasonParse)
             .message(message)
             .path(httpServletRequest.getRequestURI())
             .build();

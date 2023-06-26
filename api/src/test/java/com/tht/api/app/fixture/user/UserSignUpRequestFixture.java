@@ -31,22 +31,22 @@ public class UserSignUpRequestFixture {
 
     private final static List<String> photoList = List.of("url1", "url2", "url3");
 
-    private final static List<Long> interestList;
+    private final static List<Integer> interestList;
 
     static {
-        long image_url1 = 1L;
-        long image_url2 = 2L;
-        long image_url3 = 3L;
-        interestList = List.of(image_url1, image_url2, image_url3);
+        int interests1 = 1;
+        int interests2 = 2;
+        int interests3 = 3;
+        interestList = List.of(interests1, interests2, interests3);
     }
 
-    private final static List<Long> idealTypeList;
+    private final static List<Integer> idealTypeList;
 
     static {
-        long image_url1 = 1L;
-        long image_url2 = 2L;
-        long image_url3 = 3L;
-        idealTypeList = List.of(image_url1, image_url2, image_url3);
+        int idealType1 = 1;
+        int idealType2 = 2;
+        int idealType3 = 3;
+        idealTypeList = List.of(idealType1, idealType2, idealType3);
     }
 
     private final static SNSType snsType = SNSType.NORMAL;
@@ -61,13 +61,13 @@ public class UserSignUpRequestFixture {
             idealTypeList, snsType.name(), snsUniqueId);
     }
 
-    public static UserSignUpRequest ofInterest(final List<Long> interestList) {
+    public static UserSignUpRequest ofInterest(final List<Integer> interestList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId);
     }
 
-    public static UserSignUpRequest ofIdealType(final List<Long> idealTypeList) {
+    public static UserSignUpRequest ofIdealType(final List<Integer> idealTypeList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId);
