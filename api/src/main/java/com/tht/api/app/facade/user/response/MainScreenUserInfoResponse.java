@@ -17,7 +17,7 @@ public record MainScreenUserInfoResponse(
     HashSet<InterestResponse> interestResponses,
     HashSet<UserProfilePhotoResponse> userProfilePhotos,
     String introduction,
-    long userDailyFallingIdx
+    long userDailyFallingCourserIdx
 ) {
 
     public static MainScreenUserInfoResponse of(final List<MainScreenUserInfoMapper> mapperList) {

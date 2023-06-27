@@ -1,5 +1,6 @@
 package com.tht.api.app.repository.user.querydsl;
 
+import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import com.tht.api.app.repository.mapper.UserDailyFallingMapper;
 import java.util.List;
@@ -12,4 +13,6 @@ public interface UserDailyFallingCustomRepository {
     List<MainScreenUserInfoMapper> findAllMatchingFallingUser(final long dailyFallingIdx,
         final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
         final String myUuid, final Integer size);
+
+    Optional<DailyFallingTimeMapper> findFallingTimeInfo(final String userUuid);
 }

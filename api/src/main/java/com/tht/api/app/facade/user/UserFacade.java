@@ -3,11 +3,13 @@ package com.tht.api.app.facade.user;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.user.group.MainScreenUserInfoResponseGroup;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
-import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
+import com.tht.api.app.facade.user.response.MainScreenResponse;
+import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import com.tht.api.app.service.UserDailyFallingService;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,20 +21,27 @@ public class UserFacade {
 
     private final UserDailyFallingService userDailyFallingService;
 
-    public List<MainScreenUserInfoResponse> findAllToDayFallingUserList(final String userUuid,
+    public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
 
-        //user 가 선택한 그날의 주제어 조회 및 검증
-        final long dailyFallingIdx = userDailyFallingService.findToDayFalling(userUuid);
+        final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
+            .findChooseTodayDailyFallingInfo(userUuid);
 
-        //해당 주제어를 선택한 user list 반환
+        if (fallingInfo.isEmpty()) {
+            return MainScreenResponse.empty();
+        }
+
         final Map<String, List<MainScreenUserInfoMapper>> listMap = userDailyFallingService.findAllMatchingFallingUser(
-                dailyFallingIdx,
+                fallingInfo.get().dailyFallingIdx(),
                 request.alreadySeenUserUuidList(), request.userDailyFallingCourserIdx(),
                 userUuid, request.size())
             .stream()
             .collect(Collectors.groupingBy(MainScreenUserInfoMapper::userUuid));
 
-        return MainScreenUserInfoResponseGroup.of(listMap).responses();
+        return MainScreenResponse.of(
+            fallingInfo.get().dailyFallingIdx(),
+            fallingInfo.get().endDate(),
+            MainScreenUserInfoResponseGroup.of(listMap).responses()
+        );
     }
 }

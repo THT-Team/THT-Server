@@ -24,7 +24,7 @@ public record MainScreenUserInfoResponseGroup(
 
         return new MainScreenUserInfoResponseGroup(
             responses.stream()
-                .sorted(Comparator.comparing(MainScreenUserInfoResponse::userDailyFallingIdx))
+                .sorted(Comparator.comparing(MainScreenUserInfoResponse::userDailyFallingCourserIdx))
                 .toList()
         );
     }
