@@ -1,7 +1,8 @@
-package com.tht.api.app.fixture.user;
+package com.tht.api.app.fixture.main;
 
 import com.tht.api.app.fixture.meta.IdealTypeFixture;
 import com.tht.api.app.fixture.meta.InterestFixture;
+import com.tht.api.app.fixture.user.UserProfilePhotoFixture;
 import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;

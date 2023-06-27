@@ -1,4 +1,4 @@
-package com.tht.api.app.fixture.user;
+package com.tht.api.app.fixture.main;
 
 import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import com.tht.api.app.facade.interest.response.InterestResponse;
@@ -6,6 +6,7 @@ import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.api.app.facade.user.response.UserProfilePhotoResponse;
 import com.tht.api.app.fixture.meta.IdealTypeFixture;
 import com.tht.api.app.fixture.meta.InterestFixture;
+import com.tht.api.app.fixture.user.UserProfilePhotoFixture;
 import java.util.HashSet;
 import java.util.List;
 
