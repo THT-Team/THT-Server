@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.EntityState;
 import com.tht.api.app.entity.meta.QDailyFalling;
+import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.QIdealType;
 import com.tht.api.app.entity.meta.QInterest;
 import com.tht.api.app.entity.user.QUser;
@@ -19,6 +20,7 @@ import com.tht.api.app.repository.mapper.QMainScreenUserInfoMapper;
 import com.tht.api.app.repository.mapper.QUserDailyFallingMapper;
 import com.tht.api.app.repository.mapper.QUserProfilePhotoMapper;
 import com.tht.api.app.repository.mapper.UserDailyFallingMapper;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -38,11 +40,15 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     private static final QUserLocationInfo userLocationInfo = QUserLocationInfo.userLocationInfo;
     private static final QInterest interest = QInterest.interest;
     private static final QIdealType idealType = QIdealType.idealType;
+    private static final QDailyFallingActiveTimeTable dailyFallingActiveTimeTable = QDailyFallingActiveTimeTable.dailyFallingActiveTimeTable;
 
     private final JPAQueryFactory queryFactory;
 
     @Override
     public Optional<UserDailyFallingMapper> findByUserChoosingToDayFalling(final String userUuid) {
+
+        final LocalDateTime now = LocalDateTime.now();
+
         return Optional.ofNullable(queryFactory.select(
                 new QUserDailyFallingMapper(
                     userDailyFalling.idx,
@@ -54,8 +60,13 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             .innerJoin(dailyFalling)
             .on(userDailyFalling.dailyFallingIdx.eq(dailyFalling.idx)
                 .and(dailyFalling.state.eq(EntityState.ACTIVE)))
-            .where(userDailyFalling.state.eq(EntityState.ACTIVE)
-//                .and(dailyFalling.activeDay.eq(LocalDate.now())) fixme.
+            .innerJoin(dailyFallingActiveTimeTable)
+            .on(dailyFalling.activeTimeTableIdx.eq(dailyFallingActiveTimeTable.idx))
+            .where(
+                userDailyFalling.userUuid.eq(userUuid)
+                    .and(userDailyFalling.state.eq(EntityState.ACTIVE))
+                    .and(dailyFallingActiveTimeTable.startDateTime.loe(now))
+                    .and(dailyFallingActiveTimeTable.endDateTime.gt(now))
             )
             .orderBy(userDailyFalling.createdAt.desc())
             .fetchFirst());
@@ -63,7 +74,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
 
     @Override
     public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(final long dailyFallingIdx,
-       final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
+        final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
         final String myUuid, Integer size) {
 
         size = Objects.isNull(size) ? 100 : size;
@@ -144,7 +155,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     }
 
     private BooleanExpression notInUserIdx(final List<String> alreadySeenUserUuidList) {
-        if(Objects.isNull(alreadySeenUserUuidList)){
+        if (Objects.isNull(alreadySeenUserUuidList)) {
             return null;
         }
 

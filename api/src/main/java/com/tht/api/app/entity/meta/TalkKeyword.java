@@ -21,7 +21,4 @@ public class TalkKeyword extends Auditable {
 
     @Column
     private String keyword;
-
-    @Column(name = "talk_issue")
-    private String talkIssue;
 }

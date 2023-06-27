@@ -22,9 +22,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
 
-
-    private static final int DO_NOT_CHOICE_DAILY_FALLING = 808;
-
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(final IllegalArgumentException e,
         final HttpServletRequest request) {
@@ -118,8 +115,7 @@ public class ControllerExceptionHandler {
         final HttpServletRequest request) {
 
         return ResponseEntity.badRequest().body(
-            ErrorResponse.of(DO_NOT_CHOICE_DAILY_FALLING, "do not choice daily falling",
-                e.getMessage(), request)
+            ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
         );
     }
 
