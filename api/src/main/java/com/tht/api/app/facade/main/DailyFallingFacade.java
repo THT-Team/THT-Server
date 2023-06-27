@@ -40,6 +40,6 @@ public class DailyFallingFacade {
 
         dailyFallingService.existByIdxAndActiveToday(dailyFallingIdx);
 
-        userDailyFallingService.insert(dailyFallingIdx, userUuid);
+        userDailyFallingService.choice(dailyFallingIdx, userUuid);
     }
 }

@@ -61,7 +61,7 @@ class UserControllerTest extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("메인 화면")
+                        .tag("메인")
                         .description("메인화면 - 오늘의 주제어를 선택한 유저 리스트 조회")
                         .queryParameters(
                             parameterWithName("alreadySeenUserUuidList").description("한번 본 유저 uuid 리스트"),

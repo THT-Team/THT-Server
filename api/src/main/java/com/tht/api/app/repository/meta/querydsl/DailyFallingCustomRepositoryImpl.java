@@ -27,8 +27,9 @@ public class DailyFallingCustomRepositoryImpl implements DailyFallingCustomRepos
                 new QDailyFallingMapper(
                     dailyFalling.idx,
                     talkKeyword.keyword,
+                    talkKeyword.idx,
                     talkKeywordImg.imgUrl,
-                    talkKeyword.talkIssue
+                    dailyFalling.talkIssue
                 ))
             .from(dailyFalling)
             .innerJoin(talkKeyword)

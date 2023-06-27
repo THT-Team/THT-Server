@@ -22,4 +22,7 @@ public class DailyFalling extends Auditable {
     @Column(name = "active_time_table_idx")
     private Integer activeTimeTableIdx;
 
+    @Column(name = "talk_issue")
+    private String talkIssue;
+
 }

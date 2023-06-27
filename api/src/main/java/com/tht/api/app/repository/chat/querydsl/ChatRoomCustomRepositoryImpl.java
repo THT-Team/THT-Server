@@ -26,7 +26,7 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
                 new QChatRoomMapper(
                     chatRoom.idx,
                     talkKeyword.keyword,
-                    talkKeyword.talkIssue,
+                    dailyFalling.talkIssue,
                     Expressions.stringTemplate("DATE_FORMAT({0}, {1})", chatRoom.createdAt,
                         ConstantImpl.create("%Y년 %m월 %d일"))
                 )
