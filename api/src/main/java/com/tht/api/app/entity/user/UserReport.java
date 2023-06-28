@@ -17,10 +17,10 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @ToString
-@Table(name = "user_block")
+@Table(name = "user_report")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class UserBlock {
+public class UserReport {
 
     @Id
     @Column(name = "idx")
@@ -30,27 +30,34 @@ public class UserBlock {
     @Column(name = "user_uuid")
     private String userUuid;
 
-    @Column(name = "block_user_uuid")
-    private String blockUserUuid;
+    @Column(name = "report_user_uuid")
+    private String reportUserUuid;
+
+    @Column
+    private String reason;
 
     @CreatedDate
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserBlock(final Long idx, final String userUuid, final String blockUserUuid,
-        final LocalDateTime createdAt) {
+    private UserReport(final Long idx, final String userUuid, final String reportUserUuid,
+        final String reason, final LocalDateTime createdAt) {
 
         this.idx = idx;
         this.userUuid = userUuid;
-        this.blockUserUuid = blockUserUuid;
+        this.reportUserUuid = reportUserUuid;
+        this.reason = reason;
         this.createdAt = createdAt;
     }
 
-    public static UserBlock create(final String userUuid, final String blockUserUuid) {
-        return UserBlock.builder()
+    public static UserReport create(final String userUuid, final String reportUserUuid,
+        final String reason) {
+
+        return UserReport.builder()
             .userUuid(userUuid)
-            .blockUserUuid(blockUserUuid)
+            .reportUserUuid(reportUserUuid)
+            .reason(reason)
             .build();
     }
 }
