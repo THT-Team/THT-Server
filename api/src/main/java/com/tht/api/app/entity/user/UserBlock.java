@@ -8,6 +8,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
@@ -35,4 +37,20 @@ public class UserBlock {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Builder(access = AccessLevel.PRIVATE)
+    private UserBlock(final Long idx, final String userUuid, final String blockUserUuid,
+        final LocalDateTime createdAt) {
+
+        this.idx = idx;
+        this.userUuid = userUuid;
+        this.blockUserUuid = blockUserUuid;
+        this.createdAt = createdAt;
+    }
+
+    public static UserBlock create(final String userUuid, final String blockUserUuid) {
+        return UserBlock.builder()
+            .userUuid(userUuid)
+            .blockUserUuid(blockUserUuid)
+            .build();
+    }
 }
