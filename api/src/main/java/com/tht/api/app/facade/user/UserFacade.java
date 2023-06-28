@@ -33,8 +33,10 @@ public class UserFacade {
 
         final Map<String, List<MainScreenUserInfoMapper>> listMap = userDailyFallingService.findAllMatchingFallingUser(
                 fallingInfo.get().dailyFallingIdx(),
-                request.alreadySeenUserUuidList(), request.userDailyFallingCourserIdx(),
-                userUuid, request.size())
+                request.alreadySeenUserUuidList(),
+                request.userDailyFallingCourserIdx(),
+                userUuid, request.size()
+            )
             .stream()
             .collect(Collectors.groupingBy(MainScreenUserInfoMapper::userUuid));
 
