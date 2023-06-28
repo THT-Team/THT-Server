@@ -11,6 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,7 +42,7 @@ public class UserSns extends Auditable {
     @Column(name = "email")
     private String email;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private UserSns(final String userUuid, final SNSType snsType, final String snsUniqueId,
         final String email) {
 

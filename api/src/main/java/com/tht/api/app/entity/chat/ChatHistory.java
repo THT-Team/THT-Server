@@ -3,6 +3,7 @@ package com.tht.api.app.entity.chat;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
 import java.time.LocalDateTime;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,7 +47,7 @@ public class ChatHistory {
     @LastModifiedDate
     private LocalDateTime updatedAt;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private ChatHistory(String id, Long roomIdx, String senderName, String senderUuid, String msg,
         String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
 

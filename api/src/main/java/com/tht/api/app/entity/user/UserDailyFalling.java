@@ -7,6 +7,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,7 +29,7 @@ public class UserDailyFalling extends Auditable {
     @Column(name = "daily_falling_idx")
     private Long dailyFallingIdx;
 
-    @Builder
+    @Builder(access = AccessLevel.PRIVATE)
     private UserDailyFalling(final Long idx, final String userUuid, final Long dailyFallingIdx) {
         this.idx = idx;
         this.userUuid = userUuid;
