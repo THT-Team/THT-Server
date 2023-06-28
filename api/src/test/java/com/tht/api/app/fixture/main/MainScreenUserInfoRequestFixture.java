@@ -1,4 +1,4 @@
-package com.tht.api.app.fixture.user;
+package com.tht.api.app.fixture.main;
 
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import java.util.List;
