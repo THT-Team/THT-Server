@@ -1,5 +1,6 @@
 package com.tht.api.app.repository.user.querydsl;
 
+import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.EntityState;
@@ -76,9 +77,9 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     }
 
     @Override
-    public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(final long dailyFallingIdx,
-        final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
-        final String myUuid, Integer size) {
+    public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(
+        final Long dailyFallingIdx, final List<String> alreadySeenUserUuidList,
+        final Long userDailyFallingCourserIdx, final String myUuid, Integer size) {
 
         size = Objects.isNull(size) ? 100 : size;
 
@@ -116,33 +117,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             return new ArrayList<>();
         }
 
-        return queryFactory.select(
-                new QMainScreenUserInfoMapper(
-                    user.username,
-                    user.userUuid,
-                    user.birthDay,
-                    userLocationInfo.address,
-                    new QIdealTypeMapper(
-                        idealType.idx,
-                        idealType.name,
-                        idealType.emojiCode
-                    ),
-                    new QInterestMapper(
-                        interest.idx,
-                        interest.name,
-                        interest.emojiCode
-                    ),
-                    new QUserProfilePhotoMapper(
-                        userProfilePhoto.idx,
-                        userProfilePhoto.userUuid,
-                        userProfilePhoto.url,
-                        userProfilePhoto.priority
-                    ),
-                    user.introduction,
-                    userDailyFalling.idx
-                )
-            )
-            .from(userDailyFalling)
+        return queryFactory.selectFrom(userDailyFalling)
             .innerJoin(user)
             .on(userDailyFalling.userUuid.eq(user.userUuid)
                 .and(userDailyFalling.state.eq(EntityState.ACTIVE))
@@ -164,7 +139,37 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             .where(
                 userDailyFalling.idx.in(userDailyFallingIdxList)
             )
-            .fetch();
+            .transform(GroupBy.groupBy(user.userUuid).list(
+                new QMainScreenUserInfoMapper(
+                    user.username,
+                    user.userUuid,
+                    user.birthDay,
+                    userLocationInfo.address,
+                    GroupBy.set(
+                        new QIdealTypeMapper(
+                            idealType.idx,
+                            idealType.name,
+                            idealType.emojiCode
+                        )
+                    ),
+                    GroupBy.set(
+                        new QInterestMapper(
+                            interest.idx,
+                            interest.name,
+                            interest.emojiCode
+                        )
+                    ),
+                    GroupBy.set(
+                        new QUserProfilePhotoMapper(
+                            userProfilePhoto.idx,
+                            userProfilePhoto.userUuid,
+                            userProfilePhoto.url,
+                            userProfilePhoto.priority
+                        )
+                    ),
+                    user.introduction,
+                    userDailyFalling.idx
+                )));
     }
 
     @Override

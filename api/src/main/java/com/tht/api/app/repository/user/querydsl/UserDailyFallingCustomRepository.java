@@ -10,9 +10,10 @@ public interface UserDailyFallingCustomRepository {
 
     Optional<UserDailyFallingMapper> findByUserChoosingToDayFalling(final String userUuid);
 
-    List<MainScreenUserInfoMapper> findAllMatchingFallingUser(final long dailyFallingIdx,
-        final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
-        final String myUuid, final Integer size);
-
     Optional<DailyFallingTimeMapper> findFallingTimeInfo(final String userUuid);
+
+    List<MainScreenUserInfoMapper> findAllMatchingFallingUser(
+        final Long dailyFallingIdx, final List<String> alreadySeenUserUuidList,
+        final Long userDailyFallingCourserIdx, final String userUuid, final Integer size);
+
 }
