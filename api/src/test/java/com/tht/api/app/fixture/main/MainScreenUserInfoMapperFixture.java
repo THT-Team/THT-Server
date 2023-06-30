@@ -8,6 +8,9 @@ import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import com.tht.api.app.repository.mapper.UserProfilePhotoMapper;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class MainScreenUserInfoMapperFixture {
 
@@ -15,9 +18,12 @@ public class MainScreenUserInfoMapperFixture {
     private static final String userUuid = "uuid-uuid";
     private static final LocalDate birthDay = LocalDate.of(1997, 11, 4);
     private static final String address = "인천광역시 부평구";
-    private static final IdealTypeMapper idealTypeMapper = IdealTypeFixture.mapperMake();
-    private static final InterestMapper interestMapper = InterestFixture.mapperMake();
-    private static final UserProfilePhotoMapper userProfilePhotoMapper = UserProfilePhotoFixture.mapperMake();
+    private static final Set<IdealTypeMapper> idealTypeMapper = new HashSet<>(List.of(
+        IdealTypeFixture.mapperMake()));
+    private static final Set<InterestMapper> interestMapper = new HashSet<>(List.of(
+        InterestFixture.mapperMake()));
+    private static final Set<UserProfilePhotoMapper> userProfilePhotoMapper = new HashSet<>(List.of(
+        UserProfilePhotoFixture.mapperMake()));
     private static final String introduction = "유저 자기소개";
     private static final long userDailyFallingIdx = 1;
 
@@ -35,45 +41,4 @@ public class MainScreenUserInfoMapperFixture {
         );
     }
 
-    public static MainScreenUserInfoMapper make(final IdealTypeMapper idealTypeMapper) {
-        return new MainScreenUserInfoMapper(
-            username,
-            userUuid,
-            birthDay,
-            address,
-            idealTypeMapper,
-            interestMapper,
-            userProfilePhotoMapper,
-            introduction,
-            userDailyFallingIdx
-        );
-    }
-
-    public static MainScreenUserInfoMapper make(final InterestMapper interestMapper) {
-        return new MainScreenUserInfoMapper(
-            username,
-            userUuid,
-            birthDay,
-            address,
-            idealTypeMapper,
-            interestMapper,
-            userProfilePhotoMapper,
-            introduction,
-            userDailyFallingIdx
-        );
-    }
-
-    public static MainScreenUserInfoMapper make(final UserProfilePhotoMapper userProfilePhotoMapper) {
-        return new MainScreenUserInfoMapper(
-            username,
-            userUuid,
-            birthDay,
-            address,
-            idealTypeMapper,
-            interestMapper,
-            userProfilePhotoMapper,
-            introduction,
-            userDailyFallingIdx
-        );
-    }
 }

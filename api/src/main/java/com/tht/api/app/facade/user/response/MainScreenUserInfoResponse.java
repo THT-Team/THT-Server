@@ -4,7 +4,6 @@ import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import com.tht.api.app.facade.interest.response.InterestResponse;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import java.time.LocalDate;
-import java.util.HashSet;
 import java.util.List;
 
 public record MainScreenUserInfoResponse(
@@ -13,35 +12,26 @@ public record MainScreenUserInfoResponse(
     int age,
     String address,
     boolean isBirthDay,
-    HashSet<IdealTypeResponse> idealTypeResponseList,
-    HashSet<InterestResponse> interestResponses,
-    HashSet<UserProfilePhotoResponse> userProfilePhotos,
+    List<IdealTypeResponse> idealTypeResponseList,
+    List<InterestResponse> interestResponses,
+    List<UserProfilePhotoResponse> userProfilePhotos,
     String introduction,
     long userDailyFallingCourserIdx
 ) {
 
-    public static MainScreenUserInfoResponse of(final List<MainScreenUserInfoMapper> mapperList) {
-
-        if (mapperList.isEmpty()) {
-            return null;
-        }
-
-        MainScreenUserInfoMapper base = mapperList.get(0);
+    public static MainScreenUserInfoResponse of(final MainScreenUserInfoMapper mapper) {
 
         return new MainScreenUserInfoResponse(
-            base.username(),
-            base.userUuid(),
-            covertAge(base.birthDay()),
-            base.address(),
-            isBirthDay(base.birthDay()),
-            new HashSet<>(mapperList.stream().map(MainScreenUserInfoMapper::idealTypeMapper)
-                .map(IdealTypeResponse::of).toList()),
-            new HashSet<>(mapperList.stream().map(MainScreenUserInfoMapper::interestMapper)
-                .map(InterestResponse::of).toList()),
-            new HashSet<>(mapperList.stream().map(MainScreenUserInfoMapper::userProfilePhotoMapper)
-                .map(UserProfilePhotoResponse::of).toList()),
-            base.introduction(),
-            base.userDailyFallingIdx()
+            mapper.username(),
+            mapper.userUuid(),
+            covertAge(mapper.birthDay()),
+            mapper.address(),
+            isBirthDay(mapper.birthDay()),
+            mapper.idealTypeMapper().stream().map(IdealTypeResponse::of).toList(),
+            mapper.interestMapper().stream().map(InterestResponse::of).toList(),
+            mapper.userProfilePhotoMapper().stream().map(UserProfilePhotoResponse::of).toList(),
+            mapper.introduction(),
+            mapper.userDailyFallingIdx()
         );
     }
 
