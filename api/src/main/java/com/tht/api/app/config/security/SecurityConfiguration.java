@@ -1,5 +1,7 @@
 package com.tht.api.app.config.security;
 
+import com.tht.api.app.config.security.filter.ExceptionHandlerFilter;
+import com.tht.api.app.config.security.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +18,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
+    private final ExceptionHandlerFilter exceptionHandlerFilter;
+    private final HttpRequestEndpointChecker endpointChecker;
+
 
     private static final String[] PERMIT_URL_ARRAY = {
         /* swagger v2 */
@@ -40,7 +45,10 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
         httpSecurity
-            .csrf().disable();
+            .csrf().disable()
+            .exceptionHandling()
+            .authenticationEntryPoint(new MyAuthenticationEntryPoint(endpointChecker))
+            .accessDeniedHandler(new MyAccessDeniedHandler(endpointChecker));
 
         return httpSecurity
             .authorizeHttpRequests(
@@ -52,6 +60,7 @@ public class SecurityConfiguration {
 
                     .and()
                     .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                    .addFilterBefore(exceptionHandlerFilter, JwtFilter.class)
             )
             .httpBasic(Customizer.withDefaults())
             .build();

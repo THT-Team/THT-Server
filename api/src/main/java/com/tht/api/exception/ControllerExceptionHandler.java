@@ -18,6 +18,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
@@ -116,6 +117,15 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.badRequest().body(
             ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final NoHandlerFoundException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+            ErrorResponse.of(NOT_FOUND, e.getMessage(), request)
         );
     }
 

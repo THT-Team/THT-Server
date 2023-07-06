@@ -1,12 +1,14 @@
 package com.tht.api.app.config.security;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.mock;
 import static org.mockito.BDDMockito.when;
 
 import com.tht.api.app.entity.enums.UserRole;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.service.UserService;
+import com.tht.api.exception.custom.TokenNotValidateException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -55,7 +57,8 @@ class TokenProviderTest {
 
         TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, mock(UserService.class));
 
-        tokenProvider.validateToken(testToken);
+        assertThatThrownBy(() -> tokenProvider.validateToken(testToken))
+            .isInstanceOf(TokenNotValidateException.class);
     }
 
 }
