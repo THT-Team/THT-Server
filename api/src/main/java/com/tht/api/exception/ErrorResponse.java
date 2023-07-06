@@ -1,16 +1,23 @@
 package com.tht.api.exception;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.tht.api.app.config.utils.CustomDateFormatUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.http.HttpStatus;
 
 @Getter
+@ToString
 public class ErrorResponse {
 
-    private final LocalDateTime timestamp;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+
+    private final String timestamp;
     private final int status;
     private final String error;
     private final String message;
@@ -19,7 +26,7 @@ public class ErrorResponse {
     @Builder(access = AccessLevel.PRIVATE)
     private ErrorResponse(final int status, final String error, final String message,
         final String path) {
-        this.timestamp = LocalDateTime.now();
+        this.timestamp = LocalDateTime.now().format(CustomDateFormatUtils.getDateTimeInstance());
         this.status = status;
         this.error = error;
         this.message = message;
@@ -44,6 +51,10 @@ public class ErrorResponse {
             .message(message)
             .path(httpServletRequest.getRequestURI())
             .build();
+    }
+
+    public String convertToJson() throws JsonProcessingException {
+        return objectMapper.writeValueAsString(this);
     }
 
 }

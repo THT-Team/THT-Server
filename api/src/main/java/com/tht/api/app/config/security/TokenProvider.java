@@ -3,6 +3,7 @@ package com.tht.api.app.config.security;
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.service.UserService;
+import com.tht.api.exception.custom.TokenNotValidateException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -61,14 +62,20 @@ public class TokenProvider {
             return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             LogWriteUtils.logInfo(String.format("exception : %s, message : 잘못된 JWT 서명입니다.", e.getClass().getName()));
+            throw new TokenNotValidateException("잘못된 JWT 서명입니다.", e);
+
         } catch (ExpiredJwtException e) {
             LogWriteUtils.logInfo(String.format("exception : %s, message : 만료된 JWT 토큰입니다.", e.getClass().getName()));
+            throw new TokenNotValidateException("만료된 JWT 토큰입니다.", e);
+
         } catch (UnsupportedJwtException e) {
             LogWriteUtils.logInfo(String.format("exception : %s, message : 지원되지 않는 JWT 토큰입니다.", e.getClass().getName()));
+            throw new TokenNotValidateException("지원되지 않는 JWT 토큰입니다.", e);
+
         } catch (IllegalArgumentException e) {
             LogWriteUtils.logInfo(String.format("exception : %s, message : JWT 토큰이 잘못되었습니다.", e.getClass().getName()));
+            throw new TokenNotValidateException("JWT 토큰이 잘못되었습니다.", e);
         }
-        return false;
     }
 
     public Claims parseClaims(final String accessToken) {

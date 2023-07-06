@@ -1,5 +1,6 @@
-package com.tht.api.app.config.security;
+package com.tht.api.app.config.security.filter;
 
+import com.tht.api.app.config.security.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
