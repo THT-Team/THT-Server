@@ -27,7 +27,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenProvider {
 
-    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 8;
+//    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 8;
+    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60;
     private final Key jwtSecretKey;
     private final UserService userService;
 

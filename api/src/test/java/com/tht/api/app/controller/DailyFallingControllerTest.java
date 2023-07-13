@@ -16,6 +16,7 @@ import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.main.DailyFallingFacade;
 import com.tht.api.app.fixture.main.DailyFallingResponseFixture;
+import com.tht.api.app.fixture.main.TalkKeywordFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -97,6 +98,41 @@ class DailyFallingControllerTest extends ControllerTestConfig {
                         .description("오늘의 폴링 토픽 선택")
                         .requestFields()
                         .responseFields()
+                        .build()
+                )
+            ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("삭제되지 않은 전체 키워드 조회 api - docs")
+    void getAllKeywordAtActive() throws Exception {
+
+        //give
+        when(dailyFallingFacade.getTalkKeywords())
+            .thenReturn(TalkKeywordFixture.makeList());
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            get("/all/talk-keyword")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("모든 토픽 키워드 리스트 조회 docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("메인")
+                        .description("모든 토픽 키워드 리스트 조회")
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("[].idx").description("토픽 Idx"),
+                            fieldWithPath("[].keyword").description("토픽 주제어"),
+                            fieldWithPath("[].keywordImgIdx").description("토픽 이미지 idx")
+                        )
+                        .responseSchema(Schema.schema("TalkKeywordResponse"))
                         .build()
                 )
             ));

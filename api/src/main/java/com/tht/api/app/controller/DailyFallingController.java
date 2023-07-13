@@ -2,7 +2,9 @@ package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.main.DailyFallingFacade;
+import com.tht.api.app.facade.main.response.TalkKeywordResponse;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -33,4 +35,9 @@ public class DailyFallingController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/all/talk-keyword")
+    public ResponseEntity<List<TalkKeywordResponse>> getTalkKeyword() {
+
+        return ResponseEntity.ok(dailyFallingFacade.getTalkKeywords());
+    }
 }
