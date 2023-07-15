@@ -18,8 +18,6 @@ public class SecurityConfiguration {
 
     private final JwtFilter jwtFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
-    private final HttpRequestEndpointChecker endpointChecker;
-
 
     private static final String[] PERMIT_URL_ARRAY = {
         /* swagger v2 */
@@ -39,6 +37,7 @@ public class SecurityConfiguration {
         "/users/join/**",
         "/users/login/**",
         "/all/talk-keyword",
+        "/error"
     };
 
     @Bean
@@ -47,9 +46,7 @@ public class SecurityConfiguration {
         httpSecurity
             .csrf().disable()
             .httpBasic().disable()
-            .exceptionHandling()
-            .authenticationEntryPoint(new MyAuthenticationEntryPoint(endpointChecker))
-            .accessDeniedHandler(new MyAccessDeniedHandler(endpointChecker));
+            .exceptionHandling();
 
 
         return httpSecurity
