@@ -2,6 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserIdealType;
+import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.user.UserIdealTypeRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,5 +20,9 @@ public class UserIdealTypeService {
         LogWriteUtils.logInfo("new_user_ideal_type : " + entity);
 
         return userIdealTypeRepository.saveAll(entity);
+    }
+
+    public List<IdealTypeMapper> findBy(final String userUuid) {
+        return userIdealTypeRepository.findIdealInfoBy(userUuid);
     }
 }

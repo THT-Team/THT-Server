@@ -2,6 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.user.UserInterests;
+import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.user.UserInterestsRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +19,9 @@ public class UserInterestsService {
     public List<UserInterests> createOf(final List<UserInterests> entity) {
         LogWriteUtils.logInfo("new_user_interests : " + entity);
         return userInterestsRepository.saveAll(entity);
+    }
+
+    public List<InterestMapper> findBy(final String userUuid) {
+        return userInterestsRepository.findInterestInfoBy(userUuid);
     }
 }

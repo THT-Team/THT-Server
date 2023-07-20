@@ -20,4 +20,7 @@ public class UserProfilePhotoService {
         return repository.saveAll(entity);
     }
 
+    public List<UserProfilePhoto> findByUuid(final String userUuid) {
+        return repository.findAllByUserUuid(userUuid);
+    }
 }

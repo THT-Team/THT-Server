@@ -22,4 +22,7 @@ public class UserCustomException extends RuntimeException {
         return new UserCustomException("해당 SNS ID가 존재하지 않습니다.");
     }
 
+    public static UserCustomException notExistLocationInfo(final String uuid) {
+        return new UserCustomException("uuid : " + uuid + " 유저의 위치정보가 존재하지 않습니다.");
+    }
 }

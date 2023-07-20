@@ -5,10 +5,12 @@ import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
+import com.tht.api.app.facade.user.response.UserDetailResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,5 +49,12 @@ public class UserController {
 
         userFacade.block(user.getUserUuid(), blockUserUuid);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDetailResponse> getUserDetail(
+        @AuthenticationPrincipal final User user) {
+
+        return ResponseEntity.ok(userFacade.getUserDetail(user));
     }
 }
