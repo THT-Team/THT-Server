@@ -1,6 +1,7 @@
 package com.tht.api.app.facade.chat;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.anyInt;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.anyString;
@@ -9,8 +10,10 @@ import static org.mockito.Mockito.verify;
 
 import com.tht.api.app.entity.chat.ChatHistory;
 import com.tht.api.app.facade.chat.response.ChatResponse;
+import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomResponse;
 import com.tht.api.app.fixture.chat.ChatRoomMapperFixture;
+import com.tht.api.app.fixture.chat.ChatRoomPreviewMapperFixture;
 import com.tht.api.app.repository.mapper.ChatRoomMapper;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
@@ -85,5 +88,33 @@ class ChatFacadeTest {
         assertThat(response.talkIssue()).isEqualTo(mapper.talkIssue());
         assertThat(response.talkSubject()).isEqualTo(mapper.talkSubject());
         assertThat(response.startDate()).isEqualTo(mapper.startDate());
+    }
+
+    @Test
+    @DisplayName("나의 채팅방 조회시 매칭된 채팅방이 최근 대화 수 보다 많을 때")
+    void RoomMoreThanMessage() {
+
+        //given
+        when(chatRoomUserService.findMyChatRoomPreviewInfo(anyString())).thenReturn(
+            List.of(
+                ChatRoomPreviewMapperFixture.make(1L),
+                ChatRoomPreviewMapperFixture.make(2L),
+                ChatRoomPreviewMapperFixture.make(3L),
+                ChatRoomPreviewMapperFixture.make(4L),
+                ChatRoomPreviewMapperFixture.make(5L)
+            )
+        );
+
+        when(chatService.findAllCurrentMessageIn(anyList())).thenReturn(
+            List.of()
+        );
+
+        //when
+        List<ChatRoomPreviewResponse> result = chatFacade.findMyRoomList("user-uuid");
+
+        //then
+        assertThat(result).hasSize(5);
+        assertThat(result).extracting("currentMessage").containsOnly("매칭된 무디와 먼저 대화를 시작해 보세요");
+
     }
 }

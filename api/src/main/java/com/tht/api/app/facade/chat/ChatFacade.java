@@ -2,6 +2,7 @@ package com.tht.api.app.facade.chat;
 
 import com.tht.api.app.entity.chat.ChatHistory;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.chat.group.ChatHistoryGroup;
 import com.tht.api.app.facade.chat.group.ChatRoomPreviewMapperGroup;
 import com.tht.api.app.facade.chat.response.ChatResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
@@ -12,6 +13,7 @@ import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.ChatService;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,32 +40,27 @@ public class ChatFacade {
         final ChatRoomPreviewMapperGroup mapperGroup = ChatRoomPreviewMapperGroup.of(
             chatRoomUserService.findMyChatRoomPreviewInfo(userUuid));
 
-        final List<ChatHistory> chatHistories = chatService.findAllCurrentMessageIn(
-            mapperGroup.getChatRoomIdx());
+        final ChatHistoryGroup chatHistoryGroup = ChatHistoryGroup.of(
+            chatService.findAllCurrentMessageIn(mapperGroup.getChatRoomIdx()));
 
-        final List<ChatRoomPreviewResponse> responseList = new ArrayList<>();
-
-        int index = 0;
+        final List<ChatRoomPreviewResponse> result = new ArrayList<>();
 
         for (ChatRoomPreviewMapper mapper : mapperGroup.mapperList()) {
-
-            final ChatHistory chatHistory = chatHistories.get(index);
-            index = getIndex(responseList, index, mapper, chatHistory);
+            result.add(
+                getChatRoomResponse(mapper, chatHistoryGroup.findByRoomIdx(mapper.chatRoomIdx()))
+            );
         }
 
-        return responseList;
+        return result;
     }
 
-    private static int getIndex(final List<ChatRoomPreviewResponse> responseList, int index,
-        final ChatRoomPreviewMapper mapper, final ChatHistory chatHistory) {
+    private ChatRoomPreviewResponse getChatRoomResponse(final ChatRoomPreviewMapper mapper,
+        final Optional<ChatHistory> chatHistory) {
 
-        if (mapper.chatRoomIdx().equals(chatHistory.getRoomIdx())) {
-            responseList.add(ChatRoomPreviewResponse.of(mapper, chatHistory));
-            return ++index;
-        }
-        responseList.add(ChatRoomPreviewResponse.of(mapper));
+        return chatHistory
+            .map(history -> ChatRoomPreviewResponse.of(mapper, history))
+            .orElseGet(() -> ChatRoomPreviewResponse.of(mapper));
 
-        return index;
     }
 
     @Transactional
