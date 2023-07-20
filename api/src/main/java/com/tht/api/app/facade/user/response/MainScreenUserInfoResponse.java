@@ -3,6 +3,7 @@ package com.tht.api.app.facade.user.response;
 import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import com.tht.api.app.facade.interest.response.InterestResponse;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
+import com.tht.api.app.utils.ConvertAgeUtils;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public record MainScreenUserInfoResponse(
         return new MainScreenUserInfoResponse(
             mapper.username(),
             mapper.userUuid(),
-            covertAge(mapper.birthDay()),
+            ConvertAgeUtils.covertBeforeBirthAge(mapper.birthDay()),
             mapper.address(),
             isBirthDay(mapper.birthDay()),
             mapper.idealTypeMapper().stream().map(IdealTypeResponse::of).toList(),
@@ -33,22 +34,6 @@ public record MainScreenUserInfoResponse(
             mapper.introduction(),
             mapper.userDailyFallingIdx()
         );
-    }
-
-    private static int covertAge(final LocalDate birthDay) {
-        final int simpleAge = LocalDate.now().minusYears(birthDay.getYear()).getYear();
-
-        return simpleAge - minusBeforeBirthDayAge(birthDay, simpleAge);
-    }
-
-    private static int minusBeforeBirthDayAge(final LocalDate birthDay, final int simpleAge) {
-
-        final LocalDate now = LocalDate.now();
-
-        if (birthDay.plusDays(simpleAge).isAfter(now)) {
-            return 1;
-        }
-        return 0;
     }
 
     private static boolean isBirthDay(final LocalDate birthDay) {

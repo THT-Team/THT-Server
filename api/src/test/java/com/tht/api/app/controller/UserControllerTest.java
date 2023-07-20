@@ -13,12 +13,12 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
+import com.tht.api.app.fixture.user.UserDetailResponseFixture;
 import com.tht.api.app.fixture.user.UserRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -180,6 +180,61 @@ class UserControllerTest extends ControllerTestConfig {
                         .requestFields()
                         .responseFields()
                         .requestSchema(Schema.schema("UserReportRequest"))
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("유저 정보 상세조회 api - docs")
+    void getUserDetails() throws Exception {
+
+        //given
+        when(userFacade.getUserDetail(any())).thenReturn(
+            UserDetailResponseFixture.make()
+        );
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.get("/user")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 정보 조회 docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저 - 마이페이지")
+                        .description("마이페이지 유저 정보 상세 조회")
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("username").description("유저 이름"),
+                            fieldWithPath("age").description("나이"),
+                            fieldWithPath("address").description("주소"),
+                            fieldWithPath("introduction").description("자기소개"),
+
+                            fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
+                            fieldWithPath("idealTypeList[].idx").description("이상형 idx"),
+                            fieldWithPath("idealTypeList[].name").description("이상형 명칭"),
+                            fieldWithPath("idealTypeList[].emojiCode").description("이상형 코드"),
+
+                            fieldWithPath("interestsList").description("선택한 관심사 리스트"),
+                            fieldWithPath("interestsList[].idx").description("관심사 idx"),
+                            fieldWithPath("interestsList[].name").description("관심사 명칭"),
+                            fieldWithPath("interestsList[].emojiCode").description("관심사 코드"),
+
+                            fieldWithPath("userProfilePhotos").description("유저 프로필 이미지 리스트"),
+                            fieldWithPath("userProfilePhotos[].url").description("이미지 url"),
+                            fieldWithPath("userProfilePhotos[].priority")
+                                .description("사진 우선순위 (1:프로필)")
+                        )
+                        .responseSchema(Schema.schema("UserDetailResponse"))
                         .build()
                 ))
         );
