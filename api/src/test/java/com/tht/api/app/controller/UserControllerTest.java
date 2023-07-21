@@ -218,6 +218,8 @@ class UserControllerTest extends ControllerTestConfig {
                             fieldWithPath("age").description("나이"),
                             fieldWithPath("address").description("주소"),
                             fieldWithPath("introduction").description("자기소개"),
+                            fieldWithPath("phoneNumber").description("전화번호"),
+                            fieldWithPath("email").description("이메일"),
 
                             fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
                             fieldWithPath("idealTypeList[].idx").description("이상형 idx"),

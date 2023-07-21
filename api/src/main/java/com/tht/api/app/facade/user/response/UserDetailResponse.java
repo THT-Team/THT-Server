@@ -15,6 +15,8 @@ public record UserDetailResponse (
     int age,
     String introduction,
     String address,
+    String phoneNumber,
+    String email,
     List<IdealTypeResponse> idealTypeList,
     List<InterestResponse> interestsList,
     List<UserProfilePhotoResponse> userProfilePhotos
@@ -32,6 +34,8 @@ public record UserDetailResponse (
             ConvertAgeUtils.covertBeforeBirthAge(user.getBirthDay()),
             user.getIntroduction(),
             userLocationInfo.getAddress(),
+            user.getPhoneNumber(),
+            user.getEmail(),
             idealTypeMappers.stream().map(IdealTypeResponse::of).toList(),
             interestMappers.stream().map(InterestResponse::of).toList(),
             profilePhotoMappers.stream().map(UserProfilePhotoResponse::of).toList()
