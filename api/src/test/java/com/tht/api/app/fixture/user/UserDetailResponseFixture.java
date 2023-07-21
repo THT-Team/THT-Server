@@ -14,6 +14,8 @@ public class UserDetailResponseFixture {
     private static final int age = 345;
     private static final String introduction = "내 나이는 서른마흔다섯";
     private static final String address = "서울시 성동구 저쩌구 동작구";
+    private static final String phoneNumber = "01010041004";
+    private static final String email = "beenZino@naver.com";
     private static final List<IdealTypeResponse> idealTypeList = List.of(
         IdealTypeFixture.responseMake()
     );
@@ -30,6 +32,8 @@ public class UserDetailResponseFixture {
             age,
             introduction,
             address,
+            phoneNumber,
+            email,
             idealTypeList,
             interestsList,
             userProfilePhotos
