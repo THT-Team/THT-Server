@@ -1,12 +1,16 @@
 package com.tht.api.app.entity.user;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.UserRole;
+import com.tht.api.exception.custom.UserCustomException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class UserTest {
 
@@ -33,5 +37,30 @@ class UserTest {
         assertThat(newUser.getGender()).isEqualTo(gender);
         assertThat(newUser.getPreferGender()).isEqualTo(preferGender);
         assertThat(newUser.getUserRole()).isEqualTo(UserRole.NORMAL);
+    }
+
+    @Test
+    @DisplayName("유저 번호 수정")
+    void updatePhoneNumber() {
+        User newUser = User.createNewUser(username, birthDay, phoneNumber, email,
+            introduction, gender, preferGender);
+
+        String updateNumber = "123456780";
+
+        newUser.updatePhoneNumber(updateNumber);
+
+        assertThat(newUser.getPhoneNumber()).isEqualTo(updateNumber);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"","03130111", "010-031-322"})
+    @DisplayName("유저 번호는 숫자로 구성된 9~11자리여야 한다.")
+    void validPhoneNumber(String number) {
+        User newUser = User.createNewUser(username, birthDay, phoneNumber, email,
+            introduction, gender, preferGender);
+
+        assertThatThrownBy(() -> newUser.updatePhoneNumber(number))
+            .isInstanceOf(UserCustomException.class)
+            .hasMessageMatching("핸드폰 번호는 숫자로 구성된 9~11자리여야 합니다.");
     }
 }

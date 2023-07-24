@@ -244,4 +244,37 @@ class UserControllerTest extends ControllerTestConfig {
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+
+    @Test
+    @DisplayName("유저 핸드폰 번호 업데이트")
+    void updatePhoneNumber() throws Exception {
+
+        //then
+        String phoneNumber = "01032107781";
+
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.patch("/user/phone-number/{phone-number}", phoneNumber)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 핸드폰 번호 수정 api docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저 - 마이페이지")
+                        .description("마이페이지 유저 핸드폰 번호 수정")
+                        .pathParameters(
+                            parameterWithName("phone-number").description("수정할 핸드폰번호 [숫자만 9~11자리]")
+                        )
+                        .requestFields()
+                        .responseFields()
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 }
