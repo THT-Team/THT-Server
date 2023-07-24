@@ -29,4 +29,8 @@ public class UserCustomException extends RuntimeException {
     public static UserCustomException noneValidPhoneNumberFormat() {
         return new UserCustomException("핸드폰 번호는 숫자로 구성된 9~11자리여야 합니다.");
     }
+
+    public static UserCustomException noneValidEmailFormat() {
+        return new UserCustomException("이메일 양식이 맞지 않습니다.");
+    }
 }

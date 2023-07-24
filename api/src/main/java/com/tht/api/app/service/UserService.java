@@ -46,4 +46,8 @@ public class UserService {
     public void updatePhoneNumber(final String userUuid, final String phoneNumber) {
         findByUserUuidForAuthToken(userUuid).updatePhoneNumber(phoneNumber);
     }
+
+    public void updateEmail(final String userUuid, final String email) {
+        findByUserUuidForAuthToken(userUuid).updateEmail(email);
+    }
 }

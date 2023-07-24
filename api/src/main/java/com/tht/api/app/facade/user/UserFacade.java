@@ -111,4 +111,9 @@ public class UserFacade {
 
         userService.updatePhoneNumber(user.getUserUuid(), phoneNumber);
     }
+
+    @Transactional
+    public void updateEmail(final User user, final String email) {
+        userService.updateEmail(user.getUserUuid(), email);
+    }
 }

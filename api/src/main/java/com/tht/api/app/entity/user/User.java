@@ -35,6 +35,8 @@ import org.hibernate.annotations.DynamicUpdate;
 public class User extends Auditable {
 
     private static final Pattern PHONE_NUMBER_FORMAT = Pattern.compile("^\\d{9,11}$");
+    private static final Pattern EMAIL_FORMAT = Pattern.compile(
+        "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -98,6 +100,7 @@ public class User extends Auditable {
         final Gender gender, final Gender preferGender) {
 
         validPhoneNumberFormat(phoneNumber);
+        validEmailFormat(email);
 
         final User user = User.builder()
             .username(username)
@@ -123,6 +126,13 @@ public class User extends Auditable {
         }
     }
 
+    private static void validEmailFormat(final String email) {
+
+        if (!EMAIL_FORMAT.matcher(email).matches()) {
+            throw UserCustomException.noneValidEmailFormat();
+        }
+    }
+
     private static String generateUuid() {
         return LocalDateTime.now().getMinute() + UUID.randomUUID().toString();
     }
@@ -130,7 +140,11 @@ public class User extends Auditable {
     public void updatePhoneNumber(final String phoneNumber) {
 
         validPhoneNumberFormat(phoneNumber);
-
         this.phoneNumber = phoneNumber;
+    }
+
+    public void updateEmail(final String email) {
+        validEmailFormat(email);
+        this.email = email;
     }
 }

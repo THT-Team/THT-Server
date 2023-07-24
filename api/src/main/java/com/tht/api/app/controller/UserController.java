@@ -67,4 +67,13 @@ public class UserController {
         userFacade.updatePhoneNumber(user, phoneNumber);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/user/email/{email}")
+    public ResponseEntity<Object> updateEmail(
+        @PathVariable final String email,
+        @AuthenticationPrincipal final User user) {
+
+        userFacade.updateEmail(user, email);
+        return ResponseEntity.ok().build();
+    }
 }
