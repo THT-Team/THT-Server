@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -56,5 +57,14 @@ public class UserController {
         @AuthenticationPrincipal final User user) {
 
         return ResponseEntity.ok(userFacade.getUserDetail(user));
+    }
+
+    @PatchMapping("/user/phone-number/{phone-number}")
+    public ResponseEntity<Object> updatePhoneNumber(
+        @PathVariable(name = "phone-number") final String phoneNumber,
+        @AuthenticationPrincipal final User user) {
+
+        userFacade.updatePhoneNumber(user, phoneNumber);
+        return ResponseEntity.ok().build();
     }
 }

@@ -12,7 +12,7 @@ public class UserFixture {
 
     private final static String username = "username";
     private final static LocalDate birthDay = LocalDate.now();
-    private final static String phoneNumber = "0101234151324";
+    private final static String phoneNumber = "01012341513";
     private final static String email = "email@emila";
     private final static String introduction = "소개소개";
     private final static Gender gender = Gender.FEMALE;

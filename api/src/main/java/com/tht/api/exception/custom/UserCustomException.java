@@ -25,4 +25,8 @@ public class UserCustomException extends RuntimeException {
     public static UserCustomException notExistLocationInfo(final String uuid) {
         return new UserCustomException("uuid : " + uuid + " 유저의 위치정보가 존재하지 않습니다.");
     }
+
+    public static UserCustomException noneValidPhoneNumberFormat() {
+        return new UserCustomException("핸드폰 번호는 숫자로 구성된 9~11자리여야 합니다.");
+    }
 }

@@ -6,6 +6,7 @@ import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.UserRole;
 import com.tht.api.app.entity.enums.converter.GenderConverter;
 import com.tht.api.app.entity.enums.converter.UserRoleConverter;
+import com.tht.api.exception.custom.UserCustomException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
@@ -17,18 +18,23 @@ import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
+import java.util.regex.Pattern;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @Table(name = "user")
 @NoArgsConstructor
 @Getter
 @ToString
+@DynamicUpdate
 public class User extends Auditable {
+
+    private static final Pattern PHONE_NUMBER_FORMAT = Pattern.compile("^\\d{9,11}$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -91,6 +97,8 @@ public class User extends Auditable {
         final String phoneNumber, final String email, final String introduction,
         final Gender gender, final Gender preferGender) {
 
+        validPhoneNumberFormat(phoneNumber);
+
         final User user = User.builder()
             .username(username)
             .userUuid(generateUuid())
@@ -108,7 +116,21 @@ public class User extends Auditable {
         return user;
     }
 
+    private static void validPhoneNumberFormat(final String phoneNumber) {
+
+        if (!PHONE_NUMBER_FORMAT.matcher(phoneNumber).matches()) {
+            throw UserCustomException.noneValidPhoneNumberFormat();
+        }
+    }
+
     private static String generateUuid() {
         return LocalDateTime.now().getMinute() + UUID.randomUUID().toString();
+    }
+
+    public void updatePhoneNumber(final String phoneNumber) {
+
+        validPhoneNumberFormat(phoneNumber);
+
+        this.phoneNumber = phoneNumber;
     }
 }
