@@ -20,13 +20,14 @@ import com.tht.api.app.service.UserInterestsService;
 import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserReportService;
+import com.tht.api.app.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @Facade
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class UserFacade {
 
@@ -37,6 +38,7 @@ public class UserFacade {
     private final UserIdealTypeService userIdealTypeService;
     private final UserLocationInfoService userLocationInfoService;
     private final UserProfilePhotoService userProfilePhotoService;
+    private final UserService userService;
 
     public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
@@ -69,12 +71,14 @@ public class UserFacade {
         );
     }
 
+    @Transactional
     public void report(final String userUuid, final UserReportRequest request) {
 
         userReportService.create(userUuid, request.reportUserUuid(), request.reason());
         userBlockService.block(userUuid, request.reportUserUuid());
     }
 
+    @Transactional
     public void block(final String userUuid, final String blockUserUuid) {
         userBlockService.block(userUuid, blockUserUuid);
     }
@@ -102,4 +106,9 @@ public class UserFacade {
         );
     }
 
+    @Transactional
+    public void updatePhoneNumber(final User user, final String phoneNumber) {
+
+        userService.updatePhoneNumber(user.getUserUuid(), phoneNumber);
+    }
 }

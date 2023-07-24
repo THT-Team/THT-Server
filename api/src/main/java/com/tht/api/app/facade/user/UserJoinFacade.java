@@ -21,7 +21,6 @@ import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
 import com.tht.api.exception.custom.UserCustomException;
 import jakarta.transaction.Transactional;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 
 @Facade
