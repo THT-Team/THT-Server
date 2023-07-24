@@ -53,7 +53,7 @@ class UserTest {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"","03130111", "010-031-322"})
+    @ValueSource(strings = {"", "03130111", "010-031-322"})
     @DisplayName("유저 번호는 숫자로 구성된 9~11자리여야 한다.")
     void validPhoneNumber(String number) {
         User newUser = User.createNewUser(username, birthDay, phoneNumber, email,
@@ -63,4 +63,31 @@ class UserTest {
             .isInstanceOf(UserCustomException.class)
             .hasMessageMatching("핸드폰 번호는 숫자로 구성된 9~11자리여야 합니다.");
     }
+
+    @Test
+    @DisplayName("유저 이메일 수정하기")
+    void updateEmail() {
+
+        User newUser = User.createNewUser(username, birthDay, phoneNumber, email,
+            introduction, gender, preferGender);
+
+        String email = "123hhihi@hihi.co.kr";
+
+        newUser.updateEmail(email);
+        assertThat(newUser.getEmail()).isEqualTo(email);
+
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "03130111", "@email.com", "e@eeee,e", "empty"})
+    @DisplayName("유저 이메일 양식 유효성 검사")
+    void validEmail(String updateEmail) {
+        User newUser = User.createNewUser(username, birthDay, phoneNumber, email,
+            introduction, gender, preferGender);
+
+        assertThatThrownBy(() -> newUser.updateEmail(updateEmail))
+            .isInstanceOf(UserCustomException.class)
+            .hasMessageMatching("이메일 양식이 맞지 않습니다.");
+    }
+
 }

@@ -277,4 +277,37 @@ class UserControllerTest extends ControllerTestConfig {
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+
+    @Test
+    @DisplayName("유저 이메일 업데이트 docs 생성")
+    void updateEmail() throws Exception {
+
+        //then
+        String email = "happy@naver.com";
+
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.patch("/user/email/{email}", email)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 이메일 수정 api docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저 - 마이페이지")
+                        .description("마이페이지 유저 이메일 수정")
+                        .pathParameters(
+                            parameterWithName("email").description("수정할 이메일")
+                        )
+                        .requestFields()
+                        .responseFields()
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 }
