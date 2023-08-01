@@ -24,4 +24,14 @@ public class UserInterestsService {
     public List<InterestMapper> findBy(final String userUuid) {
         return userInterestsRepository.findInterestInfoBy(userUuid);
     }
+
+    public void update(final String userUuid, final List<Integer> interestList) {
+
+        userInterestsRepository.deleteAllByUserUuid(userUuid);
+        userInterestsRepository.saveAll(
+            interestList.stream()
+                .map(idx -> UserInterests.create(userUuid, idx))
+                .toList()
+        );
+    }
 }

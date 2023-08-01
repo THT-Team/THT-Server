@@ -7,4 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserInterestsRepository extends JpaRepository<UserInterests, Long>,
     UserInterestsCustomRepository {
+
+    void deleteAllByUserUuid(final String userUuid);
+
 }

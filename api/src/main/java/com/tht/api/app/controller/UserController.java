@@ -1,8 +1,10 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
+import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -74,6 +77,24 @@ public class UserController {
         @AuthenticationPrincipal final User user) {
 
         userFacade.updateEmail(user, email);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/user/interests")
+    public ResponseEntity<Object> modifiedInterests(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final ModifiedInterestsRequest request) {
+
+        userFacade.modifiedInterests(user.getUserUuid(), request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/user/ideal-type")
+    public ResponseEntity<Object> modifiedIdealType(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final ModifiedIdealTypeRequest request) {
+
+        userFacade.modifiedIdealType(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
     }
 }

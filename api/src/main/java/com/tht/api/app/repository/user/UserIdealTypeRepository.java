@@ -8,4 +8,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserIdealTypeRepository extends JpaRepository<UserIdealType, Long>,
     UserIdealTypeCustomRepository {
 
+    void deleteAllByUserUuid(final String userUuid);
 }

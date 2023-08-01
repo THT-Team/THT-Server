@@ -31,15 +31,21 @@ public abstract class ControllerTestConfig {
     protected WebApplicationContext ctx;
 
     @Autowired
-    protected ObjectMapper objectMapper;
+    protected ObjectMapper mapper;
+
+    protected static ObjectMapper objectMapper;
 
     @Autowired
     protected TokenProvider tokenProvider;
 
-    protected MockMvc mockMvc;
+    protected static MockMvc mockMvc;
+
 
     @BeforeEach
     void setUp(final RestDocumentationContextProvider restDocumentation) {
+
+        objectMapper = mapper;
+
         mockMvc = MockMvcBuilders.webAppContextSetup(ctx)
             .apply(documentationConfiguration(restDocumentation))
             .addFilters(new CharacterEncodingFilter("UTF-8", true))

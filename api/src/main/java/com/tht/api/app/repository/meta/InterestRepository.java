@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface InterestRepository extends JpaRepository<Interest, Integer> {
 
     List<InterestResponse> findAllBy();
+
+    List<Interest> findAllByIdxIn(List<Integer> idxList);
 }
