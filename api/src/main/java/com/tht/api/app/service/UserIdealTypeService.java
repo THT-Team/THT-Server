@@ -25,4 +25,14 @@ public class UserIdealTypeService {
     public List<IdealTypeMapper> findBy(final String userUuid) {
         return userIdealTypeRepository.findIdealInfoBy(userUuid);
     }
+
+    public void update(final String userUuid, final List<Integer> idealTypeList) {
+
+        userIdealTypeRepository.deleteAllByUserUuid(userUuid);
+        userIdealTypeRepository.saveAll(
+            idealTypeList.stream()
+                .map(idx -> UserIdealType.create(userUuid, idx))
+                .toList()
+        );
+    }
 }

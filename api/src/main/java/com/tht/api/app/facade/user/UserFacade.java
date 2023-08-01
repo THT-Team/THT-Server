@@ -4,7 +4,8 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
 import com.tht.api.app.facade.Facade;
-import com.tht.api.app.facade.interest.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
@@ -14,6 +15,7 @@ import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
+import com.tht.api.app.service.IdealTypeService;
 import com.tht.api.app.service.InterestService;
 import com.tht.api.app.service.UserBlockService;
 import com.tht.api.app.service.UserDailyFallingService;
@@ -42,6 +44,7 @@ public class UserFacade {
     private final UserProfilePhotoService userProfilePhotoService;
     private final UserService userService;
     private final InterestService interestService;
+    private final IdealTypeService idealTypeService;
 
     public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
@@ -125,5 +128,12 @@ public class UserFacade {
 
         interestService.existIn(request.interestList());
         userInterestsService.update(userUuid, request.interestList());
+    }
+
+    @Transactional
+    public void modifiedIdealType(final String userUuid, final ModifiedIdealTypeRequest request) {
+
+        idealTypeService.existIn(request.idealTypeList());
+        userIdealTypeService.update(userUuid, request.idealTypeList());
     }
 }

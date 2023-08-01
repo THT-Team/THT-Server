@@ -1,9 +1,10 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
-import com.tht.api.app.facade.interest.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
+import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -85,6 +86,15 @@ public class UserController {
         @RequestBody @Valid final ModifiedInterestsRequest request) {
 
         userFacade.modifiedInterests(user.getUserUuid(), request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/user/ideal-type")
+    public ResponseEntity<Object> modifiedIdealType(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final ModifiedIdealTypeRequest request) {
+
+        userFacade.modifiedIdealType(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
     }
 }

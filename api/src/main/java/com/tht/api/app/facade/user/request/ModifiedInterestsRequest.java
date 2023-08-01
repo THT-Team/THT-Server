@@ -1,4 +1,4 @@
-package com.tht.api.app.facade.interest.request;
+package com.tht.api.app.facade.user.request;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
