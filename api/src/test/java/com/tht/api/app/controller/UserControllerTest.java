@@ -3,6 +3,7 @@ package com.tht.api.app.controller;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static com.tht.api.app.controller.steps.UserControllerSteps.유저_관심사_수정_요청;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -10,14 +11,18 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.pr
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
+import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
+import com.tht.api.app.facade.interest.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
+import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
 import com.tht.api.app.fixture.user.UserDetailResponseFixture;
 import com.tht.api.app.fixture.user.UserRequestFixture;
 import org.junit.jupiter.api.DisplayName;
@@ -309,5 +314,59 @@ class UserControllerTest extends ControllerTestConfig {
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("관심사 수정 docs")
+    void updateInterests() throws Exception {
+
+        ModifiedInterestsRequest request = ModifiedInterestsRequestFixture.make();
+
+        //then
+        ResultActions resultActions = 유저_관심사_수정_요청(request)
+            .andDo(
+                MockMvcRestDocumentationWrapper.document("유저 관심사 수정 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저 선택한 관심사 목록 수정")
+                            .requestFields(
+                                fieldWithPath("interestList").description("이상형 idx List")
+                            )
+                            .responseFields()
+                            .requestSchema(Schema.schema("ModifiedInterestsRequest"))
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("관심사 수정 api 호출 (실패) - 이상형 리스트의 크기는 1~3개 여야한다.")
+    void updateInterests_sizeFail() throws Exception {
+
+        ModifiedInterestsRequest request = ModifiedInterestsRequestFixture.ofSize(4);
+
+        var response = 유저_관심사_수정_요청(request);
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        response.andExpect(jsonPath("message").value("관심사는 최대 3개를 골라주세요"));
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("관심사 수정 api 호출 (실패) - 이상형 리스트가 null 이어서는 안된다.")
+    void updateInterests_notNull() throws Exception {
+
+        var response = 유저_관심사_수정_요청(new ModifiedInterestsRequest(null));
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        response.andExpect(jsonPath("message").value("interestList 는 null 이어서는 안됩니다."));
     }
 }
