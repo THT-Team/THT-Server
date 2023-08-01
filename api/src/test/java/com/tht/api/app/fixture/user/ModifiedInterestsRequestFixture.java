@@ -1,6 +1,6 @@
 package com.tht.api.app.fixture.user;
 
-import com.tht.api.app.facade.interest.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import java.util.ArrayList;
 import java.util.List;
 

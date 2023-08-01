@@ -4,6 +4,7 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.tht.api.app.controller.steps.UserControllerSteps.유저_관심사_수정_요청;
+import static com.tht.api.app.controller.steps.UserControllerSteps.유저_이상형타입_수정_요청;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -18,8 +19,10 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
-import com.tht.api.app.facade.interest.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
 import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
@@ -332,7 +335,7 @@ class UserControllerTest extends ControllerTestConfig {
                     resource(
                         ResourceSnippetParameters.builder()
                             .tag("유저 - 마이페이지")
-                            .description("유저 선택한 관심사 목록 수정")
+                            .description("유저가 선택한 관심사 목록 수정")
                             .requestFields(
                                 fieldWithPath("interestList").description("이상형 idx List")
                             )
@@ -348,7 +351,7 @@ class UserControllerTest extends ControllerTestConfig {
 
     @WithCustomMockUser
     @Test
-    @DisplayName("관심사 수정 api 호출 (실패) - 이상형 리스트의 크기는 1~3개 여야한다.")
+    @DisplayName("관심사 수정 api 호출 (실패) - 관심사 리스트의 크기는 1~3개 여야한다.")
     void updateInterests_sizeFail() throws Exception {
 
         ModifiedInterestsRequest request = ModifiedInterestsRequestFixture.ofSize(4);
@@ -361,12 +364,66 @@ class UserControllerTest extends ControllerTestConfig {
 
     @WithCustomMockUser
     @Test
-    @DisplayName("관심사 수정 api 호출 (실패) - 이상형 리스트가 null 이어서는 안된다.")
+    @DisplayName("관심사 수정 api 호출 (실패) - 관심사 리스트가 null 이어서는 안된다.")
     void updateInterests_notNull() throws Exception {
 
         var response = 유저_관심사_수정_요청(new ModifiedInterestsRequest(null));
 
         response.andExpect(MockMvcResultMatchers.status().isBadRequest());
         response.andExpect(jsonPath("message").value("interestList 는 null 이어서는 안됩니다."));
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("이상형타입 수정 docs")
+    void updateIdealType() throws Exception {
+
+        ModifiedIdealTypeRequest request = ModifiedIdealTypeRequestFixture.make();
+
+        //then
+        ResultActions resultActions = 유저_이상형타입_수정_요청(request)
+            .andDo(
+                MockMvcRestDocumentationWrapper.document("유저 이상형타입 수정 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저가 선택한 이상형타입 목록 수정")
+                            .requestFields(
+                                fieldWithPath("idealTypeList").description("이상형 idx List")
+                            )
+                            .responseFields()
+                            .requestSchema(Schema.schema("ModifiedIdealTypeRequest"))
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("이상형타입 수정 api 호출 (실패) - 이상형 리스트의 크기는 1~3개 여야한다.")
+    void updateIdealType_sizeFail() throws Exception {
+
+        ModifiedIdealTypeRequest request = ModifiedIdealTypeRequestFixture.ofSize(4);
+
+        var response = 유저_이상형타입_수정_요청(request);
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        response.andExpect(jsonPath("message").value("이상형타입은 최대 3개를 골라주세요"));
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("이상형타입 수정 api 호출 (실패) - 이상형 리스트가 null 이어서는 안된다.")
+    void updateIdealType_notNull() throws Exception {
+
+        var response = 유저_이상형타입_수정_요청(new ModifiedIdealTypeRequest(null));
+
+        response.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        response.andExpect(jsonPath("message").value("idealTypeList 는 null 이어서는 안됩니다."));
     }
 }
