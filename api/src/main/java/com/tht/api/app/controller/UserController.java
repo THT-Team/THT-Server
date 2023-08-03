@@ -5,6 +5,7 @@ import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
+import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -95,6 +96,15 @@ public class UserController {
         @RequestBody @Valid final ModifiedIdealTypeRequest request) {
 
         userFacade.modifiedIdealType(user.getUserUuid(), request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/location")
+    public ResponseEntity<Object> updateMyLocation(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserLocationRequest request) {
+
+        userFacade.updateLocation(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
     }
 }
