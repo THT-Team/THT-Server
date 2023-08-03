@@ -26,4 +26,11 @@ public class UserLocationInfoService {
                 () -> UserCustomException.notExistLocationInfo(userUuid)
             );
     }
+
+    public void update(final String userUuid, final String address, final Integer regionCode,
+        final float lat, final float lon) {
+
+        UserLocationInfo userLocationInfo = findByUserUuid(userUuid);
+        userLocationInfo.updateLocation(address, regionCode, lat, lon);
+    }
 }

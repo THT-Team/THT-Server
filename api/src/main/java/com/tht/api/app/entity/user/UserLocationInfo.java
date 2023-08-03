@@ -62,4 +62,13 @@ public class UserLocationInfo {
             .lon(lon)
             .build();
     }
+
+    public void updateLocation(final String address, final Integer regionCode, final float lat,
+        final float lon) {
+
+        this.address = address;
+        this.regionCode = regionCode;
+        this.lat = lat;
+        this.lon = lon;
+    }
 }

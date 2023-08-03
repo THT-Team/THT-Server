@@ -7,6 +7,7 @@ import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
+import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
@@ -135,5 +136,12 @@ public class UserFacade {
 
         idealTypeService.existIn(request.idealTypeList());
         userIdealTypeService.update(userUuid, request.idealTypeList());
+    }
+
+    @Transactional
+    public void updateLocation(final String userUuid, final UserLocationRequest request) {
+
+        userLocationInfoService.update(userUuid, request.address(), request.regionCode(),
+            request.lat(), request.lon());
     }
 }

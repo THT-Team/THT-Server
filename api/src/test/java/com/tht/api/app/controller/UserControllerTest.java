@@ -22,11 +22,13 @@ import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
 import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
 import com.tht.api.app.fixture.user.UserDetailResponseFixture;
+import com.tht.api.app.fixture.user.UserLocationRequestFixture;
 import com.tht.api.app.fixture.user.UserRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -425,5 +427,44 @@ class UserControllerTest extends ControllerTestConfig {
 
         response.andExpect(MockMvcResultMatchers.status().isBadRequest());
         response.andExpect(jsonPath("message").value("idealTypeList 는 null 이어서는 안됩니다."));
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("내 위치 업데이트 api docs")
+    void updateLocation() throws Exception {
+
+        //given
+        UserLocationRequest request = UserLocationRequestFixture.make();
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        var resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/user/location")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody))
+            .andDo(
+                document("유저 내 위치 수정 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저의 위치 주소를 업데이트")
+                            .requestFields(
+                                fieldWithPath("address").description("주소"),
+                                fieldWithPath("regionCode").description("자치구 코드"),
+                                fieldWithPath("lat").description("위도 좌표"),
+                                fieldWithPath("lon").description("경도 좌표")
+                            )
+                            .responseFields()
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
