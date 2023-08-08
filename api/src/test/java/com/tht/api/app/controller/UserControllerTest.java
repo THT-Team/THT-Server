@@ -23,6 +23,7 @@ import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
@@ -466,5 +467,48 @@ class UserControllerTest extends ControllerTestConfig {
             );
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("유저 이름 업데이트 docs")
+    void updateName() throws Exception {
+
+        //given
+        String name = "수정할 유저 이름";
+        UserLoginResponse response = new UserLoginResponse(
+            "access-token",
+            14123980
+        );
+
+        when(userFacade.updateNickName(any(), anyString())).thenReturn(response);
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.patch("/user/name/{nick-name}", name)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 이름(닉네임) 수정 api docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저 - 마이페이지")
+                        .description("마이페이지 유저 이름(닉네임) 수정")
+                        .pathParameters(
+                            parameterWithName("nick-name").description("수정할 유저 이름")
+                        )
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("accessToken").description("액세스 토큰"),
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간 (unix time stamp)")
+                        )
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }

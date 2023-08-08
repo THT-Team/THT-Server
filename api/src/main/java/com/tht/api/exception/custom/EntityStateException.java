@@ -9,7 +9,7 @@ public class EntityStateException extends RuntimeException {
     public EntityStateException (final String message){ super(message);}
 
     public static EntityStateException duplicateColumnOf(final String entity, final String column) {
-        return new EntityStateException (entity + " 엔티티의 " + column + " 값이 이미 존재합니다.\n");
+        return new EntityStateException (entity + " 엔티티의 " + column + " 값이 이미 존재합니다.");
     }
 
     public static EntityStateException doNotExistOf(final String entity) {
