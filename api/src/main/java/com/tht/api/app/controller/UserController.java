@@ -1,14 +1,15 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
-import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
+import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
+import com.tht.api.app.facade.user.response.UserLoginResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -106,5 +107,13 @@ public class UserController {
 
         userFacade.updateLocation(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/name/{nick-name}")
+    public ResponseEntity<UserLoginResponse> updateNickName(
+        @AuthenticationPrincipal final User user,
+        @PathVariable(name = "nick-name") final String updateNickName) {
+
+        return ResponseEntity.ok(userFacade.updateNickName(user, updateNickName));
     }
 }

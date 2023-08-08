@@ -1,17 +1,19 @@
 package com.tht.api.app.facade.user;
 
+import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
+import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.mapper.InterestMapper;
@@ -46,6 +48,8 @@ public class UserFacade {
     private final UserService userService;
     private final InterestService interestService;
     private final IdealTypeService idealTypeService;
+    private final TokenProvider tokenProvider;
+
 
     public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
@@ -143,5 +147,13 @@ public class UserFacade {
 
         userLocationInfoService.update(userUuid, request.address(), request.regionCode(),
             request.lat(), request.lon());
+    }
+
+    @Transactional
+    public UserLoginResponse updateNickName(final User user, final String updateNickName) {
+
+        User updateUserInfo = userService.updateName(user, updateNickName);
+
+        return tokenProvider.generateJWT(updateUserInfo).toLoginResponse();
     }
 }

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 @Service
 @RequiredArgsConstructor
@@ -21,12 +22,15 @@ public class UserService {
                 "phoneNumber");
         }
 
-        if (userRepository.existsByUsername(user.getUsername())) {
-            throw EntityStateException.duplicateColumnOf(user.getClass().getSimpleName(),
-                "username");
-        }
+        checkDuplicateName(user.getUsername());
 
-        return userRepository.save(user);
+        return save(user);
+    }
+
+    private void checkDuplicateName(final String name) {
+        if (userRepository.existsByUsername(name)) {
+            throw EntityStateException.duplicateColumnOf("user", "username");
+        }
     }
 
     public boolean isExistUserName(final String nickName) {
@@ -49,5 +53,29 @@ public class UserService {
 
     public void updateEmail(final String userUuid, final String email) {
         findByUserUuidForAuthToken(userUuid).updateEmail(email);
+    }
+
+    public User save(final User user) {
+        return userRepository.save(user);
+    }
+
+    public User updateName(final User user, final String updateNickName) {
+
+        validateUpdateName(updateNickName);
+
+        if (user.isEqualsName(updateNickName)) {
+            return user;
+        }
+
+        checkDuplicateName(updateNickName);
+        user.updateName(updateNickName);
+
+        return save(user);
+    }
+
+    private void validateUpdateName(final String name) {
+        if (!StringUtils.hasText(name)) {
+            throw new IllegalArgumentException("수정할 이름은 공백이어서는 안됩니다.");
+        }
     }
 }

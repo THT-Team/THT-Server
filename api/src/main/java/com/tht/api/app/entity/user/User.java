@@ -74,9 +74,6 @@ public class User extends Auditable {
     @Convert(converter = UserRoleConverter.class)
     private UserRole userRole;
 
-//    @Column(name = "last_login_at")
-//    private LocalDateTime lastLoginAt;
-
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
         final LocalDate birthDay, final String phoneNumber,
@@ -146,5 +143,13 @@ public class User extends Auditable {
     public void updateEmail(final String email) {
         validEmailFormat(email);
         this.email = email;
+    }
+
+    public void updateName(final String updateNickName) {
+        this.username = updateNickName;
+    }
+
+    public boolean isEqualsName(final String updateNickName) {
+        return username.equals(updateNickName);
     }
 }
