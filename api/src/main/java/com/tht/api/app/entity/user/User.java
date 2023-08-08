@@ -152,4 +152,8 @@ public class User extends Auditable {
     public boolean isEqualsName(final String updateNickName) {
         return username.equals(updateNickName);
     }
+
+    public void updateIntroduction(final String introduction) {
+        this.introduction = introduction;
+    }
 }

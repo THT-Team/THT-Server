@@ -156,4 +156,9 @@ public class UserFacade {
 
         return tokenProvider.generateJWT(updateUserInfo).toLoginResponse();
     }
+
+    @Transactional
+    public void updateIntroduction(User user, String introduction) {
+        userService.updateIntroduction(user, introduction);
+    }
 }

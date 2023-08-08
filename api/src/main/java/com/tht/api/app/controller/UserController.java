@@ -5,6 +5,7 @@ import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.UserIntroductionRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
@@ -115,5 +116,14 @@ public class UserController {
         @PathVariable(name = "nick-name") final String updateNickName) {
 
         return ResponseEntity.ok(userFacade.updateNickName(user, updateNickName));
+    }
+
+    @PatchMapping("/user/introduction")
+    public ResponseEntity<Object> updateSelfIntroduce(
+        @AuthenticationPrincipal final User user,
+        @RequestBody final UserIntroductionRequest introduction) {
+
+        userFacade.updateIntroduction(user, introduction.introduction());
+        return ResponseEntity.ok().build();
     }
 }

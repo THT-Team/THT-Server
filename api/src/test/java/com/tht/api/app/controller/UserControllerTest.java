@@ -22,6 +22,7 @@ import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.request.UserIntroductionRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
@@ -510,5 +511,41 @@ class UserControllerTest extends ControllerTestConfig {
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
 
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("자기소개 업데이트 docs")
+    void updateIntroduction() throws Exception {
+
+        //given
+        UserIntroductionRequest request = new UserIntroductionRequest("업데이트할 자기소개 내용");
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        var resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/user/introduction")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody))
+            .andDo(
+                document("유저 자기소개 업데이트 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저의 자기소개 내용을 업데이트")
+                            .requestFields(
+                                fieldWithPath("introduction").description("수정할 자기소개 내용")
+                            )
+                            .responseFields()
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

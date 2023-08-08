@@ -78,4 +78,9 @@ public class UserService {
             throw new IllegalArgumentException("수정할 이름은 공백이어서는 안됩니다.");
         }
     }
+
+    public void updateIntroduction(final User user, final String introduction) {
+        user.updateIntroduction(introduction);
+        save(user);
+    }
 }
