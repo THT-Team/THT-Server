@@ -3,7 +3,6 @@ package com.tht.api.app.facade.user.response;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.tht.api.app.entity.enums.SNSType;
-import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

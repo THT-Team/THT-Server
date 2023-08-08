@@ -1,6 +1,7 @@
 package com.tht.api.app.facade.user;
 
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
@@ -9,6 +10,7 @@ import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
@@ -155,5 +157,28 @@ public class UserFacade {
         User updateUserInfo = userService.updateName(user, updateNickName);
 
         return tokenProvider.generateJWT(updateUserInfo).toLoginResponse();
+    }
+
+    @Transactional
+    public void updateIntroduction(final User user, final String introduction) {
+        userService.updateIntroduction(user, introduction);
+    }
+
+    @Transactional
+    public void updateUserProfilePhoto(
+        final String userUuid,
+        final List<UserProfilePhotoRequest> userProfilePhotoList) {
+
+        userProfilePhotoService.updateAll(
+            userUuid,
+            userProfilePhotoList.stream()
+                .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
+                .toList()
+        );
+    }
+
+    @Transactional
+    public void updatePreferGender(final User user, final Gender gender) {
+        userService.updatePreferGender(user, gender);
     }
 }

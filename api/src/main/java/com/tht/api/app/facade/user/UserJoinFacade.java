@@ -5,7 +5,7 @@ import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
-import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
+import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;

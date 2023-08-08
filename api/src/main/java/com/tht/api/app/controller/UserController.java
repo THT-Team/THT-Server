@@ -1,11 +1,13 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -116,4 +118,32 @@ public class UserController {
 
         return ResponseEntity.ok(userFacade.updateNickName(user, updateNickName));
     }
+
+    @PatchMapping("/user/introduction")
+    public ResponseEntity<Object> updateSelfIntroduce(
+        @AuthenticationPrincipal final User user,
+        @RequestBody final String introduction) {
+
+        userFacade.updateIntroduction(user, introduction);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/profile-photo")
+    public ResponseEntity<Object> updateProfileList(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserModifyProfilePhotoRequest request) {
+
+        userFacade.updateUserProfilePhoto(user.getUserUuid(), request.userProfilePhotoList());
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/preferred-gender/{gender}")
+    public ResponseEntity<Object> updatePreferGender(
+        @AuthenticationPrincipal final User user,
+        @PathVariable final Gender gender) {
+
+        userFacade.updatePreferGender(user, gender);
+        return ResponseEntity.ok().build();
+    }
+
 }
