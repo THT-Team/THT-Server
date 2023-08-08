@@ -156,4 +156,8 @@ public class User extends Auditable {
     public void updateIntroduction(final String introduction) {
         this.introduction = introduction;
     }
+
+    public void updatePreferGender(final Gender gender) {
+        this.preferGender = gender;
+    }
 }

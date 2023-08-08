@@ -19,6 +19,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
@@ -509,7 +510,9 @@ class UserControllerTest extends ControllerTestConfig {
                             fieldWithPath("accessToken").description("액세스 토큰"),
                             fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간 (unix time stamp)")
                         )
+                        .responseSchema(Schema.schema("ModifiedIdealTypeRequest"))
                         .build()
+
                 ))
         );
 
@@ -591,6 +594,39 @@ class UserControllerTest extends ControllerTestConfig {
                                 fieldWithPath("userProfilePhotoList[0].url").description("업데이트할 프로필 사진 url"),
                                 fieldWithPath("userProfilePhotoList[0].priority").description("업데이트할 프로필 사진 우선순위")
                             )
+                            .responseFields()
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("유저 선호성별 업데이트 docs")
+    void updatePreferGender() throws Exception {
+
+        //given
+        var resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/user/preferred-gender/{gender}", Gender.BISEXUAL.name())
+                    .header("Authorization", "Bearer {ACCESS_TOKEN")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    )
+            .andDo(
+                document("유저 선호성별 업데이트 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저의 선호성별을 업데이트")
+                            .pathParameters(
+                                parameterWithName("gender").description("선호 성별 [MALE, FEMALE, BISEXUAL]")
+                            )
+                            .requestFields()
                             .responseFields()
                             .build()
                     )

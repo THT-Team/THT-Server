@@ -1,6 +1,7 @@
 package com.tht.api.app.facade.user;
 
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
@@ -174,5 +175,10 @@ public class UserFacade {
                 .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
                 .toList()
         );
+    }
+
+    @Transactional
+    public void updatePreferGender(final User user, final Gender gender) {
+        userService.updatePreferGender(user, gender);
     }
 }

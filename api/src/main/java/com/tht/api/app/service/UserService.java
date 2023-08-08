@@ -1,5 +1,6 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.repository.user.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
@@ -81,6 +82,11 @@ public class UserService {
 
     public void updateIntroduction(final User user, final String introduction) {
         user.updateIntroduction(introduction);
+        save(user);
+    }
+
+    public void updatePreferGender(final User user, final Gender gender) {
+        user.updatePreferGender(gender);
         save(user);
     }
 }

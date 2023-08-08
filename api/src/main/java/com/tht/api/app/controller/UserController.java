@@ -1,5 +1,6 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
@@ -133,6 +134,15 @@ public class UserController {
         @RequestBody @Valid final UserModifyProfilePhotoRequest request) {
 
         userFacade.updateUserProfilePhoto(user.getUserUuid(), request.userProfilePhotoList());
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/preferred-gender/{gender}")
+    public ResponseEntity<Object> updatePreferGender(
+        @AuthenticationPrincipal final User user,
+        @PathVariable final Gender gender) {
+
+        userFacade.updatePreferGender(user, gender);
         return ResponseEntity.ok().build();
     }
 
