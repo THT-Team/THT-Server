@@ -9,6 +9,7 @@ import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
@@ -158,7 +159,20 @@ public class UserFacade {
     }
 
     @Transactional
-    public void updateIntroduction(User user, String introduction) {
+    public void updateIntroduction(final User user, final String introduction) {
         userService.updateIntroduction(user, introduction);
+    }
+
+    @Transactional
+    public void updateUserProfilePhoto(
+        final String userUuid,
+        final List<UserProfilePhotoRequest> userProfilePhotoList) {
+
+        userProfilePhotoService.updateAll(
+            userUuid,
+            userProfilePhotoList.stream()
+                .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
+                .toList()
+        );
     }
 }

@@ -22,8 +22,9 @@ import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.UserFacade;
-import com.tht.api.app.facade.user.request.UserIntroductionRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
+import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
@@ -32,6 +33,9 @@ import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
 import com.tht.api.app.fixture.user.UserDetailResponseFixture;
 import com.tht.api.app.fixture.user.UserLocationRequestFixture;
 import com.tht.api.app.fixture.user.UserRequestFixture;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -519,7 +523,9 @@ class UserControllerTest extends ControllerTestConfig {
     void updateIntroduction() throws Exception {
 
         //given
-        UserIntroductionRequest request = new UserIntroductionRequest("업데이트할 자기소개 내용");
+        String introduction = "업데이트할 자기소개 내용";
+        Map<String, String> request = new HashMap<>();
+        request.put("introduction", introduction);
 
         String requestBody = objectMapper.writeValueAsString(request);
 
@@ -539,6 +545,51 @@ class UserControllerTest extends ControllerTestConfig {
                             .description("유저의 자기소개 내용을 업데이트")
                             .requestFields(
                                 fieldWithPath("introduction").description("수정할 자기소개 내용")
+                            )
+                            .responseFields()
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("유저 프로필 사진 업데이트 docs")
+    void updateProfile() throws Exception {
+
+        //given
+        UserModifyProfilePhotoRequest request = new UserModifyProfilePhotoRequest(
+            List.of(
+                new UserProfilePhotoRequest("사진 url", 1),
+                new UserProfilePhotoRequest("사진 url", 2),
+                new UserProfilePhotoRequest("사진 url", 3)
+            )
+        );
+        
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        var resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/user/profile-photo")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody))
+            .andDo(
+                document("유저 프로필 사진 업데이트 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저의 프로필 사진을 업데이트")
+                            .requestFields(
+                                fieldWithPath("userProfilePhotoList").description("업데이트할 프로필 사진 리스트"),
+                                fieldWithPath("userProfilePhotoList[0].url").description("업데이트할 프로필 사진 url"),
+                                fieldWithPath("userProfilePhotoList[0].priority").description("업데이트할 프로필 사진 우선순위")
                             )
                             .responseFields()
                             .build()

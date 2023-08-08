@@ -23,4 +23,10 @@ public class UserProfilePhotoService {
     public List<UserProfilePhoto> findByUuid(final String userUuid) {
         return repository.findAllByUserUuid(userUuid);
     }
+
+    public List<UserProfilePhoto> updateAll(final String userUuid, final List<UserProfilePhoto> toList) {
+
+        repository.deleteAll(findByUuid(userUuid));
+        return createOf(toList);
+    }
 }

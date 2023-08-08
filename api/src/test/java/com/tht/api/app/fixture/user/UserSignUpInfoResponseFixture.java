@@ -1,7 +1,7 @@
 package com.tht.api.app.fixture.user;
 
 import com.tht.api.app.entity.enums.SNSType;
-import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
+import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
 import java.util.Arrays;
 import java.util.List;
 import lombok.AccessLevel;

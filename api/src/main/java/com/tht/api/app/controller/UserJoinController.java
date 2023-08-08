@@ -1,7 +1,7 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.facade.user.UserJoinFacade;
-import com.tht.api.app.facade.user.request.UserSignUpInfoResponse;
+import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;

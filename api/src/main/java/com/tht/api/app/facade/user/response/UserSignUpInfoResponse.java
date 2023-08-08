@@ -1,4 +1,4 @@
-package com.tht.api.app.facade.user.request;
+package com.tht.api.app.facade.user.response;
 
 import com.tht.api.app.entity.enums.SNSType;
 import java.util.Collection;

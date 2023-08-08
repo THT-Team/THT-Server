@@ -5,8 +5,8 @@ import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.request.UserIntroductionRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
+import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -121,9 +121,19 @@ public class UserController {
     @PatchMapping("/user/introduction")
     public ResponseEntity<Object> updateSelfIntroduce(
         @AuthenticationPrincipal final User user,
-        @RequestBody final UserIntroductionRequest introduction) {
+        @RequestBody final String introduction) {
 
-        userFacade.updateIntroduction(user, introduction.introduction());
+        userFacade.updateIntroduction(user, introduction);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/user/profile-photo")
+    public ResponseEntity<Object> updateProfileList(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserModifyProfilePhotoRequest request) {
+
+        userFacade.updateUserProfilePhoto(user.getUserUuid(), request.userProfilePhotoList());
+        return ResponseEntity.ok().build();
+    }
+
 }
