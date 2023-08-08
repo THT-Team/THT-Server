@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("/interestTest")
 public class InterestTestController {
     private final InterestTestFacade interestTestFacade;
-
+//test
     @GetMapping
     public ResponseEntity<List<InterestTestResponse>> getInterestTestList(){
         return ResponseEntity.ok(interestTestFacade.getInterestTestList());
