@@ -79,6 +79,8 @@ class UserJoinFacadeTest {
 
         //약관동의
         verify(userAgreementService).create(request.makeAgreementToEntity(any()));
+        //알림동의
+        verify(userAlarmAgreementService).create(anyString());
         //위치정보
         verify(userLocationService).create(request.makeUserLocationToEntity(any()));
         //사진
