@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -21,34 +22,35 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "user_agreement")
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
+@DynamicUpdate
 public class UserAgreement {
 
     @Id
-    @Column(name = "idx")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
-    @Column(name = "user_uuid")
+    @Column
     private String userUuid;
 
-    @Column(name = "service_use_agree")
+    @Column
     private boolean serviceUseAgree;
 
-    @Column(name = "personal_privacy_info_agree")
+    @Column
     private boolean personalPrivacyInfoAgree;
 
-    @Column(name = "location_service_agree")
+    @Column
     private boolean locationServiceAgree;
 
-    @Column(name = "marketing_agree")
+    @Column
     private boolean marketingAgree;
 
     @CreatedDate
-    @Column(name = "created_at")
+    @Column
     private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "last_modified_at")
+    @Column
     private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
@@ -77,4 +79,7 @@ public class UserAgreement {
             .build();
     }
 
+    public void modifyMarketingAgree(final boolean marketingAlarm) {
+        this.marketingAgree = marketingAlarm;
+    }
 }
