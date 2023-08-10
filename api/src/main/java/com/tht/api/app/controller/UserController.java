@@ -6,6 +6,7 @@ import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
@@ -146,4 +147,12 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/user/alarm-agreement")
+    public ResponseEntity<Object> updateUserAlarm(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserAlarmAgreementModifyRequest request) {
+
+        userFacade.updatePersonalAlarmAgree(user.getUserUuid(), request);
+        return ResponseEntity.ok().build();
+    }
 }

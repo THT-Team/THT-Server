@@ -7,10 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
@@ -18,10 +21,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
+@DynamicUpdate
 public class UserAlarmAgreement {
 
     @Id
-    @Column(name = "idx")
+    @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
 
@@ -39,6 +43,10 @@ public class UserAlarmAgreement {
 
     @Column
     private boolean talkAlarm;
+
+    @LastModifiedDate
+    @Column
+    private LocalDateTime lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
     private UserAlarmAgreement(String userUuid, boolean newMatchSuccessAlarm, boolean likeMeAlarm,
@@ -60,5 +68,14 @@ public class UserAlarmAgreement {
             .newConversationAlarm(true)
             .talkAlarm(true)
             .build();
+    }
+
+    public void modify(final boolean newMatchSuccessAlarm, final boolean likeMeAlarm,
+        final boolean newConversationAlarm, final boolean talkAlarm) {
+
+        this.newMatchSuccessAlarm = newMatchSuccessAlarm;
+        this.likeMeAlarm = likeMeAlarm;
+        this.newConversationAlarm = newConversationAlarm;
+        this.talkAlarm = talkAlarm;
     }
 }

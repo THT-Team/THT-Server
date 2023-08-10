@@ -20,16 +20,17 @@ import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
-import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.main.MainScreenResponseFixture;
 import com.tht.api.app.fixture.main.MainScreenUserInfoRequestFixture;
+import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
 import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
 import com.tht.api.app.fixture.user.UserDetailResponseFixture;
 import com.tht.api.app.fixture.user.UserLocationRequestFixture;
@@ -628,6 +629,49 @@ class UserControllerTest extends ControllerTestConfig {
                             )
                             .requestFields()
                             .responseFields()
+                            .build()
+                    )
+                )
+            );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @WithCustomMockUser
+    @Test
+    @DisplayName("유저 알림 설정 업데이트 docs")
+    void updateUserAlarm() throws Exception {
+
+        UserAlarmAgreementModifyRequest request = new UserAlarmAgreementModifyRequest(true, true,
+            true, true, true);
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        //given
+        var resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.patch("/user/alarm-agreement")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody)
+            )
+            .andDo(
+                document("유저 알림 설정 업데이트 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저의 알림 설정 업데이트")
+                            .requestFields(
+                                fieldWithPath("marketingAlarm").description("마케팅 정보 수신 동의 여부"),
+                                fieldWithPath("newMatchSuccessAlarm").description("새로운 매치시 알림 동의 여부"),
+                                fieldWithPath("likeMeAlarm").description("나를 좋아요 알림 동의 여부"),
+                                fieldWithPath("newConversationAlarm").description("새로운 대화 알림 동의 여부"),
+                                fieldWithPath("talkAlarm").description("기존 대화 알림 동의 여부")
+                            )
+                            .responseFields()
+                            .requestSchema(Schema.schema("UserAlarmAgreementModifyRequest"))
                             .build()
                     )
                 )

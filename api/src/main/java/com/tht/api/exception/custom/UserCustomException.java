@@ -33,4 +33,8 @@ public class UserCustomException extends RuntimeException {
     public static UserCustomException noneValidEmailFormat() {
         return new UserCustomException("이메일 양식이 맞지 않습니다.");
     }
+
+    public static UserCustomException notExistAlarmInfo(final String uuid) {
+        return new UserCustomException("uuid : " + uuid + " 유저의 알림 정보가 존재하지 않습니다.");
+    }
 }

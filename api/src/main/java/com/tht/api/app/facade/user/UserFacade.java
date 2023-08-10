@@ -9,6 +9,7 @@ import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
+import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
@@ -22,6 +23,8 @@ import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import com.tht.api.app.service.IdealTypeService;
 import com.tht.api.app.service.InterestService;
+import com.tht.api.app.service.UserAgreementService;
+import com.tht.api.app.service.UserAlarmAgreementService;
 import com.tht.api.app.service.UserBlockService;
 import com.tht.api.app.service.UserDailyFallingService;
 import com.tht.api.app.service.UserIdealTypeService;
@@ -51,7 +54,8 @@ public class UserFacade {
     private final InterestService interestService;
     private final IdealTypeService idealTypeService;
     private final TokenProvider tokenProvider;
-
+    private final UserAlarmAgreementService userAlarmAgreementService;
+    private final UserAgreementService userAgreementService;
 
     public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
@@ -180,5 +184,15 @@ public class UserFacade {
     @Transactional
     public void updatePreferGender(final User user, final Gender gender) {
         userService.updatePreferGender(user, gender);
+    }
+
+    @Transactional
+    public void updatePersonalAlarmAgree(final String userUuid,
+        final UserAlarmAgreementModifyRequest request) {
+
+        userAgreementService.modifyMarketingAgree(userUuid, request.marketingAlarm());
+        userAlarmAgreementService.update(userUuid, request.newMatchSuccessAlarm(),
+            request.likeMeAlarm(), request.newConversationAlarm(),
+            request.talkAlarm());
     }
 }
