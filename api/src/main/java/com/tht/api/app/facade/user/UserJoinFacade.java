@@ -5,13 +5,14 @@ import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
-import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
+import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
 import com.tht.api.app.service.UserAgreementService;
+import com.tht.api.app.service.UserAlarmAgreementService;
 import com.tht.api.app.service.UserDeviceKeyService;
 import com.tht.api.app.service.UserIdealTypeService;
 import com.tht.api.app.service.UserInterestsService;
@@ -39,6 +40,7 @@ public class UserJoinFacade {
     private final UserIdealTypeService userIdealTypeService;
     private final UserDeviceKeyService userDeviceKeyService;
     private final UserSnsService userSnsService;
+    private final UserAlarmAgreementService userAlarmAgreementService;
 
     public AuthNumberResponse issueAuthenticationNumber(final String phoneNumber) {
 
@@ -55,7 +57,9 @@ public class UserJoinFacade {
 
     public UserSignUpResponse signUp(final UserSignUpRequest request) {
         final User user = userService.createUser(request.toEntity());
+
         userAgreementService.create(request.makeAgreementToEntity(user.getUserUuid()));
+        userAlarmAgreementService.create(user.getUserUuid());
         userLocationInfoService.create(request.makeUserLocationToEntity(user.getUserUuid()));
         userProfilePhotoService.createOf(request.makeUserProfilePhotoList(user.getUserUuid()));
         userInterestsService.createOf(request.makeUserInterestsList(user.getUserUuid()));
