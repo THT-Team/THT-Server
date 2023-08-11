@@ -10,6 +10,7 @@ import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
+import com.tht.api.app.facade.user.request.UserWithDrawRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
@@ -153,6 +154,16 @@ public class UserController {
         @RequestBody @Valid final UserAlarmAgreementModifyRequest request) {
 
         userFacade.updatePersonalAlarmAgree(user.getUserUuid(), request);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/user/account-withdrawal")
+    public ResponseEntity<Object> withDraw(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserWithDrawRequest request
+    ) {
+
+        userFacade.withDraw(user, request);
         return ResponseEntity.ok().build();
     }
 }

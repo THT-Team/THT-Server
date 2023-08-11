@@ -13,6 +13,7 @@ import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
+import com.tht.api.app.facade.user.request.UserWithDrawRequest;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -194,5 +195,13 @@ public class UserFacade {
         userAlarmAgreementService.update(userUuid, request.newMatchSuccessAlarm(),
             request.likeMeAlarm(), request.newConversationAlarm(),
             request.talkAlarm());
+    }
+
+    @Transactional
+    public void withDraw(final User user, final UserWithDrawRequest request) {
+
+        userService.withDraw(user);
+        //유저 탈퇴 로그
+
     }
 }

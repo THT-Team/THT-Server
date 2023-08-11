@@ -89,4 +89,9 @@ public class UserService {
         user.updatePreferGender(gender);
         save(user);
     }
+
+    public void withDraw(final User user) {
+        user.accountWithdrawal();
+        save(user);
+    }
 }

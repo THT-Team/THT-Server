@@ -18,7 +18,7 @@ public class Auditable {
 
     @Column
     @Enumerated(EnumType.STRING)
-    private EntityState state = EntityState.ACTIVE;
+    protected EntityState state = EntityState.ACTIVE;
 
     @CreatedDate
     @Column(name = "created_at")
