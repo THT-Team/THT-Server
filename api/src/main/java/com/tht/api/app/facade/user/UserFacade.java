@@ -197,11 +197,13 @@ public class UserFacade {
             request.talkAlarm());
     }
 
+    //todo check list
+    // - 메인 스크린에 매칭 안되야 됨
+    // - 채팅 방 disable 되야 됨
     @Transactional
     public void withDraw(final User user, final UserWithDrawRequest request) {
 
-        userService.withDraw(user);
-        //유저 탈퇴 로그
+        userService.withDraw(user, request.reason(), request.feedBack());
 
     }
 }
