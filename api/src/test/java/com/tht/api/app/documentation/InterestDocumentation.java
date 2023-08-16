@@ -1,4 +1,4 @@
-package com.tht.api.app.unit.controller;
+package com.tht.api.app.documentation;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.Mockito.when;
@@ -11,9 +11,9 @@ import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.InterestController;
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.interest.InterestFacade;
 import com.tht.api.app.facade.interest.response.InterestResponse;
+import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(InterestController.class)
-class InterestControllerTest extends ControllerTestConfig {
+class InterestDocumentation extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/interests";
 
@@ -33,7 +33,7 @@ class InterestControllerTest extends ControllerTestConfig {
     InterestFacade interestFacade;
 
     @Test
-    @DisplayName("관심사 목록 리스트 조회")
+    @DisplayName("관심사 목록 리스트 조회 api - docs")
     void getInterestAll() throws Exception {
 
         //given

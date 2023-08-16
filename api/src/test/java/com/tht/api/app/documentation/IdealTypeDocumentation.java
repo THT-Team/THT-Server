@@ -1,4 +1,4 @@
-package com.tht.api.app.unit.controller;
+package com.tht.api.app.documentation;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.BDDMockito.when;
@@ -25,7 +25,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(IdealTypeController.class)
-class IdealTypeControllerTest extends ControllerTestConfig {
+class IdealTypeDocumentation extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/ideal-types";
 
@@ -33,7 +33,7 @@ class IdealTypeControllerTest extends ControllerTestConfig {
     IdealTypeFacade idealTypeFacade;
 
     @Test
-    @DisplayName("이상형 목록 리스트 조회")
+    @DisplayName("이상형 목록 리스트 조회 api - docs")
     void getInterestAll() throws Exception {
 
         //given

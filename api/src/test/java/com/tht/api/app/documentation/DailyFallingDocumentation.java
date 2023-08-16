@@ -1,4 +1,4 @@
-package com.tht.api.app.unit.controller;
+package com.tht.api.app.documentation;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -27,7 +27,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(DailyFallingController.class)
-class DailyFallingControllerTest extends ControllerTestConfig {
+class DailyFallingDocumentation extends ControllerTestConfig {
 
     @MockBean
     DailyFallingFacade dailyFallingFacade;

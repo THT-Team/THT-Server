@@ -1,4 +1,4 @@
-package com.tht.api.app.unit.controller;
+package com.tht.api.app.documentation;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -31,7 +31,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 @WebMvcTest(ChatController.class)
-class ChatControllerTest extends ControllerTestConfig {
+class ChatDocumentation extends ControllerTestConfig {
 
     @MockBean
     ChatFacade chatFacade;
