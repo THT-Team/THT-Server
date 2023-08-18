@@ -2,6 +2,8 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
+import com.tht.api.app.entity.user.UserWithDrawLog;
+import com.tht.api.app.repository.user.UserWithDrawLogRepository;
 import com.tht.api.app.repository.user.UserRepository;
 import com.tht.api.exception.custom.EntityStateException;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.util.StringUtils;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserWithDrawLogRepository userWithDrawLogRepository;
 
     public User createUser(final User user) {
         if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
@@ -88,5 +91,12 @@ public class UserService {
     public void updatePreferGender(final User user, final Gender gender) {
         user.updatePreferGender(gender);
         save(user);
+    }
+
+    public void withDraw(final User user, final String reason, final String feedBack) {
+        user.accountWithdrawal();
+        save(user);
+
+        userWithDrawLogRepository.save(UserWithDrawLog.of(reason, feedBack));
     }
 }

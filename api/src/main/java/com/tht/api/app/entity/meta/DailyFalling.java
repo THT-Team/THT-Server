@@ -7,8 +7,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "daily_falling")
 public class DailyFalling extends Auditable {
 
@@ -25,4 +31,8 @@ public class DailyFalling extends Auditable {
     @Column(name = "talk_issue")
     private String talkIssue;
 
+    public static DailyFalling of(int talkKeywordIdx, int activeTimeTableIdx, String talkIssue) {
+
+        return new DailyFalling(null, talkKeywordIdx, activeTimeTableIdx, talkIssue);
+    }
 }

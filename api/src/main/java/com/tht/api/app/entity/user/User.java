@@ -2,6 +2,7 @@ package com.tht.api.app.entity.user;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.Auditable;
+import com.tht.api.app.entity.enums.EntityState;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.UserRole;
 import com.tht.api.app.entity.enums.converter.GenderConverter;
@@ -159,5 +160,9 @@ public class User extends Auditable {
 
     public void updatePreferGender(final Gender gender) {
         this.preferGender = gender;
+    }
+
+    public void accountWithdrawal() {
+        this.state = EntityState.DELETED;
     }
 }
