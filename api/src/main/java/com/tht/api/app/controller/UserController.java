@@ -3,7 +3,6 @@ package com.tht.api.app.controller;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.UserFacade;
-import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
@@ -11,13 +10,14 @@ import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.request.UserWithDrawRequest;
-import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,15 +31,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final UserFacade userFacade;
-
-    @PostMapping("/main/daily-falling/users")
-    public ResponseEntity<MainScreenResponse> getMainScreenUserList(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final MainScreenUserInfoRequest request) {
-
-        return ResponseEntity.ok(
-            userFacade.findAllToDayFallingUserList(user.getUserUuid(), request));
-    }
 
     @PostMapping("/user/report")
     public ResponseEntity<Object> reportUser(
@@ -157,13 +148,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/user/account-withdrawal")
+    @DeleteMapping("/user/account-withdrawal")
     public ResponseEntity<Object> withDraw(
         @AuthenticationPrincipal final User user,
         @RequestBody @Valid final UserWithDrawRequest request
     ) {
 
         userFacade.withDraw(user, request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
