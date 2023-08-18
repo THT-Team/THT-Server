@@ -6,6 +6,10 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -23,6 +27,7 @@ import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
+import com.tht.api.app.facade.user.request.UserWithDrawRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import com.tht.api.app.unit.controller.config.WithCustomMockUser;
@@ -40,7 +45,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -59,7 +63,7 @@ class UserDocumentation extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.post("/user/report")
+            post("/user/report")
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -96,7 +100,7 @@ class UserDocumentation extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.post("/user/block/{block-user-uuid}", userUuid)
+            post("/user/block/{block-user-uuid}", userUuid)
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -134,7 +138,7 @@ class UserDocumentation extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.get("/user")
+            get("/user")
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -187,7 +191,7 @@ class UserDocumentation extends ControllerTestConfig {
         String phoneNumber = "01032107781";
 
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.patch("/user/phone-number/{phone-number}", phoneNumber)
+            patch("/user/phone-number/{phone-number}", phoneNumber)
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -220,7 +224,7 @@ class UserDocumentation extends ControllerTestConfig {
         String email = "happy@naver.com";
 
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.patch("/user/email/{email}", email)
+            patch("/user/email/{email}", email)
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -316,7 +320,7 @@ class UserDocumentation extends ControllerTestConfig {
         String requestBody = objectMapper.writeValueAsString(request);
 
         var resultActions = mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/user/location")
+                patch("/user/location")
                     .header("Authorization", "Bearer {ACCESS_TOKEN")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
@@ -359,7 +363,7 @@ class UserDocumentation extends ControllerTestConfig {
 
         //then
         ResultActions resultActions = mockMvc.perform(
-            RestDocumentationRequestBuilders.patch("/user/name/{nick-name}", name)
+            patch("/user/name/{nick-name}", name)
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -377,7 +381,8 @@ class UserDocumentation extends ControllerTestConfig {
                         .requestFields()
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간 (unix time stamp)")
+                            fieldWithPath("accessTokenExpiresIn").description(
+                                "액세스 토큰 만료시간 (unix time stamp)")
                         )
                         .responseSchema(Schema.schema("ModifiedIdealTypeRequest"))
                         .build()
@@ -402,7 +407,7 @@ class UserDocumentation extends ControllerTestConfig {
         String requestBody = objectMapper.writeValueAsString(request);
 
         var resultActions = mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/user/introduction")
+                patch("/user/introduction")
                     .header("Authorization", "Bearer {ACCESS_TOKEN")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
@@ -441,11 +446,11 @@ class UserDocumentation extends ControllerTestConfig {
                 new UserProfilePhotoRequest("사진 url", 3)
             )
         );
-        
+
         String requestBody = objectMapper.writeValueAsString(request);
 
         var resultActions = mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/user/profile-photo")
+                patch("/user/profile-photo")
                     .header("Authorization", "Bearer {ACCESS_TOKEN")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
@@ -459,9 +464,12 @@ class UserDocumentation extends ControllerTestConfig {
                             .tag("유저 - 마이페이지")
                             .description("유저의 프로필 사진을 업데이트")
                             .requestFields(
-                                fieldWithPath("userProfilePhotoList").description("업데이트할 프로필 사진 리스트"),
-                                fieldWithPath("userProfilePhotoList[0].url").description("업데이트할 프로필 사진 url"),
-                                fieldWithPath("userProfilePhotoList[0].priority").description("업데이트할 프로필 사진 우선순위")
+                                fieldWithPath("userProfilePhotoList").description(
+                                    "업데이트할 프로필 사진 리스트"),
+                                fieldWithPath("userProfilePhotoList[0].url").description(
+                                    "업데이트할 프로필 사진 url"),
+                                fieldWithPath("userProfilePhotoList[0].priority").description(
+                                    "업데이트할 프로필 사진 우선순위")
                             )
                             .responseFields()
                             .build()
@@ -479,11 +487,11 @@ class UserDocumentation extends ControllerTestConfig {
 
         //given
         var resultActions = mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/user/preferred-gender/{gender}", Gender.BISEXUAL.name())
+                patch("/user/preferred-gender/{gender}", Gender.BISEXUAL.name())
                     .header("Authorization", "Bearer {ACCESS_TOKEN")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
-                    )
+            )
             .andDo(
                 document("유저 선호성별 업데이트 api docs",
                     preprocessRequest(prettyPrint()),
@@ -493,7 +501,8 @@ class UserDocumentation extends ControllerTestConfig {
                             .tag("유저 - 마이페이지")
                             .description("유저의 선호성별을 업데이트")
                             .pathParameters(
-                                parameterWithName("gender").description("선호 성별 [MALE, FEMALE, BISEXUAL]")
+                                parameterWithName("gender").description(
+                                    "선호 성별 [MALE, FEMALE, BISEXUAL]")
                             )
                             .requestFields()
                             .responseFields()
@@ -517,7 +526,7 @@ class UserDocumentation extends ControllerTestConfig {
 
         //given
         var resultActions = mockMvc.perform(
-                RestDocumentationRequestBuilders.patch("/user/alarm-agreement")
+                patch("/user/alarm-agreement")
                     .header("Authorization", "Bearer {ACCESS_TOKEN")
                     .contentType(MediaType.APPLICATION_JSON)
                     .accept(MediaType.APPLICATION_JSON)
@@ -533,9 +542,11 @@ class UserDocumentation extends ControllerTestConfig {
                             .description("유저의 알림 설정 업데이트")
                             .requestFields(
                                 fieldWithPath("marketingAlarm").description("마케팅 정보 수신 동의 여부"),
-                                fieldWithPath("newMatchSuccessAlarm").description("새로운 매치시 알림 동의 여부"),
+                                fieldWithPath("newMatchSuccessAlarm").description(
+                                    "새로운 매치시 알림 동의 여부"),
                                 fieldWithPath("likeMeAlarm").description("나를 좋아요 알림 동의 여부"),
-                                fieldWithPath("newConversationAlarm").description("새로운 대화 알림 동의 여부"),
+                                fieldWithPath("newConversationAlarm").description(
+                                    "새로운 대화 알림 동의 여부"),
                                 fieldWithPath("talkAlarm").description("기존 대화 알림 동의 여부")
                             )
                             .responseFields()
@@ -546,5 +557,44 @@ class UserDocumentation extends ControllerTestConfig {
             );
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @DisplayName("계정탈퇴 api docs")
+    @WithCustomMockUser
+    @Test
+    void deleteUserDocs() throws Exception {
+
+        UserWithDrawRequest request = new UserWithDrawRequest("탈퇴사유", "피드백");
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        var result = mockMvc.perform(
+                delete("/user/account-withdrawal")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody)
+            )
+            .andDo(
+                document("유저 계정 탈퇴 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저 계정 탈퇴 요청")
+                            .requestFields(
+                                fieldWithPath("reason").description("탈퇴 사유"),
+                                fieldWithPath("feedBack").description("피드백")
+                            )
+                            .responseFields()
+                            .requestSchema(Schema.schema("UserWithDrawRequest"))
+                            .build()
+                    )
+                )
+            );
+
+        result.andExpect(MockMvcResultMatchers.status().isNoContent());
+
     }
 }
