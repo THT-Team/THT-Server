@@ -12,7 +12,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.tht.api.app.controller.UserController;
+import com.tht.api.app.controller.MainController;
 import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import com.tht.api.app.unit.controller.config.WithCustomMockUser;
@@ -27,8 +27,8 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-@WebMvcTest(UserController.class)
-public class MainDocumentation extends ControllerTestConfig {
+@WebMvcTest(MainController.class)
+class MainDocumentation extends ControllerTestConfig {
 
     @MockBean
     UserFacade userFacade;
