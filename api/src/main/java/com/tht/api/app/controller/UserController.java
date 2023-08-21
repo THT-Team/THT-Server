@@ -6,11 +6,13 @@ import com.tht.api.app.facade.user.UserFacade;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
+import com.tht.api.app.facade.user.request.UserFriendContactRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserReportRequest;
 import com.tht.api.app.facade.user.request.UserWithDrawRequest;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
+import com.tht.api.app.facade.user.response.UserFriendContactResponse;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -156,5 +158,25 @@ public class UserController {
 
         userFacade.withDraw(user, request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/user/friend-contact-list")
+    public ResponseEntity<UserFriendContactResponse> getMyFriendListCount(@AuthenticationPrincipal final User user) {
+
+        return ResponseEntity.ok(
+            new UserFriendContactResponse(userFacade.getFriendCount(user.getUserUuid()))
+        );
+    }
+
+    @PostMapping("/user/friend-contact-list")
+    public ResponseEntity<UserFriendContactResponse> updateMyFriendContactList(
+        @AuthenticationPrincipal final User user,
+        @RequestBody @Valid final UserFriendContactRequest request
+    ) {
+
+        return ResponseEntity.ok(
+            new UserFriendContactResponse(
+                userFacade.updateFriendContactList(user.getUserUuid(), request.contacts()))
+        );
     }
 }

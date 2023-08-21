@@ -33,4 +33,15 @@ public class UserFriend extends Auditable {
     @Column
     private String name;
 
+    private UserFriend(Long idx, String userUuid, String phoneNumber, String name) {
+        this.idx = idx;
+        this.userUuid = userUuid;
+        this.phoneNumber = phoneNumber;
+        this.name = name;
+    }
+
+    public static UserFriend of(final String userUuid, final String phoneNumber, final String name) {
+        return new UserFriend(null, userUuid, phoneNumber, name);
+    }
+
 }
