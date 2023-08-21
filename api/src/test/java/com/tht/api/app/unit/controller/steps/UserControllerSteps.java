@@ -1,8 +1,8 @@
 package com.tht.api.app.unit.controller.steps;
 
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
+import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;

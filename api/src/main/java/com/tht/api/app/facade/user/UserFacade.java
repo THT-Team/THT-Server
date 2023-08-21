@@ -6,6 +6,7 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.user.request.ContactDto;
 import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
@@ -28,6 +29,7 @@ import com.tht.api.app.service.UserAgreementService;
 import com.tht.api.app.service.UserAlarmAgreementService;
 import com.tht.api.app.service.UserBlockService;
 import com.tht.api.app.service.UserDailyFallingService;
+import com.tht.api.app.service.UserFriendService;
 import com.tht.api.app.service.UserIdealTypeService;
 import com.tht.api.app.service.UserInterestsService;
 import com.tht.api.app.service.UserLocationInfoService;
@@ -57,6 +59,7 @@ public class UserFacade {
     private final TokenProvider tokenProvider;
     private final UserAlarmAgreementService userAlarmAgreementService;
     private final UserAgreementService userAgreementService;
+    private final UserFriendService userFriendService;
 
     public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
         final MainScreenUserInfoRequest request) {
@@ -202,5 +205,15 @@ public class UserFacade {
 
         userService.withDraw(user, request.reason(), request.feedBack());
 
+    }
+
+    public int getFriendCount(final String userUuid) {
+        return userFriendService.getFriendCount(userUuid);
+    }
+
+    @Transactional
+    public int updateFriendContactList(final String userUuid, final List<ContactDto> contacts) {
+
+        return userFriendService.update(userUuid, contacts);
     }
 }
