@@ -4,6 +4,7 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
@@ -21,9 +22,11 @@ import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserController;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.request.ContactDto;
 import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
 import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
 import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
+import com.tht.api.app.facade.user.request.UserFriendContactRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
 import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
@@ -596,5 +599,89 @@ class UserDocumentation extends ControllerTestConfig {
 
         result.andExpect(MockMvcResultMatchers.status().isNoContent());
 
+    }
+
+    @DisplayName("유저 연락처 수 조회 api docs")
+    @Test
+    @WithCustomMockUser
+    void getFriendList() throws Exception {
+
+        when(userFacade.getFriendCount(anyString())).thenReturn(290);
+
+        mockMvc.perform(
+                get("/user/friend-contact-list")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+            ).andDo(
+                document("유저 연락처 차단 목록 조회 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저 연락처 차단 목록 조회")
+                            .requestFields()
+                            .responseFields(
+                                fieldWithPath("count").description("차단한 연락처 개수")
+                            )
+                            .responseSchema(Schema.schema("UserFriendContactResponse"))
+                            .build()
+                    )
+                )
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+    @DisplayName("유저 연락처 차단 api docs")
+    @Test
+    @WithCustomMockUser
+    void updateFriendList() throws Exception {
+
+        //given
+        UserFriendContactRequest request = new UserFriendContactRequest(
+            List.of(
+                new ContactDto("친구1", "01044551234"),
+                new ContactDto("친구2", "01041414141"),
+                new ContactDto("친구3", "01042212312"),
+                new ContactDto("친구4", "01044141412"),
+                new ContactDto("친구5", "01012414521")
+            )
+        );
+
+        String requestBody = objectMapper.writeValueAsString(request);
+
+        when(userFacade.updateFriendContactList(anyString(), anyList())).thenReturn(
+            request.contacts().size());
+
+        mockMvc.perform(
+                post("/user/friend-contact-list")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody)
+            ).andDo(
+                document("유저 연락처 차단 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("유저 - 마이페이지")
+                            .description("유저 연락처 리스트 차단하기")
+                            .requestFields(
+                                fieldWithPath("contacts").description("유저 기기에 저장된 차단할 연락처 목록"),
+                                fieldWithPath("contacts[].name").description("유저가 차단할 연락처 이름"),
+                                fieldWithPath("contacts[].phoneNumber").description("유저가 차단할 연락처")
+                            )
+                            .responseFields(fieldWithPath("count").description("차단한 연락처 개수")
+                            )
+                            .requestSchema(Schema.schema("UserFriendContactRequest"))
+                            .responseSchema(Schema.schema("UserFriendContactResponse"))
+                            .build()
+                    )
+                )
+            )
+            .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }
