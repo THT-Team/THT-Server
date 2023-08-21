@@ -94,4 +94,22 @@ public class UserAcceptanceStep {
             .then().log().all().extract();
     }
 
+    public static ExtractableResponse<Response> 유저_기기_연락처_차단_요청(String accessToken, Map<String, Object> request) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .body(request)
+            .when().post("/user/friend-contact-list")
+            .then().log().all().extract();
+    }
+
+    public static ExtractableResponse<Response> 유저_기기_연락처_차단_리스트_조회_요청(String accessToken) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when().get("/user/friend-contact-list")
+            .then().log().all().extract();
+    }
 }
