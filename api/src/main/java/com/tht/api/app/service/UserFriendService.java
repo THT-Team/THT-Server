@@ -22,7 +22,11 @@ public class UserFriendService {
     @Transactional
     public int update(final String userUuid, final List<ContactDto> contacts) {
 
-        userFriendRepository.deleteAllByUserUuid(userUuid);
+        List<Long> userFriendIdxList = userFriendRepository.findAllByUserUuid(userUuid)
+            .stream().map(UserFriend::getIdx)
+            .toList();
+
+        userFriendRepository.deleteAllByIdInBatch(userFriendIdxList);
 
         return userFriendRepository.saveAll(contacts.stream()
             .map(contactDto -> UserFriend.of(userUuid, contactDto.phoneNumber(), contactDto.name()))
