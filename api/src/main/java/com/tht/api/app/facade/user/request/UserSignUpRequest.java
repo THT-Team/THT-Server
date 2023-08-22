@@ -47,6 +47,8 @@ public record UserSignUpRequest(
 
 ) {
 
+    private static final String removeHyphenRegex = "[^0-9]";
+
     public UserSignUpRequest {
         if (snsType.isSns()) {
             validateSnsUniqueId(snsType, snsUniqueId);
@@ -60,7 +62,7 @@ public record UserSignUpRequest(
         final List<String> photoList, final List<Integer> interestList,
         final List<Integer> idealTypeList, final String snsType, final String snsUniqueId) {
 
-        this(phoneNumber,
+        this(phoneNumber.replaceAll(removeHyphenRegex, ""),
             username,
             email,
             birthDay,

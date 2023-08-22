@@ -16,6 +16,8 @@ public record UserSnsSignUpRequest(
 
 ) {
 
+    private static final String removeHyphenRegex = "[^0-9]";
+
     @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     public UserSnsSignUpRequest(
         @JsonProperty("phoneNumber") final String phoneNumber,
@@ -24,7 +26,7 @@ public record UserSnsSignUpRequest(
         @JsonProperty("snsUniqueId") final String snsUniqueId,
         @JsonProperty("email") final String email) {
 
-        this(phoneNumber,
+        this(phoneNumber.replaceAll(removeHyphenRegex, ""),
             deviceKey,
             SNSType.toSNSConverter(snsType),
             snsUniqueId,
