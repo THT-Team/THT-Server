@@ -31,14 +31,14 @@ public class ChatController {
         return ResponseEntity.ok(chatFacade.readHistory(chatRoomId, chatIdx, size));
     }
 
-    @GetMapping("chat/rooms")
+    @GetMapping("/chat/rooms")
     public ResponseEntity<List<ChatRoomPreviewResponse>> findMyChatRoom(
         @AuthenticationPrincipal final User user) {
 
         return ResponseEntity.ok(chatFacade.findMyRoomList(user.getUserUuid()));
     }
 
-    @PostMapping("chat/out/room/{chat-room-idx}")
+    @PostMapping("/chat/out/room/{chat-room-idx}")
     public ResponseEntity<Object> outChat(
         @PathVariable(name = "chat-room-idx") final long chatRoomIdx,
         @AuthenticationPrincipal final User user
@@ -48,7 +48,7 @@ public class ChatController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("chat/room/{chat-room-idx}")
+    @GetMapping("/chat/room/{chat-room-idx}")
     public ResponseEntity<ChatRoomResponse> findDetailChatRoom(
         @PathVariable(name = "chat-room-idx") final long chatRoomIdx) {
 
