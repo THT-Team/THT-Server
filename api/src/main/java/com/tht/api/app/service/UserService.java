@@ -94,9 +94,9 @@ public class UserService {
     }
 
     public void withDraw(final User user, final String reason, final String feedBack) {
-        user.accountWithdrawal();
-        save(user);
 
-        userWithDrawLogRepository.save(UserWithDrawLog.of(reason, feedBack));
+        user.accountWithdrawal();
+        userWithDrawLogRepository.save(UserWithDrawLog.of(user.getUserUuid(), reason, feedBack));
+        save(user);
     }
 }

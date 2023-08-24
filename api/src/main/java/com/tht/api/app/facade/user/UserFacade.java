@@ -204,7 +204,6 @@ public class UserFacade {
     public void withDraw(final User user, final UserWithDrawRequest request) {
 
         userService.withDraw(user, request.reason(), request.feedBack());
-
     }
 
     public int getFriendCount(final String userUuid) {
