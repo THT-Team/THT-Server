@@ -1,6 +1,7 @@
 package com.tht.api.app.unit.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.anyString;
 import static org.mockito.BDDMockito.when;
 import static org.mockito.Mockito.mock;
@@ -51,7 +52,7 @@ class UserServiceTest {
     void duplicateCheckUserName_at_UserCreate() {
 
         when(userRepository.existsByPhoneNumber(anyString())).thenReturn(false);
-        when(userRepository.existsByUsername(anyString())).thenReturn(true);
+        when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(true);
 
         assertThatThrownBy(() -> userService.createUser(USER))
             .isInstanceOf(EntityStateException.class)
@@ -64,7 +65,7 @@ class UserServiceTest {
 
 
         when(userRepository.existsByPhoneNumber(anyString())).thenReturn(false);
-        when(userRepository.existsByUsername(anyString())).thenReturn(false);
+        when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(false);
         when(userRepository.save(USER)).thenReturn(USER);
 
         assertThat(userService.createUser(USER)).isEqualTo(USER);
@@ -74,7 +75,7 @@ class UserServiceTest {
     @ValueSource(booleans = {true, false})
     @DisplayName("유저 닉네임 중복 체크 테스트")
     void isExistUserNameServiceTest(final Boolean result) {
-        when(userRepository.existsByUsername(anyString())).thenReturn(result);
+        when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(result);
 
         assertThat(userService.isExistUserName("")).isEqualTo(result);
     }
