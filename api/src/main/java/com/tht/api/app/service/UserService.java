@@ -1,5 +1,6 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.entity.enums.EntityState;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserWithDrawLog;
@@ -32,13 +33,13 @@ public class UserService {
     }
 
     private void checkDuplicateName(final String name) {
-        if (userRepository.existsByUsername(name)) {
+        if (userRepository.existsByUsernameAndStateEquals(name, EntityState.ACTIVE)) {
             throw EntityStateException.duplicateColumnOf("user", "username");
         }
     }
 
     public boolean isExistUserName(final String nickName) {
-        return userRepository.existsByUsername(nickName);
+        return userRepository.existsByUsernameAndStateEquals(nickName, EntityState.ACTIVE);
     }
 
     public User findByPhoneNumber(final String phoneNumber) {
@@ -94,9 +95,9 @@ public class UserService {
     }
 
     public void withDraw(final User user, final String reason, final String feedBack) {
-        user.accountWithdrawal();
-        save(user);
 
-        userWithDrawLogRepository.save(UserWithDrawLog.of(reason, feedBack));
+        user.accountWithdrawal();
+        userWithDrawLogRepository.save(UserWithDrawLog.of(user.getUserUuid(), reason, feedBack));
+        save(user);
     }
 }

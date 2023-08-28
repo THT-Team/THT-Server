@@ -1,6 +1,7 @@
 package com.tht.api.app.repository.user.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.tht.api.app.entity.enums.EntityState;
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.user.QUser;
 import com.tht.api.app.entity.user.QUserSns;
@@ -29,7 +30,10 @@ public class UserSNSRepositoryCustomImpl implements UserSNSRepositoryCustom {
             )
             .from(user)
             .leftJoin(userSns).on(user.userUuid.eq(userSns.userUuid))
-            .where(user.phoneNumber.eq(phoneNumber))
+            .where(
+                user.phoneNumber.eq(phoneNumber)
+                    .and(user.state.eq(EntityState.ACTIVE))
+            )
             .fetch());
     }
 
