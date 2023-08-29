@@ -10,37 +10,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.tht.api.app.acceptance.config.AcceptanceTest;
-import com.tht.api.app.entity.meta.DailyFalling;
-import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
-import com.tht.api.app.entity.meta.IdealType;
-import com.tht.api.app.entity.meta.Interest;
 import com.tht.api.app.facade.user.request.ContactDto;
-import com.tht.api.app.repository.meta.DailyFallingActiveTimeTableRepository;
-import com.tht.api.app.repository.meta.DailyFallingRepository;
-import com.tht.api.app.repository.meta.IdealTypeRepository;
-import com.tht.api.app.repository.meta.InterestRepository;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 class UserAcceptanceTest extends AcceptanceTest {
-
-    @Autowired
-    DailyFallingRepository dailyFallingRepository;
-
-    @Autowired
-    DailyFallingActiveTimeTableRepository dailyFallingActiveTimeTableRepository;
-
-    @Autowired
-    InterestRepository interestRepository;
-
-    @Autowired
-    IdealTypeRepository idealTypeRepository;
 
     @DisplayName("사용자 탈퇴")
     @Test
@@ -49,10 +27,6 @@ class UserAcceptanceTest extends AcceptanceTest {
         //given
         var dailyFalling = 그날의주제어_생성_요청();
 
-        for(int i=0; i<3; i++){
-            interestRepository.save(Interest.of("관심사"+i,""));
-            idealTypeRepository.save(IdealType.of("이상형"+i, ""));
-        }
 
         //given
         var 탈퇴할_사용자 = 신규유저_생성_요청_후_토큰추출("삭제할 유저", "01012341234");
@@ -77,15 +51,6 @@ class UserAcceptanceTest extends AcceptanceTest {
 
     }
 
-    private DailyFalling 그날의주제어_생성_요청() {
-        LocalDateTime now = LocalDateTime.now();
-
-        DailyFallingActiveTimeTable timeTable = dailyFallingActiveTimeTableRepository.save(
-            DailyFallingActiveTimeTable.of(now.minusDays(1), now.plusDays(1)));
-
-        return dailyFallingRepository.save(DailyFalling.of(1, timeTable.getIdx(), "주제어"));
-    }
-
     /**
      * feature : 사용자 디바이스에 저장된 연락처 차단(친구로 등록)
      * <br> scenario
@@ -104,11 +69,6 @@ class UserAcceptanceTest extends AcceptanceTest {
     void updateMyFriend() {
 
         //given
-        for(int i=0; i<3; i++){
-            interestRepository.save(Interest.of("관심사"+i,""));
-            idealTypeRepository.save(IdealType.of("이상형"+i, ""));
-        }
-
         var 일반_사용자1 = 신규유저_생성_요청_후_토큰추출("일반 사용자1", "01065689787");
 
         유저_기기_연락처_차단_요청(일반_사용자1, 차단할_연락처_리스트(5));

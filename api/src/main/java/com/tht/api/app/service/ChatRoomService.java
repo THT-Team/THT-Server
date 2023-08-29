@@ -24,4 +24,12 @@ public class ChatRoomService {
             throw EntityStateException.doNotExistOf(ChatRoom.class.getSimpleName());
         }
     }
+
+    public long makeRoomAndGetIdx(final long dailyTopicIdx) {
+        return save(dailyTopicIdx).getIdx();
+    }
+
+    private ChatRoom save(long dailyTopicIdx) {
+        return chatRoomRepository.save(ChatRoom.create(dailyTopicIdx));
+    }
 }
