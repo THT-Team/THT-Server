@@ -135,7 +135,7 @@ class UserDocumentation extends ControllerTestConfig {
     void getUserDetails() throws Exception {
 
         //given
-        when(userFacade.getUserDetail(any())).thenReturn(
+        when(userFacade.getUserDetail(anyString())).thenReturn(
             UserDetailResponseFixture.make()
         );
 
@@ -156,6 +156,68 @@ class UserDocumentation extends ControllerTestConfig {
                         .requestFields()
                         .responseFields(
                             fieldWithPath("username").description("유저 이름"),
+                            fieldWithPath("userUuid").description("유저 고유 번호"),
+                            fieldWithPath("age").description("나이"),
+                            fieldWithPath("address").description("주소"),
+                            fieldWithPath("introduction").description("자기소개"),
+                            fieldWithPath("phoneNumber").description("전화번호"),
+                            fieldWithPath("email").description("이메일"),
+
+                            fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
+                            fieldWithPath("idealTypeList[].idx").description("이상형 idx"),
+                            fieldWithPath("idealTypeList[].name").description("이상형 명칭"),
+                            fieldWithPath("idealTypeList[].emojiCode").description("이상형 코드"),
+
+                            fieldWithPath("interestsList").description("선택한 관심사 리스트"),
+                            fieldWithPath("interestsList[].idx").description("관심사 idx"),
+                            fieldWithPath("interestsList[].name").description("관심사 명칭"),
+                            fieldWithPath("interestsList[].emojiCode").description("관심사 코드"),
+
+                            fieldWithPath("userProfilePhotos").description("유저 프로필 이미지 리스트"),
+                            fieldWithPath("userProfilePhotos[].url").description("이미지 url"),
+                            fieldWithPath("userProfilePhotos[].priority")
+                                .description("사진 우선순위 (1:프로필)")
+                        )
+                        .responseSchema(Schema.schema("UserDetailResponse"))
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("다른 유저 정보 상세조회 api - docs")
+    void getAnotherUserDetails() throws Exception {
+
+        //given
+        when(userFacade.getUserDetail(anyString())).thenReturn(
+            UserDetailResponseFixture.make()
+        );
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            get("/user/another/{user-uuid}", "user-uuid")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("특정 유저 정보 조회 docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("좋아요")
+                        .description("특정 유저 정보 상세 조회")
+                        .pathParameters(
+                            parameterWithName("user-uuid").description("조회하고자 하는 유저의 고유 번호")
+                        )
+                        .requestFields()
+                        .responseFields(
+                            fieldWithPath("username").description("유저 이름"),
+                            fieldWithPath("userUuid").description("유저 고유 번호"),
                             fieldWithPath("age").description("나이"),
                             fieldWithPath("address").description("주소"),
                             fieldWithPath("introduction").description("자기소개"),

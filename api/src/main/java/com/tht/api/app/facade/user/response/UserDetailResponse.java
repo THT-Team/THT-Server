@@ -12,6 +12,7 @@ import java.util.List;
 
 public record UserDetailResponse (
     String username,
+    String userUuid,
     int age,
     String introduction,
     String address,
@@ -31,6 +32,7 @@ public record UserDetailResponse (
 
         return new UserDetailResponse(
             user.getUsername(),
+            user.getUserUuid(),
             ConvertAgeUtils.covertBeforeBirthAge(user.getBirthDay()),
             user.getIntroduction(),
             userLocationInfo.getAddress(),

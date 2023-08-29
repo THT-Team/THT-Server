@@ -104,7 +104,9 @@ public class UserFacade {
         userBlockService.block(userUuid, blockUserUuid);
     }
 
-    public UserDetailResponse getUserDetail(final User user) {
+    public UserDetailResponse getUserDetail(final String userUuid) {
+
+        final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         final List<IdealTypeMapper> idealTypeMappers = userIdealTypeService
             .findBy(user.getUserUuid());
@@ -215,4 +217,5 @@ public class UserFacade {
 
         return userFriendService.update(userUuid, contacts);
     }
+
 }
