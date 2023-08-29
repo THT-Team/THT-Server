@@ -2,6 +2,7 @@ package com.tht.api.app.service;
 
 import com.tht.api.app.entity.user.UserLike;
 import com.tht.api.app.repository.user.UserLikeRepository;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +15,14 @@ public class UserLikeService {
     private final UserLikeRepository userLikeRepository;
 
     @Transactional
-    public void save(final String myUuid, final String favoriteUserUuid, final long dailyTopicIdx) {
-        userLikeRepository.save(UserLike.create(myUuid, favoriteUserUuid, dailyTopicIdx));
+    public UserLike save(final String myUuid, final String favoriteUserUuid, final long dailyTopicIdx) {
+        return userLikeRepository.save(UserLike.create(myUuid, favoriteUserUuid, dailyTopicIdx));
+    }
+
+    public Optional<UserLike> findIsMatchedLike(final String myUuid, final String favoriteUserUuid,
+        final long dailyTopicIdx) {
+
+        return userLikeRepository.findByUserUuidAndAndFavoriteUserUuidAndDailyFallingIdx(
+            favoriteUserUuid, myUuid, dailyTopicIdx);
     }
 }

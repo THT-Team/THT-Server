@@ -30,7 +30,7 @@ class LikeAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(201),
             () -> assertThat(response.jsonPath().getBoolean("isMatching")).isTrue(),
-            () -> assertThat(response.jsonPath().getLong("chatRoomIdx")).isNotNull()
+            () -> assertThat(response.jsonPath().getObject("chatRoomIdx", Long.class)).isNotNull()
         );
     }
 
@@ -52,7 +52,7 @@ class LikeAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(201),
             () -> assertThat(response.jsonPath().getBoolean("isMatching")).isFalse(),
-            () -> assertThat(response.jsonPath().getLong("chatRoomIdx")).isNull()
+            () -> assertThat(response.jsonPath().getObject("chatRoomIdx", Long.class)).isNull()
         );
     }
 }

@@ -2,6 +2,8 @@ package com.tht.api.app.entity.user;
 
 import com.tht.api.app.entity.Auditable;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -27,12 +29,18 @@ public class UserLike extends Auditable {
 
     private Long dailyFallingIdx;
 
+    @Enumerated(EnumType.STRING)
+    private LikeState likeState;
+
     @Builder(access = AccessLevel.PRIVATE)
-    public UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx) {
+    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx,
+        LikeState likeState) {
+
         this.idx = idx;
         this.userUuid = userUuid;
         this.favoriteUserUuid = favoriteUserUuid;
         this.dailyFallingIdx = dailyFallingIdx;
+        this.likeState = likeState;
     }
 
     public static UserLike create(final String userUuid, final String favoriteUserUuid,
@@ -42,6 +50,15 @@ public class UserLike extends Auditable {
             .userUuid(userUuid)
             .favoriteUserUuid(favoriteUserUuid)
             .dailyFallingIdx(dailyFallingIdx)
+            .likeState(LikeState.WAIT)
             .build();
+    }
+
+    public void matchSuccess() {
+        this.likeState = LikeState.MATCH;
+    }
+
+    public void rejectedLike() {
+        this.likeState = LikeState.REJECT;
     }
 }
