@@ -1,14 +1,18 @@
 package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
-import com.tht.api.app.facade.like.response.LikeResponse;
 import com.tht.api.app.facade.like.LikeFacade;
+import com.tht.api.app.facade.like.response.LikeReceiveResponse;
+import com.tht.api.app.facade.like.response.LikeResponse;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -31,6 +35,21 @@ public class LikeController {
 
     //todo. 대화하기 - 채팅방 생성
 
-    //todo. 내가 받은 좋아요 리스트
+    @GetMapping("/like/receives")
+    public ResponseEntity<List<LikeReceiveResponse>> getLikeList(
+        @AuthenticationPrincipal User user,
+        @RequestParam(value = "size", defaultValue = "100") int size,
+            @RequestParam(value = "lastFallingTopicIdx", required = false) Long dailyFallingIdx,
+        @RequestParam(value = "lastLikeIdx", required = false) Long likeIdx) {
 
+
+        return ResponseEntity.ok(
+            likeFacade.getLikedPeopleList(
+                user.getUserUuid(),
+                size,
+                dailyFallingIdx,
+                likeIdx
+            )
+        );
+    }
 }

@@ -1,7 +1,9 @@
 package com.tht.api.app.service;
 
 import com.tht.api.app.entity.user.UserLike;
-import com.tht.api.app.repository.user.UserLikeRepository;
+import com.tht.api.app.repository.like.UserLikeRepository;
+import com.tht.api.app.repository.mapper.LikeReceiveMapper;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -22,7 +24,13 @@ public class UserLikeService {
     public Optional<UserLike> findIsMatchedLike(final String myUuid, final String favoriteUserUuid,
         final long dailyTopicIdx) {
 
-        return userLikeRepository.findByUserUuidAndAndFavoriteUserUuidAndDailyFallingIdx(
+        return userLikeRepository.findByUserUuidAndFavoriteUserUuidAndDailyFallingIdx(
             favoriteUserUuid, myUuid, dailyTopicIdx);
+    }
+
+    public List<LikeReceiveMapper> findReceivedLikes(final String userUuid, final int size,
+        final Long dailyFallingIdx, final Long likeIdx) {
+
+        return userLikeRepository.findReceivedLikes(userUuid, size, dailyFallingIdx, likeIdx);
     }
 }
