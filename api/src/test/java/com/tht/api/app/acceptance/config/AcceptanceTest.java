@@ -5,10 +5,12 @@ import com.tht.api.app.entity.meta.DailyFalling;
 import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.IdealType;
 import com.tht.api.app.entity.meta.Interest;
+import com.tht.api.app.entity.meta.TalkKeyword;
 import com.tht.api.app.repository.meta.DailyFallingActiveTimeTableRepository;
 import com.tht.api.app.repository.meta.DailyFallingRepository;
 import com.tht.api.app.repository.meta.IdealTypeRepository;
 import com.tht.api.app.repository.meta.InterestRepository;
+import com.tht.api.app.repository.meta.TalkKeywordRepository;
 import io.restassured.RestAssured;
 import java.time.LocalDateTime;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,6 +40,9 @@ public abstract class AcceptanceTest {
     IdealTypeRepository idealTypeRepository;
 
     @Autowired
+    TalkKeywordRepository talkKeywordRepository;
+
+    @Autowired
     TokenProvider tokenProvider;
 
     @LocalServerPort
@@ -59,12 +64,17 @@ public abstract class AcceptanceTest {
     }
 
     public DailyFalling 그날의주제어_생성_요청() {
-        LocalDateTime now = LocalDateTime.now();
 
-        DailyFallingActiveTimeTable timeTable = dailyFallingActiveTimeTableRepository.save(
+        final LocalDateTime now = LocalDateTime.now();
+
+        final TalkKeyword talkKeyword = talkKeywordRepository.save(TalkKeyword.of(1, "주제어"));
+
+        final DailyFallingActiveTimeTable timeTable = dailyFallingActiveTimeTableRepository.save(
             DailyFallingActiveTimeTable.of(now.minusDays(1), now.plusDays(1)));
 
-        return dailyFallingRepository.save(DailyFalling.of(1, timeTable.getIdx(), "주제어"));
+        return dailyFallingRepository.save(
+            DailyFalling.of(talkKeyword.getIdx(), timeTable.getIdx(), "잡담내용~~ 잡담~")
+        );
     }
 
     public String getUserUuid(String accessToken) {

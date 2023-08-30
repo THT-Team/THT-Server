@@ -2,10 +2,12 @@ package com.tht.api.app.facade.like;
 
 import com.tht.api.app.entity.user.UserLike;
 import com.tht.api.app.facade.Facade;
+import com.tht.api.app.facade.like.response.LikeReceiveResponse;
 import com.tht.api.app.facade.like.response.LikeResponse;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.UserLikeService;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,5 +42,14 @@ public class LikeFacade {
         }
 
         return LikeResponse.nonMatching();
+    }
+
+    public List<LikeReceiveResponse> getLikedPeopleList(final String userUuid, final int size,
+        final Long dailyFallingIdx, final Long likeIdx) {
+
+        return userLikeService.findReceivedLikes(userUuid, size, dailyFallingIdx, likeIdx)
+            .stream()
+            .map(LikeReceiveResponse::toResponse)
+            .toList();
     }
 }

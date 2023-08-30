@@ -30,17 +30,15 @@ public class UserLike extends Auditable {
     private Long dailyFallingIdx;
 
     @Enumerated(EnumType.STRING)
-    private LikeState likeState;
+    private LikeState likeState = LikeState.WAIT;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx,
-        LikeState likeState) {
+    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx) {
 
         this.idx = idx;
         this.userUuid = userUuid;
         this.favoriteUserUuid = favoriteUserUuid;
         this.dailyFallingIdx = dailyFallingIdx;
-        this.likeState = likeState;
     }
 
     public static UserLike create(final String userUuid, final String favoriteUserUuid,
@@ -50,7 +48,6 @@ public class UserLike extends Auditable {
             .userUuid(userUuid)
             .favoriteUserUuid(favoriteUserUuid)
             .dailyFallingIdx(dailyFallingIdx)
-            .likeState(LikeState.WAIT)
             .build();
     }
 

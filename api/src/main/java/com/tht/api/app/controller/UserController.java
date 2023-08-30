@@ -58,7 +58,15 @@ public class UserController {
     public ResponseEntity<UserDetailResponse> getUserDetail(
         @AuthenticationPrincipal final User user) {
 
-        return ResponseEntity.ok(userFacade.getUserDetail(user));
+        return ResponseEntity.ok(userFacade.getUserDetail(user.getUserUuid()));
+    }
+
+    @GetMapping("/user/another/{user-uuid}")
+    public ResponseEntity<UserDetailResponse> getAnotherUserDetail(
+        @AuthenticationPrincipal final User user,
+        @PathVariable(value = "user-uuid") final String userUuid) {
+
+        return ResponseEntity.ok(userFacade.getUserDetail(userUuid));
     }
 
     @PatchMapping("/user/phone-number/{phone-number}")

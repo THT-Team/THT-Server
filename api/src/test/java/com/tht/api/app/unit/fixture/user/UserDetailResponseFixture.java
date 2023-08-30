@@ -11,6 +11,7 @@ import java.util.List;
 public class UserDetailResponseFixture {
 
     private static final String username = "유저이름";
+    private static final String userUuid = "makeUuid-2mnk-41";
     private static final int age = 345;
     private static final String introduction = "내 나이는 서른마흔다섯";
     private static final String address = "서울시 성동구 저쩌구 동작구";
@@ -29,6 +30,7 @@ public class UserDetailResponseFixture {
     public static UserDetailResponse make() {
         return new UserDetailResponse(
             username,
+            userUuid,
             age,
             introduction,
             address,
