@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 public record LikeReceiveResponse(
 
-//    키워드 idx, topic 대주제, 파생질문, 프로필 사진, 이름, 나이, 주소 useruuid, 좋아요 받은 시간
     long dailyFallingIdx,
     long likeIdx,
     String topic,
