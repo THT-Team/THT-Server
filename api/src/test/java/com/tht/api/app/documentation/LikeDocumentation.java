@@ -22,7 +22,9 @@ import com.tht.api.app.facade.like.response.LikeResponse;
 import com.tht.api.app.unit.controller.config.ControllerTestConfig;
 import com.tht.api.app.unit.controller.config.WithCustomMockUser;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -88,15 +90,21 @@ class LikeDocumentation extends ControllerTestConfig {
         //given
         when(likeFacade.getLikedPeopleList(anyString())).thenReturn(
             List.of(
-                LikeReceiveResponse.of(1, "행복", "무엇을 할때 행복한가요?", "user-uuid-1", "유저1", "profile-url", 24, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(2, "취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-2", "유저2", "profile-url", 32, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(3, "평화", "돈많은 백수가 되고싶네요", "user-uuid-3","유저3", "profile-url", 64, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(2, "취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-4", "유저4", "profile-url", 27, "주소", LocalDateTime.now())
+                LikeReceiveResponse.of(1, 1, "행복", "무엇을 할때 행복한가요?", "user-uuid-1", "유저1", "profile-url", 24, "주소", LocalDateTime.now()),
+                LikeReceiveResponse.of(2, 3,"취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-2", "유저2", "profile-url", 32, "주소", LocalDateTime.now()),
+                LikeReceiveResponse.of(3, 154, "평화", "돈많은 백수가 되고싶네요", "user-uuid-3","유저3", "profile-url", 64, "주소", LocalDateTime.now()),
+                LikeReceiveResponse.of(2, 893, "취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-4", "유저4", "profile-url", 27, "주소", LocalDateTime.now())
             ));
+
+        Map<String, String> requestParam = new HashMap<>();
+        requestParam.put("size", "100");
+        requestParam.put("lastFallingTopicIdx", "3");
+        requestParam.put("lastLikeIdx", "1341");
 
         mockMvc.perform(
             get("/like/receives")
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .content(objectMapper.writeValueAsString(requestParam))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
         ).andDo(
@@ -107,7 +115,11 @@ class LikeDocumentation extends ControllerTestConfig {
                     ResourceSnippetParameters.builder()
                         .tag("좋아요")
                         .description("내가 받은 좋아요 리스트 조회 api")
-                        .requestFields()
+                        .requestFields(
+                            fieldWithPath("size").description("페이징 사이즈 [default : 100]"),
+                            fieldWithPath("lastFallingTopicIdx").description("조회된 리스트 마지막 좋아요의 토픽 idx (null 일경우 최근부터 조회)"),
+                            fieldWithPath("lastLikeIdx").description("조회된 리스트의 마지막 좋아요 idx (null 일경우 최근부터 조회)")
+                        )
                         .responseFields(
                             fieldWithPath("[].dailyFallingIdx").description("좋아요를 받았던 시점의 데일리 토픽 idx"),
                             fieldWithPath("[].topic").description("좋아요를 받았던 시점의 데일리 토픽 주제"),
@@ -124,5 +136,6 @@ class LikeDocumentation extends ControllerTestConfig {
                 )
             )
         ).andExpect(MockMvcResultMatchers.status().isOk());
+
     }
 }
