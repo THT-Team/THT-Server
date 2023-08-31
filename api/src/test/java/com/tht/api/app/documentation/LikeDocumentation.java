@@ -119,16 +119,21 @@ class LikeDocumentation extends ControllerTestConfig {
                         )
                         .requestFields()
                         .responseFields(
-                            fieldWithPath("[].dailyFallingIdx").description("좋아요를 받았던 시점의 데일리 토픽 idx"),
-                            fieldWithPath("[].likeIdx").description("좋아요 idx"),
-                            fieldWithPath("[].topic").description("좋아요를 받았던 시점의 데일리 토픽 주제"),
-                            fieldWithPath("[].issue").description("좋아요를 받았던 시점의 데일리 토픽 이슈 내용"),
-                            fieldWithPath("[].userUuid").description("유저 uuid"),
-                            fieldWithPath("[].username").description("유저 이름"),
-                            fieldWithPath("[].profileUrl").description("프로필 사진 url"),
-                            fieldWithPath("[].age").description("나이"),
-                            fieldWithPath("[].address").description("주소"),
-                            fieldWithPath("[].receivedTime").description("좋아요를 받은 시간 [yyyy-MM-dd HH:mm:ss]")
+                            fieldWithPath("likeList").description("나를 좋아하는 유저 리스트"),
+                            fieldWithPath("likeList[].dailyFallingIdx").description("좋아요를 받았던 시점의 데일리 토픽 idx"),
+                            fieldWithPath("likeList[].likeIdx").description("좋아요 idx"),
+                            fieldWithPath("likeList[].topic").description("좋아요를 받았던 시점의 데일리 토픽 주제"),
+                            fieldWithPath("likeList[].issue").description("좋아요를 받았던 시점의 데일리 토픽 이슈 내용"),
+                            fieldWithPath("likeList[].userUuid").description("유저 uuid"),
+                            fieldWithPath("likeList[].username").description("유저 이름"),
+                            fieldWithPath("likeList[].profileUrl").description("프로필 사진 url"),
+                            fieldWithPath("likeList[].age").description("나이"),
+                            fieldWithPath("likeList[].address").description("주소"),
+                            fieldWithPath("likeList[].receivedTime").description("좋아요를 받은 시간 [yyyy-MM-dd HH:mm:ss]"),
+
+                            fieldWithPath("size").description("유저 리스트 사이즈"),
+                            fieldWithPath("lastFallingTopicIdx").description("마지막 요소의 daily Topic idx 커서 값 [빈 리스트 일 경우 null]"),
+                            fieldWithPath("lastLikeIdx").description("마자막 요소의 idx 커서 값 [빈 리스트 일 경우 null]")
                         )
                         .responseSchema(Schema.schema("LikeReceiveResponse"))
                         .build()

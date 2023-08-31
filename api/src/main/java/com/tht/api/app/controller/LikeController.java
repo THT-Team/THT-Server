@@ -2,6 +2,7 @@ package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.like.LikeFacade;
+import com.tht.api.app.facade.like.response.LikeListResponse;
 import com.tht.api.app.facade.like.response.LikeReceiveResponse;
 import com.tht.api.app.facade.like.response.LikeResponse;
 import java.util.List;
@@ -36,20 +37,15 @@ public class LikeController {
     //todo. 대화하기 - 채팅방 생성
 
     @GetMapping("/like/receives")
-    public ResponseEntity<List<LikeReceiveResponse>> getLikeList(
+    public ResponseEntity<LikeListResponse> getLikeList(
         @AuthenticationPrincipal User user,
         @RequestParam(value = "size", defaultValue = "100") int size,
             @RequestParam(value = "lastFallingTopicIdx", required = false) Long dailyFallingIdx,
         @RequestParam(value = "lastLikeIdx", required = false) Long likeIdx) {
 
+        final List<LikeReceiveResponse> likedPeopleList = likeFacade.getLikedPeopleList(
+            user.getUserUuid(), size, dailyFallingIdx, likeIdx);
 
-        return ResponseEntity.ok(
-            likeFacade.getLikedPeopleList(
-                user.getUserUuid(),
-                size,
-                dailyFallingIdx,
-                likeIdx
-            )
-        );
+        return ResponseEntity.ok(LikeListResponse.of(likedPeopleList));
     }
 }
