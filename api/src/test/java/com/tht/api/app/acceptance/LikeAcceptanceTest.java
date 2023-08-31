@@ -87,7 +87,7 @@ class LikeAcceptanceTest extends AcceptanceTest {
         //then
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(200),
-            () -> assertThat(response.jsonPath().getList("username")).containsExactly("일반 사용자2")
+            () -> assertThat(response.jsonPath().getList("likeList.username")).containsExactly("일반 사용자2")
         );
     }
 
