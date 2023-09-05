@@ -52,4 +52,10 @@ public class LikeFacade {
             .map(LikeReceiveResponse::toResponse)
             .toList();
     }
+
+    @Transactional
+    public void reject(final String userUuid, final long likeIdx) {
+
+        userLikeService.reject(userUuid, likeIdx);
+    }
 }

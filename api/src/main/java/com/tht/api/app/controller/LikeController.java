@@ -6,6 +6,7 @@ import com.tht.api.app.facade.like.response.LikeListResponse;
 import com.tht.api.app.facade.like.response.LikeReceiveResponse;
 import com.tht.api.app.facade.like.response.LikeResponse;
 import java.util.List;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,18 +35,25 @@ public class LikeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
-    //todo. 대화하기 - 채팅방 생성
-
     @GetMapping("/like/receives")
     public ResponseEntity<LikeListResponse> getLikeList(
         @AuthenticationPrincipal User user,
         @RequestParam(value = "size", defaultValue = "100") int size,
-            @RequestParam(value = "lastFallingTopicIdx", required = false) Long dailyFallingIdx,
+        @RequestParam(value = "lastFallingTopicIdx", required = false) Long dailyFallingIdx,
         @RequestParam(value = "lastLikeIdx", required = false) Long likeIdx) {
 
         final List<LikeReceiveResponse> likedPeopleList = likeFacade.getLikedPeopleList(
             user.getUserUuid(), size, dailyFallingIdx, likeIdx);
 
         return ResponseEntity.ok(LikeListResponse.of(likedPeopleList));
+    }
+
+    @PostMapping("/like/reject")
+    public ResponseEntity<Objects> rejectLike(
+        @AuthenticationPrincipal User user,
+        @RequestParam(value = "likeIdx") long likeIdx) {
+
+        likeFacade.reject(user.getUserUuid(), likeIdx);
+        return ResponseEntity.ok().build();
     }
 }
