@@ -19,4 +19,23 @@ public class LikeAcceptanceStep {
             .then().log().all()
             .extract();
     }
+
+    public static ExtractableResponse<Response> 좋아요_리스트_조회_요청(String accessToken) {
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .when().get("/like/receives")
+            .then().log().all()
+            .extract();
+    }
+
+    public static ExtractableResponse<Response> 좋아요_거절_요청(String accessToken, long likeIdx) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .queryParam("likeIdx", likeIdx)
+            .when().post("/like/reject")
+            .then().log().all()
+            .extract();
+    }
 }

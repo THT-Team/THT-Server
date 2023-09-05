@@ -142,4 +142,34 @@ class LikeDocumentation extends ControllerTestConfig {
         ).andExpect(MockMvcResultMatchers.status().isOk());
 
     }
+
+    @DisplayName("좋아요 거절하기 api docs")
+    @WithCustomMockUser
+    @Test
+    void rejectLikeDocs() throws Exception {
+
+        //given
+        mockMvc.perform(
+            post("/like/reject")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .queryParam("likeIdx", "1234")
+        ).andDo(
+            document("좋아요 거절하기 docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("좋아요")
+                        .description("좋아요 거절하기 api")
+                        .queryParameters(
+                            parameterWithName("likeIdx").description("좋아요 idx")
+                        )
+                        .build()
+                )
+            )
+        ).andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 }

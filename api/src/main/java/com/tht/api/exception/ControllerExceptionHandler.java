@@ -6,6 +6,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 import com.tht.api.exception.custom.AligoException;
 import com.tht.api.exception.custom.EntityStateException;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
+import com.tht.api.exception.custom.LikeException;
 import com.tht.api.exception.custom.UserCustomException;
 import com.tht.api.exception.custom.UserDailyFallingException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -126,6 +127,15 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.badRequest().body(
             ErrorResponse.of(NOT_FOUND, e.getMessage(), request)
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final LikeException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+            ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
         );
     }
 

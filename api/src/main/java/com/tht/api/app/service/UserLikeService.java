@@ -3,6 +3,7 @@ package com.tht.api.app.service;
 import com.tht.api.app.entity.user.UserLike;
 import com.tht.api.app.repository.like.UserLikeRepository;
 import com.tht.api.app.repository.mapper.LikeReceiveMapper;
+import com.tht.api.exception.custom.LikeException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -32,5 +33,16 @@ public class UserLikeService {
         final Long dailyFallingIdx, final Long likeIdx) {
 
         return userLikeRepository.findReceivedLikes(userUuid, size, dailyFallingIdx, likeIdx);
+    }
+
+    @Transactional
+    public void reject(final String userUuid, final long likeIdx) {
+
+        final UserLike userLike = userLikeRepository.findById(likeIdx)
+            .orElseThrow(
+                () -> LikeException.notFound(likeIdx)
+            );
+
+        userLike.rejectedLike(userUuid);
     }
 }
