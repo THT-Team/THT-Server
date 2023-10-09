@@ -53,4 +53,21 @@ class UserLikeTest {
             .hasMessageMatching("잘못된 요청입니다. 대기 상태의 좋아요가 아닙니다.");
 
     }
+
+    @Test
+    @DisplayName("좋아요 생성시, likeState 는 WAIT")
+    void createDefaultLike() {
+
+        UserLike userLike = UserLikeFixture.make();
+        assertThat(userLike.getLikeState()).isEqualTo(LikeState.WAIT);
+    }
+
+
+    @Test
+    @DisplayName("싫어요 생성시, likeState 는 DISLIKE")
+    void createDisLike() {
+
+        UserLike userLike = UserLikeFixture.makeDisLike();
+        assertThat(userLike.getLikeState()).isEqualTo(LikeState.DISLIKE);
+    }
 }
