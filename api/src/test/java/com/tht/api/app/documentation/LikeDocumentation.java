@@ -62,7 +62,7 @@ class LikeDocumentation extends ControllerTestConfig {
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("좋아요")
-                        .description("마음에 드는 유저 좋아요 버튼 클릭 api")
+                        .description("메인화면에 표출되는 마음에 드는 유저 좋아요 버튼 클릭 api")
                         .pathParameters(
                             parameterWithName("favorite-user-uuid").description("상대방 uuid"),
                             parameterWithName("daily-topic-idx").description("매칭된 토픽 idx")
@@ -79,6 +79,40 @@ class LikeDocumentation extends ControllerTestConfig {
                 )
             )
         ).andExpect(MockMvcResultMatchers.status().isCreated());
+    }
+
+    @DisplayName("유저 싫어요 api docs")
+    @WithCustomMockUser
+    @Test
+    void dontLikeAnotherUserDocs() throws Exception {
+
+        //given
+        String userUuid = "상대방 uuid";
+        long dailyTopicIdx = 154;
+
+        mockMvc.perform(
+            post("/i-dont-like-you/{dont-favorite-user-uuid}/{daily-topic-idx}", userUuid, dailyTopicIdx)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 싫어요 docs",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("좋아요")
+                        .description("메인화면에 표출되는 마음에 들지 않는 유저 싫어요 버튼 클릭 api")
+                        .pathParameters(
+                            parameterWithName("dont-favorite-user-uuid").description("상대방 uuid"),
+                            parameterWithName("daily-topic-idx").description("매칭된 토픽 idx")
+                        )
+                        .requestFields()
+                        .responseFields()
+                        .build()
+                )
+            )
+        ).andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @DisplayName("내가 받은 좋아요 리스트 api docs")

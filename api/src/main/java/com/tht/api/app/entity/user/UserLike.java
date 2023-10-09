@@ -34,12 +34,13 @@ public class UserLike extends Auditable {
     private LikeState likeState = LikeState.WAIT;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx) {
+    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx, LikeState likeState) {
 
         this.idx = idx;
         this.userUuid = userUuid;
         this.favoriteUserUuid = favoriteUserUuid;
         this.dailyFallingIdx = dailyFallingIdx;
+        this.likeState = likeState;
     }
 
     public static UserLike create(final String userUuid, final String favoriteUserUuid,
@@ -49,6 +50,18 @@ public class UserLike extends Auditable {
             .userUuid(userUuid)
             .favoriteUserUuid(favoriteUserUuid)
             .dailyFallingIdx(dailyFallingIdx)
+            .likeState(LikeState.WAIT)
+            .build();
+    }
+
+    public static UserLike disLike(final String userUuid, final String dontFavoriteUserUuid,
+        final long dailyTopicIdx) {
+
+        return UserLike.builder()
+            .userUuid(userUuid)
+            .favoriteUserUuid(dontFavoriteUserUuid)
+            .dailyFallingIdx(dailyTopicIdx)
+            .likeState(LikeState.DISLIKE)
             .build();
     }
 

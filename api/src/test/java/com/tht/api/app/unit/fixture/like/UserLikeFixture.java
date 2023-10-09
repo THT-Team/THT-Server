@@ -40,4 +40,8 @@ public class UserLikeFixture {
         make.matchSuccess();
         return make;
     }
+
+    public static UserLike makeDisLike() {
+        return UserLike.disLike(userUuid, favoriteUserUuid, dailyFallingIdx);
+    }
 }
