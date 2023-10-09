@@ -22,6 +22,12 @@ public class UserLikeService {
         return userLikeRepository.save(UserLike.create(myUuid, favoriteUserUuid, dailyTopicIdx));
     }
 
+    @Transactional
+    public void disLike(final String myUuid, final String dontFavoriteUserUuid,
+        final long dailyTopicIdx) {
+        userLikeRepository.save(UserLike.disLike(myUuid, dontFavoriteUserUuid, dailyTopicIdx));
+    }
+
     public Optional<UserLike> findIsMatchedLike(final String myUuid, final String favoriteUserUuid,
         final long dailyTopicIdx) {
 

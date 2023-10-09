@@ -35,6 +35,17 @@ public class LikeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
+    @PostMapping("/i-dont-like-you/{dont-favorite-user-uuid}/{daily-topic-idx}")
+    public ResponseEntity<Objects> dontLikeYou(
+        @AuthenticationPrincipal User user,
+        @PathVariable(value = "dont-favorite-user-uuid") String userUuid,
+        @PathVariable(value = "daily-topic-idx") long dailyTopicIdx) {
+
+        likeFacade.dontLike(user.getUserUuid(), userUuid, dailyTopicIdx);
+
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/like/receives")
     public ResponseEntity<LikeListResponse> getLikeList(
         @AuthenticationPrincipal User user,

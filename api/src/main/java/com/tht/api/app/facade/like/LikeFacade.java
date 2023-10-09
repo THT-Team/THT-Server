@@ -44,6 +44,11 @@ public class LikeFacade {
         return LikeResponse.nonMatching();
     }
 
+    @Transactional
+    public void dontLike(final String myUuid, final String dontFavoriteUserUuid, final long dailyTopicIdx) {
+        userLikeService.disLike(myUuid, dontFavoriteUserUuid, dailyTopicIdx);
+    }
+
     public List<LikeReceiveResponse> getLikedPeopleList(final String userUuid, final int size,
         final Long dailyFallingIdx, final Long likeIdx) {
 

@@ -7,5 +7,6 @@ public enum LikeState {
 
     WAIT,
     MATCH,
-    REJECT
+    REJECT,
+    DISLIKE
 }
