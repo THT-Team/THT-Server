@@ -7,6 +7,7 @@ import java.util.List;
 public record MainScreenResponse(
     long selectDailyFallingIdx,
     long topicExpirationUnixTime,
+    boolean isLast,
     List<MainScreenUserInfoResponse> userInfos
 ) {
 
@@ -16,12 +17,13 @@ public record MainScreenResponse(
         return new MainScreenResponse(
             dailyFallingIdx,
             UnixTimeUtils.convertUnixTimeForUTC(topicExpirationUnixTime),
+            false,
             responses
         );
     }
 
     public static MainScreenResponse empty() {
-        return new MainScreenResponse(-1, 0, List.of());
+        return new MainScreenResponse(-1, 0, true, List.of());
     }
 
 }

@@ -59,12 +59,10 @@ class MainDocumentation extends ControllerTestConfig {
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("메인")
-                        .description("메인화면 - 오늘의 주제어를 선택한 유저 리스트 조회")
+                        .description("메인화면 - 오늘의 주제어를 선택한 유저 리스트 조회 (new)")
                         .requestFields(
-                            fieldWithPath("alreadySeenUserUuidList").description(
-                                "한번 본 유저 uuid 리스트"),
                             fieldWithPath("userDailyFallingCourserIdx").description(
-                                "페이징 커서 - 마지막으로 본 UserDailyFalling Idx"),
+                                "페이징 커서 - 마지막으로 본 User 리스트의 userDailyFallingCourserIdx 값 [null이 들어올 시 처음부터 조회]"),
                             fieldWithPath("size").description("페이징 사이즈")
                         )
                         .responseFields(
@@ -72,6 +70,7 @@ class MainDocumentation extends ControllerTestConfig {
                                 "유저가 선택한 그날의 topic idx - 선택하지 않았다면 (-1)"),
                             fieldWithPath("topicExpirationUnixTime").description(
                                 "유저 선택한 그날의 topic 만료시간 unix timestamp"),
+                            fieldWithPath("isLast").description("리스트의 마지막인지 여부"),
                             fieldWithPath("userInfos[].username").description("유저 이름"),
                             fieldWithPath("userInfos[].userUuid").description("유저 uuid"),
                             fieldWithPath("userInfos[].age").description("나이"),
