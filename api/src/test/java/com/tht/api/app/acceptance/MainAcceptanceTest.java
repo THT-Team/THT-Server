@@ -1,5 +1,6 @@
 package com.tht.api.app.acceptance;
 
+import static com.tht.api.app.acceptance.LikeAcceptanceStep.좋아요_요청;
 import static com.tht.api.app.acceptance.MainAcceptanceStep.메인화면_매칭유저_조회_요청;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.그날의_대화토픽_선택_요청;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
@@ -37,7 +38,12 @@ class MainAcceptanceTest extends AcceptanceTest {
         var 유저1 = 신규유저_생성_요청_후_토큰추출("유저1", "01065689737", Gender.FEMALE, Gender.BISEXUAL);
         var 유저2 = 신규유저_생성_요청_후_토큰추출("유저2", "01065681414", Gender.FEMALE, Gender.MALE);
         var 유저3 = 신규유저_생성_요청_후_토큰추출("유저3", "01065681411", Gender.FEMALE, Gender.FEMALE);
-        var 유저4 = 신규유저_생성_요청_후_토큰추출("유저4", "01065681444", Gender.MALE, Gender.BISEXUAL);
+
+        var 유저4 = 신규유저_생성_요청_후_토큰추출("유저4", "01065681444", Gender.FEMALE, Gender.BISEXUAL);
+        var 유저5 = 신규유저_생성_요청_후_토큰추출("유저5", "01064681444", Gender.FEMALE, Gender.BISEXUAL);
+        var 유저6 = 신규유저_생성_요청_후_토큰추출("유저6", "01061681444", Gender.FEMALE, Gender.BISEXUAL);
+        var 유저7 = 신규유저_생성_요청_후_토큰추출("유저7", "01063681444", Gender.FEMALE, Gender.BISEXUAL);
+        var 유저8 = 신규유저_생성_요청_후_토큰추출("유저8", "01022681444", Gender.MALE, Gender.BISEXUAL);
 
         var dailyFalling = 그날의주제어_생성_요청();
 
@@ -47,6 +53,16 @@ class MainAcceptanceTest extends AcceptanceTest {
         그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저2);
         그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저3);
         그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저4);
+        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저5);
+        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저6);
+        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저7);
+        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저8);
+
+        //내가 좋아요
+        좋아요_요청(나, 유저4, dailyFalling.getIdx());
+
+        //상대방이 좋아요
+        좋아요_요청(유저5, 나, dailyFalling.getIdx());
 
         //when
         var response = 메인화면_매칭유저_조회_요청(나, null, null);
@@ -55,7 +71,7 @@ class MainAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(200),
             () -> assertThat(response.jsonPath().getList("userInfos.username"))
-                .containsExactly("유저1", "유저2"),
+                .containsExactly("유저1", "유저2", "유저5", "유저6", "유저7"),
             () -> assertThat(response.jsonPath().getBoolean("isLast")).isTrue()
         );
 
