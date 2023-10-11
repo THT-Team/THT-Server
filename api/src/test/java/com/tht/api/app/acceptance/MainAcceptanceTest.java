@@ -21,6 +21,7 @@ class MainAcceptanceTest extends AcceptanceTest {
      * <br> 1. 유저가 그날의 데일리 토픽을 선택한다.
      * <br> 2. 같은 데일리 토픽을 선택한 유저들을 조회한다.
      * <br> 3. 조회되는 유저들은 토픽을 선택한 순서대로 조회된다.
+     * <br> 4. 유저 요청한 조회 size 보다 결과값이 작다면 마지막 페이지임을 응답한다.
      * <br>
      * <br> filter
      * <br> 1. 서로의 선호성별과 성별이 매칭되는 유저만 조회된다.
@@ -54,7 +55,8 @@ class MainAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(200),
             () -> assertThat(response.jsonPath().getList("userInfos.username"))
-                .containsExactly("유저1", "유저3")
+                .containsExactly("유저1", "유저2"),
+            () -> assertThat(response.jsonPath().getBoolean("isLast")).isTrue()
         );
 
     }

@@ -4,6 +4,7 @@ import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.EntityState;
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.meta.QDailyFalling;
 import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.QIdealType;
@@ -78,8 +79,8 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
 
     @Override
     public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(
-        final Long dailyFallingIdx, final List<String> alreadySeenUserUuidList,
-        final Long userDailyFallingCourserIdx, final String myUuid, Integer size) {
+        final Long dailyFallingIdx, final Long userDailyFallingCourserIdx, final String myUuid,
+        final Gender myGender, final Gender myPreferGender, Integer size) {
 
         size = Objects.isNull(size) ? 100 : size;
 
@@ -101,12 +102,14 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 userBlock.userUuid.eq(myUuid),
                 userDailyFalling.userUuid.eq(userBlock.blockUserUuid)
             )
+            .innerJoin(user)
+            .on(user.userUuid.eq(userDailyFalling.userUuid))
             .where(
                 userBlock.idx.isNull(),
                 userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
                 userDailyFalling.state.eq(EntityState.ACTIVE),
                 userDailyFalling.userUuid.ne(myUuid),
-                notInUserIdx(alreadySeenUserUuidList),
+                filterGender(myGender, myPreferGender),
                 notInUserIdx(userFriendBlockUuidList),
                 moreThan(userDailyFallingCourserIdx)
             )
@@ -170,6 +173,16 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                     user.introduction,
                     userDailyFalling.idx
                 )));
+    }
+
+    private BooleanExpression filterGender(Gender myGender, Gender myPreferGender) {
+
+        if (myPreferGender.equals(Gender.BISEXUAL)) {
+            return user.preferGender.eq(Gender.BISEXUAL).or(user.preferGender.eq(myGender));
+        }
+
+        return user.gender.eq(myPreferGender)
+            .and(user.preferGender.eq(myGender).or(user.preferGender.eq(Gender.BISEXUAL)));
     }
 
     @Override
