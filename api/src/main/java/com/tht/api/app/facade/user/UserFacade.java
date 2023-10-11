@@ -80,7 +80,7 @@ public class UserFacade {
         final List<MainScreenUserInfoMapper> list = userDailyFallingService
             .findAllMatchingFallingUser(
                 fallingInfo.dailyFallingIdx(),
-                request.alreadySeenUserUuidList(),
+                List.of(),
                 request.userDailyFallingCourserIdx(),
                 userUuid, request.size()
             );

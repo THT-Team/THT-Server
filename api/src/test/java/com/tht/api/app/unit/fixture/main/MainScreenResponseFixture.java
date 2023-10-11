@@ -8,6 +8,7 @@ public class MainScreenResponseFixture {
 
     private static final long selectDailyFallingIdx = 123;
     private static final long topicExpirationUnixTime = 1451021213;
+    private static final boolean isLast = false;
     private static final List<MainScreenUserInfoResponse> userInfos = List.of(
         MainScreenUserInfoResponseFixture.make());
 
@@ -15,6 +16,7 @@ public class MainScreenResponseFixture {
         return new MainScreenResponse(
             selectDailyFallingIdx,
             topicExpirationUnixTime,
+            isLast,
             userInfos
         );
     }
