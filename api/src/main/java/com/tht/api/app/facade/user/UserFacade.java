@@ -84,13 +84,14 @@ public class UserFacade {
                 user.getUserUuid(),
                 user.getGender(),
                 user.getPreferGender(),
-                request.size()
+                request.getSize()
             );
 
         return MainScreenResponse.of(
             fallingInfo.dailyFallingIdx(),
             fallingInfo.endDate(),
-            list.stream().map(MainScreenUserInfoResponse::of).toList()
+            list.stream().map(MainScreenUserInfoResponse::of).toList(),
+            request.getSize()
         );
     }
 
