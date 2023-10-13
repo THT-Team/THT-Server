@@ -1,5 +1,6 @@
 package com.tht.api.app.repository.user.querydsl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -9,6 +10,7 @@ import com.tht.api.app.entity.meta.QDailyFalling;
 import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.QIdealType;
 import com.tht.api.app.entity.meta.QInterest;
+import com.tht.api.app.entity.user.LikeState;
 import com.tht.api.app.entity.user.QUser;
 import com.tht.api.app.entity.user.QUserBlock;
 import com.tht.api.app.entity.user.QUserDailyFalling;
@@ -93,6 +95,23 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             .where(userFriend.userUuid.eq(myUuid)
                 .and(userFriend.state.eq(EntityState.ACTIVE)))
             .fetch();
+
+        final LocalDateTime disLikeDisableTime = LocalDateTime.now().minusDays(2);
+
+        final List<String> userDisLikeList = new ArrayList<>();
+
+        List<Tuple> tuples = queryFactory
+            .select(userLike.userUuid, userLike.favoriteUserUuid)
+            .from(userLike)
+            .where(
+                userLike.lastModifiedAt.goe(disLikeDisableTime),
+                userLike.likeState.eq(LikeState.DISLIKE),
+                userLike.userUuid.eq(myUuid).or(userLike.favoriteUserUuid.eq(myUuid))
+            )
+            .fetch();
+
+        //todo. 유저 싫어요 uuid 중복 제거 해야함
+        List<String> distinct = userDisLikeList.stream().distinct().toList();
 
         final List<Long> userDailyFallingIdxList = queryFactory
             .select(userDailyFalling.idx)

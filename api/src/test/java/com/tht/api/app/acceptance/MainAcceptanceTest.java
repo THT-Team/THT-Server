@@ -86,7 +86,7 @@ class MainAcceptanceTest extends AcceptanceTest {
 
     }
 
-    @DisplayName("내가 싫어요를 누른 상대도 2일이 지나면 다시 표출된다.")
+    @DisplayName("내가 싫어요를 누른 상대도 2일(48시간)이 지나면 다시 표출된다.")
     @Test
     void test() {
 
