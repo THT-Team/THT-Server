@@ -20,6 +20,19 @@ public class LikeAcceptanceStep {
             .extract();
     }
 
+    public static ExtractableResponse<Response> 싫어요_요청(String accessToken, String dontFavoriteUserUuid, long dailyFalling) {
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .post("/i-dont-like-you/{dont-favorite-user-uuid}/{daily-topic-idx}",
+                dontFavoriteUserUuid,
+                dailyFalling
+            )
+            .then().log().all()
+            .extract();
+    }
+
     public static ExtractableResponse<Response> 좋아요_리스트_조회_요청(String accessToken) {
         return RestAssured.given().log().all()
             .auth().oauth2(accessToken)

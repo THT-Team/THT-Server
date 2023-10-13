@@ -1,5 +1,6 @@
 package com.tht.api.app.acceptance;
 
+import static com.tht.api.app.acceptance.LikeAcceptanceStep.싫어요_요청;
 import static com.tht.api.app.acceptance.LikeAcceptanceStep.좋아요_요청;
 import static com.tht.api.app.acceptance.MainAcceptanceStep.메인화면_매칭유저_조회_요청;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.그날의_대화토픽_선택_요청;
@@ -46,24 +47,31 @@ class MainAcceptanceTest extends AcceptanceTest {
         var 유저7 = 신규유저_생성_요청_후_토큰추출("유저7", "01063681444", Gender.FEMALE, Gender.BISEXUAL);
         var 유저8 = 신규유저_생성_요청_후_토큰추출("유저8", "01022681444", Gender.MALE, Gender.BISEXUAL);
 
-        var dailyFalling = 그날의주제어_생성_요청();
+        var first_dailyFalling = 그날의주제어_생성_요청();
+        var second_dailyFalling = 그날의주제어_생성_요청();
 
         //given
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 나);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저1);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저2);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저3);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저4);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저5);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저6);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저7);
-        그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저8);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 나);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저1);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저2);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저3);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저4);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저5);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저6);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저7);
+        그날의_대화토픽_선택_요청(first_dailyFalling.getIdx(), 유저8);
 
         //내가 좋아요
-        좋아요_요청(나, getUserUuid(유저4), dailyFalling.getIdx());
+        좋아요_요청(나, getUserUuid(유저4), first_dailyFalling.getIdx());
 
         //상대방이 좋아요
-        좋아요_요청(유저5, getUserUuid(나), dailyFalling.getIdx());
+        좋아요_요청(유저5, getUserUuid(나), first_dailyFalling.getIdx());
+
+        //내가 어딘가에서 싫어요
+        싫어요_요청(나, getUserUuid(유저6), second_dailyFalling.getIdx());
+
+        //누군가 나를 어딘가에서 싫어요
+        싫어요_요청(유저7, getUserUuid(나), second_dailyFalling.getIdx());
 
         //when
         var response = 메인화면_매칭유저_조회_요청(나, null, null);
@@ -72,13 +80,13 @@ class MainAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(200),
             () -> assertThat(response.jsonPath().getList("userInfos.username"))
-                .containsExactly("유저1", "유저2", "유저5", "유저6", "유저7"),
+                .containsExactly("유저1", "유저2", "유저5"),
             () -> assertThat(response.jsonPath().getBoolean("isLast")).isTrue()
         );
 
     }
 
-    @DisplayName("내가 싫어요를 누른 상대도 7일이 지나면 다시 표출된다.")
+    @DisplayName("내가 싫어요를 누른 상대도 2일이 지나면 다시 표출된다.")
     @Test
     void test() {
 
