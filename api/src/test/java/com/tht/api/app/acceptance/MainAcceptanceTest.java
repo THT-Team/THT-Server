@@ -28,6 +28,7 @@ class MainAcceptanceTest extends AcceptanceTest {
      * <br> 1. 서로의 선호성별과 성별이 매칭되는 유저만 조회된다.
      * <br> 2. 이미 해당 주제어에서 좋아요한 사람은 제외된다.
      * <br> 3. 어딘가에서 싫어요한 유저는 7일동안 노출에서 제외된다.
+     * <br> 4. 특정 유저가 나를 싫어요한지 7일이 되지 않았다면, 특정 유저는 노출에서 제외된다.
      */
     @DisplayName("메인화면 매칭된 유저리스트 조회 인수테스트")
     @Test
@@ -59,10 +60,10 @@ class MainAcceptanceTest extends AcceptanceTest {
         그날의_대화토픽_선택_요청(dailyFalling.getIdx(), 유저8);
 
         //내가 좋아요
-        좋아요_요청(나, 유저4, dailyFalling.getIdx());
+        좋아요_요청(나, getUserUuid(유저4), dailyFalling.getIdx());
 
         //상대방이 좋아요
-        좋아요_요청(유저5, 나, dailyFalling.getIdx());
+        좋아요_요청(유저5, getUserUuid(나), dailyFalling.getIdx());
 
         //when
         var response = 메인화면_매칭유저_조회_요청(나, null, null);

@@ -15,6 +15,7 @@ import com.tht.api.app.entity.user.QUserDailyFalling;
 import com.tht.api.app.entity.user.QUserFriend;
 import com.tht.api.app.entity.user.QUserIdealType;
 import com.tht.api.app.entity.user.QUserInterests;
+import com.tht.api.app.entity.user.QUserLike;
 import com.tht.api.app.entity.user.QUserLocationInfo;
 import com.tht.api.app.entity.user.QUserProfilePhoto;
 import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
@@ -49,6 +50,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     private static final QDailyFallingActiveTimeTable dailyFallingActiveTimeTable = QDailyFallingActiveTimeTable.dailyFallingActiveTimeTable;
     private static final QUserFriend userFriend = QUserFriend.userFriend;
     private static final QUserBlock userBlock = QUserBlock.userBlock;
+    private static final QUserLike userLike = QUserLike.userLike;
 
     private final JPAQueryFactory queryFactory;
 
@@ -104,12 +106,18 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             )
             .innerJoin(user)
             .on(user.userUuid.eq(userDailyFalling.userUuid))
+            .leftJoin(userLike)
+            .on(userDailyFalling.userUuid.eq(userLike.favoriteUserUuid)
+                    .and(userDailyFalling.dailyFallingIdx.eq(userLike.dailyFallingIdx))
+                    .and(userLike.userUuid.eq(myUuid))
+            )
             .where(
                 userBlock.idx.isNull(),
                 userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
                 userDailyFalling.state.eq(EntityState.ACTIVE),
                 userDailyFalling.userUuid.ne(myUuid),
                 filterGender(myGender, myPreferGender),
+                filterAlreadyLike(),
                 notInUserIdx(userFriendBlockUuidList),
                 moreThan(userDailyFallingCourserIdx)
             )
@@ -183,6 +191,10 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
 
         return user.gender.eq(myPreferGender)
             .and(user.preferGender.eq(myGender).or(user.preferGender.eq(Gender.BISEXUAL)));
+    }
+
+    private BooleanExpression filterAlreadyLike() {
+        return userLike.idx.isNull();
     }
 
     @Override
