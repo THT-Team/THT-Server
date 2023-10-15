@@ -1,5 +1,6 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.UserDailyFalling;
 import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
@@ -40,10 +41,11 @@ public class UserDailyFallingService {
     }
 
     public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(final long dailyFallingIdx,
-        final List<String> alreadySeenUserUuidList, final Long userDailyFallingCourserIdx,
-        final String myUuid, final Integer size) {
+        final Long userDailyFallingCourserIdx,
+        final String myUuid, final Gender myGender, final Gender myPreferGender,
+        final Integer size) {
 
         return userDailyFallingRepository.findAllMatchingFallingUser(dailyFallingIdx,
-            alreadySeenUserUuidList, userDailyFallingCourserIdx, myUuid, size);
+            userDailyFallingCourserIdx, myUuid, myGender, myPreferGender, size);
     }
 }

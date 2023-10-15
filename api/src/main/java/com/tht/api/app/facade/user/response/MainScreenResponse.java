@@ -12,12 +12,13 @@ public record MainScreenResponse(
 ) {
 
     public static MainScreenResponse of(final long dailyFallingIdx,
-        final LocalDateTime topicExpirationUnixTime, final List<MainScreenUserInfoResponse> responses) {
+        final LocalDateTime topicExpirationUnixTime,
+        final List<MainScreenUserInfoResponse> responses, int size) {
 
         return new MainScreenResponse(
             dailyFallingIdx,
             UnixTimeUtils.convertUnixTimeForUTC(topicExpirationUnixTime),
-            false,
+            responses.size() != size,
             responses
         );
     }

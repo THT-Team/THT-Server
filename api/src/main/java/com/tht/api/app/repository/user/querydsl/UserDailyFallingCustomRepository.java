@@ -1,5 +1,6 @@
 package com.tht.api.app.repository.user.querydsl;
 
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
 import com.tht.api.app.repository.mapper.UserDailyFallingMapper;
@@ -13,7 +14,7 @@ public interface UserDailyFallingCustomRepository {
     Optional<DailyFallingTimeMapper> findFallingTimeInfo(final String userUuid);
 
     List<MainScreenUserInfoMapper> findAllMatchingFallingUser(
-        final Long dailyFallingIdx, final List<String> alreadySeenUserUuidList,
-        final Long userDailyFallingCourserIdx, final String userUuid, final Integer size);
+        final Long dailyFallingIdx, final Long userDailyFallingCourserIdx, final String userUuid,
+        final Gender myGender, final Gender myPreferGender, final Integer size);
 
 }

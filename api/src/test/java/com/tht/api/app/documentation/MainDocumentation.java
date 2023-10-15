@@ -3,7 +3,6 @@ package com.tht.api.app.documentation;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
@@ -42,7 +41,7 @@ class MainDocumentation extends ControllerTestConfig {
         String requestBody = objectMapper.writeValueAsString(
             MainScreenUserInfoRequestFixture.make());
 
-        when(userFacade.findAllToDayFallingUserList(anyString(), any()))
+        when(userFacade.findAllToDayFallingUserList(any(), any()))
             .thenReturn(MainScreenResponseFixture.make());
 
         //then

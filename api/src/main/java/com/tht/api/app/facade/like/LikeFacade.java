@@ -7,6 +7,7 @@ import com.tht.api.app.facade.like.response.LikeResponse;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.UserLikeService;
+import com.tht.api.app.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LikeFacade {
 
+    private final UserService userService;
     private final UserLikeService userLikeService;
     private final ChatRoomService chatRoomService;
     private final ChatRoomUserService chatRoomUserService;
@@ -24,6 +26,7 @@ public class LikeFacade {
     @Transactional
     public LikeResponse doLike(final String myUuid, final String favoriteUserUuid, final long dailyTopicIdx) {
 
+        userService.findByUserUuidForAuthToken(favoriteUserUuid);
         final UserLike userLike = userLikeService.save(myUuid, favoriteUserUuid, dailyTopicIdx);
 
         final Optional<UserLike> isMatchedUserLike = userLikeService.findIsMatchedLike(myUuid,

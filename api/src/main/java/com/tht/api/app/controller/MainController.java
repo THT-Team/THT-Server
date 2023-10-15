@@ -24,6 +24,6 @@ public class MainController {
         @RequestBody @Valid final MainScreenUserInfoRequest request) {
 
         return ResponseEntity.ok(
-            userFacade.findAllToDayFallingUserList(user.getUserUuid(), request));
+            userFacade.findAllToDayFallingUserList(user, request));
     }
 }

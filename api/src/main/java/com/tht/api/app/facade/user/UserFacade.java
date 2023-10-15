@@ -61,34 +61,37 @@ public class UserFacade {
     private final UserAgreementService userAgreementService;
     private final UserFriendService userFriendService;
 
-    public MainScreenResponse findAllToDayFallingUserList(final String userUuid,
+    public MainScreenResponse findAllToDayFallingUserList(final User user,
         final MainScreenUserInfoRequest request) {
 
         final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
-            .findChooseTodayDailyFallingInfo(userUuid);
+            .findChooseTodayDailyFallingInfo(user.getUserUuid());
 
         if (fallingInfo.isEmpty()) {
             return MainScreenResponse.empty();
         }
 
-        return getMainScreenResponse(userUuid, request, fallingInfo.get());
+        return getMainScreenResponse(user, request, fallingInfo.get());
     }
 
-    private MainScreenResponse getMainScreenResponse(final String userUuid,
+    private MainScreenResponse getMainScreenResponse(final User user,
         final MainScreenUserInfoRequest request, final DailyFallingTimeMapper fallingInfo) {
 
         final List<MainScreenUserInfoMapper> list = userDailyFallingService
             .findAllMatchingFallingUser(
                 fallingInfo.dailyFallingIdx(),
-                List.of(),
                 request.userDailyFallingCourserIdx(),
-                userUuid, request.size()
+                user.getUserUuid(),
+                user.getGender(),
+                user.getPreferGender(),
+                request.getSize()
             );
 
         return MainScreenResponse.of(
             fallingInfo.dailyFallingIdx(),
             fallingInfo.endDate(),
-            list.stream().map(MainScreenUserInfoResponse::of).toList()
+            list.stream().map(MainScreenUserInfoResponse::of).toList(),
+            request.getSize()
         );
     }
 

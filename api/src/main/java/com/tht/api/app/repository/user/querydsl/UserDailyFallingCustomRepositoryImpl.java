@@ -1,37 +1,25 @@
 package com.tht.api.app.repository.user.querydsl;
 
+import com.querydsl.core.Tuple;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.EntityState;
+import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.meta.QDailyFalling;
 import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.QIdealType;
 import com.tht.api.app.entity.meta.QInterest;
-import com.tht.api.app.entity.user.QUser;
-import com.tht.api.app.entity.user.QUserBlock;
-import com.tht.api.app.entity.user.QUserDailyFalling;
-import com.tht.api.app.entity.user.QUserFriend;
-import com.tht.api.app.entity.user.QUserIdealType;
-import com.tht.api.app.entity.user.QUserInterests;
-import com.tht.api.app.entity.user.QUserLocationInfo;
-import com.tht.api.app.entity.user.QUserProfilePhoto;
-import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
-import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
-import com.tht.api.app.repository.mapper.QDailyFallingTimeMapper;
-import com.tht.api.app.repository.mapper.QIdealTypeMapper;
-import com.tht.api.app.repository.mapper.QInterestMapper;
-import com.tht.api.app.repository.mapper.QMainScreenUserInfoMapper;
-import com.tht.api.app.repository.mapper.QUserDailyFallingMapper;
-import com.tht.api.app.repository.mapper.QUserProfilePhotoMapper;
-import com.tht.api.app.repository.mapper.UserDailyFallingMapper;
+import com.tht.api.app.entity.user.*;
+import com.tht.api.app.repository.mapper.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.util.CollectionUtils;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
-import org.springframework.util.CollectionUtils;
 
 @RequiredArgsConstructor
 public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCustomRepository {
@@ -48,6 +36,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     private static final QDailyFallingActiveTimeTable dailyFallingActiveTimeTable = QDailyFallingActiveTimeTable.dailyFallingActiveTimeTable;
     private static final QUserFriend userFriend = QUserFriend.userFriend;
     private static final QUserBlock userBlock = QUserBlock.userBlock;
+    private static final QUserLike userLike = QUserLike.userLike;
 
     private final JPAQueryFactory queryFactory;
 
@@ -78,8 +67,8 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
 
     @Override
     public List<MainScreenUserInfoMapper> findAllMatchingFallingUser(
-        final Long dailyFallingIdx, final List<String> alreadySeenUserUuidList,
-        final Long userDailyFallingCourserIdx, final String myUuid, Integer size) {
+        final Long dailyFallingIdx, final Long userDailyFallingCourserIdx, final String myUuid,
+        final Gender myGender, final Gender myPreferGender, Integer size) {
 
         size = Objects.isNull(size) ? 100 : size;
 
@@ -91,27 +80,57 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 .and(userFriend.state.eq(EntityState.ACTIVE)))
             .fetch();
 
-        final List<Long> userDailyFallingIdxList = queryFactory
-            .select(userDailyFalling.idx)
-            .from(userDailyFalling)
-            .leftJoin(userBlock)
-            .on(
-                userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
-                userDailyFalling.state.eq(EntityState.ACTIVE),
-                userBlock.userUuid.eq(myUuid),
-                userDailyFalling.userUuid.eq(userBlock.blockUserUuid)
-            )
+        final LocalDateTime disLikeDisableTime = LocalDateTime.now().minusDays(2);
+
+        final List<String> userDisLikeList = new ArrayList<>();
+
+        final List<Tuple> tuples = queryFactory
+            .select(userLike.userUuid, userLike.favoriteUserUuid)
+            .from(userLike)
             .where(
-                userBlock.idx.isNull(),
-                userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
-                userDailyFalling.state.eq(EntityState.ACTIVE),
-                userDailyFalling.userUuid.ne(myUuid),
-                notInUserIdx(alreadySeenUserUuidList),
-                notInUserIdx(userFriendBlockUuidList),
-                moreThan(userDailyFallingCourserIdx)
+                userLike.lastModifiedAt.goe(disLikeDisableTime),
+                userLike.likeState.eq(LikeState.DISLIKE),
+                userLike.userUuid.eq(myUuid).or(userLike.favoriteUserUuid.eq(myUuid))
             )
-            .limit(size)
             .fetch();
+
+        for (Tuple t : tuples) {
+            userDisLikeList.add(t.get(userLike.userUuid));
+            userDisLikeList.add(t.get(userLike.favoriteUserUuid));
+        }
+
+        final List<String> distinctUserDisLikeList = userDisLikeList.stream().distinct().toList();
+
+        final List<Long> userDailyFallingIdxList = queryFactory
+                .select(userDailyFalling.idx)
+                .from(userDailyFalling)
+                .leftJoin(userBlock)
+                .on(
+                        userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
+                        userDailyFalling.state.eq(EntityState.ACTIVE),
+                        userBlock.userUuid.eq(myUuid),
+                        userDailyFalling.userUuid.eq(userBlock.blockUserUuid)
+                )
+                .innerJoin(user)
+                .on(user.userUuid.eq(userDailyFalling.userUuid))
+                .leftJoin(userLike)
+                .on(userDailyFalling.userUuid.eq(userLike.favoriteUserUuid)
+                        .and(userDailyFalling.dailyFallingIdx.eq(userLike.dailyFallingIdx))
+                        .and(userLike.userUuid.eq(myUuid))
+                )
+                .where(
+                        userBlock.idx.isNull(),
+                        userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
+                        userDailyFalling.state.eq(EntityState.ACTIVE),
+                        userDailyFalling.userUuid.ne(myUuid),
+                        filterGender(myGender, myPreferGender),
+                        filterAlreadyLike(),
+                        notInUserIdx(userFriendBlockUuidList),
+                        notInUserIdx(distinctUserDisLikeList),
+                        moreThan(userDailyFallingCourserIdx)
+                )
+                .limit(size)
+                .fetch();
 
         if (CollectionUtils.isEmpty(userDailyFallingIdxList)) {
             return new ArrayList<>();
@@ -172,6 +191,20 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 )));
     }
 
+    private BooleanExpression filterGender(Gender myGender, Gender myPreferGender) {
+
+        if (myPreferGender.equals(Gender.BISEXUAL)) {
+            return user.preferGender.eq(Gender.BISEXUAL).or(user.preferGender.eq(myGender));
+        }
+
+        return user.gender.eq(myPreferGender)
+            .and(user.preferGender.eq(myGender).or(user.preferGender.eq(Gender.BISEXUAL)));
+    }
+
+    private BooleanExpression filterAlreadyLike() {
+        return userLike.idx.isNull();
+    }
+
     @Override
     public Optional<DailyFallingTimeMapper> findFallingTimeInfo(final String userUuid) {
 
@@ -202,12 +235,12 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
         return userDailyFalling.idx.gt(userDailyFallingCourserIdx);
     }
 
-    private BooleanExpression notInUserIdx(final List<String> alreadySeenUserUuidList) {
-        if (Objects.isNull(alreadySeenUserUuidList)) {
+    private BooleanExpression notInUserIdx(final List<String> userUuidList) {
+        if (Objects.isNull(userUuidList)) {
             return null;
         }
 
-        return userDailyFalling.userUuid.notIn(alreadySeenUserUuidList);
+        return userDailyFalling.userUuid.notIn(userUuidList);
     }
 
     private BooleanExpression activeTimeAtNow() {
