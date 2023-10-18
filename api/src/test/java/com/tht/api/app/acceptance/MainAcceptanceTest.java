@@ -10,10 +10,15 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.tht.api.app.acceptance.config.AcceptanceTest;
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.repository.like.UserLikeRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 class MainAcceptanceTest extends AcceptanceTest {
+
+    @Autowired
+    UserLikeRepository userLikeRepository;
 
 
     /**
@@ -83,12 +88,6 @@ class MainAcceptanceTest extends AcceptanceTest {
                 .containsExactly("유저1", "유저2", "유저5"),
             () -> assertThat(response.jsonPath().getBoolean("isLast")).isTrue()
         );
-
-    }
-
-    @DisplayName("내가 싫어요를 누른 상대도 2일(48시간)이 지나면 다시 표출된다.")
-    @Test
-    void test() {
 
     }
 }
