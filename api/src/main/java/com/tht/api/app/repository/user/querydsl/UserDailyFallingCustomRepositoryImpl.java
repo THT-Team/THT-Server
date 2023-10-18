@@ -24,6 +24,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCustomRepository {
 
+    private static final int DISLIKE_HOLDING_DAY = 2;
+
     private static final QUserDailyFalling userDailyFalling = QUserDailyFalling.userDailyFalling;
     private static final QDailyFalling dailyFalling = QDailyFalling.dailyFalling;
     private static final QUser user = QUser.user;
@@ -80,7 +82,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 .and(userFriend.state.eq(EntityState.ACTIVE)))
             .fetch();
 
-        final LocalDateTime disLikeDisableTime = LocalDateTime.now().minusDays(2);
+        final LocalDateTime disLikeDisableTime = LocalDateTime.now().minusDays(DISLIKE_HOLDING_DAY);
 
         final List<String> userDisLikeList = new ArrayList<>();
 
