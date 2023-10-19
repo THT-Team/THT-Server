@@ -87,18 +87,18 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
         final List<String> userDisLikeList = new ArrayList<>();
 
         final List<Tuple> tuples = queryFactory
-            .select(userLike.userUuid, userLike.favoriteUserUuid)
+            .select(userLike.userUuid, userLike.targetUserUuid)
             .from(userLike)
             .where(
                 userLike.lastModifiedAt.goe(disLikeDisableTime),
                 userLike.likeState.eq(LikeState.DISLIKE),
-                userLike.userUuid.eq(myUuid).or(userLike.favoriteUserUuid.eq(myUuid))
+                userLike.userUuid.eq(myUuid).or(userLike.targetUserUuid.eq(myUuid))
             )
             .fetch();
 
         for (Tuple t : tuples) {
             userDisLikeList.add(t.get(userLike.userUuid));
-            userDisLikeList.add(t.get(userLike.favoriteUserUuid));
+            userDisLikeList.add(t.get(userLike.targetUserUuid));
         }
 
         final List<String> distinctUserDisLikeList = userDisLikeList.stream().distinct().toList();
@@ -116,7 +116,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 .innerJoin(user)
                 .on(user.userUuid.eq(userDailyFalling.userUuid))
                 .leftJoin(userLike)
-                .on(userDailyFalling.userUuid.eq(userLike.favoriteUserUuid)
+                .on(userDailyFalling.userUuid.eq(userLike.targetUserUuid)
                         .and(userDailyFalling.dailyFallingIdx.eq(userLike.dailyFallingIdx))
                         .and(userLike.userUuid.eq(myUuid))
                 )
