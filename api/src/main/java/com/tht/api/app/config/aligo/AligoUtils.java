@@ -23,6 +23,7 @@ public class AligoUtils {
     private static final JSONParser JSON_PARSER = new JSONParser();
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    //todo. test
     public static void sendAuthNumber(final String phoneNumber, final String authNumber) {
         final String response = WebClientConfig.getBaseUrl(AligoConst.SMS_SEND_URL)
             .post()
