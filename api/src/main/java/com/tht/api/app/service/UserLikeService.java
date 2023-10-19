@@ -1,5 +1,6 @@
 package com.tht.api.app.service;
 
+import com.tht.api.app.entity.user.LikeState;
 import com.tht.api.app.entity.user.UserLike;
 import com.tht.api.app.repository.like.UserLikeRepository;
 import com.tht.api.app.repository.mapper.LikeReceiveMapper;
@@ -31,8 +32,8 @@ public class UserLikeService {
     public Optional<UserLike> findIsMatchedLike(final String myUuid, final String favoriteUserUuid,
         final long dailyTopicIdx) {
 
-        return userLikeRepository.findByUserUuidAndFavoriteUserUuidAndDailyFallingIdx(
-            favoriteUserUuid, myUuid, dailyTopicIdx);
+        return userLikeRepository.findByUserUuidAndTargetUserUuidAndDailyFallingIdxAndLikeState(
+            favoriteUserUuid, myUuid, dailyTopicIdx, LikeState.LIKE);
     }
 
     public List<LikeReceiveMapper> findReceivedLikes(final String userUuid, final int size,

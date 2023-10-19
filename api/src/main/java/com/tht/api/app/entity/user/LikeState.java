@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @JsonFormat(shape = JsonFormat.Shape.STRING)
 public enum LikeState {
 
-    WAIT,
+    LIKE,
     MATCH,
     REJECT,
     DISLIKE

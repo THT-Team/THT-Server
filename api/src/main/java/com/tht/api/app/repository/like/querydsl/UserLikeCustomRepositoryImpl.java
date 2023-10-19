@@ -53,7 +53,7 @@ public class UserLikeCustomRepositoryImpl implements UserLikeCustomRepository {
             .innerJoin(user)
             .on(userLike.userUuid.eq(user.userUuid)
                 .and(user.state.eq(EntityState.ACTIVE))
-                .and(userLike.favoriteUserUuid.eq(userUuid))
+                .and(userLike.targetUserUuid.eq(userUuid))
             )
             .innerJoin(userLocationInfo).on(user.userUuid.eq(userLocationInfo.userUuid))
             .innerJoin(userProfilePhoto)
@@ -62,7 +62,7 @@ public class UserLikeCustomRepositoryImpl implements UserLikeCustomRepository {
             .innerJoin(dailyFalling).on(userLike.dailyFallingIdx.eq(dailyFalling.idx))
             .innerJoin(talkKeyword).on(dailyFalling.talkKeywordIdx.eq(talkKeyword.idx))
             .where(
-                userLike.likeState.eq(LikeState.WAIT),
+                userLike.likeState.eq(LikeState.LIKE),
                 userLike.state.eq(EntityState.ACTIVE),
                 equalsAndLessThaDailyFallingIdx(dailyFallingIdx),
                 lessThanLikeIdx(likeIdx)

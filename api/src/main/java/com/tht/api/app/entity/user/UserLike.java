@@ -26,19 +26,19 @@ public class UserLike extends Auditable {
 
     private String userUuid;
 
-    private String favoriteUserUuid;
+    private String targetUserUuid;
 
     private Long dailyFallingIdx;
 
     @Enumerated(EnumType.STRING)
-    private LikeState likeState = LikeState.WAIT;
+    private LikeState likeState = LikeState.LIKE;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserLike(Long idx, String userUuid, String favoriteUserUuid, Long dailyFallingIdx, LikeState likeState) {
+    private UserLike(Long idx, String userUuid, String targetUserUuid, Long dailyFallingIdx, LikeState likeState) {
 
         this.idx = idx;
         this.userUuid = userUuid;
-        this.favoriteUserUuid = favoriteUserUuid;
+        this.targetUserUuid = targetUserUuid;
         this.dailyFallingIdx = dailyFallingIdx;
         this.likeState = likeState;
     }
@@ -48,9 +48,9 @@ public class UserLike extends Auditable {
 
         return UserLike.builder()
             .userUuid(userUuid)
-            .favoriteUserUuid(favoriteUserUuid)
+            .targetUserUuid(favoriteUserUuid)
             .dailyFallingIdx(dailyFallingIdx)
-            .likeState(LikeState.WAIT)
+            .likeState(LikeState.LIKE)
             .build();
     }
 
@@ -59,7 +59,7 @@ public class UserLike extends Auditable {
 
         return UserLike.builder()
             .userUuid(userUuid)
-            .favoriteUserUuid(dontFavoriteUserUuid)
+            .targetUserUuid(dontFavoriteUserUuid)
             .dailyFallingIdx(dailyTopicIdx)
             .likeState(LikeState.DISLIKE)
             .build();
@@ -78,7 +78,7 @@ public class UserLike extends Auditable {
     }
 
     private void validationMatchReceiver(final String userUuid) {
-        if (!this.favoriteUserUuid.equals(userUuid)) {
+        if (!this.targetUserUuid.equals(userUuid)) {
             throw LikeException.didNotMatchReceiver(userUuid, getIdx());
         }
     }
@@ -90,7 +90,7 @@ public class UserLike extends Auditable {
     }
 
     private boolean isLikeStateWait() {
-        return this.likeState.equals(LikeState.WAIT);
+        return this.likeState.equals(LikeState.LIKE);
     }
 
 }

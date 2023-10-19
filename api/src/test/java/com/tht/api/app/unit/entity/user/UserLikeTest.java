@@ -17,7 +17,7 @@ class UserLikeTest {
     void success_reject() {
 
         final UserLike userLike = UserLikeFixture.make();
-        final String rejectUserUuid = userLike.getFavoriteUserUuid();
+        final String rejectUserUuid = userLike.getTargetUserUuid();
 
         //when
         userLike.rejectedLike(rejectUserUuid);
@@ -45,7 +45,7 @@ class UserLikeTest {
     void fail_reject_likeDontWaitedState() {
 
         final UserLike userLike = UserLikeFixture.makeDontWait();
-        final String rejectUserUuid = userLike.getFavoriteUserUuid();
+        final String rejectUserUuid = userLike.getTargetUserUuid();
 
         //when
         assertThatThrownBy(() -> userLike.rejectedLike(rejectUserUuid))
@@ -59,7 +59,7 @@ class UserLikeTest {
     void createDefaultLike() {
 
         UserLike userLike = UserLikeFixture.make();
-        assertThat(userLike.getLikeState()).isEqualTo(LikeState.WAIT);
+        assertThat(userLike.getLikeState()).isEqualTo(LikeState.LIKE);
     }
 
 
