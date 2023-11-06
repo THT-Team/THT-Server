@@ -26,4 +26,8 @@ public class ChatRoomUserService {
     public void inChatRoom(final long chatRoomIdx, final String userUuid) {
         chatRoomUserRepository.save(ChatRoomUser.create(chatRoomIdx, userUuid));
     }
+
+    public void outOfBlockChatRoom(final String userUuid, final String blockUserUuid) {
+        chatRoomUserRepository.updateChatRoomUserInActiveOfBlock(userUuid, blockUserUuid);
+    }
 }

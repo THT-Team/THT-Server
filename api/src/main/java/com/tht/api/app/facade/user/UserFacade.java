@@ -23,6 +23,7 @@ import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.repository.mapper.MainScreenUserInfoMapper;
+import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.IdealTypeService;
 import com.tht.api.app.service.InterestService;
 import com.tht.api.app.service.UserAgreementService;
@@ -60,6 +61,7 @@ public class UserFacade {
     private final UserAlarmAgreementService userAlarmAgreementService;
     private final UserAgreementService userAgreementService;
     private final UserFriendService userFriendService;
+    private final ChatRoomUserService chatRoomUserService;
 
     public MainScreenResponse findAllToDayFallingUserList(final User user,
         final MainScreenUserInfoRequest request) {
@@ -105,6 +107,7 @@ public class UserFacade {
     @Transactional
     public void block(final String userUuid, final String blockUserUuid) {
         userBlockService.block(userUuid, blockUserUuid);
+        chatRoomUserService.outOfBlockChatRoom(userUuid, blockUserUuid);
     }
 
     public UserDetailResponse getUserDetail(final String userUuid) {

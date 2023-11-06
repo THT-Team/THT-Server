@@ -27,7 +27,7 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
     @Override
     public List<ChatRoomPreviewMapper> findAllByUserUuidInActive(final String userUuid) {
 
-        final QChatRoomUser chatRoomPartnerUser = new QChatRoomUser("partner_chatRoomUSer");
+        final QChatRoomUser chatRoomPartnerUser = new QChatRoomUser("partnerChatRoomUser");
 
         return queryFactory.select(
                 new QChatRoomPreviewMapper(
@@ -61,6 +61,26 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
             .set(chatRoomUser.state, EntityState.INACTIVE)
             .where(chatRoomUser.chatRoomIdx.eq(chatRoomIdx)
                 .and(chatRoomUser.userUuid.eq(userUuid)))
+            .execute();
+    }
+
+    @Override
+    public void updateChatRoomUserInActiveOfBlock(final String userUuid,
+        final String blockUserUuid) {
+
+        final List<Long> blockUserChatRoomIdxList = queryFactory.select(chatRoomUser.chatRoomIdx)
+            .from(chatRoomUser)
+            .where(
+                chatRoomUser.userUuid.eq(blockUserUuid),
+                chatRoomUser.state.eq(EntityState.ACTIVE)
+            )
+            .fetch();
+
+        queryFactory.update(chatRoomUser)
+            .set(chatRoomUser.state, EntityState.INACTIVE)
+            .where(
+                chatRoomUser.chatRoomIdx.in(blockUserChatRoomIdxList),
+                chatRoomUser.userUuid.eq(userUuid))
             .execute();
     }
 
