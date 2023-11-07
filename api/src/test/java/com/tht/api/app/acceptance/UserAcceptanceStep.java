@@ -122,4 +122,13 @@ public class UserAcceptanceStep {
             .when().get("/user/friend-contact-list")
             .then().log().all().extract();
     }
+
+    public static ExtractableResponse<Response> 유저_차단_요청(String accessToken, String blockUserUuid) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when().post("/user/block/{block-user-uuid}", blockUserUuid)
+            .then().log().all().extract();
+    }
 }

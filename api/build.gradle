@@ -58,6 +58,9 @@ dependencies {
 	//mongo
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
+	//in-memory-mongo
+	testImplementation 'de.bwaldvogel:mongo-java-server:1.44.0'
+
 	//h2
 	implementation 'com.h2database:h2'
 

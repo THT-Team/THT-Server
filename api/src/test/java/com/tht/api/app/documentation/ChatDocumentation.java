@@ -109,7 +109,8 @@ class ChatDocumentation extends ControllerTestConfig {
                             fieldWithPath("[].partnerName").description("채팅 상대방 이름"),
                             fieldWithPath("[].partnerProfileUrl").description("채팅 상대방 프로필 사진 url"),
                             fieldWithPath("[].currentMessage").description("가장 최근 메세지 내용"),
-                            fieldWithPath("[].messageTime").description("메세지 전송 시간")
+                            fieldWithPath("[].messageTime").description("메세지 전송 시간"),
+                            fieldWithPath("[].isAvailableChat").description("채팅방 활성화 여부")
                         )
                         .responseSchema(Schema.schema("ChatRoomResponse"))
                         .build()
