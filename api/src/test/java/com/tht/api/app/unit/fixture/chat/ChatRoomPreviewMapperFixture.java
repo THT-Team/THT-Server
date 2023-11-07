@@ -12,14 +12,15 @@ public class ChatRoomPreviewMapperFixture {
     private final static String partnerProfileUrl = "profile_url";
     private final static LocalDateTime chatRoomCreatedAt = LocalDateTime.now();
     private final static EntityState entityState = EntityState.ACTIVE;
+    private final static EntityState userState = EntityState.ACTIVE;
 
     public static ChatRoomPreviewMapper make(final Long roomIdx) {
 
-        return new ChatRoomPreviewMapper(roomIdx, partnerUuid, partnerName, partnerProfileUrl, chatRoomCreatedAt, entityState);
+        return new ChatRoomPreviewMapper(roomIdx, partnerUuid, partnerName, partnerProfileUrl, chatRoomCreatedAt, entityState, userState);
     }
 
     public static ChatRoomPreviewMapper make() {
 
-        return new ChatRoomPreviewMapper(chatRoomIdx, partnerUuid, partnerName, partnerProfileUrl, chatRoomCreatedAt, entityState);
+        return new ChatRoomPreviewMapper(chatRoomIdx, partnerUuid, partnerName, partnerProfileUrl, chatRoomCreatedAt, entityState, userState);
     }
 }

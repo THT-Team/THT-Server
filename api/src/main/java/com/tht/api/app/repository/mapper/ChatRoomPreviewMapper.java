@@ -10,7 +10,8 @@ public record ChatRoomPreviewMapper(
     String partnerName,
     String partnerProfileUrl,
     LocalDateTime chatRoomCreatedAt,
-    EntityState state
+    EntityState state,
+    EntityState userState
 
 ) {
 
@@ -18,6 +19,6 @@ public record ChatRoomPreviewMapper(
     public ChatRoomPreviewMapper{}
 
     public boolean isChatOutPartner(){
-        return !EntityState.ACTIVE.equals(state);
+        return !EntityState.ACTIVE.equals(state) || !EntityState.ACTIVE.equals(userState);
     }
 }

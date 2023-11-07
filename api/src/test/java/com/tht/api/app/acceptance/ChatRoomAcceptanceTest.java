@@ -84,8 +84,12 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
             () -> assertThat(response.jsonPath().getList("partnerName"))
                 .isNotIn(otherUser + 1, otherUser + 2),
             () -> assertThat(unChatAbleRoom).hasSize(3),
-            () -> assertThat(unChatAbleRoom).extracting("isAvailableChat").containsOnly("현재 메세지를 보낼 수 없습니다."),
-            () -> assertThat(unChatAbleRoom).extracting("isAvailableChat").containsOnly("false"),
+            () -> assertThat(unChatAbleRoom).extracting("currentMessage")
+                .isEqualTo(
+                    List.of("현재 메세지를 보낼 수 없습니다.", "현재 메세지를 보낼 수 없습니다.", "현재 메세지를 보낼 수 없습니다.")
+                ),
+            () -> assertThat(unChatAbleRoom).extracting("isAvailableChat")
+                .isEqualTo(List.of(false, false, false)),
             () -> assertThat(response.jsonPath()
                 .getString("find{it.partnerName == '채팅할상대방7'}.currentMessage"))
                 .isEqualTo("매칭된 무디와 먼저 대화를 시작해 보세요."),

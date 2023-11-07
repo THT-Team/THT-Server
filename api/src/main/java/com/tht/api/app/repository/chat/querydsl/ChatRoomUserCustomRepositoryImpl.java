@@ -36,7 +36,8 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
                     user.username,
                     userProfilePhoto.url,
                     chatRoom.createdAt,
-                    chatRoomPartnerUser.state
+                    chatRoomPartnerUser.state,
+                    user.state
                 ))
             .from(chatRoomUser)
             .innerJoin(chatRoomPartnerUser)
