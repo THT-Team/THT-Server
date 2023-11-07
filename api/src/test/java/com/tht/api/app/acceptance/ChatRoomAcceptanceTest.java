@@ -4,6 +4,7 @@ import static com.tht.api.app.acceptance.ChatRoomAcceptanceStep.채팅방_리스
 import static com.tht.api.app.acceptance.LikeAcceptanceStep.좋아요_요청;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.유저_차단_요청;
+import static com.tht.api.app.acceptance.UserAcceptanceStep.유저계정_탈퇴_요청;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -13,7 +14,9 @@ import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
@@ -35,38 +38,61 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
 
         Map<String, String> tokenMap = new HashMap<>();
         Map<String, Long> chatRoomMap = new HashMap<>();
+        String otherUser = "채팅할상대방";
 
         //given
         String 로그인유저토큰 = 신규유저_생성_요청_후_토큰추출("박형싴케이", "0105513171");
         DailyFalling dailyFalling = 그날의주제어_생성_요청();
 
         for (int i = 1; i <= 9; i++) {
-            String otherAccessToken = 신규유저_생성_요청_후_토큰추출("채팅할상대방" + i, "0105513123" + i);
+            String otherAccessToken = 신규유저_생성_요청_후_토큰추출(otherUser + i, "0105513123" + i);
             좋아요_요청(로그인유저토큰, getUserUuid(otherAccessToken), dailyFalling.getIdx());
+
             var 좋아요_요청_결과 = 좋아요_요청(otherAccessToken, getUserUuid(로그인유저토큰),
                 dailyFalling.getIdx());
 
-            tokenMap.put("채팅할상대방" + i, otherAccessToken);
-            chatRoomMap.put("채팅할상대방" + i, 좋아요_요청_결과.jsonPath().getLong("chatRoomIdx"));
+            tokenMap.put(otherUser + i, otherAccessToken);
+            chatRoomMap.put(otherUser + i, 좋아요_요청_결과.jsonPath().getLong("chatRoomIdx"));
         }
 
 
         //scenario 1 - 내가 나간 채팅방
-        채팅방_나가기_요청(로그인유저토큰, chatRoomMap.get("채팅할상대방1"));
+        채팅방_나가기_요청(로그인유저토큰, chatRoomMap.get(otherUser+1));
 
         //scenario 2 - 내가 차단한 상대방 채팅방
-        유저_차단_요청(로그인유저토큰, getUserUuid(tokenMap.get("채팅할상대방2")));
+        유저_차단_요청(로그인유저토큰, getUserUuid(tokenMap.get(otherUser+2)));
 
+        //scenario 3 - 상대방 유저가 나를 차단
+        유저_차단_요청(tokenMap.get(otherUser + 3), getUserUuid(로그인유저토큰));
+
+        //scenario 4 - 상대방 유저가 나와의 채팅방을 나감
+        채팅방_나가기_요청(tokenMap.get(otherUser + 4), chatRoomMap.get(otherUser+4));
+
+        //scenario 5 - 상대방 유저가 탈퇴
+        유저계정_탈퇴_요청(tokenMap.get(otherUser + 5));
 
 
         //when
         var response = 채팅방_리스트_조회_요청(로그인유저토큰);
 
         //then
+        List<Objects> unChatAbleRoom = response.jsonPath()
+            .getList("findAll{it.partnerName in ['채팅할상대방3', '채팅할상대방4', '채팅할상대방5']}");
+
         assertAll(
             () -> assertThat(response.jsonPath().getList("")).hasSize(7),
-            () -> assertThat(response.jsonPath().getList("partnerName")).isNotIn("채팅할상대방1", "채팅할상대방2")
+            () -> assertThat(response.jsonPath().getList("partnerName"))
+                .isNotIn(otherUser + 1, otherUser + 2),
+            () -> assertThat(unChatAbleRoom).hasSize(3),
+            () -> assertThat(unChatAbleRoom).extracting("isAvailableChat").containsOnly("현재 메세지를 보낼 수 없습니다."),
+            () -> assertThat(unChatAbleRoom).extracting("isAvailableChat").containsOnly("false"),
+            () -> assertThat(response.jsonPath()
+                .getString("find{it.partnerName == '채팅할상대방7'}.currentMessage"))
+                .isEqualTo("매칭된 무디와 먼저 대화를 시작해 보세요."),
+            () -> assertThat(response.jsonPath()
+                .getBoolean("find{it.partnerName == '채팅할상대방7'}.isAvailableChat")).isTrue()
         );
+
     }
 
     private ExtractableResponse<Response> 채팅방_나가기_요청(String accessToken, long chatRoomIdx) {
