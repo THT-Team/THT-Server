@@ -19,6 +19,6 @@ class ChatRoomPreviewResponseTest {
         ChatRoomPreviewResponse response = ChatRoomPreviewResponse.of(
             ChatRoomPreviewMapperFixture.make(1L), mock);
 
-        assertThat(response.currentMessage()).isEqualTo("매칭된 무디와 먼저 대화를 시작해 보세요");
+        assertThat(response.currentMessage()).isEqualTo("매칭된 무디와 먼저 대화를 시작해 보세요.");
     }
 }

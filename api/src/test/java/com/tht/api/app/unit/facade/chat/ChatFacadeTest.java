@@ -115,7 +115,7 @@ class ChatFacadeTest {
 
         //then
         assertThat(result).hasSize(5);
-        assertThat(result).extracting("currentMessage").containsOnly("매칭된 무디와 먼저 대화를 시작해 보세요");
+        assertThat(result).extracting("currentMessage").containsOnly("매칭된 무디와 먼저 대화를 시작해 보세요.");
 
     }
 }
