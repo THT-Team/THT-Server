@@ -18,4 +18,14 @@ class ChatRoomAcceptanceStep {
             .extract();
     }
 
+    public static ExtractableResponse<Response> 채팅방_나가기_요청(String accessToken, long chatRoomIdx) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .post("/chat/out/room/{chat-room-idx}", chatRoomIdx)
+            .then().log().all()
+            .extract();
+    }
 }

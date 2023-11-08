@@ -1,5 +1,6 @@
 package com.tht.api.app.acceptance;
 
+import static com.tht.api.app.acceptance.ChatRoomAcceptanceStep.채팅방_나가기_요청;
 import static com.tht.api.app.acceptance.ChatRoomAcceptanceStep.채팅방_리스트_조회_요청;
 import static com.tht.api.app.acceptance.LikeAcceptanceStep.좋아요_요청;
 import static com.tht.api.app.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
@@ -10,16 +11,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.tht.api.app.acceptance.config.mongo.AcceptanceTestWithMongo;
 import com.tht.api.app.entity.meta.DailyFalling;
-import io.restassured.RestAssured;
-import io.restassured.response.ExtractableResponse;
-import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 
 class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
 
@@ -97,17 +94,6 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
                 .getBoolean("find{it.partnerName == '채팅할상대방7'}.isAvailableChat")).isTrue()
         );
 
-    }
-
-    private ExtractableResponse<Response> 채팅방_나가기_요청(String accessToken, long chatRoomIdx) {
-
-        return RestAssured.given().log().all()
-            .auth().oauth2(accessToken)
-            .contentType(MediaType.APPLICATION_JSON_VALUE)
-            .when()
-            .post("/chat/out/room/{chat-room-idx}", chatRoomIdx)
-            .then().log().all()
-            .extract();
     }
 
 }
