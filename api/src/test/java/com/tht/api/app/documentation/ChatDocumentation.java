@@ -37,7 +37,7 @@ class ChatDocumentation extends ControllerTestConfig {
     ChatFacade chatFacade;
 
     @Test
-    @DisplayName("채팅 내역 리스트 조회 api test - docs")
+    @DisplayName("채팅 내역 리스트 조회 api - docs")
     void getChatHistory() throws Exception {
 
         //given
@@ -85,7 +85,7 @@ class ChatDocumentation extends ControllerTestConfig {
 
     @Test
     @WithCustomMockUser
-    @DisplayName("유저 채팅방 리스트 조회 api test - docs")
+    @DisplayName("유저 채팅방 리스트 조회 api - docs")
     void getChatRooms() throws Exception {
 
         //given
@@ -123,7 +123,7 @@ class ChatDocumentation extends ControllerTestConfig {
 
     @Test
     @WithCustomMockUser
-    @DisplayName("유저 채팅방 나가기 api test - docs")
+    @DisplayName("유저 채팅방 나가기 api - docs")
     void outChatRoom() throws Exception {
 
         //given
@@ -154,7 +154,7 @@ class ChatDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 채팅방 상세조회 api test - docs")
+    @DisplayName("유저 채팅방 상세조회 api - docs")
     void getDetailRoomInfo() throws Exception {
 
         //given
@@ -181,7 +181,8 @@ class ChatDocumentation extends ControllerTestConfig {
                             fieldWithPath("chatRoomIdx").description("채팅방 idx"),
                             fieldWithPath("talkSubject").description("대화 주제"),
                             fieldWithPath("talkIssue").description("대화 주제 파생질문"),
-                            fieldWithPath("startDate").description("재화 시작일")
+                            fieldWithPath("startDate").description("재화 시작일"),
+                            fieldWithPath("isChatAble").description("채팅 가능여부")
                         )
                         .build()
                 )

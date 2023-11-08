@@ -6,7 +6,8 @@ public record ChatRoomResponse(
     long chatRoomIdx,
     String talkSubject,
     String talkIssue,
-    String startDate
+    String startDate,
+    boolean isChatAble
 ) {
 
     public static ChatRoomResponse of(final ChatRoomMapper mapper) {
@@ -14,7 +15,8 @@ public record ChatRoomResponse(
             mapper.chatRoomIdx(),
             mapper.talkSubject(),
             mapper.talkIssue(),
-            mapper.startDate()
+            mapper.startDate(),
+            true
         );
     }
 }
