@@ -11,12 +11,16 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.tht.api.app.acceptance.config.mongo.AcceptanceTestWithMongo;
 import com.tht.api.app.entity.meta.DailyFalling;
+import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 
 class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
 
@@ -29,7 +33,7 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
      * <br> - 상대방 유저가 로그인한 유저의 채팅방을 나가면 채팅 불가 상태입니다.
      * <br> - 상대방 유저가 탈퇴했다면 채팅 불가 상태입니다.
      */
-    @DisplayName("채팅방 리스트 조회")
+    @DisplayName("채팅방 리스트 조회 인수테스트")
     @Test
     void getChatRooms() {
 
@@ -52,22 +56,20 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
             chatRoomMap.put(otherUser + i, 좋아요_요청_결과.jsonPath().getLong("chatRoomIdx"));
         }
 
-
         //scenario 1 - 내가 나간 채팅방
-        채팅방_나가기_요청(로그인유저토큰, chatRoomMap.get(otherUser+1));
+        채팅방_나가기_요청(로그인유저토큰, chatRoomMap.get(otherUser + 1));
 
         //scenario 2 - 내가 차단한 상대방 채팅방
-        유저_차단_요청(로그인유저토큰, getUserUuid(tokenMap.get(otherUser+2)));
+        유저_차단_요청(로그인유저토큰, getUserUuid(tokenMap.get(otherUser + 2)));
 
         //scenario 3 - 상대방 유저가 나를 차단
         유저_차단_요청(tokenMap.get(otherUser + 3), getUserUuid(로그인유저토큰));
 
         //scenario 4 - 상대방 유저가 나와의 채팅방을 나감
-        채팅방_나가기_요청(tokenMap.get(otherUser + 4), chatRoomMap.get(otherUser+4));
+        채팅방_나가기_요청(tokenMap.get(otherUser + 4), chatRoomMap.get(otherUser + 4));
 
         //scenario 5 - 상대방 유저가 탈퇴
         유저계정_탈퇴_요청(tokenMap.get(otherUser + 5));
-
 
         //when
         var response = 채팅방_리스트_조회_요청(로그인유저토큰);
@@ -96,4 +98,44 @@ class ChatRoomAcceptanceTest extends AcceptanceTestWithMongo {
 
     }
 
+
+    /**
+     * scenario
+     * <br> - 로그인한 유저가 속한 채팅방을 조회한다. (입장)
+     * <br> - 상대방 유저가 해당 유저를 차단하면 채팅이 불가 상태입니다.
+     * <br> - 상대방 유저가 로그인한 유저의 채팅방을 나가면 채팅 불가 상태입니다.
+     * <br> - 상대방 유저가 탈퇴했다면 채팅 불가 상태입니다.
+     */
+    @DisplayName("채팅방 상세 조회 인수테스트 - 채팅가능")
+    @Test
+    void getChatRoomDetail() {
+
+        //given
+        String 로그인유저토큰 = 신규유저_생성_요청_후_토큰추출("박형싴케이", "0105513171");
+        DailyFalling dailyFalling = 그날의주제어_생성_요청();
+
+        String otherAccessToken = 신규유저_생성_요청_후_토큰추출("유저", "01055131232" );
+        좋아요_요청(로그인유저토큰, getUserUuid(otherAccessToken), dailyFalling.getIdx());
+
+        var 좋아요_요청_결과 = 좋아요_요청(otherAccessToken, getUserUuid(로그인유저토큰),
+            dailyFalling.getIdx());
+
+        //when
+        var response = 채팅방_상세조회_요청(로그인유저토큰, 좋아요_요청_결과.jsonPath().getLong("chatRoomIdx"));
+
+        //then
+        assertThat(response.jsonPath().getBoolean("isChatAble")).isTrue();
+
+    }
+
+    private static ExtractableResponse<Response> 채팅방_상세조회_요청(String accessToken, Long chatRoomIdx) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .get("/chat/room/{chat-room-idx}", chatRoomIdx)
+            .then().log().all()
+            .extract();
+    }
 }
