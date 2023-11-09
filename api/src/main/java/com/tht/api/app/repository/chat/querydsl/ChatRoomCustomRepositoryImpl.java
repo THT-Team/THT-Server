@@ -1,7 +1,5 @@
 package com.tht.api.app.repository.chat.querydsl;
 
-import com.querydsl.core.types.ConstantImpl;
-import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.chat.QChatRoom;
 import com.tht.api.app.entity.meta.QDailyFalling;
@@ -27,8 +25,7 @@ public class ChatRoomCustomRepositoryImpl implements ChatRoomCustomRepository{
                     chatRoom.idx,
                     talkKeyword.keyword,
                     dailyFalling.talkIssue,
-                    Expressions.stringTemplate("DATE_FORMAT({0}, {1})", chatRoom.createdAt,
-                        ConstantImpl.create("%Y년 %m월 %d일"))
+                    chatRoom.createdAt
                 )
             )
             .from(chatRoom)

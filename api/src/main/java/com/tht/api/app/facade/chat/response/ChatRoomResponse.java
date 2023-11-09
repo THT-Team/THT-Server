@@ -1,6 +1,7 @@
 package com.tht.api.app.facade.chat.response;
 
 import com.tht.api.app.repository.mapper.ChatRoomMapper;
+import java.time.format.DateTimeFormatter;
 
 public record ChatRoomResponse(
     long chatRoomIdx,
@@ -15,7 +16,7 @@ public record ChatRoomResponse(
             mapper.chatRoomIdx(),
             mapper.talkSubject(),
             mapper.talkIssue(),
-            mapper.startDate(),
+            mapper.startDate().format(DateTimeFormatter.ofPattern("y년 M월 d일")),
             true
         );
     }
