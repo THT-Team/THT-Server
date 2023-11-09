@@ -28,4 +28,15 @@ class ChatRoomAcceptanceStep {
             .then().log().all()
             .extract();
     }
+
+    public static ExtractableResponse<Response> 채팅방_상세조회_요청(String accessToken, Long chatRoomIdx) {
+
+        return RestAssured.given().log().all()
+            .auth().oauth2(accessToken)
+            .contentType(MediaType.APPLICATION_JSON_VALUE)
+            .when()
+            .get("/chat/room/{chat-room-idx}", chatRoomIdx)
+            .then().log().all()
+            .extract();
+    }
 }
