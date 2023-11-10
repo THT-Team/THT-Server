@@ -50,8 +50,9 @@ public class ChatController {
 
     @GetMapping("/chat/room/{chat-room-idx}")
     public ResponseEntity<ChatRoomResponse> findDetailChatRoom(
-        @PathVariable(name = "chat-room-idx") final long chatRoomIdx) {
+        @PathVariable(name = "chat-room-idx") final long chatRoomIdx,
+        @AuthenticationPrincipal final User user) {
 
-        return ResponseEntity.ok(chatFacade.findMyRoomDetail(chatRoomIdx));
+        return ResponseEntity.ok(chatFacade.findMyRoomDetail(chatRoomIdx, user.getUserUuid()));
     }
 }

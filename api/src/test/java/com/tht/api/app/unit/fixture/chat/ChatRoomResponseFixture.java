@@ -16,11 +16,11 @@ public class ChatRoomResponseFixture {
     private static final String talkSubject = "마음";
     private static final String talkIssue = "너의 마음은 어떠니?";
     private static final String startDate = "2023년 3월 21일";
-    private static final boolean isAvailableChat = true;
+    private static final boolean isChatAble = true;
 
     public static ChatRoomPreviewResponse makePreviewResponse() {
         return new ChatRoomPreviewResponse(chatRoomIdx, partnerName, partnerProfileUrl, currentMessage,
-            messageTime, isAvailableChat);
+            messageTime, isChatAble);
     }
 
     public static List<ChatRoomPreviewResponse> makePreviewResponseList() {
@@ -28,6 +28,6 @@ public class ChatRoomResponseFixture {
     }
 
     public static ChatRoomResponse make() {
-        return new ChatRoomResponse(chatRoomIdx,talkSubject, talkIssue, startDate);
+        return new ChatRoomResponse(chatRoomIdx,talkSubject, talkIssue, startDate, isChatAble);
     }
 }

@@ -13,12 +13,13 @@ import com.tht.api.app.facade.chat.ChatFacade;
 import com.tht.api.app.facade.chat.response.ChatResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomResponse;
-import com.tht.api.app.unit.fixture.chat.ChatRoomMapperFixture;
-import com.tht.api.app.unit.fixture.chat.ChatRoomPreviewMapperFixture;
-import com.tht.api.app.repository.mapper.ChatRoomMapper;
+import com.tht.api.app.repository.group.ChatRoomMapperGroup;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.ChatService;
+import com.tht.api.app.unit.fixture.chat.ChatRoomMapperFixture;
+import com.tht.api.app.unit.fixture.chat.ChatRoomPreviewMapperFixture;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -79,16 +80,19 @@ class ChatFacadeTest {
     @DisplayName("채팅방 상세조회 반환값 테스트")
     void returnResponseTypeAtFindRoomDetail() {
 
-        ChatRoomMapper mapper = ChatRoomMapperFixture.make();
-        when(chatRoomService.findDetailInfoById(anyLong())).thenReturn(
-            mapper);
+        ChatRoomMapperGroup group = ChatRoomMapperGroup.of(List.of(ChatRoomMapperFixture.make()));
 
-        ChatRoomResponse response = chatFacade.findMyRoomDetail(1);
+        when(chatRoomService.findDetailInfoById(anyLong(), anyString()))
+            .thenReturn(group);
 
-        assertThat(response.chatRoomIdx()).isEqualTo(mapper.chatRoomIdx());
-        assertThat(response.talkIssue()).isEqualTo(mapper.talkIssue());
-        assertThat(response.talkSubject()).isEqualTo(mapper.talkSubject());
-        assertThat(response.startDate()).isEqualTo(mapper.startDate());
+        ChatRoomResponse response = chatFacade.findMyRoomDetail(1, "userUuid");
+
+        assertThat(response.chatRoomIdx()).isEqualTo(group.getBasic().chatRoomIdx());
+        assertThat(response.talkIssue()).isEqualTo(group.getBasic().talkIssue());
+        assertThat(response.talkSubject()).isEqualTo(group.getBasic().talkSubject());
+        assertThat(response.startDate()).isEqualTo(group.getBasic().startDate().format(
+            DateTimeFormatter.ofPattern("y년 M월 d일")));
+        assertThat(response.isChatAble()).isTrue();
     }
 
     @Test
