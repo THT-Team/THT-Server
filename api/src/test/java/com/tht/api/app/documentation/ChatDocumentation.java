@@ -154,12 +154,13 @@ class ChatDocumentation extends ControllerTestConfig {
     }
 
     @Test
+    @WithCustomMockUser
     @DisplayName("유저 채팅방 상세조회 api - docs")
     void getDetailRoomInfo() throws Exception {
 
         //given
         long chatRoomIdx = 13;
-        when(chatFacade.findMyRoomDetail(anyLong())).thenReturn(ChatRoomResponseFixture.make());
+        when(chatFacade.findMyRoomDetail(anyLong(), anyString())).thenReturn(ChatRoomResponseFixture.make());
 
         //then
         ResultActions resultActions = mockMvc.perform(
