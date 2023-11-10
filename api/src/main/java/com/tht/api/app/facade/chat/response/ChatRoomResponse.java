@@ -11,13 +11,13 @@ public record ChatRoomResponse(
     boolean isChatAble
 ) {
 
-    public static ChatRoomResponse of(final ChatRoomMapper mapper) {
+    public static ChatRoomResponse of(final ChatRoomMapper mapper, final boolean isChatAble) {
         return new ChatRoomResponse(
             mapper.chatRoomIdx(),
             mapper.talkSubject(),
             mapper.talkIssue(),
             mapper.startDate().format(DateTimeFormatter.ofPattern("y년 M월 d일")),
-            true
+            isChatAble
         );
     }
 }

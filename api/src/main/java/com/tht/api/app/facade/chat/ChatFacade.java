@@ -7,6 +7,7 @@ import com.tht.api.app.facade.chat.group.ChatRoomPreviewResponseGroup;
 import com.tht.api.app.facade.chat.response.ChatResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.api.app.facade.chat.response.ChatRoomResponse;
+import com.tht.api.app.repository.group.ChatRoomMapperGroup;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.app.service.ChatRoomUserService;
 import com.tht.api.app.service.ChatService;
@@ -52,10 +53,12 @@ public class ChatFacade {
         chatRoomUserService.outChatRoom(chatRoomIdx, userUuid);
     }
 
-    public ChatRoomResponse findMyRoomDetail(final long chatRoomIdx) {
+    public ChatRoomResponse findMyRoomDetail(final long chatRoomIdx, final String userUuid) {
 
         chatRoomService.existBy(chatRoomIdx);
 
-        return ChatRoomResponse.of(chatRoomService.findDetailInfoById(chatRoomIdx));
+        ChatRoomMapperGroup group = chatRoomService.findDetailInfoById(chatRoomIdx, userUuid);
+
+        return ChatRoomResponse.of(group.getBasic(), group.isChatAble());
     }
 }

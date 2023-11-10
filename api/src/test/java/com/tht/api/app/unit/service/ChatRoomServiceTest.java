@@ -2,14 +2,16 @@ package com.tht.api.app.unit.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.anyLong;
 import static org.mockito.BDDMockito.when;
 
+import com.tht.api.app.repository.group.ChatRoomMapperGroup;
 import com.tht.api.app.unit.fixture.chat.ChatRoomMapperFixture;
 import com.tht.api.app.repository.chat.ChatRoomRepository;
-import com.tht.api.app.repository.mapper.ChatRoomMapper;
 import com.tht.api.app.service.ChatRoomService;
 import com.tht.api.exception.custom.EntityStateException;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,14 +33,14 @@ class ChatRoomServiceTest {
     void findDetail() {
 
         //give
-        when(chatRoomRepository.findRoomFallingInfoBy(anyLong())).thenReturn(
-            ChatRoomMapperFixture.make());
+        when(chatRoomRepository.findMyChatRoomInfos(anyLong(), anyString()))
+            .thenReturn(List.of(ChatRoomMapperFixture.make()));
 
         //when
-        ChatRoomMapper mapper = chatRoomService.findDetailInfoById(1L);
+        ChatRoomMapperGroup group = chatRoomService.findDetailInfoById(1L, "userUuid");
 
         //then
-        assertThat(mapper.getClass().getSimpleName()).isEqualTo("ChatRoomMapper");
+        assertThat(group.getBasic().getClass().getSimpleName()).isEqualTo("ChatRoomMapper");
     }
 
     @Test
