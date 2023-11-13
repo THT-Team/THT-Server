@@ -4,9 +4,9 @@ spring:
     jpa:
         hibernate:
             ddl-auto: none
-        properties:
-            hibernate:
-                format_sql: true
+#        properties:
+#            hibernate:
+#                format_sql: true
 #        show-sql: true
 
     thymeleaf:
@@ -23,10 +23,11 @@ springdoc:
 
 logging:
     level:
+        p6spy: info
         org:
-            hibernate:
-                SQL: DEBUG
-                orm.jdbc.bind: TRACE
+#            hibernate:
+#                SQL: DEBUG
+#                orm.jdbc.bind: TRACE
             springframework:
                 data:
                     mongodb:

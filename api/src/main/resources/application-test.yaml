@@ -16,3 +16,7 @@ spring:
         url: jdbc:h2:mem:test;NON_KEYWORDS=USER
         username: sa
         password:
+decorator:
+    datasource:
+        p6spy:
+            enable-logging: true
