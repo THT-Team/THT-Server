@@ -3,6 +3,7 @@ package com.tht.api.app.config.security;
 import com.tht.api.app.config.security.filter.ExceptionHandlerFilter;
 import com.tht.api.app.config.security.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -37,7 +38,9 @@ public class SecurityConfiguration {
         "/users/join/**",
         "/users/login/**",
         "/all/talk-keyword",
-        "/error"
+        "/error",
+            /*H2*/
+            "/h2-console"
     };
 
     @Bean
@@ -53,6 +56,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(
                 authorize -> authorize
                     .requestMatchers(PERMIT_URL_ARRAY).permitAll()
+                        .requestMatchers(PathRequest.toH2Console()).permitAll()
                     .requestMatchers(HttpMethod.GET, "/ideal-types").permitAll()
                     .requestMatchers(HttpMethod.GET, "/interests").permitAll()
                     .anyRequest().authenticated()
