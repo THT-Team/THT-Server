@@ -56,7 +56,7 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(
                 authorize -> authorize
                     .requestMatchers(PERMIT_URL_ARRAY).permitAll()
-                        .requestMatchers(PathRequest.toH2Console()).permitAll()
+                    .requestMatchers(PathRequest.toH2Console()).permitAll()
                     .requestMatchers(HttpMethod.GET, "/ideal-types").permitAll()
                     .requestMatchers(HttpMethod.GET, "/interests").permitAll()
                     .anyRequest().authenticated()
