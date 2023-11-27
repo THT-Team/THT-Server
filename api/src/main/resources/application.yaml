@@ -3,12 +3,11 @@ spring:
         import: security/application-security.yaml
     jpa:
         hibernate:
-            ddl-auto: create-drop
-#            ddl-auto: none
-#        properties:
-#            hibernate:
-#                format_sql: true
-#        show-sql: true
+            ddl-auto: none
+        properties:
+            hibernate:
+                format_sql: true
+        show-sql: true
 
     thymeleaf:
         prefix: classpath:static/
