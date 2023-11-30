@@ -19,6 +19,7 @@ import com.tht.api.app.facade.user.request.UserSNSLoginRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.unit.fixture.user.UserLoginRequestFixture;
 import com.tht.api.app.unit.fixture.user.UserSNSLoginRequestFixture;
+import com.tht.api.exception.custom.UserTokenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -44,7 +45,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
         UserLoginRequest request = UserLoginRequestFixture.make();
         String requestBody = objectMapper.writeValueAsString(request);
 
-        when(userLoginFacade.login(any())).thenReturn(new UserLoginResponse("token", 1L));
+        when(userLoginFacade.login(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -86,7 +87,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
         UserSNSLoginRequest request = UserSNSLoginRequestFixture.make();
         String requestBody = objectMapper.writeValueAsString(request);
 
-        when(userLoginFacade.snsLogin(any())).thenReturn(new UserLoginResponse("token", 1L));
+        when(userLoginFacade.snsLogin(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -104,7 +105,8 @@ class UserLoginDocumentation extends ControllerTestConfig {
                         .description("유저 SNS 로그인")
                         .requestFields(
                             fieldWithPath("email").description("유저 email"),
-                            fieldWithPath("snsType").description("유저 snsType [KAKAO, NAVER, GOOGLE]"),
+                            fieldWithPath("snsType").description(
+                                "유저 snsType [KAKAO, NAVER, GOOGLE]"),
                             fieldWithPath("snsUniqueId").description("유저 sns 고유 Id 일련번호"),
                             fieldWithPath("deviceKey").description("유저 디바이스 키")
                         )
@@ -122,4 +124,71 @@ class UserLoginDocumentation extends ControllerTestConfig {
 
     }
 
+    @Test
+    @DisplayName("유저 토큰 재발급 api docs")
+    void refreshTokenDocs() throws Exception {
+
+        //give
+        when(userLoginFacade.refresh(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.post(DEFAULT_URL + "/refresh")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 access token 재발급 요청",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저")
+                        .description("유저 access token 재발급 요청")
+                        .responseFields(
+                            fieldWithPath("accessToken").description("액세스 토큰"),
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                        )
+                        .responseSchema(Schema.schema("UserLoginResponse"))
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("유저 토큰 재발급 - refresh token 만료 시 api docs")
+    void refreshTokenDocs_fail() throws Exception {
+
+        //give
+        when(userLoginFacade.refresh(any())).thenThrow(UserTokenException.refreshExpired());
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            RestDocumentationRequestBuilders.post(DEFAULT_URL + "/refresh")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+            document("유저 access token 재발급 요청 - refresh token 만료 시",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(
+                    ResourceSnippetParameters.builder()
+                        .tag("유저")
+                        .description("유저 access token 재발급 요청 - refresh token 만료 시")
+                        .responseFields(
+                            fieldWithPath("timestamp").description("exception 발생 시각"),
+                            fieldWithPath("status").description("http status - refresh 만료 (500)"),
+                            fieldWithPath("error").description("시스템 에러 메세지"),
+                            fieldWithPath("message").description("사용자 에러 메세지"),
+                            fieldWithPath("path").description("요청 경로")
+                        )
+                        .build()
+                ))
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().is(500));
+    }
 }

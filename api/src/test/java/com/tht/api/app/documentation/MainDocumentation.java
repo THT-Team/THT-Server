@@ -102,8 +102,8 @@ class MainDocumentation extends ControllerTestConfig {
                             fieldWithPath("userInfos[].userDailyFallingCourserIdx").description(
                                 "페이징 커서 - 그날의 토픽을 선택한 유저 정보 idx")
                         )
-                        .requestSchema(Schema.schema("UserLoginRequest"))
-                        .responseSchema(Schema.schema("UserLoginResponse"))
+                        .requestSchema(Schema.schema("MainScreenUserInfoRequest"))
+                        .responseSchema(Schema.schema("MainScreenResponse"))
                         .build()
                 ))
         );
