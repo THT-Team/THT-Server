@@ -20,4 +20,7 @@ public class UserTokenService {
         );
     }
 
+    public void create(final String userUuid, final String accessToken) {
+        userTokenRepository.save(UserToken.create(userUuid, accessToken));
+    }
 }

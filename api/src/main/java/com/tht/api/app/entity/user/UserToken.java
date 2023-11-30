@@ -48,17 +48,8 @@ public class UserToken {
     @Column
     private LocalDateTime lastModifiedAt;
 
-    public void checkRefreshExpired() {
-
-        try {
-            Jwts.parserBuilder().build().parseClaimsJws(refreshToken);
-        } catch (ExpiredJwtException e) {
-            LogWriteUtils.logInfo(String.format("exception : %s, message : 만료된 refresh 토큰입니다.", e.getClass().getName()));
-            throw UserTokenException.refreshExpired();
-        }
-    }
-
-    public void refresh(final String accessToken) {
+    private UserToken(String userUuid, String accessToken) {
+        this.userUuid = userUuid;
         this.accessToken = accessToken;
         this.refreshToken = generateRefreshToken();
     }
@@ -73,6 +64,25 @@ public class UserToken {
             .claim("userUuid", userUuid)
             .setExpiration(refreshTokenExpireIn)
             .compact();
+    }
+
+    public static UserToken create(final String userUuid, final String accessToken) {
+        return new UserToken(userUuid, accessToken);
+    }
+
+    public void checkRefreshExpired() {
+
+        try {
+            Jwts.parserBuilder().build().parseClaimsJws(refreshToken);
+        } catch (ExpiredJwtException e) {
+            LogWriteUtils.logInfo(String.format("exception : %s, message : 만료된 refresh 토큰입니다.", e.getClass().getName()));
+            throw UserTokenException.refreshExpired();
+        }
+    }
+
+    public void refresh(final String accessToken) {
+        this.accessToken = accessToken;
+        this.refreshToken = generateRefreshToken();
     }
 }
 

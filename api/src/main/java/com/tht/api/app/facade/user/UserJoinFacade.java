@@ -2,6 +2,7 @@ package com.tht.api.app.facade.user;
 
 import com.tht.api.app.config.aligo.AligoUtils;
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.config.security.TokenResponse;
 import com.tht.api.app.config.utils.RandomUtils;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
@@ -20,6 +21,7 @@ import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
+import com.tht.api.app.service.UserTokenService;
 import com.tht.api.exception.custom.UserCustomException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +43,7 @@ public class UserJoinFacade {
     private final UserDeviceKeyService userDeviceKeyService;
     private final UserSnsService userSnsService;
     private final UserAlarmAgreementService userAlarmAgreementService;
+    private final UserTokenService userTokenService;
 
     public AuthNumberResponse issueAuthenticationNumber(final String phoneNumber) {
 
@@ -71,7 +74,14 @@ public class UserJoinFacade {
                 request.email());
         }
 
-        return tokenProvider.generateJWT(user).toSignUpResponse();
+        return getUserSignUpResponse(user);
+    }
+
+    private UserSignUpResponse getUserSignUpResponse(User user) {
+        final TokenResponse tokenResponse = tokenProvider.generateJWT(user);
+        userTokenService.create(user.getUserUuid(), tokenResponse.accessToken());
+
+        return tokenResponse.toSignUpResponse();
     }
 
     public UserSignUpInfoResponse getUserSignUpInfo(final String phoneNumber) {
@@ -92,6 +102,6 @@ public class UserJoinFacade {
             request.email());
         userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
 
-        return tokenProvider.generateJWT(user).toSignUpResponse();
+        return getUserSignUpResponse(user);
     }
 }
