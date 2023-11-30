@@ -71,7 +71,7 @@ class LikeAcceptanceTest extends AcceptanceTest {
         var 나 = 신규유저_생성_요청_후_토큰추출("일반 사용자1", "01065689787");
         var 나를_좋아하는_사람 = 신규유저_생성_요청_후_토큰추출("일반 사용자2", "01065689737");
         var 서로_좋아하는_사람 = 신규유저_생성_요청_후_토큰추출("일반 사용자3", "01065829737");
-        var 내가_거절할_사람 = 신규유저_생성_요청_후_토큰추출("내가 거절할 사람", "01065829717");
+        var 내가_거절할_사람 = 신규유저_생성_요청_후_토큰추출("거절할사람", "01065829717");
 
         var dailyFalling = 그날의주제어_생성_요청();
 
@@ -87,12 +87,12 @@ class LikeAcceptanceTest extends AcceptanceTest {
         assertAll(
             () -> assertThat(response.statusCode()).isEqualTo(200),
             () -> assertThat(response.jsonPath().getList("likeList.username")).containsExactly(
-                "내가 거절할 사람", "일반 사용자2")
+                "거절할사람", "일반 사용자2")
         );
 
         //when
         List<Integer> likeIdx = response.jsonPath()
-            .getList("likeList.findAll{ likeList -> likeList.username == '내가 거절할 사람'}.likeIdx");
+            .getList("likeList.findAll{ likeList -> likeList.username == '거절할사람'}.likeIdx");
 
         좋아요_거절_요청(나, likeIdx.get(0));
 
