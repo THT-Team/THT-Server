@@ -15,6 +15,7 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
+import com.tht.api.app.service.UserTokenService;
 import com.tht.api.app.unit.fixture.user.UserSignUpRequestFixture;
 import com.tht.api.app.unit.fixture.user.UserSnsSignUpRequestFixture;
 import com.tht.api.app.service.UserAgreementService;
@@ -57,6 +58,8 @@ class UserJoinFacadeTest {
     TokenProvider tokenProvider;
     @Mock
     UserAlarmAgreementService userAlarmAgreementService;
+    @Mock
+    UserTokenService userTokenService;
 
     @InjectMocks
     UserJoinFacade userJoinFacade;

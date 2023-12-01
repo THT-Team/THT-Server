@@ -39,8 +39,8 @@ public class SecurityConfiguration {
         "/users/login/**",
         "/all/talk-keyword",
         "/error",
-            /*H2*/
-            "/h2-console"
+        /*H2*/
+        "/h2-console"
     };
 
     @Bean

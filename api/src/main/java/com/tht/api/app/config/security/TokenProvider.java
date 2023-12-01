@@ -23,12 +23,15 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class TokenProvider {
 
-//    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 8;
-    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60;
+//    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 90;
+
+    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 30;
+
     private final Key jwtSecretKey;
     private final UserService userService;
 
@@ -108,5 +111,14 @@ public class TokenProvider {
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);
+    }
+
+    public String getParseJwt(final String headerAuth) {
+
+        if (StringUtils.hasText(headerAuth) && headerAuth.startsWith("Bearer")) {
+            return headerAuth.substring(7);
+        }
+
+        return null;
     }
 }

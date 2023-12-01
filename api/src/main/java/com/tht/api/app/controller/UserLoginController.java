@@ -1,9 +1,11 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.config.security.SecurityConst;
 import com.tht.api.app.facade.user.UserLoginFacade;
 import com.tht.api.app.facade.user.request.UserLoginRequest;
 import com.tht.api.app.facade.user.request.UserSNSLoginRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +23,8 @@ public class UserLoginController {
     private final UserLoginFacade userLoginFacade;
 
     @PostMapping("/normal")
-    public ResponseEntity<UserLoginResponse> normalLogin(@RequestBody @Valid UserLoginRequest request) {
+    public ResponseEntity<UserLoginResponse> normalLogin(
+        @RequestBody @Valid UserLoginRequest request) {
         return ResponseEntity.ok(userLoginFacade.login(request));
     }
 
@@ -30,5 +33,11 @@ public class UserLoginController {
         @RequestBody @Valid UserSNSLoginRequest request) {
 
         return ResponseEntity.ok(userLoginFacade.snsLogin(request));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<UserLoginResponse> tokenRefresh(final HttpServletRequest request) {
+
+        return ResponseEntity.ok(userLoginFacade.refresh(request.getHeader(SecurityConst.AUTH_HEADER_NAME)));
     }
 }

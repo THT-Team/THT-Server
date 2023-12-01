@@ -10,14 +10,17 @@ import static org.mockito.Mockito.verify;
 import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.config.security.TokenResponse;
 import com.tht.api.app.entity.user.User;
+import com.tht.api.app.entity.user.UserToken;
 import com.tht.api.app.facade.user.UserLoginFacade;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
+import com.tht.api.app.service.UserTokenService;
 import com.tht.api.app.unit.fixture.user.UserFixture;
 import com.tht.api.app.unit.fixture.user.UserLoginRequestFixture;
 import com.tht.api.app.unit.fixture.user.UserSNSLoginRequestFixture;
 import com.tht.api.app.service.UserDeviceKeyService;
 import com.tht.api.app.service.UserService;
 import com.tht.api.app.service.UserSnsService;
+import com.tht.api.app.unit.fixture.user.UserTokenFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,6 +32,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 class UserLoginFacadeTest {
 
     private static final User USER = UserFixture.make();
+    private static final UserToken USER_TOKEN = UserTokenFixture.make();
 
     @Mock
     TokenProvider tokenProvider;
@@ -38,6 +42,8 @@ class UserLoginFacadeTest {
     UserDeviceKeyService deviceKeyService;
     @Mock
     UserSnsService userSnsService;
+    @Mock
+    UserTokenService userTokenService;
 
     @InjectMocks
     UserLoginFacade userLoginFacade;
@@ -51,6 +57,7 @@ class UserLoginFacadeTest {
         when(userService.findByPhoneNumber(anyString())).thenReturn(USER);
         doNothing().when(deviceKeyService).create(anyString(), anyString());
         when(tokenProvider.generateJWT(any())).thenReturn(tokenResponse);
+        when(userTokenService.findByUserUuid(anyString())).thenReturn(USER_TOKEN);
 
         //when
         UserLoginResponse result = userLoginFacade.login(UserLoginRequestFixture.make());
@@ -72,6 +79,7 @@ class UserLoginFacadeTest {
         when(userSnsService.findUserUuidBySnsIdKey(any(), anyString())).thenReturn("user-uuid");
         when(userService.findByUserUuidForAuthToken(anyString())).thenReturn(USER);
         when(tokenProvider.generateJWT(any())).thenReturn(tokenResponse);
+        when(userTokenService.findByUserUuid(anyString())).thenReturn(USER_TOKEN);
 
         //when
         UserLoginResponse result = userLoginFacade.snsLogin(UserSNSLoginRequestFixture.make());
