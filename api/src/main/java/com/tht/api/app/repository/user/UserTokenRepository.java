@@ -8,4 +8,5 @@ public interface UserTokenRepository extends JpaRepository<UserToken, Long> {
 
     Optional<UserToken> findByAccessToken(final String accessToken);
 
+    Optional<UserToken> findByUserUuid(final String userUuid);
 }

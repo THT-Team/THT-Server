@@ -11,7 +11,7 @@ public class UserTokenException extends RuntimeException {
     private HttpStatus status;
     private String reasonParse;
 
-    public UserTokenException(String message, HttpStatus status) {
+    private UserTokenException(String message, HttpStatus status) {
         super(message);
         this.status = status;
         this.reasonParse = status.getReasonPhrase();
@@ -25,6 +25,10 @@ public class UserTokenException extends RuntimeException {
 
     public static UserTokenException notFoundOfAccessToken() {
         return new UserTokenException("요청 Access Token 에 해당하는 유저 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
+    }
+
+    public static UserTokenException notFoundOfUserUuid() {
+        return new UserTokenException("요청 uuid 에 해당하는 유저 정보를 찾을 수 없습니다.", HttpStatus.BAD_REQUEST);
     }
 
     public static UserTokenException refreshExpired() {

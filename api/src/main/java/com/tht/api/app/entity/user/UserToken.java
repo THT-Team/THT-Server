@@ -27,7 +27,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 public class UserToken {
 
     //    private static final long REFRESH_TOKEN_VALID_PERIOD =  1000L * 60 * 24 * 3;
-    private static final long REFRESH_TOKEN_VALID_PERIOD = 1000L * 60 * 3;
+    private static final long REFRESH_TOKEN_VALID_PERIOD = 1000L * 90;
 
 
     @Id
@@ -73,7 +73,7 @@ public class UserToken {
     public void checkRefreshExpired() {
 
         try {
-            Jwts.parserBuilder().build().parseClaimsJws(refreshToken);
+            Jwts.parserBuilder().build().parseClaimsJwt(refreshToken);
         } catch (ExpiredJwtException e) {
             LogWriteUtils.logInfo(String.format("exception : %s, message : 만료된 refresh 토큰입니다.", e.getClass().getName()));
             throw UserTokenException.refreshExpired();

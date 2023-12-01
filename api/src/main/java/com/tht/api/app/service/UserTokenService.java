@@ -20,6 +20,13 @@ public class UserTokenService {
         );
     }
 
+    public UserToken findByUserUuid(final String userUuid) {
+        return userTokenRepository.findByUserUuid(userUuid).orElseThrow(
+            UserTokenException::notFoundOfUserUuid
+        );
+    }
+
+
     public void create(final String userUuid, final String accessToken) {
         userTokenRepository.save(UserToken.create(userUuid, accessToken));
     }

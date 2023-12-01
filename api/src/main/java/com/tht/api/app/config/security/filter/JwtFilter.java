@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 public class JwtFilter extends OncePerRequestFilter  {
 
+    private static final String REFRESH_URL = "/users/login/refresh";
     private final TokenProvider tokenProvider;
 
     @Override
@@ -26,7 +27,7 @@ public class JwtFilter extends OncePerRequestFilter  {
 
         final String token = tokenProvider.getParseJwt(request.getHeader(SecurityConst.AUTH_HEADER_NAME));
 
-        if (token != null && tokenProvider.validateToken(token)) {
+        if (token != null && !isIgnoreRequestPass(request.getRequestURI()) && tokenProvider.validateToken(token)) {
             // 토큰이 유효할 경우 토큰에서 Authentication 객체를 가지고 와서 SecurityContext 에 저장
             Authentication auth = tokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -34,5 +35,10 @@ public class JwtFilter extends OncePerRequestFilter  {
 
         filterChain.doFilter(request, response);
 
+    }
+
+    private boolean isIgnoreRequestPass(final String requestUrl) {
+
+        return REFRESH_URL.equals(requestUrl);
     }
 }

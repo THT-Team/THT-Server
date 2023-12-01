@@ -30,7 +30,7 @@ public class TokenProvider {
 
 //    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 90;
 
-    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60;
+    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 30;
 
     private final Key jwtSecretKey;
     private final UserService userService;

@@ -26,25 +26,31 @@ public class UserLoginFacade {
     private final UserSnsService userSnsService;
     private final UserTokenService userTokenService;
 
+    @Transactional
     public UserLoginResponse login(final UserLoginRequest request) {
 
         final User user = userService.findByPhoneNumber(request.phoneNumber());
-
         deviceKeyService.create(user.getUserUuid(), request.deviceKey());
 
-        final TokenResponse tokenResponse = tokenProvider.generateJWT(user);
-
-        return tokenResponse.toLoginResponse();
+        return getGenerateJWT(user).toLoginResponse();
     }
 
+    private TokenResponse getGenerateJWT(final User user) {
+
+        final TokenResponse tokenResponse = tokenProvider.generateJWT(user);
+        userTokenService.findByUserUuid(user.getUserUuid()).refresh(tokenResponse.accessToken());
+
+        return tokenResponse;
+    }
+
+    @Transactional
     public UserLoginResponse snsLogin(final UserSNSLoginRequest request) {
 
         final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(),
             request.snsUniqueId());
-
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
-        return tokenProvider.generateJWT(user).toLoginResponse();
+        return getGenerateJWT(user).toLoginResponse();
     }
 
     @Transactional
