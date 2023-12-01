@@ -26,14 +26,15 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
     }
 
     public void setErrorResponse(HttpStatus status, HttpServletRequest request,
-        HttpServletResponse response, Throwable ex) throws IOException {
+        HttpServletResponse response, TokenNotValidateException ex) throws IOException {
 
         response.setStatus(status.value());
         response.setContentType("application/json; charset=UTF-8");
 
         response.getWriter().write(
             ErrorResponse.of(
-                    HttpStatus.UNAUTHORIZED,
+                    ex.getStatusValue(),
+                    ex.getReasonParse(),
                     ex.getMessage(),
                     request
                 )
