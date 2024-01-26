@@ -8,5 +8,6 @@ public interface DailyFallingActiveTimeTableRepository extends
     JpaRepository<DailyFallingActiveTimeTable, Integer>,
     DailyFallingActiveTimeTableCustomRepository {
 
+    DailyFallingActiveTimeTable findTopByOrOrderByEndDateTimeDesc();
 
 }
