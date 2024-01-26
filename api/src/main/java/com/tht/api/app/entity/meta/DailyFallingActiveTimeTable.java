@@ -16,17 +16,17 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "daily_falling_active_time_table")
+@Table
 public class DailyFallingActiveTimeTable extends Auditable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idx;
 
-    @Column(name = "start_date_time")
+    @Column
     private LocalDateTime startDateTime;
 
-    @Column(name = "end_date_time")
+    @Column
     private LocalDateTime endDateTime;
 
     public static DailyFallingActiveTimeTable of(final LocalDateTime start,
