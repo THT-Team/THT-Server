@@ -27,7 +27,7 @@ public class Macro {
 
         //insert time table
         //가장 최근 시간 조회 + 10분
-        DailyFallingActiveTimeTable topTimeTable = timeTableRepository.findTopByOrOrderByEndDateTimeDesc();
+        DailyFallingActiveTimeTable topTimeTable = timeTableRepository.findTopByOrderByEndDateTimeDesc();
         DailyFallingActiveTimeTable save = timeTableRepository.save(DailyFallingActiveTimeTable.of(topTimeTable.getEndDateTime(), topTimeTable.getEndDateTime().plusMinutes(10)));
 
         //insert daily falling
