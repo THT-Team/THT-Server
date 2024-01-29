@@ -1,28 +1,29 @@
-package com.tht.api.app.scheduled;
+package com.tht.api.app;
 
 import com.tht.api.app.entity.meta.DailyFalling;
 import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
 import com.tht.api.app.repository.meta.DailyFallingActiveTimeTableRepository;
 import com.tht.api.app.repository.meta.DailyFallingRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.bson.LazyBSONList;
-import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Slf4j
-@Component
-@RequiredArgsConstructor
-public class Macro {
+@SpringBootTest
+class InsertDailyFallingDummyData {
 
-    private final DailyFallingActiveTimeTableRepository timeTableRepository;
-    private final DailyFallingRepository dailyFallingRepository;
+    @Autowired
+    DailyFallingActiveTimeTableRepository timeTableRepository;
 
-    //10분마다 그날의 토픽 10분단위 매크로 데이터 삽입
-    @Scheduled(cron = "0 0/10 * * * *")
+    @Autowired
+    DailyFallingRepository dailyFallingRepository;
+
+    /**
+     * 그날의 토픽 더미 테스트 데이터 삽입 10분단위
+     */
+    @Test
     public void insertDailyFallingTalkSubjectData() {
 
         //insert time table
@@ -33,7 +34,7 @@ public class Macro {
         //insert daily falling
         dailyFallingRepository.saveAll(
                 List.of(
-                        DailyFalling.of(1, save.getIdx(), "토픽주제 매크로 1 ["+LocalDateTime.now().toString()+"]"),
+                        DailyFalling.of(1, save.getIdx(), "토픽주제 매크로 1 ["+ LocalDateTime.now()+"]"),
                         DailyFalling.of(2, save.getIdx(), "토픽주제 매크로 2 ["+LocalDateTime.now().toString()+"]"),
                         DailyFalling.of(3, save.getIdx(), "토픽주제 매크로 3 ["+LocalDateTime.now().toString()+"]"),
                         DailyFalling.of(4, save.getIdx(), "토픽주제 매크로 4 ["+LocalDateTime.now().toString()+"]")
