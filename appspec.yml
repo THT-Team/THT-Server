@@ -14,4 +14,4 @@ hooks:
   AfterInstall:
     - location: /start_server.sh
       timeout: 60
-      runas: tht-chat-admin
+      runas: tht-api-admin
