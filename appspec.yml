@@ -1,0 +1,17 @@
+version: 0.0
+os: linux
+
+files:
+  - source: /
+    destination: /home/tht-api-admin/deploy
+
+permissions:
+  - object: /home/tht-api-admin/deploy/
+    owner: tht-api-admin
+    group: tht-api-admin
+
+hooks:
+  AfterInstall:
+    - location: /start_server.sh
+      timeout: 60
+      runas: tht-chat-admin
