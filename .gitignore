@@ -185,3 +185,7 @@ build/
 !**/src/test/**/out/
 
 **/src/main/resources/static/docs/
+
+/gen/*
+
+/src/main/generated
