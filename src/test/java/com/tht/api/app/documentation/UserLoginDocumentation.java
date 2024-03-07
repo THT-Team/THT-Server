@@ -59,7 +59,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 로그인")
                         .description("유저 일반 로그인")
                         .requestFields(
                             fieldWithPath("phoneNumber").description("유저 전화번호"),
@@ -101,7 +101,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 로그인")
                         .description("유저 SNS 로그인")
                         .requestFields(
                             fieldWithPath("email").description("유저 email"),
@@ -143,7 +143,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 로그인")
                         .description("유저 access token 재발급 요청")
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
@@ -176,7 +176,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 로그인")
                         .description("유저 access token 재발급 요청 - refresh token 만료 시")
                         .responseFields(
                             fieldWithPath("timestamp").description("exception 발생 시각"),

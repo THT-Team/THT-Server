@@ -63,7 +63,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 회원가입")
                         .description("유저 번호 인증번호 발급")
                         .pathParameters(parameterWithName("phone-number").description("유저 폰 번호"))
                         .requestFields()
@@ -102,7 +102,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 회원가입")
                         .description("유저 닉네임 중복 체크")
                         .pathParameters(parameterWithName("nick-name").description("닉네임"))
                         .requestFields()
@@ -140,7 +140,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 회원가입")
                         .description("유저 일반 회원가입")
                         .requestFields(
                             fieldWithPath("username").description("닉네임"),
@@ -212,7 +212,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 회원가입")
                         .description("유저 회원가입 이력 조회")
                         .pathParameters(parameterWithName("phone-number").description("핸드폰 번호"))
                         .requestFields()
@@ -250,7 +250,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저")
+                        .tag("유저 - 회원가입")
                         .description("유저 SNS 아이디 통합 회원 가입")
                         .requestFields(
                             fieldWithPath("phoneNumber").description("전화번호"),
