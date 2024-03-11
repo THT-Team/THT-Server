@@ -12,13 +12,13 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserLoginController;
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
+import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.facade.user.UserLoginFacade;
 import com.tht.api.app.facade.user.request.UserLoginRequest;
 import com.tht.api.app.facade.user.request.UserSNSLoginRequest;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
-import com.tht.api.app.unit.fixture.user.UserLoginRequestFixture;
-import com.tht.api.app.unit.fixture.user.UserSNSLoginRequestFixture;
+import com.tht.api.app.fixture.user.UserLoginRequestFixture;
+import com.tht.api.app.fixture.user.UserSNSLoginRequestFixture;
 import com.tht.api.exception.custom.UserTokenException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
