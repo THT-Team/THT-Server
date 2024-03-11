@@ -17,11 +17,11 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.ChatController;
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
-import com.tht.api.app.unit.controller.config.WithCustomMockUser;
+import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.chat.ChatFacade;
-import com.tht.api.app.unit.fixture.chat.ChatHistoryResponseFixture;
-import com.tht.api.app.unit.fixture.chat.ChatRoomResponseFixture;
+import com.tht.api.app.fixture.chat.ChatHistoryResponseFixture;
+import com.tht.api.app.fixture.chat.ChatRoomResponseFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;

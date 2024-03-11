@@ -13,7 +13,7 @@ import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.InterestController;
 import com.tht.api.app.facade.interest.InterestFacade;
 import com.tht.api.app.facade.interest.response.InterestResponse;
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
+import com.tht.api.app.controller.config.ControllerTestConfig;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

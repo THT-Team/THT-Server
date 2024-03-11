@@ -2,10 +2,10 @@ package com.tht.api.app.entity.user;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
 import com.tht.api.app.entity.Auditable;
-import com.tht.api.app.entity.enums.EntityState;
-import com.tht.api.app.entity.enums.Gender;
-import com.tht.api.app.entity.enums.UserRole;
+import com.tht.api.app.entity.enums.*;
 import com.tht.api.app.entity.enums.converter.GenderConverter;
+import com.tht.api.app.entity.enums.converter.UserFrequencyConverter;
+import com.tht.api.app.entity.enums.converter.UserReligionConverter;
 import com.tht.api.app.entity.enums.converter.UserRoleConverter;
 import com.tht.api.exception.custom.UserCustomException;
 import jakarta.persistence.Column;
@@ -16,16 +16,20 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.regex.Pattern;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
+
+import javax.swing.text.IconView;
 
 @Entity
 @Table(name = "user")
@@ -37,49 +41,65 @@ public class User extends Auditable {
 
     private static final Pattern PHONE_NUMBER_FORMAT = Pattern.compile("^\\d{9,11}$");
     private static final Pattern EMAIL_FORMAT = Pattern.compile(
-        "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
+            "^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$");
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idx")
+    @Column
     private Long idx;
 
-    @Column(name = "user_uuid")
+    @Column
     private String userUuid;
 
-    @Column(name = "username")
+    @Column
     private String username;
 
-    @Column(name = "birth_day")
+    @Column
     private LocalDate birthDay;
 
-    @Column(name = "phone_number")
+    @Column
     private String phoneNumber;
 
-    @Column(name = "email")
+    @Column
     private String email;
 
-    @Column(name = "introduction")
+    @Column
     @Lob
     private String introduction;
 
-    @Column(name = "gender")
+    @Column
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
-    @Column(name = "prefer_gender")
+    @Column
     @Convert(converter = GenderConverter.class)
     private Gender preferGender;
 
-    @Column(name = "user_role")
+    @Column
     @Convert(converter = UserRoleConverter.class)
     private UserRole userRole;
 
+    @Column
+    private int tall;
+
+    @Column
+    @Convert(converter = UserFrequencyConverter.class)
+    private UserFrequency smoking;
+
+    @Column
+    @Convert(converter = UserFrequencyConverter.class)
+    private UserFrequency drinking;
+
+    @Column
+    @Convert(converter = UserReligionConverter.class)
+    private UserReligion religion;
+
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
-        final LocalDate birthDay, final String phoneNumber,
-        final String email, final String introduction, final Gender gender,
-        final Gender preferGender, final UserRole userRole) {
+                final LocalDate birthDay, final String phoneNumber,
+                final String email, final String introduction, final Gender gender,
+                final Gender preferGender, final UserRole userRole, final int tall, final UserFrequency smoking,
+                final UserFrequency drinking, final UserReligion religion) {
 
         this.idx = idx;
         this.userUuid = userUuid;
@@ -91,26 +111,30 @@ public class User extends Auditable {
         this.gender = gender;
         this.preferGender = preferGender;
         this.userRole = userRole;
+        this.tall = tall;
+        this.drinking = drinking;
+        this.smoking = smoking;
+        this.religion = religion;
     }
 
     public static User createNewUser(final String username, final LocalDate birthDay,
-        final String phoneNumber, final String email, final String introduction,
-        final Gender gender, final Gender preferGender) {
+                                     final String phoneNumber, final String email, final String introduction,
+                                     final Gender gender, final Gender preferGender) {
 
         validPhoneNumberFormat(phoneNumber);
         validEmailFormat(email);
 
         final User user = User.builder()
-            .username(username)
-            .userUuid(generateUuid())
-            .birthDay(birthDay)
-            .phoneNumber(phoneNumber)
-            .email(email)
-            .introduction(introduction)
-            .gender(gender)
-            .preferGender(preferGender)
-            .userRole(UserRole.NORMAL)
-            .build();
+                .username(username)
+                .userUuid(generateUuid())
+                .birthDay(birthDay)
+                .phoneNumber(phoneNumber)
+                .email(email)
+                .introduction(introduction)
+                .gender(gender)
+                .preferGender(preferGender)
+                .userRole(UserRole.NORMAL)
+                .build();
 
         LogWriteUtils.createInfo(user);
 

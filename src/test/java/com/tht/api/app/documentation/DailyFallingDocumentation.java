@@ -13,11 +13,11 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.DailyFallingController;
-import com.tht.api.app.unit.controller.config.ControllerTestConfig;
-import com.tht.api.app.unit.controller.config.WithCustomMockUser;
+import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.facade.main.DailyFallingFacade;
-import com.tht.api.app.unit.fixture.main.DailyFallingResponseFixture;
-import com.tht.api.app.unit.fixture.main.TalkKeywordFixture;
+import com.tht.api.app.fixture.main.DailyFallingResponseFixture;
+import com.tht.api.app.fixture.main.TalkKeywordFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
