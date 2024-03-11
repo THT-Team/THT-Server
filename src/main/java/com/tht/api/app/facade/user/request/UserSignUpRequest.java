@@ -5,21 +5,15 @@ import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.SNSType;
 import com.tht.api.app.entity.enums.UserFrequency;
 import com.tht.api.app.entity.enums.UserReligion;
-import com.tht.api.app.entity.user.User;
-import com.tht.api.app.entity.user.UserAgreement;
-import com.tht.api.app.entity.user.UserIdealType;
-import com.tht.api.app.entity.user.UserInterests;
-import com.tht.api.app.entity.user.UserLocationInfo;
-import com.tht.api.app.entity.user.UserProfilePhoto;
+import com.tht.api.app.entity.user.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import org.springframework.util.StringUtils;
+
 import java.time.LocalDate;
 import java.util.List;
-
-import org.apache.logging.log4j.message.StringFormattedMessage;
-import org.springframework.util.StringUtils;
 
 public record UserSignUpRequest(
 
