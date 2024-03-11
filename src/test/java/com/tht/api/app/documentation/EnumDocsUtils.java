@@ -1,8 +1,6 @@
 package com.tht.api.app.documentation;
 
 import com.tht.api.app.entity.enums.EnumModel;
-import com.tht.api.app.entity.enums.UserFrequency;
-import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 

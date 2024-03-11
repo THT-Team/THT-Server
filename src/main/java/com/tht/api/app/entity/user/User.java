@@ -8,28 +8,14 @@ import com.tht.api.app.entity.enums.converter.UserFrequencyConverter;
 import com.tht.api.app.entity.enums.converter.UserReligionConverter;
 import com.tht.api.app.entity.enums.converter.UserRoleConverter;
 import com.tht.api.exception.custom.UserCustomException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import java.util.regex.Pattern;
-
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.hibernate.annotations.DynamicUpdate;
-
-import javax.swing.text.IconView;
 
 @Entity
 @Table(name = "user")

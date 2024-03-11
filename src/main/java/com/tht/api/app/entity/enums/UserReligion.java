@@ -2,7 +2,6 @@ package com.tht.api.app.entity.enums;
 
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.Arrays;
 
