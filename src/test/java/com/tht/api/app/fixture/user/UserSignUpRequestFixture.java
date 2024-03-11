@@ -2,6 +2,8 @@ package com.tht.api.app.fixture.user;
 
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.enums.SNSType;
+import com.tht.api.app.entity.enums.UserFrequency;
+import com.tht.api.app.entity.enums.UserReligion;
 import com.tht.api.app.facade.user.request.UserAgreementRequest;
 import com.tht.api.app.facade.user.request.UserLocationRequest;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
@@ -53,35 +55,40 @@ public class UserSignUpRequestFixture {
 
     private static final String snsUniqueId = "snsUniqueId";
 
+    private static final int tall = 170;
+    private static final String smoking = UserFrequency.FREQUENTLY.name();
+    private static final String drinking = UserFrequency.SOMETIMES.name();
+    private static final String religion = UserReligion.BUDDHISM.name();
+
     private UserSignUpRequestFixture() {}
 
     public static UserSignUpRequest make() {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList, snsType.name(), snsUniqueId);
+            idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofInterest(final List<Integer> interestList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList, snsType.name(), snsUniqueId);
+            idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofIdealType(final List<Integer> idealTypeList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList, snsType.name(), snsUniqueId);
+            idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofPhoto(final List<String> photoList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList, snsType.name(), snsUniqueId);
+            idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofSNSType(final String snsType) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
             introduction, deviceKey, agreement, locationRequest, photoList, interestList,
-            idealTypeList, snsType, snsUniqueId);
+            idealTypeList, snsType, snsUniqueId, tall, smoking, drinking, religion);
     }
 }
