@@ -10,25 +10,25 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class UserFrequencyTest {
 
-    private static final String NONE_VALID_FIND_MESSAGE_FORMAT = "는 유효하지 않은 User Frequency 타입입니다.";
+    private static final String NONE_VALID_FIND_MESSAGE_FORMAT = "는 유효하지 않은 User Frequency 타입입니다. (ex)";
 
     @ParameterizedTest
     @ValueSource(strings = {"", " ", " NONE ", "HEAVY"})
     @DisplayName("User Frequency 잘못된 파라미터 exception 처리 테스트")
-    public void unValidParameterToConverter(String name) {
+    void unValidParameterToConverter(String name) {
 
         assertThatThrownBy(() -> UserFrequency.toConverter(name))
                 .isInstanceOf(EnumStateNotFoundException.class)
-                .hasMessageMatching(name + NONE_VALID_FIND_MESSAGE_FORMAT);
+                .hasMessageStartingWith(name + NONE_VALID_FIND_MESSAGE_FORMAT);
     }
 
     @ParameterizedTest
     @NullSource
     @DisplayName("User Frequency 잘못된 파라미터 exception 처리 테스트(NULL)")
-    public void unValidParameterToConvertersWithNull(String name) {
+    void unValidParameterToConvertersWithNull(String name) {
 
         assertThatThrownBy(() -> UserFrequency.toConverter(name))
                 .isInstanceOf(EnumStateNotFoundException.class)
-                .hasMessageMatching(name + NONE_VALID_FIND_MESSAGE_FORMAT);
+                .hasMessageStartingWith(name + NONE_VALID_FIND_MESSAGE_FORMAT);
     }
 }
