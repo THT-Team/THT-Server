@@ -1,5 +1,6 @@
 package com.tht.api.app.entity.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -14,6 +15,7 @@ public enum UserFrequency implements EnumModel{
 
     private final String value;
 
+    @JsonCreator
     public static UserFrequency toConverter(final String name) {
         return Arrays.stream(UserFrequency.values())
                 .filter(userFrequency -> userFrequency.getValue().equals(name))
@@ -22,6 +24,7 @@ public enum UserFrequency implements EnumModel{
                         () -> EnumStateNotFoundException.ofUserFrequency(name)
                 );
     }
+
 
     @Override
     public String getKey() {
@@ -32,4 +35,5 @@ public enum UserFrequency implements EnumModel{
     public String getValue() {
         return value;
     }
+
 }

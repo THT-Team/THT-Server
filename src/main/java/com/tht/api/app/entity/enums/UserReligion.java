@@ -1,5 +1,6 @@
 package com.tht.api.app.entity.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -17,6 +18,7 @@ public enum UserReligion implements EnumModel{
 
     private final String value;
 
+    @JsonCreator
     public static UserReligion toConverter(final String name) {
         return Arrays.stream(UserReligion.values())
                 .filter(userReligion -> userReligion.getValue().equals(name))
@@ -35,4 +37,5 @@ public enum UserReligion implements EnumModel{
     public String getValue() {
         return value;
     }
+
 }

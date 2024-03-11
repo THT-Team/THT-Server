@@ -1,7 +1,13 @@
 package com.tht.api.exception.custom;
 
+import com.tht.api.app.entity.enums.EnumModel;
+import com.tht.api.app.entity.enums.UserFrequency;
+import com.tht.api.app.entity.enums.UserReligion;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.Arrays;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EnumStateNotFoundException extends RuntimeException {
@@ -31,10 +37,14 @@ public class EnumStateNotFoundException extends RuntimeException {
     }
 
     public static EnumStateNotFoundException ofUserFrequency(final String findUserFrequency) {
-        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Frequency 타입입니다.", findUserFrequency));
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Frequency 타입입니다. (ex) %s", findUserFrequency, getEnumValueList(UserFrequency.class)));
+    }
+
+    private static List<String> getEnumValueList(Class<? extends EnumModel> enums) {
+        return Arrays.stream(enums.getEnumConstants()).map(EnumModel::getValue).toList();
     }
 
     public static EnumStateNotFoundException ofUserReligion(final String findReligionName) {
-        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Religion 타입입니다.", findReligionName));
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Religion 타입입니다. (ex) %s", findReligionName, getEnumValueList(UserReligion.class)));
     }
 }
