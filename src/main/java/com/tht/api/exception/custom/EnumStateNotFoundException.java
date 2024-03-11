@@ -34,4 +34,7 @@ public class EnumStateNotFoundException extends RuntimeException {
         return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Frequency 타입입니다.", findUserFrequency));
     }
 
+    public static EnumStateNotFoundException ofUserReligion(final String findReligionName) {
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Religion 타입입니다.", findReligionName));
+    }
 }
