@@ -30,4 +30,8 @@ public class EnumStateNotFoundException extends RuntimeException {
         return new EnumStateNotFoundException("SNS 통합회원가입은 NORMAL 을 제외한 유효한 타입만 가능합니다.");
     }
 
+    public static EnumStateNotFoundException ofUserFrequency(final String findUserFrequency) {
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Frequency 타입입니다.", findUserFrequency));
+    }
+
 }
