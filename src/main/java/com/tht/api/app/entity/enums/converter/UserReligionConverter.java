@@ -2,8 +2,6 @@ package com.tht.api.app.entity.enums.converter;
 
 import com.tht.api.app.entity.enums.UserReligion;
 import jakarta.persistence.AttributeConverter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Objects;
 
