@@ -1,6 +1,8 @@
 package com.tht.api.app.acceptance;
 
 import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.UserFrequency;
+import com.tht.api.app.entity.enums.UserReligion;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
@@ -64,6 +66,11 @@ public class UserAcceptanceStep {
         map.put("idealTypeList", List.of(1, 2, 3));
         map.put("snsType", "NORMAL");
         map.put("snsUniqueId", "snsUniqueId");
+        map.put("tall", 180);
+        map.put("drinking", UserFrequency.SOMETIMES.name());
+        map.put("smoking", UserFrequency.NONE.name());
+        map.put("religion", UserReligion.WON_BUDDHISM.name());
+
 
         return map;
     }

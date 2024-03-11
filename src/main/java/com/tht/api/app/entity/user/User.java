@@ -119,7 +119,8 @@ public class User extends Auditable {
 
     public static User createNewUser(final String username, final LocalDate birthDay,
                                      final String phoneNumber, final String email, final String introduction,
-                                     final Gender gender, final Gender preferGender) {
+                                     final Gender gender, final Gender preferGender, final int tall,
+                                     final UserFrequency drinking, final UserFrequency smoking, final UserReligion religion) {
 
         validPhoneNumberFormat(phoneNumber);
         validEmailFormat(email);
@@ -134,6 +135,10 @@ public class User extends Auditable {
                 .gender(gender)
                 .preferGender(preferGender)
                 .userRole(UserRole.NORMAL)
+                .tall(tall)
+                .drinking(drinking)
+                .smoking(smoking)
+                .religion(religion)
                 .build();
 
         LogWriteUtils.createInfo(user);

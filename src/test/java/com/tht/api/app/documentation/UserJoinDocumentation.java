@@ -14,6 +14,8 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserJoinController;
+import com.tht.api.app.entity.enums.UserFrequency;
+import com.tht.api.app.entity.enums.UserReligion;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
@@ -174,7 +176,11 @@ class UserJoinDocumentation extends ControllerTestConfig {
 
                             fieldWithPath("snsType").type(JsonFieldType.STRING)
                                 .description("회원가입 타입 - [NORMAL, KAKAO, NAVER, GOOGLE]"),
-                            fieldWithPath("snsUniqueId").description("sns 고유 id 값")
+                            fieldWithPath("snsUniqueId").description("sns 고유 id 값"),
+                            fieldWithPath("tall").type(JsonFieldType.NUMBER).description("키 (cm)"),
+                            fieldWithPath("smoking").type(JsonFieldType.STRING).description("흡연여부 : " + EnumDocsUtils.getTypesFieldList(UserFrequency.class)),
+                            fieldWithPath("drinking").type(JsonFieldType.STRING).description("주량(음주 여부) : " + EnumDocsUtils.getTypesFieldList(UserFrequency.class)),
+                            fieldWithPath("religion").type(JsonFieldType.STRING).description("종교 : " + EnumDocsUtils.getTypesFieldList(UserReligion.class))
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
