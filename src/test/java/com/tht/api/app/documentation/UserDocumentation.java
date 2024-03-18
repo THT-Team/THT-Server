@@ -1,50 +1,19 @@
 package com.tht.api.app.documentation;
 
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.delete;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserController;
-import com.tht.api.app.entity.enums.Gender;
-import com.tht.api.app.facade.user.UserFacade;
-import com.tht.api.app.facade.user.request.ContactDto;
-import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
-import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
-import com.tht.api.app.facade.user.request.UserFriendContactRequest;
-import com.tht.api.app.facade.user.request.UserLocationRequest;
-import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
-import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
-import com.tht.api.app.facade.user.request.UserWithDrawRequest;
-import com.tht.api.app.facade.user.response.UserLoginResponse;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.controller.steps.UserControllerSteps;
-import com.tht.api.app.fixture.user.ModifiedIdealTypeRequestFixture;
-import com.tht.api.app.fixture.user.ModifiedInterestsRequestFixture;
-import com.tht.api.app.fixture.user.UserDetailResponseFixture;
-import com.tht.api.app.fixture.user.UserLocationRequestFixture;
-import com.tht.api.app.fixture.user.UserRequestFixture;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.tht.api.app.entity.enums.Gender;
+import com.tht.api.app.entity.enums.UserFrequency;
+import com.tht.api.app.entity.enums.UserReligion;
+import com.tht.api.app.facade.user.UserFacade;
+import com.tht.api.app.facade.user.request.*;
+import com.tht.api.app.facade.user.response.UserLoginResponse;
+import com.tht.api.app.fixture.user.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -52,6 +21,19 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
 @WebMvcTest(UserController.class)
 class UserDocumentation extends ControllerTestConfig {
@@ -165,12 +147,12 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("phoneNumber").description("전화번호"),
                                                 fieldWithPath("email").description("이메일"),
 
-                                                fieldWithPath("gender").description("성별"),
-                                                fieldWithPath("prefer_gender").description("선호 성별"),
+                                                fieldWithPath("gender").description(String.format("성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
+                                                fieldWithPath("prefer_gender").description(String.format("선호 성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
                                                 fieldWithPath("tall").description("키"),
-                                                fieldWithPath("smoking").description("흡연 여부"),
-                                                fieldWithPath("drinking").description("술"),
-                                                fieldWithPath("religion").description("종교"),
+                                                fieldWithPath("smoking").description(String.format("흡연 여부 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
+                                                fieldWithPath("drinking").description(String.format("술 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
+                                                fieldWithPath("religion").description(String.format("종교 - %s", EnumDocsUtils.getTypesFieldList(UserReligion.class))),
 
                                                 fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
                                                 fieldWithPath("idealTypeList[].idx").description("이상형 idx"),
@@ -232,6 +214,13 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("introduction").description("자기소개"),
                                                 fieldWithPath("phoneNumber").description("전화번호"),
                                                 fieldWithPath("email").description("이메일"),
+
+                                                fieldWithPath("gender").description(String.format("성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
+                                                fieldWithPath("prefer_gender").description(String.format("선호 성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
+                                                fieldWithPath("tall").description("키"),
+                                                fieldWithPath("smoking").description(String.format("흡연 여부 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
+                                                fieldWithPath("drinking").description(String.format("술 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
+                                                fieldWithPath("religion").description(String.format("종교 - %s", EnumDocsUtils.getTypesFieldList(UserReligion.class))),
 
                                                 fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
                                                 fieldWithPath("idealTypeList[].idx").description("이상형 idx"),
