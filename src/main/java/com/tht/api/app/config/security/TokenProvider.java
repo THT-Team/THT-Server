@@ -28,9 +28,7 @@ import org.springframework.util.StringUtils;
 @Component
 public class TokenProvider {
 
-//    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 90;
-
-    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 30;
+    private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 7; //7일
 
     private final Key jwtSecretKey;
     private final UserService userService;
