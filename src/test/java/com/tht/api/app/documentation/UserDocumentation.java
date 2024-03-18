@@ -137,8 +137,8 @@ class UserDocumentation extends ControllerTestConfig {
     void getUserDetails() throws Exception {
 
         //given
-        when(userFacade.getUserDetail(anyString())).thenReturn(
-                UserDetailResponseFixture.make()
+        when(userFacade.getUserDetail(anyString()))
+                .thenReturn(UserDetailResponseFixture.make()
         );
 
         //then
@@ -165,6 +165,7 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("phoneNumber").description("전화번호"),
                                                 fieldWithPath("email").description("이메일"),
 
+                                                fieldWithPath("gender").description("성별"),
                                                 fieldWithPath("prefer_gender").description("선호 성별"),
                                                 fieldWithPath("tall").description("키"),
                                                 fieldWithPath("smoking").description("흡연 여부"),
