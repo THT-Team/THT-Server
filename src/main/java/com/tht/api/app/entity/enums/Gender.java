@@ -2,16 +2,21 @@ package com.tht.api.app.entity.enums;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
-import java.util.Arrays;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@Getter
-@JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum Gender {
+import java.util.Arrays;
 
-    MALE,
-    FEMALE,
-    BISEXUAL;
+@Getter
+@AllArgsConstructor
+@JsonFormat(shape = JsonFormat.Shape.STRING)
+public enum Gender implements EnumModel{
+
+    MALE("MALE"),
+    FEMALE("FEMALE"),
+    BISEXUAL("BISEXUAL");
+
+    private final String value;
 
     public static Gender toConverter(final String name) {
         return Arrays.stream(Gender.values())
@@ -20,4 +25,13 @@ public enum Gender {
             .orElseThrow(() -> EnumStateNotFoundException.ofGender(name));
     }
 
+    @Override
+    public String getKey() {
+        return name();
+    }
+
+    @Override
+    public String getValue() {
+        return value;
+    }
 }
