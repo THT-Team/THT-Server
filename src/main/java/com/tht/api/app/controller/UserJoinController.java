@@ -1,12 +1,10 @@
 package com.tht.api.app.controller;
 
+import com.tht.api.app.facade.user.AgreementFacade;
 import com.tht.api.app.facade.user.UserJoinFacade;
-import com.tht.api.app.facade.user.response.UserSignUpInfoResponse;
+import com.tht.api.app.facade.user.response.*;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
-import com.tht.api.app.facade.user.response.AuthNumberResponse;
-import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
-import com.tht.api.app.facade.user.response.UserSignUpResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,12 +16,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/users/join")
 public class UserJoinController {
 
     private final UserJoinFacade userJoinFacade;
+    private final AgreementFacade agreementFacade;
 
     @GetMapping("/certification/phone-number/{phone-number}")
     ResponseEntity<AuthNumberResponse> getCertificationNumber(
@@ -54,5 +55,11 @@ public class UserJoinController {
     public ResponseEntity<UserSignUpResponse> integratedUser(
         @RequestBody @Valid UserSnsSignUpRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.integratedSnsId(request));
+    }
+
+    @GetMapping("/agreements/main-category")
+    public ResponseEntity<List<AgreementMainCategoryResponse>> getAgreementMainCategoryList() {
+
+        return ResponseEntity.ok(agreementFacade.getMainCategoryList());
     }
 }
