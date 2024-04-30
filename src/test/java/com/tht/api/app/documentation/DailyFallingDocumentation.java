@@ -150,11 +150,11 @@ class DailyFallingDocumentation extends ControllerTestConfig {
 
 
         when(dailyFallingFacade.checkIsChooseDailyTopicUser(any()))
-                .thenReturn(DailyTopicChooseResponse.of(true));
+                .thenReturn(DailyTopicChooseResponse.isChooseDone());
 
         //then
         ResultActions resultActions = mockMvc.perform(
-                get("/is-choose-daily-topic")
+                get("/check/is-choose-daily-topic")
                         .header("Authorization", "Bearer {ACCESS_TOKEN}")
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON)
