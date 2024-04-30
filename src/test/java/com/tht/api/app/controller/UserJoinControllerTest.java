@@ -1,15 +1,11 @@
 package com.tht.api.app.controller;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-
 import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.facade.user.AgreementFacade;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
-import java.util.LinkedList;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -21,12 +17,20 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 @WebMvcTest(UserJoinController.class)
 class UserJoinControllerTest extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/users/join";
     @MockBean
     UserJoinFacade userJoinFacade;
+    @MockBean
+    AgreementFacade agreementFacade;
 
     @Test
     @DisplayName("유저 일반 회원가입 api test(실패) - 관심사 최대 사이즈(3개) 초과 테스트")

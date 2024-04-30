@@ -1,28 +1,20 @@
 package com.tht.api.app.documentation;
 
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserJoinController;
+import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.entity.enums.AgreementCategory;
 import com.tht.api.app.entity.enums.UserFrequency;
 import com.tht.api.app.entity.enums.UserReligion;
+import com.tht.api.app.facade.user.AgreementFacade;
 import com.tht.api.app.facade.user.UserJoinFacade;
 import com.tht.api.app.facade.user.request.UserSignUpRequest;
 import com.tht.api.app.facade.user.request.UserSnsSignUpRequest;
 import com.tht.api.app.facade.user.response.AuthNumberResponse;
 import com.tht.api.app.facade.user.response.UserNickNameValidResponse;
 import com.tht.api.app.facade.user.response.UserSignUpResponse;
-import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.fixture.user.AgreementMainCategoryResponseFixture;
 import com.tht.api.app.fixture.user.UserSignUpInfoResponseFixture;
 import com.tht.api.app.fixture.user.UserSignUpRequestFixture;
 import com.tht.api.app.fixture.user.UserSnsSignUpRequestFixture;
@@ -36,12 +28,27 @@ import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+
 @WebMvcTest(UserJoinController.class)
 class UserJoinDocumentation extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/users/join";
+
     @MockBean
     UserJoinFacade userJoinFacade;
+
+    @MockBean
+    AgreementFacade agreementFacade;
 
     @Test
     @DisplayName("유저 번호 인증 발급 docs")
@@ -65,7 +72,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저 - 회원가입")
+                        .tag("회원가입")
                         .description("유저 번호 인증번호 발급")
                         .pathParameters(parameterWithName("phone-number").description("유저 폰 번호"))
                         .requestFields()
@@ -104,7 +111,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저 - 회원가입")
+                        .tag("회원가입")
                         .description("유저 닉네임 중복 체크")
                         .pathParameters(parameterWithName("nick-name").description("닉네임"))
                         .requestFields()
@@ -142,7 +149,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저 - 회원가입")
+                        .tag("회원가입")
                         .description("유저 일반 회원가입")
                         .requestFields(
                             fieldWithPath("username").description("닉네임"),
@@ -218,7 +225,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저 - 회원가입")
+                        .tag("회원가입")
                         .description("유저 회원가입 이력 조회")
                         .pathParameters(parameterWithName("phone-number").description("핸드폰 번호"))
                         .requestFields()
@@ -256,7 +263,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                 preprocessResponse(prettyPrint()),
                 resource(
                     ResourceSnippetParameters.builder()
-                        .tag("유저 - 회원가입")
+                        .tag("회원가입")
                         .description("유저 SNS 아이디 통합 회원 가입")
                         .requestFields(
                             fieldWithPath("phoneNumber").description("전화번호"),
@@ -281,4 +288,40 @@ class UserJoinDocumentation extends ControllerTestConfig {
 
     }
 
+    @Test
+    @DisplayName("약관동의 데이터 리스트 조회 api test - docs")
+    void getAgreementListDocs() throws Exception {
+
+        //give
+        when(agreementFacade.getMainCategoryList()).thenReturn(List.of(AgreementMainCategoryResponseFixture.make()));
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+                RestDocumentationRequestBuilders.get(DEFAULT_URL + "/agreements/main-category")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        ).andDo(
+                document("회원가입 약관동의 대분류 카테고리 조회",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .tag("회원가입")
+                                        .description("유저 회원가입 시 약관동의 대분류 카테고리 리스트 조회")
+                                        .requestFields()
+                                        .responseFields(
+                                                fieldWithPath("[].name").type(JsonFieldType.STRING).description(String.format("약관 카테고리 변수명 - %s", EnumDocsUtils.getTypesFieldList(AgreementCategory.class))),
+                                                fieldWithPath("[].subject").type(JsonFieldType.STRING).description("약관 카테고리 명칭"),
+                                                fieldWithPath("[].isRequired").type(JsonFieldType.BOOLEAN).description("필수 여부"),
+                                                fieldWithPath("[].description").type(JsonFieldType.STRING).description("설명")
+                                        )
+                                        .responseSchema(Schema.schema(""))
+                                        .build()
+                        )
+                )
+        );
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+
+    }
 }

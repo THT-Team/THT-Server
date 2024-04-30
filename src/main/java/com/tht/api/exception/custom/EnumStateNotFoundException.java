@@ -1,5 +1,6 @@
 package com.tht.api.exception.custom;
 
+import com.tht.api.app.entity.enums.AgreementCategory;
 import com.tht.api.app.entity.enums.EnumModel;
 import com.tht.api.app.entity.enums.UserFrequency;
 import com.tht.api.app.entity.enums.UserReligion;
@@ -46,5 +47,9 @@ public class EnumStateNotFoundException extends RuntimeException {
 
     public static EnumStateNotFoundException ofUserReligion(final String findReligionName) {
         return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 User Religion 타입입니다. (ex) %s", findReligionName, getEnumValueList(UserReligion.class)));
+    }
+
+    public static RuntimeException ofAgreement(final String agreementCategoryName) {
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 약관동의 카테고리 타입입니다. (ex) %s", agreementCategoryName, getEnumValueList(AgreementCategory.class)));
     }
 }
