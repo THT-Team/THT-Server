@@ -4,6 +4,7 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.UserJoinController;
 import com.tht.api.app.controller.config.ControllerTestConfig;
+import com.tht.api.app.entity.enums.AgreementCategory;
 import com.tht.api.app.entity.enums.UserFrequency;
 import com.tht.api.app.entity.enums.UserReligion;
 import com.tht.api.app.facade.user.AgreementFacade;
@@ -309,7 +310,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
                                         .description("유저 회원가입 시 약관동의 대분류 카테고리 리스트 조회")
                                         .requestFields()
                                         .responseFields(
-                                                fieldWithPath("[].name").type(JsonFieldType.STRING).description("약관 카테고리 변수명"),
+                                                fieldWithPath("[].name").type(JsonFieldType.STRING).description(String.format("약관 카테고리 변수명 - %s", EnumDocsUtils.getTypesFieldList(AgreementCategory.class))),
                                                 fieldWithPath("[].subject").type(JsonFieldType.STRING).description("약관 카테고리 명칭"),
                                                 fieldWithPath("[].isRequired").type(JsonFieldType.BOOLEAN).description("필수 여부"),
                                                 fieldWithPath("[].description").type(JsonFieldType.STRING).description("설명")
