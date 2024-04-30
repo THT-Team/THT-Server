@@ -1,18 +1,22 @@
 package com.tht.api.app.facade.main;
 
 import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
+import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
 import com.tht.api.app.facade.main.response.DailyFallingTopicResponse;
+import com.tht.api.app.facade.main.response.DailyTopicChooseResponse;
 import com.tht.api.app.facade.main.response.TalkKeywordResponse;
+import com.tht.api.app.repository.mapper.DailyFallingTimeMapper;
 import com.tht.api.app.service.DailyFallingActiveService;
 import com.tht.api.app.service.DailyFallingService;
 import com.tht.api.app.service.TalkKeywordService;
 import com.tht.api.app.service.UserDailyFallingService;
-import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Facade
 @Transactional
@@ -53,5 +57,15 @@ public class DailyFallingFacade {
             .stream()
             .map(TalkKeywordResponse::of)
             .toList();
+    }
+
+    public DailyTopicChooseResponse checkIsChooseDailyTopicUser(final User user) {
+
+        Optional<DailyFallingTimeMapper> chooseTodayDailyFallingInfo = userDailyFallingService.findChooseTodayDailyFallingInfo(user.getUserUuid());
+
+        if (chooseTodayDailyFallingInfo.isPresent()) {
+            return DailyTopicChooseResponse.isChooseDone();
+        }
+        return DailyTopicChooseResponse.isNotChoose();
     }
 }
