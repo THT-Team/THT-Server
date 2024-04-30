@@ -2,6 +2,7 @@ package com.tht.api.app.controller;
 
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.main.DailyFallingFacade;
+import com.tht.api.app.facade.main.response.DailyTopicChooseResponse;
 import com.tht.api.app.facade.main.response.TalkKeywordResponse;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
 import java.util.List;
@@ -27,8 +28,8 @@ public class DailyFallingController {
 
     @PostMapping("/falling/choice/daily-keyword/{daily-falling-idx}")
     public ResponseEntity<Object> chooseFallingKeyword(
-        @PathVariable(name = "daily-falling-idx") final long dailyFallingIdx,
-        @AuthenticationPrincipal User user
+            @PathVariable(name = "daily-falling-idx") final long dailyFallingIdx,
+            @AuthenticationPrincipal User user
     ) {
 
         dailyFallingFacade.chooseDailyFallingKeyword(dailyFallingIdx, user.getUserUuid());
@@ -39,5 +40,11 @@ public class DailyFallingController {
     public ResponseEntity<List<TalkKeywordResponse>> getTalkKeyword() {
 
         return ResponseEntity.ok(dailyFallingFacade.getTalkKeywords());
+    }
+
+    @GetMapping("/is-choose-daily-topic")
+    public ResponseEntity<DailyTopicChooseResponse> isChooseDailyTopic(@AuthenticationPrincipal User user) {
+
+        return ResponseEntity.ok(dailyFallingFacade.checkIsChooseDailyTopicUser(user));
     }
 }
