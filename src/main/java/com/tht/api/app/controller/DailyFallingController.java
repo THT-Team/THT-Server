@@ -42,7 +42,7 @@ public class DailyFallingController {
         return ResponseEntity.ok(dailyFallingFacade.getTalkKeywords());
     }
 
-    @GetMapping("/is-choose-daily-topic")
+    @GetMapping("/check/is-choose-daily-topic")
     public ResponseEntity<DailyTopicChooseResponse> isChooseDailyTopic(@AuthenticationPrincipal User user) {
 
         return ResponseEntity.ok(dailyFallingFacade.checkIsChooseDailyTopicUser(user));

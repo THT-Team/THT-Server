@@ -3,13 +3,7 @@ package com.tht.api.exception;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
-import com.tht.api.exception.custom.AligoException;
-import com.tht.api.exception.custom.EntityStateException;
-import com.tht.api.exception.custom.EnumStateNotFoundException;
-import com.tht.api.exception.custom.LikeException;
-import com.tht.api.exception.custom.UserCustomException;
-import com.tht.api.exception.custom.UserDailyFallingException;
-import com.tht.api.exception.custom.UserTokenException;
+import com.tht.api.exception.custom.*;
 import jakarta.servlet.http.HttpServletRequest;
 import java.time.format.DateTimeParseException;
 import org.springframework.http.HttpStatus;
@@ -146,6 +140,14 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.status(e.getStatusValue()).body(
             ErrorResponse.of(e.getStatusValue(), e.getReasonParse(), e.getMessage(), request)
+        );
+    }
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final DailyFallingException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+                ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
         );
     }
 
