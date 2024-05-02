@@ -8,8 +8,6 @@ public record UserAgreementRequest(
     boolean serviceUseAgree,
     @AssertTrue(message = "개인 정보 수집 및 이용 동의는 필수입니다.")
     boolean personalPrivacyInfoAgree,
-    @AssertTrue(message = "위치 기반 서비스 약관 동의는 필수입니다.")
-    boolean locationServiceAgree,
     boolean marketingAgree
 ){
 
@@ -18,7 +16,6 @@ public record UserAgreementRequest(
             userUuid,
             serviceUseAgree,
             personalPrivacyInfoAgree,
-            locationServiceAgree,
             marketingAgree
         );
     }

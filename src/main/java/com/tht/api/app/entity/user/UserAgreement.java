@@ -67,14 +67,14 @@ public class UserAgreement {
     }
 
     public static UserAgreement create(final String userUuid, final boolean serviceUseAgree,
-        final boolean personalPrivacyInfoAgree, final boolean locationServiceAgree,
+        final boolean personalPrivacyInfoAgree,
         final boolean marketingAgree) {
 
         return UserAgreement.builder()
             .userUuid(userUuid)
             .serviceUseAgree(serviceUseAgree)
             .personalPrivacyInfoAgree(personalPrivacyInfoAgree)
-            .locationServiceAgree(locationServiceAgree)
+            .locationServiceAgree(false)
             .marketingAgree(marketingAgree)
             .build();
     }

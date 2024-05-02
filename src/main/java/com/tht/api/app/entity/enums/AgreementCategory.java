@@ -8,7 +8,7 @@ import java.util.Arrays;
 @AllArgsConstructor
 public enum AgreementCategory implements EnumModel{
 
-    SERVICE_USER_AGREE("serviceUserAgree"),
+    SERVICE_USE_AGREE("serviceUseAgree"),
     PERSONAL_PRIVACY_INFO_AGREE("personalPrivacyInfoAgree"),
     LOCATION_SERVICE_AGREE("locationServiceAgree"),
     MARKETING_AGREE("marketingAgree");

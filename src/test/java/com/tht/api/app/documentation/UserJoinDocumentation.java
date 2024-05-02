@@ -165,7 +165,6 @@ class UserJoinDocumentation extends ControllerTestConfig {
                             fieldWithPath("agreement.serviceUseAgree").description("서비스 약관 동의"),
                             fieldWithPath("agreement.personalPrivacyInfoAgree").description(
                                 "개인정보 이용 약관 동의"),
-                            fieldWithPath("agreement.locationServiceAgree").description("위치 동의 내역"),
                             fieldWithPath("agreement.marketingAgree").description("마케팅 동의 내역"),
 
                             fieldWithPath("locationRequest").description("유저 위치 정보"),
