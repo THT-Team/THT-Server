@@ -14,6 +14,6 @@ public class UserAgreementRequestFixture {
 
     public static UserAgreementRequest make() {
         return new UserAgreementRequest(
-            serviceUseAgree, personalPrivacyInfoAgree, locationServiceAgree, marketingAgree);
+            serviceUseAgree, personalPrivacyInfoAgree, marketingAgree);
     }
 }
