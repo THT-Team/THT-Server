@@ -222,7 +222,10 @@ public class UserFacade {
         return userFriendService.update(userUuid, contacts);
     }
 
-    public void updateUserAgreement(final User user, final UserAgreementUpdateRequest request) {
+    @Transactional
+    public void updateSingleUserAgreement(final User user, final UserAgreementUpdateRequest request) {
 
+        userAgreementService.updateSingleAgreement(user.getUserUuid(), request.agreementName(), request.value());
     }
+
 }
