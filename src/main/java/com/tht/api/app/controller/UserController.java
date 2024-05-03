@@ -3,14 +3,7 @@ package com.tht.api.app.controller;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.user.UserFacade;
-import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
-import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
-import com.tht.api.app.facade.user.request.UserFriendContactRequest;
-import com.tht.api.app.facade.user.request.UserLocationRequest;
-import com.tht.api.app.facade.user.request.UserModifyProfilePhotoRequest;
-import com.tht.api.app.facade.user.request.UserReportRequest;
-import com.tht.api.app.facade.user.request.UserWithDrawRequest;
+import com.tht.api.app.facade.user.request.*;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
 import com.tht.api.app.facade.user.response.UserFriendContactResponse;
 import com.tht.api.app.facade.user.response.UserLoginResponse;
@@ -36,8 +29,8 @@ public class UserController {
 
     @PostMapping("/user/report")
     public ResponseEntity<Object> reportUser(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserReportRequest request
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserReportRequest request
     ) {
 
         userFacade.report(user.getUserUuid(), request);
@@ -46,8 +39,8 @@ public class UserController {
 
     @PostMapping("/user/block/{block-user-uuid}")
     public ResponseEntity<Object> blockUser(
-        @AuthenticationPrincipal final User user,
-        @PathVariable(name = "block-user-uuid") final String blockUserUuid
+            @AuthenticationPrincipal final User user,
+            @PathVariable(name = "block-user-uuid") final String blockUserUuid
     ) {
 
         userFacade.block(user.getUserUuid(), blockUserUuid);
@@ -56,23 +49,23 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<UserDetailResponse> getUserDetail(
-        @AuthenticationPrincipal final User user) {
+            @AuthenticationPrincipal final User user) {
 
         return ResponseEntity.ok(userFacade.getUserDetail(user.getUserUuid()));
     }
 
     @GetMapping("/user/another/{user-uuid}")
     public ResponseEntity<UserDetailResponse> getAnotherUserDetail(
-        @AuthenticationPrincipal final User user,
-        @PathVariable(value = "user-uuid") final String userUuid) {
+            @AuthenticationPrincipal final User user,
+            @PathVariable(value = "user-uuid") final String userUuid) {
 
         return ResponseEntity.ok(userFacade.getUserDetail(userUuid));
     }
 
     @PatchMapping("/user/phone-number/{phone-number}")
     public ResponseEntity<Object> updatePhoneNumber(
-        @PathVariable(name = "phone-number") final String phoneNumber,
-        @AuthenticationPrincipal final User user) {
+            @PathVariable(name = "phone-number") final String phoneNumber,
+            @AuthenticationPrincipal final User user) {
 
         userFacade.updatePhoneNumber(user, phoneNumber);
         return ResponseEntity.ok().build();
@@ -80,8 +73,8 @@ public class UserController {
 
     @PatchMapping("/user/email/{email}")
     public ResponseEntity<Object> updateEmail(
-        @PathVariable final String email,
-        @AuthenticationPrincipal final User user) {
+            @PathVariable final String email,
+            @AuthenticationPrincipal final User user) {
 
         userFacade.updateEmail(user, email);
         return ResponseEntity.ok().build();
@@ -89,8 +82,8 @@ public class UserController {
 
     @PutMapping("/user/interests")
     public ResponseEntity<Object> modifiedInterests(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final ModifiedInterestsRequest request) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final ModifiedInterestsRequest request) {
 
         userFacade.modifiedInterests(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
@@ -98,8 +91,8 @@ public class UserController {
 
     @PutMapping("/user/ideal-type")
     public ResponseEntity<Object> modifiedIdealType(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final ModifiedIdealTypeRequest request) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final ModifiedIdealTypeRequest request) {
 
         userFacade.modifiedIdealType(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
@@ -107,8 +100,8 @@ public class UserController {
 
     @PatchMapping("/user/location")
     public ResponseEntity<Object> updateMyLocation(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserLocationRequest request) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserLocationRequest request) {
 
         userFacade.updateLocation(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
@@ -116,16 +109,16 @@ public class UserController {
 
     @PatchMapping("/user/name/{nick-name}")
     public ResponseEntity<UserLoginResponse> updateNickName(
-        @AuthenticationPrincipal final User user,
-        @PathVariable(name = "nick-name") final String updateNickName) {
+            @AuthenticationPrincipal final User user,
+            @PathVariable(name = "nick-name") final String updateNickName) {
 
         return ResponseEntity.ok(userFacade.updateNickName(user, updateNickName));
     }
 
     @PatchMapping("/user/introduction")
     public ResponseEntity<Object> updateSelfIntroduce(
-        @AuthenticationPrincipal final User user,
-        @RequestBody final String introduction) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody final String introduction) {
 
         userFacade.updateIntroduction(user, introduction);
         return ResponseEntity.ok().build();
@@ -133,8 +126,8 @@ public class UserController {
 
     @PatchMapping("/user/profile-photo")
     public ResponseEntity<Object> updateProfileList(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserModifyProfilePhotoRequest request) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserModifyProfilePhotoRequest request) {
 
         userFacade.updateUserProfilePhoto(user.getUserUuid(), request.userProfilePhotoList());
         return ResponseEntity.ok().build();
@@ -142,8 +135,8 @@ public class UserController {
 
     @PatchMapping("/user/preferred-gender/{gender}")
     public ResponseEntity<Object> updatePreferGender(
-        @AuthenticationPrincipal final User user,
-        @PathVariable final Gender gender) {
+            @AuthenticationPrincipal final User user,
+            @PathVariable final Gender gender) {
 
         userFacade.updatePreferGender(user, gender);
         return ResponseEntity.ok().build();
@@ -151,8 +144,8 @@ public class UserController {
 
     @PatchMapping("/user/alarm-agreement")
     public ResponseEntity<Object> updateUserAlarm(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserAlarmAgreementModifyRequest request) {
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserAlarmAgreementModifyRequest request) {
 
         userFacade.updatePersonalAlarmAgree(user.getUserUuid(), request);
         return ResponseEntity.ok().build();
@@ -160,8 +153,8 @@ public class UserController {
 
     @DeleteMapping("/user/account-withdrawal")
     public ResponseEntity<Object> withDraw(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserWithDrawRequest request
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserWithDrawRequest request
     ) {
 
         userFacade.withDraw(user, request);
@@ -172,19 +165,26 @@ public class UserController {
     public ResponseEntity<UserFriendContactResponse> getMyFriendListCount(@AuthenticationPrincipal final User user) {
 
         return ResponseEntity.ok(
-            new UserFriendContactResponse(userFacade.getFriendCount(user.getUserUuid()))
+                new UserFriendContactResponse(userFacade.getFriendCount(user.getUserUuid()))
         );
     }
 
     @PostMapping("/user/friend-contact-list")
     public ResponseEntity<UserFriendContactResponse> updateMyFriendContactList(
-        @AuthenticationPrincipal final User user,
-        @RequestBody @Valid final UserFriendContactRequest request
+            @AuthenticationPrincipal final User user,
+            @RequestBody @Valid final UserFriendContactRequest request
     ) {
 
         return ResponseEntity.ok(
-            new UserFriendContactResponse(
-                userFacade.updateFriendContactList(user.getUserUuid(), request.contacts()))
+                new UserFriendContactResponse(
+                        userFacade.updateFriendContactList(user.getUserUuid(), request.contacts()))
         );
+    }
+
+    @PatchMapping("/user/agreement")
+    public ResponseEntity<Object> patchUserAgreement(@AuthenticationPrincipal final User user, @RequestBody @Valid final UserAgreementUpdateRequest request) {
+
+
+        return ResponseEntity.ok().build();
     }
 }
