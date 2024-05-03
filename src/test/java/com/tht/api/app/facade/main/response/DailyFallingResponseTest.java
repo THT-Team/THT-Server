@@ -27,7 +27,7 @@ class DailyFallingResponseTest {
     void convertUnix() {
         LocalDateTime localDateTime = LocalDateTime.of(2023, 6, 26, 11, 0, 0);
 
-        DailyFallingResponse response = DailyFallingResponse.of(localDateTime, DailyFallingType.ONE_CHOICE, List.of());
+        DailyFallingResponse response = DailyFallingResponse.of(localDateTime, DailyFallingType.ONE_CHOICE, "", List.of());
 
         assertThat(response.expirationUnixTime()).isEqualTo(1687744800);
     }
