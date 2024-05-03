@@ -1,6 +1,7 @@
 package com.tht.api.app.acceptance.config;
 
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.entity.enums.DailyFallingType;
 import com.tht.api.app.entity.meta.DailyFalling;
 import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
 import com.tht.api.app.entity.meta.IdealType;
@@ -73,7 +74,7 @@ public abstract class AcceptanceTest {
             DailyFallingActiveTimeTable.of(now.minusDays(1), now.plusDays(1)));
 
         return dailyFallingRepository.save(
-            DailyFalling.of(talkKeyword.getIdx(), timeTable.getIdx(), "잡담내용~~ 잡담~")
+            DailyFalling.of(talkKeyword.getIdx(), timeTable.getIdx(), "잡담내용~~ 잡담~", DailyFallingType.ONE_CHOICE)
         );
     }
 
