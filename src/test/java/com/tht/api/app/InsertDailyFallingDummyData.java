@@ -1,16 +1,6 @@
 package com.tht.api.app;
 
-import com.tht.api.app.entity.meta.DailyFalling;
-
-import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
-import com.tht.api.app.repository.meta.DailyFallingActiveTimeTableRepository;
-import com.tht.api.app.repository.meta.DailyFallingRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 
 //todo. 2024.03.05 박형민 - 데일리토픽 더미 데이터 삽입을 위한 테스트 주석처리

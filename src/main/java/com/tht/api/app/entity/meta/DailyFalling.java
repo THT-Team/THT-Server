@@ -28,12 +28,8 @@ public class DailyFalling extends Auditable {
     @Column
     private String talkIssue;
 
-    @Column
-    @Convert(converter = DailyFallingTypeConverter.class)
-    private DailyFallingType type;
+    public static DailyFalling of(int talkKeywordIdx, int activeTimeTableIdx, String talkIssue) {
 
-    public static DailyFalling of(int talkKeywordIdx, int activeTimeTableIdx, String talkIssue, DailyFallingType type) {
-
-        return new DailyFalling(null, talkKeywordIdx, activeTimeTableIdx, talkIssue, type);
+        return new DailyFalling(null, talkKeywordIdx, activeTimeTableIdx, talkIssue);
     }
 }

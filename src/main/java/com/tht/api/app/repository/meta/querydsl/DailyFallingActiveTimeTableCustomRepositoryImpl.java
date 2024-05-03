@@ -1,7 +1,7 @@
 package com.tht.api.app.repository.meta.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
+import com.tht.api.app.entity.meta.DailyFallingActiveInfo;
 import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -16,7 +16,7 @@ public class DailyFallingActiveTimeTableCustomRepositoryImpl implements
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<DailyFallingActiveTimeTable> findByActiveNow() {
+    public Optional<DailyFallingActiveInfo> findByActiveNow() {
 
         final LocalDateTime now = LocalDateTime.now();
 

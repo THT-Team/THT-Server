@@ -1,6 +1,6 @@
 package com.tht.api.app.facade.main;
 
-import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
+import com.tht.api.app.entity.meta.DailyFallingActiveInfo;
 import com.tht.api.app.entity.user.User;
 import com.tht.api.app.facade.Facade;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
@@ -30,7 +30,7 @@ public class DailyFallingFacade {
 
     public DailyFallingResponse getDailyFallingList() {
 
-        final Optional<DailyFallingActiveTimeTable> activeInfo = dailyFallingActiveService.findActiveInfo();
+        final Optional<DailyFallingActiveInfo> activeInfo = dailyFallingActiveService.findActiveInfo();
 
         if (activeInfo.isEmpty()) {
             return DailyFallingResponse.empty();
