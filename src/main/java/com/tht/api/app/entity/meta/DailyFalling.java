@@ -1,8 +1,6 @@
 package com.tht.api.app.entity.meta;
 
 import com.tht.api.app.entity.Auditable;
-import com.tht.api.app.entity.enums.DailyFallingType;
-import com.tht.api.app.entity.enums.converter.DailyFallingTypeConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

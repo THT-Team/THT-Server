@@ -42,7 +42,7 @@ public class DailyFallingFacade {
             .map(DailyFallingTopicResponse::of)
             .toList();
 
-        return DailyFallingResponse.of(activeInfo.get().getEndDateTime(), topicResponses);
+        return DailyFallingResponse.of(activeInfo.get().getEndDateTime(), activeInfo.get().getType(), topicResponses);
     }
 
     public void chooseDailyFallingKeyword(final long dailyFallingIdx, final String userUuid) {

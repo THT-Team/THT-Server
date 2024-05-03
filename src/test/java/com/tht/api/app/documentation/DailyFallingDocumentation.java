@@ -5,6 +5,7 @@ import com.epages.restdocs.apispec.Schema;
 import com.tht.api.app.controller.DailyFallingController;
 import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
+import com.tht.api.app.entity.enums.DailyFallingType;
 import com.tht.api.app.facade.main.DailyFallingFacade;
 import com.tht.api.app.facade.main.response.DailyTopicChooseResponse;
 import com.tht.api.app.fixture.main.DailyFallingResponseFixture;
@@ -57,16 +58,17 @@ class DailyFallingDocumentation extends ControllerTestConfig {
                                         .description("오늘의 폴링 토픽 리스트 조회")
                                         .requestFields()
                                         .responseFields(
-                                                fieldWithPath("expirationUnixTime").description(
-                                                        "폴링 주제어 만료시간 [존재하지 않으면 -1]"),
-                                                fieldWithPath("fallingTopicList").description(
-                                                        "폴링 주제어 라수투 [존재하지 않으면 빈 리스트 [] "),
-                                                fieldWithPath("fallingTopicList[].idx").description("데일리 폴링 토픽 idx"),
-                                                fieldWithPath("fallingTopicList[].keyword").description("폴링 주제어"),
-                                                fieldWithPath("fallingTopicList[].keywordIdx").description("폴링 주제어 idx"),
-                                                fieldWithPath("fallingTopicList[].keywordImgUrl").description(
-                                                        "폴링 주제어 이미지 url"),
-                                                fieldWithPath("fallingTopicList[].talkIssue").description("주제어 파생 질문")
+                                                fieldWithPath("expirationUnixTime").type(JsonFieldType.NUMBER)
+                                                        .description("폴링 주제어 만료시간 [존재하지 않으면 -1]"),
+                                                fieldWithPath("type").type(JsonFieldType.STRING)
+                                                        .description(String.format("그날의 대화주제 표출 형식 - ex %s", EnumDocsUtils.getTypesFieldList(DailyFallingType.class))),
+                                                fieldWithPath("fallingTopicList").type(JsonFieldType.ARRAY)
+                                                        .description("폴링 주제어 라수투 [존재하지 않으면 빈 리스트 [] "),
+                                                fieldWithPath("fallingTopicList[].idx").type(JsonFieldType.NUMBER).description("데일리 폴링 토픽 idx"),
+                                                fieldWithPath("fallingTopicList[].keyword").type(JsonFieldType.STRING).description("폴링 주제어"),
+                                                fieldWithPath("fallingTopicList[].keywordIdx").type(JsonFieldType.NUMBER).description("폴링 주제어 idx"),
+                                                fieldWithPath("fallingTopicList[].keywordImgUrl").type(JsonFieldType.STRING).description("폴링 주제어 이미지 url"),
+                                                fieldWithPath("fallingTopicList[].talkIssue").type(JsonFieldType.STRING).description("주제어 파생 질문")
                                         )
                                         .responseSchema(Schema.schema("DailyFallingResponse"))
                                         .build()

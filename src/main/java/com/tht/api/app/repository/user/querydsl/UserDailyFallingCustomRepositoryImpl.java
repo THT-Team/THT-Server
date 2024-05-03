@@ -7,7 +7,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.api.app.entity.enums.EntityState;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.meta.QDailyFalling;
-import com.tht.api.app.entity.meta.QDailyFallingActiveTimeTable;
+import com.tht.api.app.entity.meta.QDailyFallingActiveInfo;
 import com.tht.api.app.entity.meta.QIdealType;
 import com.tht.api.app.entity.meta.QInterest;
 import com.tht.api.app.entity.user.*;
@@ -35,7 +35,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     private static final QUserLocationInfo userLocationInfo = QUserLocationInfo.userLocationInfo;
     private static final QInterest interest = QInterest.interest;
     private static final QIdealType idealType = QIdealType.idealType;
-    private static final QDailyFallingActiveTimeTable dailyFallingActiveTimeTable = QDailyFallingActiveTimeTable.dailyFallingActiveTimeTable;
+    private static final QDailyFallingActiveInfo dailyFallingActiveInfo = QDailyFallingActiveInfo.dailyFallingActiveInfo;
     private static final QUserFriend userFriend = QUserFriend.userFriend;
     private static final QUserBlock userBlock = QUserBlock.userBlock;
     private static final QUserLike userLike = QUserLike.userLike;
@@ -56,8 +56,8 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
             .innerJoin(dailyFalling)
             .on(userDailyFalling.dailyFallingIdx.eq(dailyFalling.idx)
                 .and(dailyFalling.state.eq(EntityState.ACTIVE)))
-            .innerJoin(dailyFallingActiveTimeTable)
-            .on(dailyFalling.activeTimeTableIdx.eq(dailyFallingActiveTimeTable.idx))
+            .innerJoin(dailyFallingActiveInfo)
+            .on(dailyFalling.activeTimeTableIdx.eq(dailyFallingActiveInfo.idx))
             .where(
                 userDailyFalling.userUuid.eq(userUuid)
                     .and(userDailyFalling.state.eq(EntityState.ACTIVE))
@@ -213,18 +213,18 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
         return Optional.ofNullable(queryFactory.select(
                 new QDailyFallingTimeMapper(
                     dailyFalling.idx,
-                    dailyFallingActiveTimeTable.endDateTime
+                    dailyFallingActiveInfo.endDateTime
                 )
             ).from(userDailyFalling)
             .innerJoin(dailyFalling)
             .on(dailyFalling.idx.eq(userDailyFalling.dailyFallingIdx))
-            .innerJoin(dailyFallingActiveTimeTable)
-            .on(dailyFallingActiveTimeTable.idx.eq(dailyFalling.activeTimeTableIdx))
+            .innerJoin(dailyFallingActiveInfo)
+            .on(dailyFallingActiveInfo.idx.eq(dailyFalling.activeTimeTableIdx))
             .where(
                 userDailyFalling.userUuid.eq(userUuid)
                     .and(userDailyFalling.state.eq(EntityState.ACTIVE))
                     .and(dailyFalling.state.eq(EntityState.ACTIVE))
-                    .and(dailyFallingActiveTimeTable.state.eq(EntityState.ACTIVE)),
+                    .and(dailyFallingActiveInfo.state.eq(EntityState.ACTIVE)),
                 activeTimeAtNow()
             )
             .fetchFirst());
@@ -248,7 +248,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
     private BooleanExpression activeTimeAtNow() {
         final LocalDateTime now = LocalDateTime.now();
 
-        return dailyFallingActiveTimeTable.startDateTime.loe(now)
-            .and(dailyFallingActiveTimeTable.endDateTime.gt(now));
+        return dailyFallingActiveInfo.startDateTime.loe(now)
+            .and(dailyFallingActiveInfo.endDateTime.gt(now));
     }
 }

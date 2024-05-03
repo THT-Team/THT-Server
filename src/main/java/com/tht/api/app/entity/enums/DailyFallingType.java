@@ -11,14 +11,14 @@ public enum DailyFallingType implements EnumModel{
 
     ONE_CHOICE("oneChoice"),
     TWO_CHOICE("twoChoice"),
-    FORE_CHOICE("foreChoice");
+    FOUR_CHOICE("fourChoice");
 
-    private String value;
+    private final String value;
 
     @JsonCreator
     public static DailyFallingType toConverter(final String name) {
         return Arrays.stream(DailyFallingType.values())
-                .filter(dailyFallingType -> dailyFallingType.getValue().equals(name))
+                .filter(dailyFallingType -> dailyFallingType.name().equals(name))
                 .findAny()
                 .orElseThrow(() -> EnumStateNotFoundException.ofDailyFallingType(name));
     }

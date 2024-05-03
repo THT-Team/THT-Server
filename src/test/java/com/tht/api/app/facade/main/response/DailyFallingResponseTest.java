@@ -1,12 +1,13 @@
 package com.tht.api.app.facade.main.response;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import com.tht.api.app.facade.main.response.DailyFallingResponse;
-import java.time.LocalDateTime;
-import java.util.List;
+import com.tht.api.app.entity.enums.DailyFallingType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class DailyFallingResponseTest {
 
@@ -26,7 +27,7 @@ class DailyFallingResponseTest {
     void convertUnix() {
         LocalDateTime localDateTime = LocalDateTime.of(2023, 6, 26, 11, 0, 0);
 
-        DailyFallingResponse response = DailyFallingResponse.of(localDateTime, List.of());
+        DailyFallingResponse response = DailyFallingResponse.of(localDateTime, DailyFallingType.ONE_CHOICE, List.of());
 
         assertThat(response.expirationUnixTime()).isEqualTo(1687744800);
     }
