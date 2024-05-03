@@ -19,6 +19,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -135,7 +136,7 @@ class UserDocumentation extends ControllerTestConfig {
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .tag("유저 - 마이페이지")
+                                        .tag("마이페이지")
                                         .description("마이페이지 유저 정보 상세 조회")
                                         .requestFields()
                                         .responseFields(
@@ -167,8 +168,15 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("userProfilePhotos").description("유저 프로필 이미지 리스트"),
                                                 fieldWithPath("userProfilePhotos[].url").description("이미지 url"),
                                                 fieldWithPath("userProfilePhotos[].priority")
-                                                        .description("사진 우선순위 (1:프로필)")
-                                        )
+                                                        .description("사진 우선순위 (1:프로필)"),
+
+                                                fieldWithPath("userAgreements").type(JsonFieldType.OBJECT).description("유저 약관동의 내역"),
+                                                fieldWithPath("userAgreements.serviceUseAgree").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의 내역"),
+                                                fieldWithPath("userAgreements.personalPrivacyInfoAgree").type(JsonFieldType.BOOLEAN).description("개인정보 이용 약관 동의 내역"),
+                                                fieldWithPath("userAgreements.marketingAgree").type(JsonFieldType.BOOLEAN).description("마케팅 동의 내역"),
+                                                fieldWithPath("userAgreements.locationServiceAgree").type(JsonFieldType.BOOLEAN).description("위치정보 동의 내역")
+
+                                                )
                                         .responseSchema(Schema.schema("UserDetailResponse"))
                                         .build()
                         ))
@@ -264,7 +272,7 @@ class UserDocumentation extends ControllerTestConfig {
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .tag("유저 - 마이페이지")
+                                        .tag("마이페이지")
                                         .description("마이페이지 유저 핸드폰 번호 수정")
                                         .pathParameters(
                                                 parameterWithName("phone-number").description("수정할 핸드폰번호 [숫자만 9~11자리]")
@@ -297,7 +305,7 @@ class UserDocumentation extends ControllerTestConfig {
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .tag("유저 - 마이페이지")
+                                        .tag("마이페이지")
                                         .description("마이페이지 유저 이메일 수정")
                                         .pathParameters(
                                                 parameterWithName("email").description("수정할 이메일")
@@ -327,7 +335,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저가 선택한 관심사 목록 수정")
                                                 .requestFields(
                                                         fieldWithPath("interestList").description("이상형 idx List")
@@ -357,7 +365,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저가 선택한 이상형타입 목록 수정")
                                                 .requestFields(
                                                         fieldWithPath("idealTypeList").description("이상형 idx List")
@@ -394,7 +402,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저의 위치 주소를 업데이트")
                                                 .requestFields(
                                                         fieldWithPath("address").description("주소"),
@@ -436,7 +444,7 @@ class UserDocumentation extends ControllerTestConfig {
                         preprocessResponse(prettyPrint()),
                         resource(
                                 ResourceSnippetParameters.builder()
-                                        .tag("유저 - 마이페이지")
+                                        .tag("마이페이지")
                                         .description("마이페이지 유저 이름(닉네임) 수정")
                                         .pathParameters(
                                                 parameterWithName("nick-name").description("수정할 유저 이름")
@@ -481,7 +489,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저의 자기소개 내용을 업데이트")
                                                 .requestFields(
                                                         fieldWithPath("introduction").description("수정할 자기소개 내용")
@@ -524,7 +532,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저의 프로필 사진을 업데이트")
                                                 .requestFields(
                                                         fieldWithPath("userProfilePhotoList").description(
@@ -561,7 +569,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저의 선호성별을 업데이트")
                                                 .pathParameters(
                                                         parameterWithName("gender").description(
@@ -601,7 +609,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저의 알림 설정 업데이트")
                                                 .requestFields(
                                                         fieldWithPath("marketingAlarm").description("마케팅 정보 수신 동의 여부"),
@@ -644,7 +652,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저 계정 탈퇴 요청")
                                                 .requestFields(
                                                         fieldWithPath("reason").description("탈퇴 사유"),
@@ -679,7 +687,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저 연락처 차단 목록 조회")
                                                 .requestFields()
                                                 .responseFields(
@@ -727,7 +735,7 @@ class UserDocumentation extends ControllerTestConfig {
                                 preprocessResponse(prettyPrint()),
                                 resource(
                                         ResourceSnippetParameters.builder()
-                                                .tag("유저 - 마이페이지")
+                                                .tag("마이페이지")
                                                 .description("유저 연락처 리스트 차단하기")
                                                 .requestFields(
                                                         fieldWithPath("contacts").description("유저 기기에 저장된 차단할 연락처 목록"),
