@@ -6,7 +6,6 @@ import com.tht.api.app.controller.config.ControllerTestConfig;
 import com.tht.api.app.controller.config.WithCustomMockUser;
 import com.tht.api.app.entity.enums.AgreementCategory;
 import com.tht.api.app.facade.user.UserFacade;
-import com.tht.api.app.facade.user.request.UserAgreementUpdateRequest;
 import com.tht.api.app.fixture.user.UserAgreementUpdateRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
@@ -36,8 +34,7 @@ public class AgreementDocumentation extends ControllerTestConfig {
     void patchUserAgreement() throws Exception {
 
         //give
-        UserAgreementUpdateRequest request = UserAgreementUpdateRequestFixture.make();
-        String requestBody = objectMapper.writeValueAsString(request);
+        String requestBody = objectMapper.writeValueAsString(UserAgreementUpdateRequestFixture.makeJson());
 
         ResultActions resultActions = mockMvc.perform(patch("/user/agreement")
                         .accept(MediaType.APPLICATION_JSON)

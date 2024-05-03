@@ -243,7 +243,14 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("userProfilePhotos").description("유저 프로필 이미지 리스트"),
                                                 fieldWithPath("userProfilePhotos[].url").description("이미지 url"),
                                                 fieldWithPath("userProfilePhotos[].priority")
-                                                        .description("사진 우선순위 (1:프로필)")
+                                                        .description("사진 우선순위 (1:프로필)"),
+
+                                                fieldWithPath("userAgreements").type(JsonFieldType.OBJECT).description("유저 약관동의 내역"),
+                                                fieldWithPath("userAgreements.serviceUseAgree").type(JsonFieldType.BOOLEAN).description("서비스 약관 동의 내역"),
+                                                fieldWithPath("userAgreements.personalPrivacyInfoAgree").type(JsonFieldType.BOOLEAN).description("개인정보 이용 약관 동의 내역"),
+                                                fieldWithPath("userAgreements.marketingAgree").type(JsonFieldType.BOOLEAN).description("마케팅 동의 내역"),
+                                                fieldWithPath("userAgreements.locationServiceAgree").type(JsonFieldType.BOOLEAN).description("위치정보 동의 내역")
+
                                         )
                                         .responseSchema(Schema.schema("UserDetailResponse"))
                                         .build()
