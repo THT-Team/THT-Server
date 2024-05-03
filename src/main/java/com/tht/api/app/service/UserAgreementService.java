@@ -27,4 +27,11 @@ public class UserAgreementService {
 
         userAgreement.modifyMarketingAgree(marketingAlarm);
     }
+
+    public UserAgreement findByUserUuid(final String userUuid) {
+        return userAgreementRepository.findByUserUuid(userUuid)
+                .orElseThrow(
+                        () -> UserCustomException.notExistUserAgreementsInfo(userUuid)
+                );
+    }
 }

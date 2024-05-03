@@ -29,7 +29,7 @@ public class UserAgreementAcceptanceTest extends AcceptanceTest {
         //then
         assertAll(
                 () -> assertThat(유저약관동의내역_수정_결과.statusCode()).isEqualTo(200),
-                () -> assertThat(유저상세조회_결과.jsonPath().getBoolean("agreement." + agreementName)).isEqualTo(userAgreementValue)
+                () -> assertThat(유저상세조회_결과.jsonPath().getBoolean("agreements." + agreementName)).isEqualTo(userAgreementValue)
         );
     }
 

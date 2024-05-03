@@ -5,10 +5,12 @@ import com.tht.api.app.entity.enums.UserFrequency;
 import com.tht.api.app.entity.enums.UserReligion;
 import com.tht.api.app.facade.idealtype.response.IdealTypeResponse;
 import com.tht.api.app.facade.interest.response.InterestResponse;
+import com.tht.api.app.facade.user.response.UserAgreementResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
 import com.tht.api.app.facade.user.response.UserProfilePhotoResponse;
 import com.tht.api.app.fixture.meta.IdealTypeFixture;
 import com.tht.api.app.fixture.meta.InterestFixture;
+
 import java.util.List;
 
 public class UserDetailResponseFixture {
@@ -27,33 +29,36 @@ public class UserDetailResponseFixture {
     private static final UserFrequency drinking = UserFrequency.FREQUENTLY;
     private static final UserReligion religion = UserReligion.BUDDHISM;
     private static final List<IdealTypeResponse> idealTypeList = List.of(
-        IdealTypeFixture.responseMake()
+            IdealTypeFixture.responseMake()
     );
     private static final List<InterestResponse> interestsList = List.of(
-        InterestFixture.responseMake()
+            InterestFixture.responseMake()
     );
     private static final List<UserProfilePhotoResponse> userProfilePhotos = List.of(
-        UserProfilePhotoFixture.responseMake()
+            UserProfilePhotoFixture.responseMake()
     );
+
+    private static final UserAgreementResponse userAgreements = UserAgreementResponseFixture.make();
 
     public static UserDetailResponse make() {
         return new UserDetailResponse(
-            username,
-            userUuid,
-            age,
-            introduction,
-            address,
-            phoneNumber,
-            email,
-            gender,
-            preferGender,
-            tall,
-            smoking,
-            drinking,
-            religion,
-            idealTypeList,
-            interestsList,
-            userProfilePhotos
+                username,
+                userUuid,
+                age,
+                introduction,
+                address,
+                phoneNumber,
+                email,
+                gender,
+                preferGender,
+                tall,
+                smoking,
+                drinking,
+                religion,
+                idealTypeList,
+                interestsList,
+                userProfilePhotos,
+                userAgreements
         );
     }
 }

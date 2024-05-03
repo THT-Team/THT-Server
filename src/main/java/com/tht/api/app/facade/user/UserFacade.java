@@ -3,6 +3,7 @@ package com.tht.api.app.facade.user;
 import com.tht.api.app.config.security.TokenProvider;
 import com.tht.api.app.entity.enums.Gender;
 import com.tht.api.app.entity.user.User;
+import com.tht.api.app.entity.user.UserAgreement;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
 import com.tht.api.app.facade.Facade;
@@ -29,8 +30,10 @@ import com.tht.api.app.service.UserLocationInfoService;
 import com.tht.api.app.service.UserProfilePhotoService;
 import com.tht.api.app.service.UserReportService;
 import com.tht.api.app.service.UserService;
+
 import java.util.List;
 import java.util.Optional;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,10 +59,10 @@ public class UserFacade {
     private final ChatRoomUserService chatRoomUserService;
 
     public MainScreenResponse findAllToDayFallingUserList(final User user,
-        final MainScreenUserInfoRequest request) {
+                                                          final MainScreenUserInfoRequest request) {
 
         final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
-            .findChooseTodayDailyFallingInfo(user.getUserUuid());
+                .findChooseTodayDailyFallingInfo(user.getUserUuid());
 
         if (fallingInfo.isEmpty()) {
             return MainScreenResponse.empty();
@@ -69,23 +72,23 @@ public class UserFacade {
     }
 
     private MainScreenResponse getMainScreenResponse(final User user,
-        final MainScreenUserInfoRequest request, final DailyFallingTimeMapper fallingInfo) {
+                                                     final MainScreenUserInfoRequest request, final DailyFallingTimeMapper fallingInfo) {
 
         final List<MainScreenUserInfoMapper> list = userDailyFallingService
-            .findAllMatchingFallingUser(
-                fallingInfo.dailyFallingIdx(),
-                request.userDailyFallingCourserIdx(),
-                user.getUserUuid(),
-                user.getGender(),
-                user.getPreferGender(),
-                request.getSize()
-            );
+                .findAllMatchingFallingUser(
+                        fallingInfo.dailyFallingIdx(),
+                        request.userDailyFallingCourserIdx(),
+                        user.getUserUuid(),
+                        user.getGender(),
+                        user.getPreferGender(),
+                        request.getSize()
+                );
 
         return MainScreenResponse.of(
-            fallingInfo.dailyFallingIdx(),
-            fallingInfo.endDate(),
-            list.stream().map(MainScreenUserInfoResponse::of).toList(),
-            request.getSize()
+                fallingInfo.dailyFallingIdx(),
+                fallingInfo.endDate(),
+                list.stream().map(MainScreenUserInfoResponse::of).toList(),
+                request.getSize()
         );
     }
 
@@ -107,23 +110,26 @@ public class UserFacade {
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         final List<IdealTypeMapper> idealTypeMappers = userIdealTypeService
-            .findBy(user.getUserUuid());
+                .findBy(user.getUserUuid());
 
         final List<InterestMapper> interestMappers = userInterestsService
-            .findBy(user.getUserUuid());
+                .findBy(user.getUserUuid());
 
         final List<UserProfilePhoto> profilePhotoMappers = userProfilePhotoService
-            .findByUuid(user.getUserUuid());
+                .findByUuid(user.getUserUuid());
 
         final UserLocationInfo userLocationInfo = userLocationInfoService
-            .findByUserUuid(user.getUserUuid());
+                .findByUserUuid(user.getUserUuid());
+
+        final UserAgreement userAgreement = userAgreementService.findByUserUuid(user.getUserUuid());
 
         return UserDetailResponse.of(
-            user,
-            idealTypeMappers,
-            interestMappers,
-            profilePhotoMappers,
-            userLocationInfo
+                user,
+                idealTypeMappers,
+                interestMappers,
+                profilePhotoMappers,
+                userLocationInfo,
+                userAgreement
         );
     }
 
@@ -156,7 +162,7 @@ public class UserFacade {
     public void updateLocation(final String userUuid, final UserLocationRequest request) {
 
         userLocationInfoService.update(userUuid, request.address(), request.regionCode(),
-            request.lat(), request.lon());
+                request.lat(), request.lon());
     }
 
     @Transactional
@@ -174,14 +180,14 @@ public class UserFacade {
 
     @Transactional
     public void updateUserProfilePhoto(
-        final String userUuid,
-        final List<UserProfilePhotoRequest> userProfilePhotoList) {
+            final String userUuid,
+            final List<UserProfilePhotoRequest> userProfilePhotoList) {
 
         userProfilePhotoService.updateAll(
-            userUuid,
-            userProfilePhotoList.stream()
-                .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
-                .toList()
+                userUuid,
+                userProfilePhotoList.stream()
+                        .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
+                        .toList()
         );
     }
 
@@ -192,12 +198,12 @@ public class UserFacade {
 
     @Transactional
     public void updatePersonalAlarmAgree(final String userUuid,
-        final UserAlarmAgreementModifyRequest request) {
+                                         final UserAlarmAgreementModifyRequest request) {
 
         userAgreementService.modifyMarketingAgree(userUuid, request.marketingAlarm());
         userAlarmAgreementService.update(userUuid, request.newMatchSuccessAlarm(),
-            request.likeMeAlarm(), request.newConversationAlarm(),
-            request.talkAlarm());
+                request.likeMeAlarm(), request.newConversationAlarm(),
+                request.talkAlarm());
     }
 
     @Transactional
