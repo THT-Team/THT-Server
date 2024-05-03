@@ -31,9 +31,11 @@ public class DailyFallingActiveInfo extends Auditable {
     @Convert(converter = DailyFallingTypeConverter.class)
     private DailyFallingType type;
 
-    public static DailyFallingActiveInfo of(final LocalDateTime start,
-                                            final LocalDateTime end, final DailyFallingType type) {
+    @Column
+    private String introduction;
 
-        return new DailyFallingActiveInfo(null, start, end, type);
+    public static DailyFallingActiveInfo of(final LocalDateTime start, final LocalDateTime end, final DailyFallingType type, final String introduction) {
+
+        return new DailyFallingActiveInfo(null, start, end, type, introduction);
     }
 }

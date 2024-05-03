@@ -71,7 +71,7 @@ public abstract class AcceptanceTest {
         final TalkKeyword talkKeyword = talkKeywordRepository.save(TalkKeyword.of(1, "주제어"));
 
         final DailyFallingActiveInfo timeTable = dailyFallingActiveTimeTableRepository.save(
-            DailyFallingActiveInfo.of(now.minusDays(1), now.plusDays(1), DailyFallingType.ONE_CHOICE));
+            DailyFallingActiveInfo.of(now.minusDays(1), now.plusDays(1), DailyFallingType.ONE_CHOICE, "오늘 나는 너랑.."));
 
         return dailyFallingRepository.save(
             DailyFalling.of(talkKeyword.getIdx(), timeTable.getIdx(), "잡담내용~~ 잡담~")

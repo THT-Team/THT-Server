@@ -62,6 +62,7 @@ class DailyFallingDocumentation extends ControllerTestConfig {
                                                         .description("폴링 주제어 만료시간 [존재하지 않으면 -1]"),
                                                 fieldWithPath("type").type(JsonFieldType.STRING)
                                                         .description(String.format("그날의 대화주제 표출 형식 - ex %s", EnumDocsUtils.getTypesFieldList(DailyFallingType.class))),
+                                                fieldWithPath("introduction").type(JsonFieldType.STRING).description("그날의 주제어 서두"),
                                                 fieldWithPath("fallingTopicList").type(JsonFieldType.ARRAY)
                                                         .description("폴링 주제어 라수투 [존재하지 않으면 빈 리스트 [] "),
                                                 fieldWithPath("fallingTopicList[].idx").type(JsonFieldType.NUMBER).description("데일리 폴링 토픽 idx"),
