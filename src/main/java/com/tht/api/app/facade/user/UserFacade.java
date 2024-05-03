@@ -6,15 +6,7 @@ import com.tht.api.app.entity.user.User;
 import com.tht.api.app.entity.user.UserLocationInfo;
 import com.tht.api.app.entity.user.UserProfilePhoto;
 import com.tht.api.app.facade.Facade;
-import com.tht.api.app.facade.user.request.ContactDto;
-import com.tht.api.app.facade.user.request.MainScreenUserInfoRequest;
-import com.tht.api.app.facade.user.request.ModifiedIdealTypeRequest;
-import com.tht.api.app.facade.user.request.ModifiedInterestsRequest;
-import com.tht.api.app.facade.user.request.UserAlarmAgreementModifyRequest;
-import com.tht.api.app.facade.user.request.UserLocationRequest;
-import com.tht.api.app.facade.user.request.UserProfilePhotoRequest;
-import com.tht.api.app.facade.user.request.UserReportRequest;
-import com.tht.api.app.facade.user.request.UserWithDrawRequest;
+import com.tht.api.app.facade.user.request.*;
 import com.tht.api.app.facade.user.response.MainScreenResponse;
 import com.tht.api.app.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.api.app.facade.user.response.UserDetailResponse;
@@ -224,4 +216,7 @@ public class UserFacade {
         return userFriendService.update(userUuid, contacts);
     }
 
+    public void updateUserAgreement(final User user, final UserAgreementUpdateRequest request) {
+
+    }
 }

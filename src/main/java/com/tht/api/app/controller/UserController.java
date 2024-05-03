@@ -184,7 +184,7 @@ public class UserController {
     @PatchMapping("/user/agreement")
     public ResponseEntity<Object> patchUserAgreement(@AuthenticationPrincipal final User user, @RequestBody @Valid final UserAgreementUpdateRequest request) {
 
-
+        userFacade.updateUserAgreement(user, request);
         return ResponseEntity.ok().build();
     }
 }

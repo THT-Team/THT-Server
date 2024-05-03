@@ -1,7 +1,12 @@
 package com.tht.api.app.facade.user.request;
 
+import com.tht.api.app.entity.enums.AgreementCategory;
+
 public record UserAgreementUpdateRequest(
-        String agreementName,
+
+        AgreementCategory agreementName,
+
         boolean value
-)  {
+) {
+
 }
