@@ -1,6 +1,7 @@
 package com.tht.api.app.service;
 
 import com.tht.api.app.config.utils.LogWriteUtils;
+import com.tht.api.app.entity.enums.AgreementCategory;
 import com.tht.api.app.entity.user.UserAgreement;
 import com.tht.api.app.repository.user.UserAgreementRepository;
 import com.tht.api.exception.custom.UserCustomException;
@@ -26,5 +27,17 @@ public class UserAgreementService {
             .orElseThrow(() -> UserCustomException.notExistAlarmInfo(userUuid));
 
         userAgreement.modifyMarketingAgree(marketingAlarm);
+    }
+
+    public UserAgreement findByUserUuid(final String userUuid) {
+        return userAgreementRepository.findByUserUuid(userUuid)
+                .orElseThrow(
+                        () -> UserCustomException.notExistUserAgreementsInfo(userUuid)
+                );
+    }
+
+    public void updateSingleAgreement(final String userUuid, final AgreementCategory agreementCategory, final boolean value) {
+
+        userAgreementRepository.singleUpdate(userUuid, agreementCategory, value);
     }
 }

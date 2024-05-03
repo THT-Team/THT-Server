@@ -1,5 +1,6 @@
 package com.tht.api.app.entity.enums;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tht.api.exception.custom.EnumStateNotFoundException;
 import lombok.AllArgsConstructor;
 
@@ -15,12 +16,14 @@ public enum AgreementCategory implements EnumModel{
 
     private final String value;
 
+    @JsonCreator
     public static AgreementCategory toConverter(final String name) {
         return Arrays.stream(AgreementCategory.values())
                 .filter(agreement -> agreement.getValue().equals(name))
                 .findAny()
                 .orElseThrow(() -> EnumStateNotFoundException.ofAgreement(name));
     }
+
 
     @Override
     public String getKey() {
