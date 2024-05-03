@@ -1,8 +1,9 @@
 package com.tht.api.app.acceptance.config;
 
 import com.tht.api.app.config.security.TokenProvider;
+import com.tht.api.app.entity.enums.DailyFallingType;
 import com.tht.api.app.entity.meta.DailyFalling;
-import com.tht.api.app.entity.meta.DailyFallingActiveTimeTable;
+import com.tht.api.app.entity.meta.DailyFallingActiveInfo;
 import com.tht.api.app.entity.meta.IdealType;
 import com.tht.api.app.entity.meta.Interest;
 import com.tht.api.app.entity.meta.TalkKeyword;
@@ -69,8 +70,8 @@ public abstract class AcceptanceTest {
 
         final TalkKeyword talkKeyword = talkKeywordRepository.save(TalkKeyword.of(1, "주제어"));
 
-        final DailyFallingActiveTimeTable timeTable = dailyFallingActiveTimeTableRepository.save(
-            DailyFallingActiveTimeTable.of(now.minusDays(1), now.plusDays(1)));
+        final DailyFallingActiveInfo timeTable = dailyFallingActiveTimeTableRepository.save(
+            DailyFallingActiveInfo.of(now.minusDays(1), now.plusDays(1), DailyFallingType.ONE_CHOICE));
 
         return dailyFallingRepository.save(
             DailyFalling.of(talkKeyword.getIdx(), timeTable.getIdx(), "잡담내용~~ 잡담~")

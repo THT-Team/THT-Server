@@ -1,5 +1,6 @@
 package com.tht.api.app.fixture.main;
 
+import com.tht.api.app.entity.enums.DailyFallingType;
 import com.tht.api.app.facade.main.response.DailyFallingResponse;
 import com.tht.api.app.facade.main.response.DailyFallingTopicResponse;
 import java.util.List;
@@ -13,6 +14,7 @@ public class DailyFallingResponseFixture {
     private static final String keywordImgUrl = "카워드-이미지-url";
     private static final String talkIssue = "키워드 파생질문 - 이런이런 주제로 이야기해볼까요~";
     private static final long expirationTime = 1687744800;
+    private static final DailyFallingType type = DailyFallingType.ONE_CHOICE;
 
     public static DailyFallingTopicResponse makeTopic() {
         return new DailyFallingTopicResponse(idx, keyword, keywordIdx, keywordImgUrl, talkIssue);
@@ -23,6 +25,6 @@ public class DailyFallingResponseFixture {
     }
 
     public static DailyFallingResponse make() {
-        return new DailyFallingResponse(expirationTime, makeTopicList());
+        return new DailyFallingResponse(expirationTime, type.getValue(), makeTopicList());
     }
 }
