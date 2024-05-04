@@ -313,7 +313,8 @@ class UserJoinDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("[].name").type(JsonFieldType.STRING).description(String.format("약관 카테고리 변수명 - %s", EnumDocsUtils.getTypesFieldList(AgreementCategory.class))),
                                                 fieldWithPath("[].subject").type(JsonFieldType.STRING).description("약관 카테고리 명칭"),
                                                 fieldWithPath("[].isRequired").type(JsonFieldType.BOOLEAN).description("필수 여부"),
-                                                fieldWithPath("[].description").type(JsonFieldType.STRING).description("설명")
+                                                fieldWithPath("[].description").type(JsonFieldType.STRING).description("설명"),
+                                                fieldWithPath("[].detailLink").type(JsonFieldType.STRING).description("본문 상세 문서 링크")
                                         )
                                         .responseSchema(Schema.schema(""))
                                         .build()

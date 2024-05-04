@@ -22,7 +22,9 @@ public class AgreementFacade {
                         agreement.getName().getValue(),
                         agreement.getSubject(),
                         agreement.isRequired(),
-                        agreement.getDescription()))
+                        agreement.getDescription(),
+                        agreement.getDetailLink())
+                )
                 .toList();
     }
 }

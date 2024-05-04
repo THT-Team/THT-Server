@@ -29,4 +29,7 @@ public class Agreement {
 
     @Column
     String description;
+
+    @Column
+    String detailLink;
 }
