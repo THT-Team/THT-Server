@@ -13,7 +13,9 @@ public record MainScreenUserInfoMapper(
     Set<InterestMapper> interestMapper,
     Set<UserProfilePhotoMapper> userProfilePhotoMapper,
     String introduction,
-    long userDailyFallingIdx
+    long userDailyFallingIdx,
+    float lat,
+    float lon
 ) {
 
     @QueryProjection

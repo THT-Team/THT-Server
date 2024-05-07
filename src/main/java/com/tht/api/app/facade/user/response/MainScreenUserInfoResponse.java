@@ -17,10 +17,11 @@ public record MainScreenUserInfoResponse(
     List<InterestResponse> interestResponses,
     List<UserProfilePhotoResponse> userProfilePhotos,
     String introduction,
-    long userDailyFallingCourserIdx
+    long userDailyFallingCourserIdx,
+    int distance
 ) {
 
-    public static MainScreenUserInfoResponse of(final MainScreenUserInfoMapper mapper) {
+    public static MainScreenUserInfoResponse of(final MainScreenUserInfoMapper mapper, final int distance) {
 
         return new MainScreenUserInfoResponse(
             mapper.username(),
@@ -32,7 +33,8 @@ public record MainScreenUserInfoResponse(
             mapper.interestMapper().stream().map(InterestResponse::of).toList(),
             mapper.userProfilePhotoMapper().stream().map(UserProfilePhotoResponse::of).toList(),
             mapper.introduction(),
-            mapper.userDailyFallingIdx()
+            mapper.userDailyFallingIdx(),
+            distance
         );
     }
 

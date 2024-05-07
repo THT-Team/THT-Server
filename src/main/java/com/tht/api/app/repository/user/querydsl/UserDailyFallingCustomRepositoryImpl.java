@@ -189,7 +189,9 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                         )
                     ),
                     user.introduction,
-                    userDailyFalling.idx
+                    userDailyFalling.idx,
+                    userLocationInfo.lat,
+                    userLocationInfo.lon
                 )));
     }
 
