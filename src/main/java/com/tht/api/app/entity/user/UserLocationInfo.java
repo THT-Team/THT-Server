@@ -41,7 +41,7 @@ public class UserLocationInfo {
 
     @Builder(access = AccessLevel.PRIVATE)
     public UserLocationInfo(final Long idx, final String userUuid, final String address,
-        final Integer regionCode, final float lat, final float lon) {
+                            final Integer regionCode, final float lat, final float lon) {
 
         this.idx = idx;
         this.userUuid = userUuid;
@@ -52,7 +52,7 @@ public class UserLocationInfo {
     }
 
     public static UserLocationInfo create(final String userUuid, final String address,
-        final Integer regionCode, final float lat, final float lon) {
+                                          final Integer regionCode, final float lat, final float lon) {
 
         return UserLocationInfo.builder()
             .userUuid(userUuid)
@@ -64,11 +64,22 @@ public class UserLocationInfo {
     }
 
     public void updateLocation(final String address, final Integer regionCode, final float lat,
-        final float lon) {
+                               final float lon) {
 
         this.address = address;
         this.regionCode = regionCode;
         this.lat = lat;
         this.lon = lon;
+    }
+
+    public int getDistanceBetween(final float lat, final float lon) {
+
+        double theta = this.lon - lon;
+        double distance = 60 * 1.1515 * (180 / Math.PI) * Math.acos(
+            Math.sin(this.lat * (Math.PI / 180)) * Math.sin(lat * (Math.PI / 180)) +
+                Math.cos(this.lat * (Math.PI / 180)) * Math.cos(lat * (Math.PI / 180)) * Math.cos(theta * (Math.PI / 180))
+        );
+
+        return (int) Math.ceil(distance * 1609.344);
     }
 }

@@ -58,49 +58,35 @@ class MainDocumentation extends ControllerTestConfig {
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("메인")
-                        .description("메인화면 - 오늘의 주제어를 선택한 유저 리스트 조회 (new)")
+                        .description("메인화면 - 오늘의 주제어를 선택한 유저 리스트 조회")
                         .requestFields(
-                            fieldWithPath("userDailyFallingCourserIdx").description(
-                                "페이징 커서 - 마지막으로 본 User 리스트의 userDailyFallingCourserIdx 값 [null이 들어올 시 처음부터 조회]"),
+                            fieldWithPath("userDailyFallingCourserIdx")
+                                .description("페이징 커서 - 마지막으로 본 User 리스트의 userDailyFallingCourserIdx 값 [null이 들어올 시 처음부터 조회]"),
                             fieldWithPath("size").description("페이징 사이즈")
                         )
                         .responseFields(
-                            fieldWithPath("selectDailyFallingIdx").description(
-                                "유저가 선택한 그날의 topic idx - 선택하지 않았다면 (-1)"),
-                            fieldWithPath("topicExpirationUnixTime").description(
-                                "유저 선택한 그날의 topic 만료시간 unix timestamp"),
+                            fieldWithPath("selectDailyFallingIdx").description("유저가 선택한 그날의 topic idx - 선택하지 않았다면 (-1)"),
+                            fieldWithPath("topicExpirationUnixTime").description("유저 선택한 그날의 topic 만료시간 unix timestamp"),
                             fieldWithPath("isLast").description("리스트의 마지막인지 여부"),
                             fieldWithPath("userInfos[].username").description("유저 이름"),
                             fieldWithPath("userInfos[].userUuid").description("유저 uuid"),
                             fieldWithPath("userInfos[].age").description("나이"),
                             fieldWithPath("userInfos[].address").description("주소"),
                             fieldWithPath("userInfos[].isBirthDay").description("생일 여부"),
-                            fieldWithPath("userInfos[].idealTypeResponseList").description(
-                                "선택한 이상형 리스트"),
-                            fieldWithPath("userInfos[].idealTypeResponseList[].idx").description(
-                                "이상형 idx"),
-                            fieldWithPath("userInfos[].idealTypeResponseList[].name").description(
-                                "이상형 명칭"),
-                            fieldWithPath(
-                                "userInfos[].idealTypeResponseList[].emojiCode").description(
-                                "이상형 코드"),
-                            fieldWithPath("userInfos[].interestResponses").description(
-                                "선택한 관심사 리스트"),
-                            fieldWithPath("userInfos[].interestResponses[].idx").description(
-                                "관심사 idx"),
-                            fieldWithPath("userInfos[].interestResponses[].name").description(
-                                "관심사 명칭"),
-                            fieldWithPath("userInfos[].interestResponses[].emojiCode").description(
-                                "관심사 코드"),
-                            fieldWithPath("userInfos[].userProfilePhotos").description(
-                                "매칭된 유저 프로필 이미지 리스트"),
-                            fieldWithPath("userInfos[].userProfilePhotos[].url").description(
-                                "이미지 url"),
-                            fieldWithPath("userInfos[].userProfilePhotos[].priority").description(
-                                "사진 우선순위 (1:프로필)"),
+                            fieldWithPath("userInfos[].idealTypeResponseList").description("선택한 이상형 리스트"),
+                            fieldWithPath("userInfos[].idealTypeResponseList[].idx").description("이상형 idx"),
+                            fieldWithPath("userInfos[].idealTypeResponseList[].name").description("이상형 명칭"),
+                            fieldWithPath("userInfos[].idealTypeResponseList[].emojiCode").description("이상형 코드"),
+                            fieldWithPath("userInfos[].interestResponses").description("선택한 관심사 리스트"),
+                            fieldWithPath("userInfos[].interestResponses[].idx").description("관심사 idx"),
+                            fieldWithPath("userInfos[].interestResponses[].name").description("관심사 명칭"),
+                            fieldWithPath("userInfos[].interestResponses[].emojiCode").description("관심사 코드"),
+                            fieldWithPath("userInfos[].userProfilePhotos").description("매칭된 유저 프로필 이미지 리스트"),
+                            fieldWithPath("userInfos[].userProfilePhotos[].url").description("이미지 url"),
+                            fieldWithPath("userInfos[].userProfilePhotos[].priority").description("사진 우선순위 (1:프로필)"),
                             fieldWithPath("userInfos[].introduction").description("자기소개"),
-                            fieldWithPath("userInfos[].userDailyFallingCourserIdx").description(
-                                "페이징 커서 - 그날의 토픽을 선택한 유저 정보 idx")
+                            fieldWithPath("userInfos[].userDailyFallingCourserIdx").description("페이징 커서 - 그날의 토픽을 선택한 유저 정보 idx"),
+                            fieldWithPath("userInfos[].distance").description("유저와의 거리 m 단위")
                         )
                         .requestSchema(Schema.schema("MainScreenUserInfoRequest"))
                         .responseSchema(Schema.schema("MainScreenResponse"))

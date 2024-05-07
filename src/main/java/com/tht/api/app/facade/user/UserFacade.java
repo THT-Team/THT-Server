@@ -62,33 +62,34 @@ public class UserFacade {
                                                           final MainScreenUserInfoRequest request) {
 
         final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
-                .findChooseTodayDailyFallingInfo(user.getUserUuid());
+            .findChooseTodayDailyFallingInfo(user.getUserUuid());
 
-        if (fallingInfo.isEmpty()) {
-            return MainScreenResponse.empty();
-        }
+        return fallingInfo
+            .map(dailyFallingTimeMapper -> getMainScreenResponse(user, request, dailyFallingTimeMapper))
+            .orElseGet(MainScreenResponse::empty);
 
-        return getMainScreenResponse(user, request, fallingInfo.get());
     }
 
     private MainScreenResponse getMainScreenResponse(final User user,
                                                      final MainScreenUserInfoRequest request, final DailyFallingTimeMapper fallingInfo) {
 
         final List<MainScreenUserInfoMapper> list = userDailyFallingService
-                .findAllMatchingFallingUser(
-                        fallingInfo.dailyFallingIdx(),
-                        request.userDailyFallingCourserIdx(),
-                        user.getUserUuid(),
-                        user.getGender(),
-                        user.getPreferGender(),
-                        request.getSize()
-                );
+            .findAllMatchingFallingUser(
+                fallingInfo.dailyFallingIdx(),
+                request.userDailyFallingCourserIdx(),
+                user.getUserUuid(),
+                user.getGender(),
+                user.getPreferGender(),
+                request.getSize()
+            );
+
+        final UserLocationInfo userLocationInfo = userLocationInfoService.findByUserUuid(user.getUserUuid());
 
         return MainScreenResponse.of(
-                fallingInfo.dailyFallingIdx(),
-                fallingInfo.endDate(),
-                list.stream().map(MainScreenUserInfoResponse::of).toList(),
-                request.getSize()
+            fallingInfo.dailyFallingIdx(),
+            fallingInfo.endDate(),
+            list.stream().map(mapper -> MainScreenUserInfoResponse.of(mapper, userLocationInfo.getDistanceBetween(mapper.lat(), mapper.lon()))).toList(),
+            request.getSize()
         );
     }
 
@@ -110,26 +111,26 @@ public class UserFacade {
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         final List<IdealTypeMapper> idealTypeMappers = userIdealTypeService
-                .findBy(user.getUserUuid());
+            .findBy(user.getUserUuid());
 
         final List<InterestMapper> interestMappers = userInterestsService
-                .findBy(user.getUserUuid());
+            .findBy(user.getUserUuid());
 
         final List<UserProfilePhoto> profilePhotoMappers = userProfilePhotoService
-                .findByUuid(user.getUserUuid());
+            .findByUuid(user.getUserUuid());
 
         final UserLocationInfo userLocationInfo = userLocationInfoService
-                .findByUserUuid(user.getUserUuid());
+            .findByUserUuid(user.getUserUuid());
 
         final UserAgreement userAgreement = userAgreementService.findByUserUuid(user.getUserUuid());
 
         return UserDetailResponse.of(
-                user,
-                idealTypeMappers,
-                interestMappers,
-                profilePhotoMappers,
-                userLocationInfo,
-                userAgreement
+            user,
+            idealTypeMappers,
+            interestMappers,
+            profilePhotoMappers,
+            userLocationInfo,
+            userAgreement
         );
     }
 
@@ -162,7 +163,7 @@ public class UserFacade {
     public void updateLocation(final String userUuid, final UserLocationRequest request) {
 
         userLocationInfoService.update(userUuid, request.address(), request.regionCode(),
-                request.lat(), request.lon());
+            request.lat(), request.lon());
     }
 
     @Transactional
@@ -180,14 +181,14 @@ public class UserFacade {
 
     @Transactional
     public void updateUserProfilePhoto(
-            final String userUuid,
-            final List<UserProfilePhotoRequest> userProfilePhotoList) {
+        final String userUuid,
+        final List<UserProfilePhotoRequest> userProfilePhotoList) {
 
         userProfilePhotoService.updateAll(
-                userUuid,
-                userProfilePhotoList.stream()
-                        .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
-                        .toList()
+            userUuid,
+            userProfilePhotoList.stream()
+                .map(userProfilePhotoRequest -> userProfilePhotoRequest.toEntity(userUuid))
+                .toList()
         );
     }
 
@@ -202,8 +203,8 @@ public class UserFacade {
 
         userAgreementService.modifyMarketingAgree(userUuid, request.marketingAlarm());
         userAlarmAgreementService.update(userUuid, request.newMatchSuccessAlarm(),
-                request.likeMeAlarm(), request.newConversationAlarm(),
-                request.talkAlarm());
+            request.likeMeAlarm(), request.newConversationAlarm(),
+            request.talkAlarm());
     }
 
     @Transactional
