@@ -26,6 +26,7 @@ public class MainScreenUserInfoResponseFixture {
         UserProfilePhotoFixture.responseMake());
     private static final String introduction = "유저 자기소개";
     private static final long userDailyFallingIdx = 1;
+    private static final int distance = 1200;
 
     public static MainScreenUserInfoResponse make() {
         return new MainScreenUserInfoResponse(
@@ -38,8 +39,8 @@ public class MainScreenUserInfoResponseFixture {
             interestResponses,
             userProfilePhotoResponses,
             introduction,
-            userDailyFallingIdx
-
+            userDailyFallingIdx,
+            distance
         );
     }
 }
