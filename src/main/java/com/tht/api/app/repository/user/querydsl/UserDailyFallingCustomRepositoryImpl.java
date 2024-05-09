@@ -104,35 +104,38 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
         final List<String> distinctUserDisLikeList = userDisLikeList.stream().distinct().toList();
 
         final List<Long> userDailyFallingIdxList = queryFactory
-                .select(userDailyFalling.idx)
-                .from(userDailyFalling)
-                .leftJoin(userBlock)
-                .on(
-                        userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
-                        userDailyFalling.state.eq(EntityState.ACTIVE),
-                        userBlock.userUuid.eq(myUuid),
-                        userDailyFalling.userUuid.eq(userBlock.blockUserUuid)
-                )
-                .innerJoin(user)
-                .on(user.userUuid.eq(userDailyFalling.userUuid))
-                .leftJoin(userLike)
-                .on(userDailyFalling.userUuid.eq(userLike.targetUserUuid)
-                        .and(userDailyFalling.dailyFallingIdx.eq(userLike.dailyFallingIdx))
-                        .and(userLike.userUuid.eq(myUuid))
-                )
-                .where(
-                        userBlock.idx.isNull(),
-                        userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
-                        userDailyFalling.state.eq(EntityState.ACTIVE),
-                        userDailyFalling.userUuid.ne(myUuid),
-                        filterGender(myGender, myPreferGender),
-                        filterAlreadyLike(),
-                        notInUserIdx(userFriendBlockUuidList),
-                        notInUserIdx(distinctUserDisLikeList),
-                        moreThan(userDailyFallingCourserIdx)
-                )
-                .limit(size)
-                .fetch();
+            .select(userDailyFalling.idx)
+            .from(userDailyFalling)
+            .leftJoin(userBlock)
+            .on(
+                userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
+                userDailyFalling.state.eq(EntityState.ACTIVE),
+                userBlock.userUuid.eq(myUuid),
+                userDailyFalling.userUuid.eq(userBlock.blockUserUuid)
+            )
+            .innerJoin(user)
+            .on(
+                user.userUuid.eq(userDailyFalling.userUuid),
+                user.state.eq(EntityState.ACTIVE)
+            )
+            .leftJoin(userLike)
+            .on(userDailyFalling.userUuid.eq(userLike.targetUserUuid)
+                .and(userDailyFalling.dailyFallingIdx.eq(userLike.dailyFallingIdx))
+                .and(userLike.userUuid.eq(myUuid))
+            )
+            .where(
+                userBlock.idx.isNull(),
+                userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx),
+                userDailyFalling.state.eq(EntityState.ACTIVE),
+                userDailyFalling.userUuid.ne(myUuid),
+                filterGender(myGender, myPreferGender),
+                filterAlreadyLike(),
+                notInUserIdx(userFriendBlockUuidList),
+                notInUserIdx(distinctUserDisLikeList),
+                moreThan(userDailyFallingCourserIdx)
+            )
+            .limit(size)
+            .fetch();
 
         if (CollectionUtils.isEmpty(userDailyFallingIdxList)) {
             return new ArrayList<>();
