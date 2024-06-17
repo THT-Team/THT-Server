@@ -1,6 +1,6 @@
 spring:
     config:
-        import: security/application-security.yaml
+        import: security/Server-Security/application-security.yaml
     jpa:
         hibernate:
             ddl-auto: none
