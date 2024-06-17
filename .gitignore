@@ -189,3 +189,5 @@ build/
 /gen/*
 
 /src/main/generated
+
+.DS_Store
