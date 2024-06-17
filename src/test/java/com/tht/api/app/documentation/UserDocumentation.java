@@ -147,6 +147,7 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("introduction").description("자기소개"),
                                                 fieldWithPath("phoneNumber").description("전화번호"),
                                                 fieldWithPath("email").description("이메일"),
+                                                fieldWithPath("birthDay").description("생년월일"),
 
                                                 fieldWithPath("gender").description(String.format("성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
                                                 fieldWithPath("prefer_gender").description(String.format("선호 성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
@@ -222,6 +223,7 @@ class UserDocumentation extends ControllerTestConfig {
                                                 fieldWithPath("introduction").description("자기소개"),
                                                 fieldWithPath("phoneNumber").description("전화번호"),
                                                 fieldWithPath("email").description("이메일"),
+                                                fieldWithPath("birthDay").description("생년월일"),
 
                                                 fieldWithPath("gender").description(String.format("성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
                                                 fieldWithPath("prefer_gender").description(String.format("선호 성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),

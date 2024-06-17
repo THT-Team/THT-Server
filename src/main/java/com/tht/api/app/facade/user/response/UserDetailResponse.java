@@ -14,6 +14,7 @@ import com.tht.api.app.repository.mapper.IdealTypeMapper;
 import com.tht.api.app.repository.mapper.InterestMapper;
 import com.tht.api.app.utils.ConvertAgeUtils;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public record UserDetailResponse(
@@ -24,6 +25,7 @@ public record UserDetailResponse(
         String address,
         String phoneNumber,
         String email,
+        LocalDate birthDay,
         Gender gender,
         @JsonProperty("prefer_gender")
         Gender preferGender,
@@ -53,6 +55,7 @@ public record UserDetailResponse(
                 userLocationInfo.getAddress(),
                 user.getPhoneNumber(),
                 user.getEmail(),
+                user.getBirthDay(),
                 user.getGender(),
                 user.getPreferGender(),
                 user.getTall(),
