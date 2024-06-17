@@ -11,6 +11,7 @@ import com.tht.api.app.facade.user.response.UserProfilePhotoResponse;
 import com.tht.api.app.fixture.meta.IdealTypeFixture;
 import com.tht.api.app.fixture.meta.InterestFixture;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class UserDetailResponseFixture {
@@ -22,6 +23,7 @@ public class UserDetailResponseFixture {
     private static final String address = "서울시 성동구 저쩌구 동작구";
     private static final String phoneNumber = "01010041004";
     private static final String email = "beenZino@naver.com";
+    private static final LocalDate birthDay = LocalDate.now();
     private static final int tall = 170;
     private static final Gender gender = Gender.MALE;
     private static final Gender preferGender = Gender.FEMALE;
@@ -49,6 +51,7 @@ public class UserDetailResponseFixture {
                 address,
                 phoneNumber,
                 email,
+                birthDay,
                 gender,
                 preferGender,
                 tall,
