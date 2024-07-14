@@ -1,0 +1,59 @@
+bootJar { enabled = true }
+jar { enabled = true }
+
+dependencies {
+
+    implementation project(':tht-common-utils')
+    implementation project(':tht-core:domain')
+    implementation project(':tht-core:infra')
+
+    testImplementation testFixtures(project(':tht-core:infra'))
+    testImplementation project(':tht-core:infra')
+    testImplementation project(':tht-core:domain')
+    testImplementation project(':tht-common-utils')
+
+    //h2
+    implementation 'com.h2database:h2'
+
+    //Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //todo. domain 에서 repository 를 생성하면 해당 의존성 없애자
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+}
+
+// Task 및 설정 추가
+// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
+tasks.withType(GenerateSwaggerUI).configureEach {
+    dependsOn 'openapi3'
+}
+
+openapi3 {
+    server = "http://tht-talk.store"
+    title = "THT API 문서"
+    description = "Spring REST Docs with SwaggerUI."
+    version = "0.0.1"
+    outputFileNamePrefix = 'open-api-3.0.1'
+    format = 'json'
+
+    // src/main/resources/static/docs/open-api-3.0.1.json 생성
+    outputDirectory = 'build/resources/main/static/docs'
+}
+
+//openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
+bootJar{
+    dependsOn(':openapi3')
+
+    delete file('src/main/resources/static/docs/')
+    copy {
+        from "build/resources/main/static/docs"
+        into "src/main/resources/static/docs/"
+
+    }
+}

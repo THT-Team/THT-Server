@@ -1,1 +1,5 @@
-rootProject.name = 'api'
+rootProject.name = 'server'
+include('tht-apis')
+include('tht-common-utils')
+include('tht-core:domain')
+include('tht-core:infra')
