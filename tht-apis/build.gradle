@@ -26,6 +26,14 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+    //spring rest docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
+
+    // Swagger ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
+
 }
 
 // Task 및 설정 추가
@@ -34,8 +42,12 @@ tasks.withType(GenerateSwaggerUI).configureEach {
     dependsOn 'openapi3'
 }
 
+tasks.named('test') {
+    finalizedBy 'openapi3'
+}
+
 openapi3 {
-    server = "http://tht-talk.store"
+    server = "http://tht-talk.co.kr"
     title = "THT API 문서"
     description = "Spring REST Docs with SwaggerUI."
     version = "0.0.1"

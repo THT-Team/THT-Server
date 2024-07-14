@@ -11,7 +11,6 @@ plugins {
 
     //restdocs-api-spec → restdocs extension  포함함
     id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
-
     //swagger generator 플러그인 추가
     id 'org.hidetake.swagger.generator' version '2.18.2'
 
@@ -43,9 +42,10 @@ subprojects {
     apply plugin: "java"
     apply plugin: "org.springframework.boot"
     apply plugin: "io.spring.dependency-management"
+    apply plugin: "java-test-fixtures"
+
     apply plugin: "com.epages.restdocs-api-spec"
     apply plugin: "org.hidetake.swagger.generator"
-    apply plugin: "java-test-fixtures"
 
     test {
         useJUnitPlatform()
@@ -75,28 +75,14 @@ subprojects {
         // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
         implementation 'com.mysql:mysql-connector-j:8.0.32'
 
-
-        //spring rest docs
-        testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-
-        // restdocs-api-spec 의존성 추가
-        testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
-
-        // Swagger ui - https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
-        // implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'  → 이거 안됨
-        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
-        // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
-        implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
         // https://mvnrepository.com/artifact/org.springframework/spring-webflux
         implementation 'org.springframework:spring-webflux'
 
-        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
-
         // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
         implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+        // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+        implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
 
     }
 }

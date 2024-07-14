@@ -1,4 +1,4 @@
-package com.tht.thtcommonutils;
+package com.tht;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

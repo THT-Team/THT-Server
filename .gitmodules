@@ -1,3 +1,0 @@
-[submodule "src/main/resources/security/Server-Security"]
-	path = src/main/resources/security/Server-Security
-	url = https://github.com/THT-Team/Server-Security.git
