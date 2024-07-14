@@ -2,7 +2,7 @@ spring:
   application:
     name: infra
   config:
-    import: security/Server-Security/application-security.yaml
+    import: security/application-security.yaml
   jpa:
     hibernate:
       ddl-auto: none
