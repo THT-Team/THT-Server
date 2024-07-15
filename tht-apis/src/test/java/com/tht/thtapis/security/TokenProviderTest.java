@@ -38,7 +38,7 @@ class TokenProviderTest {
         System.out.println(tokenDto);
         System.out.println(claims);
 
-        assertThat(claims.get("userUuid")).hasToString(user.getUserUuid());
+        assertThat(claims.get("uuid")).hasToString(user.getUserUuid());
         assertThat(claims.get("role")).hasToString(user.getUserRole().name());
 
     }
