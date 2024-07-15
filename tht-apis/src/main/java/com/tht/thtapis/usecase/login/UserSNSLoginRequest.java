@@ -1,4 +1,4 @@
-package com.tht.thtapis.facade.user.request;
+package com.tht.thtapis.usecase.login;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

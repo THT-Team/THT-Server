@@ -1,25 +1,16 @@
 package com.tht.thtapis.documentation;
 
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.infra.user.exception.UserTokenException;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
-import com.tht.thtapis.facade.user.UserLoginFacade;
-import com.tht.thtapis.facade.user.request.UserLoginRequest;
-import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
-import com.tht.thtapis.facade.user.response.UserLoginResponse;
+import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserLoginRequestFixture;
 import com.tht.thtapis.fixture.user.UserSNSLoginRequestFixture;
 import com.tht.thtapis.ui.UserLoginController;
+import com.tht.thtapis.usecase.login.LoginUseCase;
+import com.tht.thtapis.usecase.login.UserLoginRequest;
+import com.tht.thtapis.usecase.login.UserSNSLoginRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -29,23 +20,31 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+
 @WebMvcTest(UserLoginController.class)
 class UserLoginDocumentation extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/users/login";
 
     @MockBean
-    UserLoginFacade userLoginFacade;
+    LoginUseCase loginUseCase;
 
     @Test
-    @DisplayName("유저 일반 로그인  api test - docs (성공)")
+    @DisplayName("유저 일반 로그인 docs")
     void normalUserLogin() throws Exception {
 
         //give
         UserLoginRequest request = UserLoginRequestFixture.make();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(request);
 
-        when(userLoginFacade.login(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
+        when(loginUseCase.login(any()))
+            .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
@@ -67,9 +66,10 @@ class UserLoginDocumentation extends ControllerTestConfig {
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간"),
+                            fieldWithPath("userUuid").description("유저 uuid")
                         )
-                        .responseSchema(Schema.schema("UserLoginResponse"))
+                        .responseSchema(Schema.schema("TokenDto"))
                         .requestSchema(Schema.schema("UserLoginRequest"))
                         .build()
                 ))
@@ -80,14 +80,15 @@ class UserLoginDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 SNS 로그인  api test - docs")
+    @DisplayName("유저 SNS 로그인 docs")
     void snsUserLogin() throws Exception {
 
         //give
         UserSNSLoginRequest request = UserSNSLoginRequestFixture.make();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(request);
 
-        when(userLoginFacade.snsLogin(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
+        when(loginUseCase.snsLogin(any()))
+            .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
@@ -112,10 +113,11 @@ class UserLoginDocumentation extends ControllerTestConfig {
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간"),
+                            fieldWithPath("userUuid").description("유저 uuid")
                         )
                         .requestSchema(Schema.schema("UserSNSLoginRequest"))
-                        .responseSchema(Schema.schema("UserLoginResponse"))
+                        .responseSchema(Schema.schema("TokenDto"))
                         .build()
                 ))
         );
@@ -125,11 +127,12 @@ class UserLoginDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 토큰 재발급 api docs")
+    @DisplayName("유저 토큰 재발급 docs")
     void refreshTokenDocs() throws Exception {
 
         //give
-        when(userLoginFacade.refresh(any())).thenReturn(new UserLoginResponse("access_token", 1701306000));
+        when(loginUseCase.refresh(any()))
+            .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
@@ -147,9 +150,10 @@ class UserLoginDocumentation extends ControllerTestConfig {
                         .description("유저 access token 재발급 요청")
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간"),
+                            fieldWithPath("userUuid").description("유저 uuid")
                         )
-                        .responseSchema(Schema.schema("UserLoginResponse"))
+                        .responseSchema(Schema.schema("TokenDto"))
                         .build()
                 ))
         );
@@ -158,11 +162,11 @@ class UserLoginDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 토큰 재발급 - refresh token 만료 시 api docs")
+    @DisplayName("유저 토큰 재발급(refresh) docs")
     void refreshTokenDocs_fail() throws Exception {
 
         //give
-        when(userLoginFacade.refresh(any())).thenThrow(UserTokenException.refreshExpired());
+        when(loginUseCase.refresh(any())).thenThrow(UserTokenException.refreshExpired());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(

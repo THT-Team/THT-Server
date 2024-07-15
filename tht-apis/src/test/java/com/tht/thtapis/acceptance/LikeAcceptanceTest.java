@@ -3,7 +3,7 @@ package com.tht.thtapis.acceptance;
 import static com.tht.thtapis.acceptance.LikeAcceptanceStep.좋아요_거절_요청;
 import static com.tht.thtapis.acceptance.LikeAcceptanceStep.좋아요_리스트_조회_요청;
 import static com.tht.thtapis.acceptance.LikeAcceptanceStep.좋아요_요청;
-import static com.tht.thtapis.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

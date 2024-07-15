@@ -1,10 +1,10 @@
 package com.tht.thtapis.ui;
 
-import com.tht.thtapis.facade.user.UserLoginFacade;
-import com.tht.thtapis.facade.user.request.UserLoginRequest;
-import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
-import com.tht.thtapis.facade.user.response.UserLoginResponse;
+import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.SecurityConst;
+import com.tht.thtapis.usecase.login.UserLoginRequest;
+import com.tht.thtapis.usecase.login.UserSNSLoginRequest;
+import com.tht.thtapis.usecase.login.LoginUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,24 +20,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users/login")
 public class UserLoginController {
 
-    private final UserLoginFacade userLoginFacade;
+    private final LoginUseCase loginUseCase;
 
     @PostMapping("/normal")
-    public ResponseEntity<UserLoginResponse> normalLogin(
+    public ResponseEntity<TokenDto> normalLogin(
         @RequestBody @Valid UserLoginRequest request) {
-        return ResponseEntity.ok(userLoginFacade.login(request));
+        return ResponseEntity.ok(loginUseCase.login(request));
     }
 
     @PostMapping("/sns")
-    public ResponseEntity<UserLoginResponse> snsLogin(
+    public ResponseEntity<TokenDto> snsLogin(
         @RequestBody @Valid UserSNSLoginRequest request) {
 
-        return ResponseEntity.ok(userLoginFacade.snsLogin(request));
+        return ResponseEntity.ok(loginUseCase.snsLogin(request));
     }
 
     @PostMapping("/refresh")
-    public ResponseEntity<UserLoginResponse> tokenRefresh(final HttpServletRequest request) {
+    public ResponseEntity<TokenDto> tokenRefresh(final HttpServletRequest request) {
 
-        return ResponseEntity.ok(userLoginFacade.refresh(request.getHeader(SecurityConst.AUTH_HEADER_NAME)));
+        return ResponseEntity.ok(loginUseCase.refresh(request.getHeader(SecurityConst.AUTH_HEADER_NAME)));
     }
 }

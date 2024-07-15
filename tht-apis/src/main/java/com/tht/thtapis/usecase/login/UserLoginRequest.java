@@ -1,4 +1,4 @@
-package com.tht.thtapis.facade.user.request;
+package com.tht.thtapis.usecase.login;
 
 import jakarta.validation.constraints.NotEmpty;
 

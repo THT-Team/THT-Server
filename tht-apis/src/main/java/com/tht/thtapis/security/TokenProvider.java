@@ -37,20 +37,20 @@ public class TokenProvider {
         this.userService = userService;
     }
 
-    public TokenResponse generateJWT(final User userInfo) {
+    public TokenDto generateJWT(final User userInfo) {
         final Date now = new Date();
         final Date accessTokenExpireIn = new Date(now.getTime() + ACCESS_TOKEN_VALID_PERIOD);
 
         final String accessToken = Jwts.builder()
             .setSubject("authorization")
-            .claim("userUuid", userInfo.getUserUuid())
+            .claim("uuid", userInfo.getUserUuid())
             .claim("role", userInfo.getUserRole())
-            .claim("username", userInfo.getUsername())
+            .setIssuedAt(now)
             .setExpiration(accessTokenExpireIn)
             .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();
 
-        return TokenResponse.of(accessToken,accessTokenExpireIn.getTime());
+        return TokenDto.of(accessToken,accessTokenExpireIn.getTime(), userInfo.getUserUuid());
     }
 
     public boolean validateToken(final String token) {
@@ -100,7 +100,7 @@ public class TokenProvider {
             .map(SimpleGrantedAuthority::new)
             .toList();
 
-        final String userUuid = claims.get("userUuid").toString();
+        final String userUuid = claims.get("uuid").toString();
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);

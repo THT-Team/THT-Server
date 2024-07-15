@@ -1,25 +1,18 @@
 package com.tht.thtapis.ui;
 
-import com.tht.infra.user.enums.Gender;
 import com.tht.infra.user.User;
+import com.tht.infra.user.enums.Gender;
 import com.tht.thtapis.facade.user.UserFacade;
 import com.tht.thtapis.facade.user.request.*;
 import com.tht.thtapis.facade.user.response.UserDetailResponse;
 import com.tht.thtapis.facade.user.response.UserFriendContactResponse;
-import com.tht.thtapis.facade.user.response.UserLoginResponse;
+import com.tht.thtapis.security.TokenDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -108,7 +101,7 @@ public class UserController {
     }
 
     @PatchMapping("/user/name/{nick-name}")
-    public ResponseEntity<UserLoginResponse> updateNickName(
+    public ResponseEntity<TokenDto> updateNickName(
             @AuthenticationPrincipal final User user,
             @PathVariable(name = "nick-name") final String updateNickName) {
 

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static com.tht.thtapis.acceptance.DailyFallingAcceptanceStep.그날의주제어_선택여부_조회_요청;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.그날의_대화토픽_선택_요청;
-import static com.tht.thtapis.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

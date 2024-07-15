@@ -4,7 +4,7 @@ import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.facade.user.AgreementFacade;
 import com.tht.thtapis.facade.user.UserJoinFacade;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
-import com.tht.thtapis.facade.user.response.UserSignUpResponse;
+import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserSignUpRequestFixture;
 import com.tht.thtapis.ui.UserJoinController;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +40,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
         //give
         UserSignUpRequest make = UserSignUpRequestFixture.ofInterest(List.of(1, 2, 3, 4));
         String requestBody = objectMapper.writeValueAsString(make);
-        when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.signUp(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -61,7 +61,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
         //give
         UserSignUpRequest make = UserSignUpRequestFixture.ofIdealType(List.of(1, 2, 3, 4));
         String requestBody = objectMapper.writeValueAsString(make);
-        when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.signUp(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -90,7 +90,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
         UserSignUpRequest make = UserSignUpRequestFixture.ofPhoto(photo_url);
 
         String requestBody = objectMapper.writeValueAsString(make);
-        when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.signUp(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = mockMvc.perform(
@@ -114,7 +114,7 @@ class UserJoinControllerTest extends ControllerTestConfig {
             "{\"phoneNumber\":\"01012341234\",\"deviceKey\":\"device-key\",\"snsType\":\"" + type
                 + "\",\"snsUniqueId\":\"sns unique id\"}";
 
-        when(userJoinFacade.integratedSnsId(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.integratedSnsId(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = mockMvc.perform(

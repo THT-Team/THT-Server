@@ -12,7 +12,7 @@ import com.tht.thtapis.facade.user.request.UserSignUpRequest;
 import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
 import com.tht.thtapis.facade.user.response.AuthNumberResponse;
 import com.tht.thtapis.facade.user.response.UserNickNameValidResponse;
-import com.tht.thtapis.facade.user.response.UserSignUpResponse;
+import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.AgreementMainCategoryResponseFixture;
 import com.tht.thtapis.fixture.user.UserSignUpInfoResponseFixture;
 import com.tht.thtapis.fixture.user.UserSignUpRequestFixture;
@@ -90,7 +90,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 닉네인 중복체크 - api docs ")
+    @DisplayName("유저 닉네인 중복체크 docs ")
     void duplicateNickname() throws Exception {
 
         //given
@@ -128,14 +128,14 @@ class UserJoinDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 일반 회원가입 api - docs")
+    @DisplayName("유저 일반 회원가입 docs")
     void normalUserJoin() throws Exception {
 
         //give
         UserSignUpRequest make = UserSignUpRequestFixture.make();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(make);
 
-        when(userJoinFacade.signUp(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.signUp(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
@@ -191,9 +191,10 @@ class UserJoinDocumentation extends ControllerTestConfig {
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간"),
+                            fieldWithPath("userUuid").description("유저 uuid")
                         )
-                        .responseSchema(Schema.schema("UserSignUpResponse"))
+                        .responseSchema(Schema.schema("TokenDto"))
                         .requestSchema(Schema.schema("UserSignUpRequest"))
                         .build()
                 ))
@@ -204,7 +205,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("유저 회원가입 정보 조회 api test - docs")
+    @DisplayName("유저 회원가입 정보 조회 api docs")
     void getUserSignUpInfo() throws Exception {
 
         //given
@@ -242,14 +243,14 @@ class UserJoinDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("SNS 유저 아이디 통합 가입 api test - docs")
+    @DisplayName("SNS 유저 아이디 통합 가입 docs")
     void integratedUserJoin() throws Exception {
 
         //give
         UserSnsSignUpRequest make = UserSnsSignUpRequestFixture.makeSNSType();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(make);
 
-        when(userJoinFacade.integratedSnsId(any())).thenReturn(new UserSignUpResponse("token", 1L));
+        when(userJoinFacade.integratedSnsId(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
@@ -276,10 +277,11 @@ class UserJoinDocumentation extends ControllerTestConfig {
                         )
                         .responseFields(
                             fieldWithPath("accessToken").description("액세스 토큰"),
-                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간")
+                            fieldWithPath("accessTokenExpiresIn").description("액세스 토큰 만료시간"),
+                            fieldWithPath("userUuid").description("유저 uuid")
                         )
-                        .responseSchema(Schema.schema("UserSignUpResponse"))
-                        .requestSchema(Schema.schema("UserSignUpResponse"))
+                        .responseSchema(Schema.schema("TokenDto"))
+                        .requestSchema(Schema.schema("UserSnsSignUpRequest"))
                         .build()
                 ))
         );
@@ -289,7 +291,7 @@ class UserJoinDocumentation extends ControllerTestConfig {
     }
 
     @Test
-    @DisplayName("약관동의 데이터 리스트 조회 api test - docs")
+    @DisplayName("약관동의 데이터 리스트 조회 api docs")
     void getAgreementListDocs() throws Exception {
 
         //give
