@@ -43,9 +43,9 @@ public class TokenProvider {
 
         final String accessToken = Jwts.builder()
             .setSubject("authorization")
-            .claim("userUuid", userInfo.getUserUuid())
+            .claim("uuid", userInfo.getUserUuid())
             .claim("role", userInfo.getUserRole())
-            .claim("username", userInfo.getUsername())
+            .setIssuedAt(now)
             .setExpiration(accessTokenExpireIn)
             .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();
@@ -100,7 +100,7 @@ public class TokenProvider {
             .map(SimpleGrantedAuthority::new)
             .toList();
 
-        final String userUuid = claims.get("userUuid").toString();
+        final String userUuid = claims.get("uuid").toString();
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
         return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);
