@@ -1,157 +1,76 @@
-buildscript {
-	ext {
-		restdocsApiSpecVersion = '0.17.1' // restdocsApiSpecVersion 버전 변수 설정
-	}
-}
-
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.0.5'
-	id 'io.spring.dependency-management' version '1.1.0'
-
-	//restdocs-api-spec → restdocs extension  포함함
-	id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
-
-	//swagger generator 플러그인 추가
-	id 'org.hidetake.swagger.generator' version '2.18.2'
-
+    id 'java'
+    id 'org.springframework.boot' version '3.0.5'
+    id 'io.spring.dependency-management' version '1.1.0'
 }
 
+bootJar {enabled = false}
+jar {enabled = true}
 
-group = 'com.tht'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
-targetCompatibility = '17'
+allprojects {
+    group = 'com.tht'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+
+    repositories {
+        mavenCentral()
+    }
+}
 
 configurations {
-	compileOnly {
-		extendsFrom annotationProcessor
-	}
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
-repositories {
-	mavenCentral()
+subprojects {
+
+    apply plugin: "java"
+    apply plugin: "org.springframework.boot"
+    apply plugin: "io.spring.dependency-management"
+    apply plugin: "java-test-fixtures"
+
+//    apply plugin: "com.epages.restdocs-api-spec"
+//    apply plugin: "org.hidetake.swagger.generator"
+
+    test {
+        useJUnitPlatform()
+    }
+
+    dependencies {
+
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.apache.commons:commons-lang3:3.12.0'
+
+        testImplementation 'org.projectlombok:lombok'
+        testFixturesImplementation 'org.projectlombok:lombok'
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+
+        //test
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'io.rest-assured:rest-assured:5.3.0'
+
+        //mongo
+        implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+
+        //in-memory-mongo
+        testImplementation 'de.bwaldvogel:mongo-java-server:1.44.0'
+
+        // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
+        implementation 'com.mysql:mysql-connector-j:8.0.32'
+
+        // https://mvnrepository.com/artifact/org.springframework/spring-webflux
+        implementation 'org.springframework:spring-webflux'
+
+        // https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+        implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+        // https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api
+        implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
+
+    }
 }
 
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'org.springframework.boot:spring-boot-starter-validation'
-	implementation 'org.apache.commons:commons-lang3:3.12.0'
-
-	implementation 'com.querydsl:querydsl-core:5.0.0'
-	implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
-
-	annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
-	annotationProcessor "jakarta.annotation:jakarta.annotation-api"
-	annotationProcessor "jakarta.persistence:jakarta.persistence-api"
-
-	testImplementation 'org.projectlombok:lombok'
-
-	compileOnly 'org.projectlombok:lombok'
-	annotationProcessor 'org.projectlombok:lombok'
-
-	//test
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'io.rest-assured:rest-assured:5.3.0'
-
-	//mongo
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-
-	//in-memory-mongo
-	testImplementation 'de.bwaldvogel:mongo-java-server:1.44.0'
-
-	//h2
-	implementation 'com.h2database:h2'
-
-	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
-	implementation 'com.mysql:mysql-connector-j:8.0.32'
-
-
-	//spring rest docs
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-
-    // restdocs-api-spec 의존성 추가
-    testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
-
-	// Swagger ui - https://mvnrepository.com/artifact/org.springdoc/springdoc-openapi-ui
-	// implementation 'org.springdoc:springdoc-openapi-ui:1.7.0'  → 이거 안됨
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
-	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-thymeleaf
-	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-
-	// https://mvnrepository.com/artifact/org.springframework/spring-webflux
-	implementation 'org.springframework:spring-webflux'
-
-	// https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.14.2'
-
-	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
-	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
-
-	//Spring Security
-	implementation 'org.springframework.boot:spring-boot-starter-security'
-	testImplementation 'org.springframework.security:spring-security-test'
-
-	//JWT
-	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-
-	//log
-	implementation('com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0')
-
-}
-
-
-test {
-	useJUnitPlatform()
-}
-
-// querydsl QClass 파일 생성 위치를 지정
-//def querydslDir = "$buildDir/generated/querydsl"
-def querydslDir = "src/main/generated"
-
-sourceSets {
-	main.java.srcDirs += [ querydslDir ]
-}
-
-tasks.withType(JavaCompile) {
-	options.annotationProcessorGeneratedSourcesDirectory = file(querydslDir)
-}
-
-clean {
-	delete file(querydslDir)
-}
-
-// Task 및 설정 추가
-// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
-tasks.withType(GenerateSwaggerUI) {
-	dependsOn 'openapi3'
-}
-
-
-//openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
-bootJar{
-	dependsOn(':openapi3')
-
-	delete file('src/main/resources/static/docs/')
-	copy {
-		from "build/resources/main/static/docs"
-		into "src/main/resources/static/docs/"
-
-	}
-}
-
-openapi3 {
-	server = "http://tht-talk.store"
-	title = "THT API 문서"
-	description = "Spring REST Docs with SwaggerUI."
-	version = "0.0.1"
-	outputFileNamePrefix = 'open-api-3.0.1'
-	format = 'json'
-
-	// src/main/resources/static/docs/open-api-3.0.1.json 생성
-	outputDirectory = 'build/resources/main/static/docs'
-}

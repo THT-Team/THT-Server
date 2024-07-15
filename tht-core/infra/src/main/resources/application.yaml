@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: infra
+  config:
+    import: security/application-security.yaml
+  jpa:
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
