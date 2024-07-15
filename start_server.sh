@@ -4,7 +4,7 @@ echo "Java Version"
 java -version
 
 echo "Start Spring Boot Application!"
-CURRENT_PID=$(ps -ef | grep api-0.0.1-SNAPSHOT.jar | grep java | awk '{print $2}')
+CURRENT_PID=$(ps -ef | grep thtapis-0.0.1-SNAPSHOT.jar | grep java | awk '{print $2}')
 
 echo $CURRENT_PID
 
@@ -19,4 +19,4 @@ fi
 
 echo ">어플리케이션 배포 진행!"
 
-nohup java -jar ~/deploy/build/libs/tht-apis-0.0.1-SNAPSHOT.jar >> ~/deploy/logs/$(date '+%Y-%m-%d')_api.log 2>&1 &
+nohup java -jar ~/deploy/tht-apis/build/libs/tht-apis-0.0.1-SNAPSHOT.jar >> ~/deploy/logs/$(date '+%Y-%m-%d')_api.log 2>&1 &
