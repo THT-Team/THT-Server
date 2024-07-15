@@ -1,13 +1,10 @@
-package com.tht.thtapis.facade.user;
+package com.tht.thtapis.usecase.login;
 
 import com.tht.infra.user.User;
 import com.tht.infra.user.UserToken;
 import com.tht.thtapis.facade.Facade;
-import com.tht.thtapis.facade.user.request.UserLoginRequest;
-import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
-import com.tht.thtapis.facade.user.response.UserLoginResponse;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.security.TokenResponse;
+import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.service.UserDeviceKeyService;
 import com.tht.thtapis.service.UserService;
 import com.tht.thtapis.service.UserSnsService;
@@ -16,9 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
 @Facade
-@Transactional(readOnly = true)
 @RequiredArgsConstructor
-public class UserLoginFacade {
+@Transactional(readOnly = true)
+public class LoginUseCase {
 
     private final TokenProvider tokenProvider;
     private final UserService userService;
@@ -27,34 +24,33 @@ public class UserLoginFacade {
     private final UserTokenService userTokenService;
 
     @Transactional
-    public UserLoginResponse login(final UserLoginRequest request) {
+    public TokenDto login(final UserLoginRequest request) {
 
         final User user = userService.findByPhoneNumber(request.phoneNumber());
         deviceKeyService.create(user.getUserUuid(), request.deviceKey());
 
-        return getGenerateJWT(user).toLoginResponse();
+        return getGenerateJWT(user);
     }
 
-    private TokenResponse getGenerateJWT(final User user) {
+    private TokenDto getGenerateJWT(final User user) {
 
-        final TokenResponse tokenResponse = tokenProvider.generateJWT(user);
-        userTokenService.findByUserUuid(user.getUserUuid()).refresh(tokenResponse.accessToken());
+        final TokenDto tokenDto = tokenProvider.generateJWT(user);
+        userTokenService.findByUserUuid(user.getUserUuid()).refresh(tokenDto.accessToken());
 
-        return tokenResponse;
+        return tokenDto;
     }
 
     @Transactional
-    public UserLoginResponse snsLogin(final UserSNSLoginRequest request) {
+    public TokenDto snsLogin(final UserSNSLoginRequest request) {
 
-        final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(),
-            request.snsUniqueId());
+        final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(), request.snsUniqueId());
         final User user = userService.findByUserUuidForAuthToken(userUuid);
 
-        return getGenerateJWT(user).toLoginResponse();
+        return getGenerateJWT(user);
     }
 
     @Transactional
-    public UserLoginResponse refresh(final String requestHeaderAuth) {
+    public TokenDto refresh(final String requestHeaderAuth) {
 
         final String accessToken = tokenProvider.getParseJwt(requestHeaderAuth);
         final UserToken userToken = userTokenService.findByAccessToken(accessToken);
@@ -63,10 +59,9 @@ public class UserLoginFacade {
 
         userToken.checkRefreshExpired();
 
-        TokenResponse tokenResponse = tokenProvider.generateJWT(user);
+        TokenDto tokenDto = tokenProvider.generateJWT(user);
+        userToken.refresh(tokenDto.accessToken());
 
-        userToken.refresh(tokenResponse.accessToken());
-
-        return tokenResponse.toLoginResponse();
+        return tokenDto;
     }
 }

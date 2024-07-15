@@ -31,11 +31,11 @@ class TokenProviderTest {
         Mockito.when(user.getUserRole()).thenReturn(UserRole.NORMAL);
 
         TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, Mockito.mock(UserService.class));
-        TokenResponse tokenResponse = tokenProvider.generateJWT(user);
+        TokenDto tokenDto = tokenProvider.generateJWT(user);
 
-        Claims claims = tokenProvider.parseClaims(tokenResponse.accessToken());
+        Claims claims = tokenProvider.parseClaims(tokenDto.accessToken());
 
-        System.out.println(tokenResponse);
+        System.out.println(tokenDto);
         System.out.println(claims);
 
         assertThat(claims.get("userUuid")).hasToString(user.getUserUuid());

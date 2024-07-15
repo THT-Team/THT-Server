@@ -37,7 +37,7 @@ public class TokenProvider {
         this.userService = userService;
     }
 
-    public TokenResponse generateJWT(final User userInfo) {
+    public TokenDto generateJWT(final User userInfo) {
         final Date now = new Date();
         final Date accessTokenExpireIn = new Date(now.getTime() + ACCESS_TOKEN_VALID_PERIOD);
 
@@ -50,7 +50,7 @@ public class TokenProvider {
             .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();
 
-        return TokenResponse.of(accessToken,accessTokenExpireIn.getTime());
+        return TokenDto.of(accessToken,accessTokenExpireIn.getTime(), userInfo.getUserUuid());
     }
 
     public boolean validateToken(final String token) {

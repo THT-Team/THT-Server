@@ -4,17 +4,16 @@ import com.tht.thtapis.facade.user.AgreementFacade;
 import com.tht.thtapis.facade.user.UserJoinFacade;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
 import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
-import com.tht.thtapis.facade.user.response.*;
+import com.tht.thtapis.facade.user.response.AgreementMainCategoryResponse;
+import com.tht.thtapis.facade.user.response.AuthNumberResponse;
+import com.tht.thtapis.facade.user.response.UserNickNameValidResponse;
+import com.tht.thtapis.facade.user.response.UserSignUpInfoResponse;
+import com.tht.thtapis.security.TokenDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,13 +45,13 @@ public class UserJoinController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<UserSignUpResponse> createUser(
+    public ResponseEntity<TokenDto> createUser(
         @RequestBody @Valid UserSignUpRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.signUp(request));
     }
 
     @PostMapping("/signup/sns")
-    public ResponseEntity<UserSignUpResponse> integratedUser(
+    public ResponseEntity<TokenDto> integratedUser(
         @RequestBody @Valid UserSnsSignUpRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userJoinFacade.integratedSnsId(request));
     }

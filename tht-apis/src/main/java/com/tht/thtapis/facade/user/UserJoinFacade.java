@@ -9,19 +9,9 @@ import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
 import com.tht.thtapis.facade.user.response.AuthNumberResponse;
 import com.tht.thtapis.facade.user.response.UserNickNameValidResponse;
 import com.tht.thtapis.facade.user.response.UserSignUpInfoResponse;
-import com.tht.thtapis.facade.user.response.UserSignUpResponse;
+import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.security.TokenResponse;
-import com.tht.thtapis.service.UserAgreementService;
-import com.tht.thtapis.service.UserAlarmAgreementService;
-import com.tht.thtapis.service.UserDeviceKeyService;
-import com.tht.thtapis.service.UserIdealTypeService;
-import com.tht.thtapis.service.UserInterestsService;
-import com.tht.thtapis.service.UserLocationInfoService;
-import com.tht.thtapis.service.UserProfilePhotoService;
-import com.tht.thtapis.service.UserService;
-import com.tht.thtapis.service.UserSnsService;
-import com.tht.thtapis.service.UserTokenService;
+import com.tht.thtapis.service.*;
 import com.tht.thtcommonutils.utils.RandomUtils;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -58,7 +48,7 @@ public class UserJoinFacade {
         return new UserNickNameValidResponse(userService.isExistUserName(nickName));
     }
 
-    public UserSignUpResponse signUp(final UserSignUpRequest request) {
+    public TokenDto signUp(final UserSignUpRequest request) {
         final User user = userService.createUser(request.toEntity());
 
         userAgreementService.create(request.makeAgreementToEntity(user.getUserUuid()));
@@ -77,11 +67,11 @@ public class UserJoinFacade {
         return getUserSignUpResponse(user);
     }
 
-    private UserSignUpResponse getUserSignUpResponse(User user) {
-        final TokenResponse tokenResponse = tokenProvider.generateJWT(user);
-        userTokenService.create(user.getUserUuid(), tokenResponse.accessToken());
+    private TokenDto getUserSignUpResponse(User user) {
+        final TokenDto tokenDto = tokenProvider.generateJWT(user);
+        userTokenService.create(user.getUserUuid(), tokenDto.accessToken());
 
-        return tokenResponse.toSignUpResponse();
+        return tokenDto;
     }
 
     public UserSignUpInfoResponse getUserSignUpInfo(final String phoneNumber) {
@@ -89,7 +79,7 @@ public class UserJoinFacade {
         return UserSignUpInfoResponse.ofEnum(userSnsService.findAllByPhoneNumber(phoneNumber));
     }
 
-    public UserSignUpResponse integratedSnsId(final UserSnsSignUpRequest request) {
+    public TokenDto integratedSnsId(final UserSnsSignUpRequest request) {
 
         final User user = userService.findByPhoneNumber(request.phoneNumber());
 

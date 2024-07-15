@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.user;
 
 
-import com.tht.thtapis.facade.user.request.UserLoginRequest;
+import com.tht.thtapis.usecase.login.UserLoginRequest;
 
 public class UserLoginRequestFixture {
 

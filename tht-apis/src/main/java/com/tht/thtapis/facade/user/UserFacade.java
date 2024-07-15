@@ -14,7 +14,7 @@ import com.tht.thtapis.facade.user.request.*;
 import com.tht.thtapis.facade.user.response.MainScreenResponse;
 import com.tht.thtapis.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.thtapis.facade.user.response.UserDetailResponse;
-import com.tht.thtapis.facade.user.response.UserLoginResponse;
+import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
 import com.tht.thtapis.service.ChatRoomUserService;
 import com.tht.thtapis.service.IdealTypeService;
@@ -167,11 +167,11 @@ public class UserFacade {
     }
 
     @Transactional
-    public UserLoginResponse updateNickName(final User user, final String updateNickName) {
+    public TokenDto updateNickName(final User user, final String updateNickName) {
 
         User updateUserInfo = userService.updateName(user, updateNickName);
 
-        return tokenProvider.generateJWT(updateUserInfo).toLoginResponse();
+        return tokenProvider.generateJWT(updateUserInfo);
     }
 
     @Transactional

@@ -1,22 +1,13 @@
 package com.tht.thtapis.facade.user;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.BDDMockito.any;
-import static org.mockito.BDDMockito.mock;
-import static org.mockito.BDDMockito.verify;
-import static org.mockito.BDDMockito.when;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.times;
-
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
 import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
+import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserSignUpRequestFixture;
 import com.tht.thtapis.fixture.user.UserSnsSignUpRequestFixture;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.security.TokenResponse;
 import com.tht.thtapis.service.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,6 +15,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.BDDMockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
 
 @ExtendWith(MockitoExtension.class)
 class UserJoinFacadeTest {
@@ -63,7 +60,7 @@ class UserJoinFacadeTest {
         User user = mock(User.class);
         when(user.getUserUuid()).thenReturn("user-uuid-test");
         when(userService.createUser(any())).thenReturn(user);
-        when(tokenProvider.generateJWT(any())).thenReturn(new TokenResponse("", 1L));
+        when(tokenProvider.generateJWT(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //when
         userJoinFacade.signUp(request);
@@ -99,7 +96,7 @@ class UserJoinFacadeTest {
         User user = mock(User.class);
         when(user.getUserUuid()).thenReturn("user-uuid-test");
         when(userService.createUser(any())).thenReturn(user);
-        when(tokenProvider.generateJWT(any())).thenReturn(new TokenResponse("", 1L));
+        when(tokenProvider.generateJWT(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //when
         userJoinFacade.signUp(request);
@@ -120,7 +117,7 @@ class UserJoinFacadeTest {
         when(userSnsService.isExistIntegratedUserInfo(anyString(), any(), anyString())).thenReturn(
             false);
         doNothing().when(userSnsService).create(anyString(), any(), anyString(), anyString());
-        when(tokenProvider.generateJWT(any())).thenReturn(new TokenResponse("", 1L));
+        when(tokenProvider.generateJWT(any())).thenReturn(TokenDtoFixture.createTokenDto());
 
         //when
         userJoinFacade.integratedSnsId(UserSnsSignUpRequestFixture.makeSNSType());
