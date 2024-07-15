@@ -1,8 +1,20 @@
+buildscript {
+    ext {
+        restdocsApiSpecVersion = '0.18.2' // restdocsApiSpecVersion 버전 변수 설정
+    }
+}
+
+plugins{
+    //restdocs-api-spec → restdocs extension  포함함
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+    //swagger generator 플러그인 추가
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+}
+
 bootJar { enabled = true }
 jar { enabled = true }
 
 dependencies {
-
     implementation project(':tht-common-utils')
     implementation project(':tht-core:domain')
     implementation project(':tht-core:infra')
@@ -32,18 +44,9 @@ dependencies {
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
 
     // Swagger ui
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
-
-}
-
-// Task 및 설정 추가
-// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
-tasks.withType(GenerateSwaggerUI).configureEach {
-    dependsOn 'openapi3'
-}
-
-tasks.named('test') {
-    finalizedBy 'openapi3'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
 }
 
 openapi3 {
@@ -58,9 +61,19 @@ openapi3 {
     outputDirectory = 'build/resources/main/static/docs'
 }
 
+// Task 및 설정 추가
+// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
+tasks.withType(GenerateSwaggerUI).configureEach {
+    dependsOn 'openapi3'
+}
+
+tasks.named('test') {
+    finalizedBy 'openapi3' // added
+}
+
 //openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
 bootJar{
-    dependsOn(':openapi3')
+    dependsOn(':tht-apis:openapi3')
 
     delete file('src/main/resources/static/docs/')
     copy {
