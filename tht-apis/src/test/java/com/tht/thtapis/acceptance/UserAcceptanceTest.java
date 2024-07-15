@@ -2,7 +2,7 @@ package com.tht.thtapis.acceptance;
 
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.그날의_대화토픽_선택_요청;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.메인화면_조회_요청;
-import static com.tht.thtapis.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저_기기_연락처_차단_리스트_조회_요청;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저_기기_연락처_차단_요청;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저계정_탈퇴_요청;

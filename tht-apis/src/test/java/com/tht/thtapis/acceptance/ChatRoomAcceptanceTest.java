@@ -4,7 +4,7 @@ import static com.tht.thtapis.acceptance.ChatRoomAcceptanceStep.채팅방_나가
 import static com.tht.thtapis.acceptance.ChatRoomAcceptanceStep.채팅방_리스트_조회_요청;
 import static com.tht.thtapis.acceptance.ChatRoomAcceptanceStep.채팅방_상세조회_요청;
 import static com.tht.thtapis.acceptance.LikeAcceptanceStep.좋아요_요청;
-import static com.tht.thtapis.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저_차단_요청;
 import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저계정_탈퇴_요청;
 import static org.assertj.core.api.Assertions.assertThat;

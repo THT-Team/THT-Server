@@ -5,7 +5,7 @@ import com.tht.thtapis.acceptance.config.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static com.tht.thtapis.acceptance.UserAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
