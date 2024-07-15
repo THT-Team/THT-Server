@@ -60,7 +60,7 @@ jobs:
             ${{ github.repository }}-gradle-
           
       - name: Build with Gradle
-        run: ./gradlew clean build
+        run: ./gradlew clean tht-apis:clean tht-apis:build
 
       - name: make env now date
         id: now
