@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -18,13 +19,13 @@ import java.util.Date;
 @Entity
 @Getter
 @ToString
+@DynamicUpdate
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class UserToken {
 
     //    private static final long REFRESH_TOKEN_VALID_PERIOD =  1000L * 60 * 24 * 3;
     private static final long REFRESH_TOKEN_VALID_PERIOD = 1000L * 90;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,6 +1,7 @@
 package com.tht.thtapis.facade.user;
 
 import com.tht.domain.auth.UserAuthService;
+import com.tht.domain.auth.UserTokenService;
 import com.tht.domain.user.UserDeviceKeyService;
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;

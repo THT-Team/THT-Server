@@ -8,7 +8,7 @@ import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
 import com.tht.domain.user.UserDeviceKeyService;
 import com.tht.thtapis.service.UserSnsService;
-import com.tht.thtapis.service.UserTokenService;
+import com.tht.domain.auth.UserTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +36,7 @@ public class LoginUseCase {
     private TokenDto getGenerateJWT(final User user) {
 
         final TokenDto tokenDto = tokenProvider.generateJWT(user);
-        userTokenService.findByUserUuid(user.getUserUuid()).refresh(tokenDto.accessToken());
+        userTokenService.renewal(user.getUserUuid(), tokenDto.accessToken());
 
         return tokenDto;
     }
@@ -56,7 +56,6 @@ public class LoginUseCase {
 
         final String accessToken = tokenProvider.getParseJwt(requestHeaderAuth);
         final UserToken userToken = userTokenService.findByAccessToken(accessToken);
-
         final User user = userAuthService.findByUserUuidForAuthToken(userToken.getUserUuid());
 
         userToken.checkRefreshExpired();
