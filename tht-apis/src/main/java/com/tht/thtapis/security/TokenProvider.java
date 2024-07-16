@@ -1,7 +1,7 @@
 package com.tht.thtapis.security;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.user.User;
-import com.tht.thtapis.service.UserService;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
@@ -26,15 +26,15 @@ public class TokenProvider {
     private static final long ACCESS_TOKEN_VALID_PERIOD =  1000L * 60 * 60 * 24 * 7; //7일
 
     private final Key jwtSecretKey;
-    private final UserService userService;
+    private final UserAuthService userAuthService;
 
     public TokenProvider(@Value("${jwt.secret-key}") String secretKey,
-        final UserService userService) {
+        final UserAuthService userAuthService) {
 
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         jwtSecretKey = Keys.hmacShaKeyFor(keyBytes);
 
-        this.userService = userService;
+        this.userAuthService = userAuthService;
     }
 
     public TokenDto generateJWT(final User userInfo) {
@@ -101,7 +101,7 @@ public class TokenProvider {
             .toList();
 
         final String userUuid = claims.get("uuid").toString();
-        final User user = userService.findByUserUuidForAuthToken(userUuid);
+        final User user = userAuthService.findByUserUuidForAuthToken(userUuid);
 
         return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);
     }

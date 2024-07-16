@@ -1,5 +1,6 @@
 package com.tht.thtapis.facade.user;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.dailyfalling.mapper.DailyFallingTimeMapper;
 import com.tht.infra.idealtype.IdealTypeMapper;
 import com.tht.infra.interesst.InterestMapper;
@@ -58,6 +59,8 @@ public class UserFacade {
     private final UserFriendService userFriendService;
     private final ChatRoomUserService chatRoomUserService;
 
+    private final UserAuthService userAuthService;
+
     public MainScreenResponse findAllToDayFallingUserList(final User user,
                                                           final MainScreenUserInfoRequest request) {
 
@@ -108,7 +111,7 @@ public class UserFacade {
 
     public UserDetailResponse getUserDetail(final String userUuid) {
 
-        final User user = userService.findByUserUuidForAuthToken(userUuid);
+        final User user = userAuthService.findByUserUuidForAuthToken(userUuid);
 
         final List<IdealTypeMapper> idealTypeMappers = userIdealTypeService
             .findBy(user.getUserUuid());

@@ -1,5 +1,6 @@
 package com.tht.thtapis.facade.user;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.config.aligo.AligoUtils;
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
@@ -34,6 +35,8 @@ public class UserJoinFacade {
     private final UserSnsService userSnsService;
     private final UserAlarmAgreementService userAlarmAgreementService;
     private final UserTokenService userTokenService;
+
+    private final UserAuthService userAuthService;
 
     public AuthNumberResponse issueAuthenticationNumber(final String phoneNumber) {
 
@@ -81,7 +84,7 @@ public class UserJoinFacade {
 
     public TokenDto integratedSnsId(final UserSnsSignUpRequest request) {
 
-        final User user = userService.findByPhoneNumber(request.phoneNumber());
+        final User user = userAuthService.findByPhoneNumber(request.phoneNumber());
 
         if (userSnsService.isExistIntegratedUserInfo(user.getUserUuid(), request.snsType(),
             request.snsUniqueId())) {

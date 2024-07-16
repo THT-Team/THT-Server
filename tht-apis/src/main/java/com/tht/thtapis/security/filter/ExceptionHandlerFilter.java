@@ -22,7 +22,7 @@ public class ExceptionHandlerFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (TokenNotValidateException ex) {
-            setErrorResponse(HttpStatus.UNAUTHORIZED, request, response, ex);
+            setErrorResponse(HttpStatus.FORBIDDEN, request, response, ex);
         }
     }
 

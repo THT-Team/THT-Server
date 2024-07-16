@@ -1,8 +1,8 @@
 package com.tht.thtapis.security;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.user.User;
 import com.tht.infra.user.enums.UserRole;
-import com.tht.thtapis.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -30,7 +30,7 @@ class TokenProviderTest {
         Mockito.when(user.getUserUuid()).thenReturn(userUuid);
         Mockito.when(user.getUserRole()).thenReturn(UserRole.NORMAL);
 
-        TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, Mockito.mock(UserService.class));
+        TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, Mockito.mock(UserAuthService.class));
         TokenDto tokenDto = tokenProvider.generateJWT(user);
 
         Claims claims = tokenProvider.parseClaims(tokenDto.accessToken());
@@ -54,7 +54,7 @@ class TokenProviderTest {
                 SignatureAlgorithm.HS256)
             .compact();
 
-        TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, Mockito.mock(UserService.class));
+        TokenProvider tokenProvider = new TokenProvider(SECRET_KEY, Mockito.mock(UserAuthService.class));
 
         Assertions.assertThatThrownBy(() -> tokenProvider.validateToken(testToken))
             .isInstanceOf(TokenNotValidateException.class);

@@ -1,5 +1,6 @@
 package com.tht.thtapis.facade.user;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
@@ -47,6 +48,8 @@ class UserJoinFacadeTest {
     UserAlarmAgreementService userAlarmAgreementService;
     @Mock
     UserTokenService userTokenService;
+    @Mock
+    UserAuthService userAuthService;
 
     @InjectMocks
     UserJoinFacade userJoinFacade;
@@ -111,7 +114,7 @@ class UserJoinFacadeTest {
     void integratedUserId() {
 
         User mock = mock(User.class);
-        when(userService.findByPhoneNumber(anyString())).thenReturn(mock);
+        when(userAuthService.findByPhoneNumber(anyString())).thenReturn(mock);
         when(mock.getUserUuid()).thenReturn("");
 
         when(userSnsService.isExistIntegratedUserInfo(anyString(), any(), anyString())).thenReturn(
@@ -134,7 +137,7 @@ class UserJoinFacadeTest {
     void integratedUserId_duplicateCase() {
 
         User mock = mock(User.class);
-        when(userService.findByPhoneNumber(anyString())).thenReturn(mock);
+        when(userAuthService.findByPhoneNumber(anyString())).thenReturn(mock);
         when(mock.getUserUuid()).thenReturn("1234");
         when(mock.getPhoneNumber()).thenReturn("1234");
 

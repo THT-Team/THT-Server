@@ -1,12 +1,12 @@
 package com.tht.thtapis.usecase.login;
 
+import com.tht.domain.auth.UserAuthService;
 import com.tht.infra.user.User;
 import com.tht.infra.user.UserToken;
 import com.tht.thtapis.facade.Facade;
-import com.tht.thtapis.security.TokenProvider;
 import com.tht.thtapis.security.TokenDto;
+import com.tht.thtapis.security.TokenProvider;
 import com.tht.thtapis.service.UserDeviceKeyService;
-import com.tht.thtapis.service.UserService;
 import com.tht.thtapis.service.UserSnsService;
 import com.tht.thtapis.service.UserTokenService;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +18,16 @@ import org.springframework.transaction.annotation.Transactional;
 public class LoginUseCase {
 
     private final TokenProvider tokenProvider;
-    private final UserService userService;
     private final UserDeviceKeyService deviceKeyService;
     private final UserSnsService userSnsService;
     private final UserTokenService userTokenService;
 
+    private final UserAuthService userAuthService;
+
     @Transactional
     public TokenDto login(final UserLoginRequest request) {
 
-        final User user = userService.findByPhoneNumber(request.phoneNumber());
+        final User user = userAuthService.findByPhoneNumber(request.phoneNumber());
         deviceKeyService.create(user.getUserUuid(), request.deviceKey());
 
         return getGenerateJWT(user);
@@ -44,7 +45,7 @@ public class LoginUseCase {
     public TokenDto snsLogin(final UserSNSLoginRequest request) {
 
         final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(), request.snsUniqueId());
-        final User user = userService.findByUserUuidForAuthToken(userUuid);
+        final User user = userAuthService.findByUserUuidForAuthToken(userUuid);
 
         return getGenerateJWT(user);
     }
@@ -55,7 +56,7 @@ public class LoginUseCase {
         final String accessToken = tokenProvider.getParseJwt(requestHeaderAuth);
         final UserToken userToken = userTokenService.findByAccessToken(accessToken);
 
-        final User user = userService.findByUserUuidForAuthToken(userToken.getUserUuid());
+        final User user = userAuthService.findByUserUuidForAuthToken(userToken.getUserUuid());
 
         userToken.checkRefreshExpired();
 

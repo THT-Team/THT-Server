@@ -12,9 +12,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.authentication.BadCredentialsException;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -79,46 +76,6 @@ class UserServiceTest {
         when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(result);
 
         assertThat(userService.isExistUserName("")).isEqualTo(result);
-    }
-
-    @Test
-    @DisplayName("핸드폰 번호로 유저 조회 (성공)")
-    void findUserByPhoneNumber_success() {
-
-        when(userRepository.findByPhoneNumber(anyString())).thenReturn(Optional.of(USER));
-
-        assertThat(userService.findByPhoneNumber("")).isEqualTo(USER);
-    }
-
-    @Test
-    @DisplayName("핸드폰 번호로 유저 조회 (실패)")
-    void findUserByPhoneNumber_fail() {
-
-        when(userRepository.findByPhoneNumber(anyString())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> userService.findByPhoneNumber(""))
-            .isInstanceOf(BadCredentialsException.class)
-            .hasMessageContaining("존재하지 않는 유저 번호입니다.");
-    }
-
-    @Test
-    @DisplayName("유저 uuid 로 유저 조회 (성공)")
-    void findByUUID_success() {
-
-        when(userRepository.findByUserUuid(anyString())).thenReturn(Optional.of(USER));
-
-        assertThat(userService.findByUserUuidForAuthToken("")).isEqualTo(USER);
-    }
-
-    @Test
-    @DisplayName("유저 uuid 로 유저 조회 (실패)")
-    void findByUUID_fail() {
-
-        when(userRepository.findByUserUuid(anyString())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> userService.findByUserUuidForAuthToken(""))
-            .isInstanceOf(BadCredentialsException.class)
-            .hasMessageContaining("존재하지 않는 회원번호 입니다.");
     }
 
 }

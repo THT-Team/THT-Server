@@ -3,6 +3,7 @@ package com.tht.thtapis.exception;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.tht.domain.auth.UnAuthException;
 import com.tht.infra.exception.AligoException;
 import com.tht.infra.exception.EntityStateException;
 import com.tht.infra.exception.EnumStateNotFoundException;
@@ -149,12 +150,22 @@ public class ControllerExceptionHandler {
             ErrorResponse.of(e.getStatusValue(), e.getReasonParse(), e.getMessage(), request)
         );
     }
+
     @ExceptionHandler
     public ResponseEntity<ErrorResponse> handlerException(final DailyFallingException e,
         final HttpServletRequest request) {
 
         return ResponseEntity.badRequest().body(
                 ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final UnAuthException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+                ErrorResponse.of(e.getHttpStatus(), e.getMessage(), request)
         );
     }
 
