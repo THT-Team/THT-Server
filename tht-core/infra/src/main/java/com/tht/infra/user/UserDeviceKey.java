@@ -1,7 +1,6 @@
 package com.tht.infra.user;
 
 import com.tht.infra.Auditable;
-import com.tht.thtcommonutils.utils.LogWriteUtils;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -11,7 +10,7 @@ import lombok.ToString;
 @Entity
 @ToString
 @NoArgsConstructor
-public final class UserDeviceKey extends Auditable {
+public class UserDeviceKey extends Auditable {
 
     @Id
     @Column
@@ -31,13 +30,16 @@ public final class UserDeviceKey extends Auditable {
     }
 
     public static UserDeviceKey create(final String userUuid, final String deviceKey) {
-        LogWriteUtils.logInfo(
-            "UserDeviceKey_create : " + "{userUuid : " + userUuid + ", deviceKey : " + deviceKey
-                + "}");
 
         return UserDeviceKey.builder()
             .userUuid(userUuid)
             .deviceKey(deviceKey)
             .build();
+    }
+
+    public void changeKey(final String deviceKey) {
+        if(!this.deviceKey.equals(deviceKey)) {
+            this.deviceKey = deviceKey;
+        }
     }
 }

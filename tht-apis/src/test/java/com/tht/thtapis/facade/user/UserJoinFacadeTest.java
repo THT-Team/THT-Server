@@ -1,6 +1,7 @@
 package com.tht.thtapis.facade.user;
 
 import com.tht.domain.auth.UserAuthService;
+import com.tht.domain.user.UserDeviceKeyService;
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
@@ -84,7 +85,7 @@ class UserJoinFacadeTest {
         //이상형
         verify(userIdealTypeService).createOf(request.makeUserIdealTypeList(any()));
         //디바이스 키
-        verify(userDeviceKeyService).create(anyString(), anyString());
+        verify(userDeviceKeyService).recordDeviceKey(anyString(), anyString());
 
         verify(userSnsService, times(0)).create(anyString(), any(), anyString(), anyString());
 

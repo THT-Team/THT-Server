@@ -1,6 +1,7 @@
 package com.tht.thtapis.facade.user;
 
 import com.tht.domain.auth.UserAuthService;
+import com.tht.domain.user.UserDeviceKeyService;
 import com.tht.infra.config.aligo.AligoUtils;
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
@@ -60,7 +61,7 @@ public class UserJoinFacade {
         userProfilePhotoService.createOf(request.makeUserProfilePhotoList(user.getUserUuid()));
         userInterestsService.createOf(request.makeUserInterestsList(user.getUserUuid()));
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
-        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        userDeviceKeyService.recordDeviceKey(user.getUserUuid(), request.deviceKey());
 
         if (request.snsType().isSns()) {
             userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
@@ -93,7 +94,7 @@ public class UserJoinFacade {
 
         userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
             request.email());
-        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        userDeviceKeyService.recordDeviceKey(user.getUserUuid(), request.deviceKey());
 
         return getUserSignUpResponse(user);
     }

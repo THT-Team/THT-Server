@@ -6,7 +6,7 @@ import com.tht.infra.user.UserToken;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.service.UserDeviceKeyService;
+import com.tht.domain.user.UserDeviceKeyService;
 import com.tht.thtapis.service.UserSnsService;
 import com.tht.thtapis.service.UserTokenService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +28,7 @@ public class LoginUseCase {
     public TokenDto login(final UserLoginRequest request) {
 
         final User user = userAuthService.findByPhoneNumber(request.phoneNumber());
-        deviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        deviceKeyService.recordDeviceKey(user.getUserUuid(), request.deviceKey());
 
         return getGenerateJWT(user);
     }
@@ -46,6 +46,7 @@ public class LoginUseCase {
 
         final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(), request.snsUniqueId());
         final User user = userAuthService.findByUserUuidForAuthToken(userUuid);
+        deviceKeyService.recordDeviceKey(user.getUserUuid(), request.deviceKey());
 
         return getGenerateJWT(user);
     }
