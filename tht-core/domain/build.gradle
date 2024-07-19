@@ -5,5 +5,6 @@ dependencies {
 
     implementation project(':tht-common-utils')
     implementation project(':tht-core:infra')
+    implementation project(':tht-core:enums')
 
 }

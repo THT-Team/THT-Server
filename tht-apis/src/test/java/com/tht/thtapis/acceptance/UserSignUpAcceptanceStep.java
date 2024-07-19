@@ -1,9 +1,9 @@
 package com.tht.thtapis.acceptance;
 
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.SNSType;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.SNSType;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

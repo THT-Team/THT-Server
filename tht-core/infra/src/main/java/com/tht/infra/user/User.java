@@ -1,16 +1,16 @@
 package com.tht.infra.user;
 
 import com.tht.infra.user.exception.UserCustomException;
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
-import com.tht.infra.user.enums.UserRole;
-import com.tht.infra.user.enums.converter.GenderConverter;
-import com.tht.infra.user.enums.converter.UserFrequencyConverter;
-import com.tht.infra.user.enums.converter.UserReligionConverter;
-import com.tht.infra.user.enums.converter.UserRoleConverter;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
+import com.tht.enums.user.UserRole;
+import com.tht.enums.user.converter.GenderConverter;
+import com.tht.enums.user.converter.UserFrequencyConverter;
+import com.tht.enums.user.converter.UserReligionConverter;
+import com.tht.enums.user.converter.UserRoleConverter;
 import com.tht.infra.Auditable;
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import jakarta.persistence.*;
 import lombok.*;

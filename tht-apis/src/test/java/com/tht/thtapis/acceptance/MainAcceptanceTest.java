@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import com.tht.infra.like.UserLikeRepository;
-import com.tht.infra.user.enums.Gender;
+import com.tht.enums.user.Gender;
 import com.tht.thtapis.acceptance.config.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -2,7 +2,7 @@ package com.tht.thtapis.service;
 
 import java.util.List;
 
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.talkkeyword.TalkKeyword;
 import com.tht.infra.talkkeyword.TalkKeywordRepository;
 import lombok.RequiredArgsConstructor;

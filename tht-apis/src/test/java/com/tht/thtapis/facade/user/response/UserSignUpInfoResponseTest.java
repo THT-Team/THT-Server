@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

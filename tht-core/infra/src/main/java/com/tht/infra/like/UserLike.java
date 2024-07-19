@@ -1,7 +1,7 @@
 package com.tht.infra.like;
 
+import com.tht.enums.user.LikeState;
 import com.tht.infra.Auditable;
-import com.tht.infra.user.enums.LikeState;
 import jakarta.persistence.*;
 import lombok.*;
 

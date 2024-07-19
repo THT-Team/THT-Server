@@ -7,7 +7,7 @@ import com.tht.infra.like.LikeException;
 import com.tht.infra.like.LikeReceiveMapper;
 import com.tht.infra.like.UserLike;
 import com.tht.infra.like.UserLikeRepository;
-import com.tht.infra.user.enums.LikeState;
+import com.tht.enums.user.LikeState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -7,7 +7,7 @@ import com.tht.infra.user.User;
 import com.tht.infra.user.UserAgreement;
 import com.tht.infra.user.UserLocationInfo;
 import com.tht.infra.user.UserProfilePhoto;
-import com.tht.infra.user.enums.Gender;
+import com.tht.enums.user.Gender;
 import com.tht.infra.user.mapper.MainScreenUserInfoMapper;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.user.request.*;

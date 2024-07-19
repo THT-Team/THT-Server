@@ -2,7 +2,7 @@ package com.tht.thtapis.acceptance.config;
 
 import com.tht.infra.dailyfalling.DailyFalling;
 import com.tht.infra.dailyfalling.DailyFallingActiveInfo;
-import com.tht.infra.dailyfalling.DailyFallingType;
+import com.tht.enums.dailyfalling.DailyFallingType;
 import com.tht.infra.dailyfalling.repository.DailyFallingActiveTimeTableRepository;
 import com.tht.infra.dailyfalling.repository.DailyFallingRepository;
 import com.tht.infra.idealtype.IdealType;

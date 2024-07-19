@@ -2,7 +2,7 @@ package com.tht.infra.user.repository.querydsl;
 
 import com.querydsl.core.types.dsl.BooleanPath;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tht.infra.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategory;
 import com.tht.infra.user.QUserAgreement;
 import lombok.RequiredArgsConstructor;
 

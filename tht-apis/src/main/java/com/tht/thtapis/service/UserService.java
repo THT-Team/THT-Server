@@ -1,10 +1,10 @@
 package com.tht.thtapis.service;
 
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.exception.EntityStateException;
 import com.tht.infra.user.User;
 import com.tht.infra.user.UserWithDrawLog;
-import com.tht.infra.user.enums.Gender;
+import com.tht.enums.user.Gender;
 import com.tht.infra.user.repository.UserRepository;
 import com.tht.infra.user.repository.UserWithDrawLogRepository;
 import lombok.RequiredArgsConstructor;

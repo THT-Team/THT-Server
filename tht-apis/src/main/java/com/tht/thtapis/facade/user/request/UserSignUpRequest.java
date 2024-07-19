@@ -1,10 +1,10 @@
 package com.tht.thtapis.facade.user.request;
 
 import com.tht.infra.user.*;
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.SNSType;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.SNSType;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtcommonutils.utils.CustomDateFormatUtils;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;

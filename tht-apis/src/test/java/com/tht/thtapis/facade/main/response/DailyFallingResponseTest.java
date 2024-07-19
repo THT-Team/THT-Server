@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.main.response;
 
-import com.tht.infra.dailyfalling.DailyFallingType;
+import com.tht.enums.dailyfalling.DailyFallingType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

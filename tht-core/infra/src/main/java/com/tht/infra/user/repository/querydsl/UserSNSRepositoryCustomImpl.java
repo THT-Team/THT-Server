@@ -1,10 +1,10 @@
 package com.tht.infra.user.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.user.QUser;
 import com.tht.infra.user.QUserSns;
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import com.tht.infra.user.mapper.QUserSnsMapper;
 import com.tht.infra.user.mapper.UserSnsMapper;
 import lombok.RequiredArgsConstructor;

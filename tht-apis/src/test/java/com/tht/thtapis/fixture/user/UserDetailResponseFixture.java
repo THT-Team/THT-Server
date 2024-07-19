@@ -1,8 +1,8 @@
 package com.tht.thtapis.fixture.user;
 
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 import com.tht.thtapis.facade.user.response.UserAgreementResponse;

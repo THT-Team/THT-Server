@@ -1,5 +1,7 @@
 package com.tht.infra.dailyfalling;
 
+import com.tht.enums.dailyfalling.DailyFallingType;
+import com.tht.enums.dailyfalling.DailyFallingTypeConverter;
 import com.tht.infra.Auditable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
