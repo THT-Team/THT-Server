@@ -10,9 +10,9 @@ import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomResponse;
 import java.util.List;
 
-import com.tht.thtapis.service.ChatRoomService;
-import com.tht.thtapis.service.ChatRoomUserService;
-import com.tht.thtapis.service.ChatService;
+import com.tht.infra.chat.service.ChatRoomService;
+import com.tht.infra.chat.service.ChatRoomUserService;
+import com.tht.infra.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

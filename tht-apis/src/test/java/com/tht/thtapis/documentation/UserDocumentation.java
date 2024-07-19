@@ -717,11 +717,11 @@ class UserDocumentation extends ControllerTestConfig {
         //given
         UserFriendContactRequest request = new UserFriendContactRequest(
             List.of(
-                new ContactDto("친구1", "01044551234"),
-                new ContactDto("친구2", "01041414141"),
-                new ContactDto("친구3", "01042212312"),
-                new ContactDto("친구4", "01044141412"),
-                new ContactDto("친구5", "01012414521")
+                new UserFriendContactInfo("친구1", "01044551234"),
+                new UserFriendContactInfo("친구2", "01041414141"),
+                new UserFriendContactInfo("친구3", "01042212312"),
+                new UserFriendContactInfo("친구4", "01044141412"),
+                new UserFriendContactInfo("친구5", "01012414521")
             )
         );
 

@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.user;
 
 import com.tht.enums.user.SNSType;
-import com.tht.thtapis.usecase.login.UserSNSLoginRequest;
+import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -2,7 +2,7 @@ package com.tht.thtapis.security;
 
 import com.tht.infra.user.User;
 import com.tht.enums.user.UserRole;
-import com.tht.thtapis.service.UserService;
+import com.tht.infra.user.service.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

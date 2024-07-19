@@ -8,9 +8,9 @@ import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserLoginRequestFixture;
 import com.tht.thtapis.fixture.user.UserSNSLoginRequestFixture;
 import com.tht.thtapis.ui.UserLoginController;
-import com.tht.thtapis.usecase.login.LoginUseCase;
-import com.tht.thtapis.usecase.login.UserLoginRequest;
-import com.tht.thtapis.usecase.login.UserSNSLoginRequest;
+import com.tht.thtapis.facade.user.UserLoginFacade;
+import com.tht.thtapis.facade.user.request.UserLoginRequest;
+import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -33,7 +33,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
     private static final String DEFAULT_URL = "/users/login";
 
     @MockBean
-    LoginUseCase loginUseCase;
+    UserLoginFacade userLoginFacade;
 
     @Test
     @DisplayName("유저 일반 로그인 docs")
@@ -43,7 +43,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
         UserLoginRequest request = UserLoginRequestFixture.make();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(request);
 
-        when(loginUseCase.login(any()))
+        when(userLoginFacade.login(any()))
             .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
@@ -87,7 +87,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
         UserSNSLoginRequest request = UserSNSLoginRequestFixture.make();
         String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(request);
 
-        when(loginUseCase.snsLogin(any()))
+        when(userLoginFacade.snsLogin(any()))
             .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
@@ -131,7 +131,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
     void refreshTokenDocs() throws Exception {
 
         //give
-        when(loginUseCase.refresh(any()))
+        when(userLoginFacade.refresh(any()))
             .thenReturn(TokenDtoFixture.createTokenDto());
 
         //then
@@ -166,7 +166,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
     void refreshTokenDocs_fail() throws Exception {
 
         //give
-        when(loginUseCase.refresh(any())).thenThrow(UserTokenException.refreshExpired());
+        when(userLoginFacade.refresh(any())).thenThrow(UserTokenException.refreshExpired());
 
         //then
         ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
