@@ -101,7 +101,7 @@ public class ControllerExceptionHandler {
         final HttpServletRequest request) {
 
         return ResponseEntity.badRequest().body(
-            ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
+            ErrorResponse.of(e.getStatus(), e.getMessage(), request)
         );
     }
 

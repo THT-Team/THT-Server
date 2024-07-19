@@ -8,10 +8,10 @@ import com.tht.thtapis.facade.main.response.DailyFallingResponse;
 import com.tht.thtapis.facade.main.response.DailyFallingTopicResponse;
 import com.tht.thtapis.facade.main.response.DailyTopicChooseResponse;
 import com.tht.thtapis.facade.main.response.TalkKeywordResponse;
-import com.tht.thtapis.service.DailyFallingActiveService;
-import com.tht.thtapis.service.DailyFallingService;
-import com.tht.thtapis.service.TalkKeywordService;
-import com.tht.thtapis.service.UserDailyFallingService;
+import com.tht.infra.dailyfalling.service.DailyFallingActiveService;
+import com.tht.infra.dailyfalling.service.DailyFallingService;
+import com.tht.infra.talkkeyword.TalkKeywordService;
+import com.tht.infra.user.service.UserDailyFallingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

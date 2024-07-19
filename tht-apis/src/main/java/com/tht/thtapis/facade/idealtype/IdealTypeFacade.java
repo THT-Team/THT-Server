@@ -4,7 +4,7 @@ import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import java.util.List;
 
-import com.tht.thtapis.service.IdealTypeService;
+import com.tht.infra.idealtype.IdealTypeService;
 import lombok.RequiredArgsConstructor;
 
 @Facade

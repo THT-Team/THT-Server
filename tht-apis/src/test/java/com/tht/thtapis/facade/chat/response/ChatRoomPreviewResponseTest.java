@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.mock;
 
 import com.tht.infra.chat.ChatHistory;
-import com.tht.thtapis.fixture.chat.ChatRoomPreviewMapperFixture;
+import fixture.chat.ChatRoomPreviewMapperFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

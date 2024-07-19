@@ -9,6 +9,7 @@ import com.tht.infra.user.UserLocationInfo;
 import com.tht.infra.user.UserProfilePhoto;
 import com.tht.enums.user.Gender;
 import com.tht.infra.user.mapper.MainScreenUserInfoMapper;
+import com.tht.infra.user.service.*;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.user.request.*;
 import com.tht.thtapis.facade.user.response.MainScreenResponse;
@@ -16,20 +17,9 @@ import com.tht.thtapis.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.thtapis.facade.user.response.UserDetailResponse;
 import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.service.ChatRoomUserService;
-import com.tht.thtapis.service.IdealTypeService;
-import com.tht.thtapis.service.InterestService;
-import com.tht.thtapis.service.UserAgreementService;
-import com.tht.thtapis.service.UserAlarmAgreementService;
-import com.tht.thtapis.service.UserBlockService;
-import com.tht.thtapis.service.UserDailyFallingService;
-import com.tht.thtapis.service.UserFriendService;
-import com.tht.thtapis.service.UserIdealTypeService;
-import com.tht.thtapis.service.UserInterestsService;
-import com.tht.thtapis.service.UserLocationInfoService;
-import com.tht.thtapis.service.UserProfilePhotoService;
-import com.tht.thtapis.service.UserReportService;
-import com.tht.thtapis.service.UserService;
+import com.tht.infra.chat.service.ChatRoomUserService;
+import com.tht.infra.idealtype.IdealTypeService;
+import com.tht.infra.interesst.InterestService;
 
 import java.util.List;
 import java.util.Optional;
@@ -218,9 +208,9 @@ public class UserFacade {
     }
 
     @Transactional
-    public int updateFriendContactList(final String userUuid, final List<ContactDto> contacts) {
+    public int updateFriendContactList(final String userUuid, final List<UserFriendContactInfo> contacts) {
 
-        return userFriendService.update(userUuid, contacts);
+        return userFriendService.update(userUuid, contacts.stream().map(UserFriendContactInfo::toContactDto).toList());
     }
 
     @Transactional

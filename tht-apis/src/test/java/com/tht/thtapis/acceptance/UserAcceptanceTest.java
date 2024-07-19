@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.tht.thtapis.acceptance.config.AcceptanceTest;
-import com.tht.thtapis.facade.user.request.ContactDto;
+import com.tht.thtapis.facade.user.request.UserFriendContactInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -87,10 +87,10 @@ class UserAcceptanceTest extends AcceptanceTest {
 
     private Map<String, Object> 차단할_연락처_리스트(int number) {
 
-        List<ContactDto> contacts = new ArrayList<>();
+        List<UserFriendContactInfo> contacts = new ArrayList<>();
 
         for (int i = 0; i < number; i++) {
-            contacts.add(new ContactDto("친구"+i, "0" + 101234123+i));
+            contacts.add(new UserFriendContactInfo("친구"+i, "0" + 101234123+i));
         }
 
 

@@ -2,13 +2,13 @@ package com.tht.thtapis.facade.user;
 
 import com.tht.infra.user.User;
 import com.tht.infra.user.exception.UserCustomException;
+import com.tht.infra.user.service.*;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
 import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
 import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserSignUpRequestFixture;
 import com.tht.thtapis.fixture.user.UserSnsSignUpRequestFixture;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.thtapis.service.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

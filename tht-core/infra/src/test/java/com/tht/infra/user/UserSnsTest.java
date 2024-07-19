@@ -1,7 +1,7 @@
 package com.tht.infra.user;
 
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
