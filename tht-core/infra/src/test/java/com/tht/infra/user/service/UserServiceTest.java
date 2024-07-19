@@ -38,7 +38,7 @@ class UserServiceTest {
     @DisplayName("User Info 엔티티 데이터 생성 전 휴대전환 중복 체크")
     void duplicateCheckPhoneNumber_at_UserCreate() {
 
-        when(userRepository.existsByPhoneNumber(anyString())).thenReturn(true);
+        when(userRepository.existsByPhoneNumberAndStateEquals(anyString(), any())).thenReturn(true);
 
         User user = mock(User.class);
         when(user.getPhoneNumber()).thenReturn("중복번호");
@@ -52,7 +52,7 @@ class UserServiceTest {
     @DisplayName("User Info 엔티티 데이터 생성 전 닉네임 중복 체크")
     void duplicateCheckUserName_at_UserCreate() {
 
-        when(userRepository.existsByPhoneNumber(anyString())).thenReturn(false);
+        when(userRepository.existsByPhoneNumberAndStateEquals(anyString(), any())).thenReturn(false);
         when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(true);
 
         assertThatThrownBy(() -> userService.createUser(USER))
@@ -65,7 +65,7 @@ class UserServiceTest {
     void createNewUser() {
 
 
-        when(userRepository.existsByPhoneNumber(anyString())).thenReturn(false);
+        when(userRepository.existsByPhoneNumberAndStateEquals(anyString(), any())).thenReturn(false);
         when(userRepository.existsByUsernameAndStateEquals(anyString(), any())).thenReturn(false);
         when(userRepository.save(USER)).thenReturn(USER);
 
