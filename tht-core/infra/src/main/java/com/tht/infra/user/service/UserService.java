@@ -22,7 +22,7 @@ public class UserService {
     private final UserWithDrawLogRepository userWithDrawLogRepository;
 
     public User createUser(final User user) {
-        if (userRepository.existsByPhoneNumber(user.getPhoneNumber())) {
+        if (userRepository.existsByPhoneNumberAndStateEquals(user.getPhoneNumber(), EntityState.ACTIVE)) {
             throw EntityStateException.duplicateColumnOf(user.getClass().getSimpleName(),
                 "phoneNumber");
         }

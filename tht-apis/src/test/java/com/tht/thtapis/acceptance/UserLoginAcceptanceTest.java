@@ -67,7 +67,7 @@ class UserLoginAcceptanceTest extends AcceptanceTest {
         final String token = 신규유저_생성_요청_후_토큰추출(username, phoneNumber);
 
         //when
-        sleep(500);
+        sleep(1000);
         var result = 토큰리프레시(token);
 
         //then
