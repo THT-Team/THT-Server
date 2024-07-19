@@ -2,13 +2,13 @@ package com.tht.infra.like;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.dailyfalling.QDailyFalling;
 import com.tht.infra.talkkeyword.QTalkKeyword;
 import com.tht.infra.user.QUser;
 import com.tht.infra.user.QUserLocationInfo;
 import com.tht.infra.user.QUserProfilePhoto;
-import com.tht.infra.user.enums.LikeState;
+import com.tht.enums.user.LikeState;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;

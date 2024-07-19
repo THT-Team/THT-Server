@@ -1,7 +1,7 @@
 package com.tht.infra.user.mapper;
 
 import com.querydsl.core.annotations.QueryProjection;
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 
 public record UserSnsMapper(
 

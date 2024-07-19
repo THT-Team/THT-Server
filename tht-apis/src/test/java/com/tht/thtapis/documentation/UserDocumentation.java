@@ -2,9 +2,9 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.controller.config.WithCustomMockUser;
 import com.tht.thtapis.controller.steps.UserControllerSteps;

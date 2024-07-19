@@ -1,7 +1,7 @@
 package com.tht.infra.chat.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.chat.QChatRoom;
 import com.tht.infra.chat.QChatRoomUser;
 import com.tht.infra.chat.mapper.ChatRoomPreviewMapper;

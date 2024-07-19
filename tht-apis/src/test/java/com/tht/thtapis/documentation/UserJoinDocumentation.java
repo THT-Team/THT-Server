@@ -2,9 +2,9 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.tht.infra.agreement.AgreementCategory;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
+import com.tht.enums.agreement.AgreementCategory;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.facade.user.AgreementFacade;
 import com.tht.thtapis.facade.user.UserJoinFacade;

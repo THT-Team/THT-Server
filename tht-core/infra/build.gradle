@@ -3,6 +3,8 @@ jar { enabled = true }
 
 dependencies {
     implementation project(':tht-common-utils')
+    implementation project(':tht-core:enums')
+    testFixturesImplementation project(':tht-core:enums')
 
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 

@@ -1,6 +1,6 @@
 package com.tht.infra.user.exception;
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

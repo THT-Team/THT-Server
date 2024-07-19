@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.user.request;
 
 
-import com.tht.infra.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategory;
 
 public record UserAgreementUpdateRequest(
 

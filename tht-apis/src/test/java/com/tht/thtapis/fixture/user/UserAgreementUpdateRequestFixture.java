@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.user;
 
 
-import com.tht.infra.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategory;
 import com.tht.thtapis.facade.user.request.UserAgreementUpdateRequest;
 
 import java.util.HashMap;

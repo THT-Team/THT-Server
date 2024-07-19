@@ -1,7 +1,7 @@
 package com.tht.infra.user.repository.querydsl;
 
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import com.tht.infra.user.mapper.UserSnsMapper;
 
 import java.util.List;

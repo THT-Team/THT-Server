@@ -3,10 +3,10 @@ package fixture.user;
 import java.time.LocalDate;
 
 import com.tht.infra.user.User;
-import com.tht.infra.user.enums.Gender;
-import com.tht.infra.user.enums.UserFrequency;
-import com.tht.infra.user.enums.UserReligion;
-import com.tht.infra.user.enums.UserRole;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
+import com.tht.enums.user.UserRole;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -2,7 +2,7 @@ package com.tht.infra.user.repository.querydsl;
 
 import com.tht.infra.dailyfalling.mapper.DailyFallingTimeMapper;
 import com.tht.infra.dailyfalling.mapper.UserDailyFallingMapper;
-import com.tht.infra.user.enums.Gender;
+import com.tht.enums.user.Gender;
 import com.tht.infra.user.mapper.MainScreenUserInfoMapper;
 
 import java.util.List;

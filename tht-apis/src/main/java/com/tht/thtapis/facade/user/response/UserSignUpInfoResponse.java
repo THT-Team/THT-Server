@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.response;
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 
 import java.util.Collection;
 import java.util.List;

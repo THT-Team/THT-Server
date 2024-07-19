@@ -1,7 +1,7 @@
 package com.tht.infra.user.repository;
 
 import com.tht.infra.user.UserSns;
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import com.tht.infra.user.repository.querydsl.UserSNSRepositoryCustom;
 import org.springframework.data.jpa.repository.JpaRepository;
 

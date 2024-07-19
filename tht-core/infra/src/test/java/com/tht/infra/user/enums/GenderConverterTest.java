@@ -1,6 +1,7 @@
 package com.tht.infra.user.enums;
 
-import com.tht.infra.user.enums.converter.GenderConverter;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.converter.GenderConverter;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

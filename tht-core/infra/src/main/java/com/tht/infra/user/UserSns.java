@@ -1,8 +1,8 @@
 package com.tht.infra.user;
 
 import com.tht.infra.Auditable;
-import com.tht.infra.user.enums.SNSType;
-import com.tht.infra.user.enums.converter.SNSTypeConverter;
+import com.tht.enums.user.SNSType;
+import com.tht.enums.user.converter.SNSTypeConverter;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
 package com.tht.thtapis.acceptance;
 
-import com.tht.infra.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategory;
 import com.tht.thtapis.acceptance.config.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

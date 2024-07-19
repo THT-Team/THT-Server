@@ -3,7 +3,7 @@ package com.tht.thtapis.fixture.user;
 import java.util.Arrays;
 import java.util.List;
 
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import com.tht.thtapis.facade.user.response.UserSignUpInfoResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

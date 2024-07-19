@@ -1,6 +1,6 @@
 package com.tht.thtapis.service;
 
-import com.tht.infra.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategory;
 import com.tht.infra.user.UserAgreement;
 import com.tht.infra.user.exception.UserCustomException;
 import com.tht.infra.user.repository.UserAgreementRepository;

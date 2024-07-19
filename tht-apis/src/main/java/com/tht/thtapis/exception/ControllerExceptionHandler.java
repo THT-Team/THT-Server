@@ -5,7 +5,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import com.tht.infra.exception.AligoException;
 import com.tht.infra.exception.EntityStateException;
-import com.tht.infra.exception.EnumStateNotFoundException;
+import com.tht.enums.EnumStateNotFoundException;
 import com.tht.infra.dailyfalling.DailyFallingException;
 import com.tht.infra.dailyfalling.UserDailyFallingException;
 import com.tht.infra.like.LikeException;

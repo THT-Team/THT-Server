@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import com.tht.infra.exception.EntityStateException;
 import com.tht.infra.user.UserSns;
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import com.tht.infra.user.exception.UserCustomException;
 import com.tht.infra.user.mapper.UserSnsMapper;
 import com.tht.infra.user.repository.UserSnsRepository;

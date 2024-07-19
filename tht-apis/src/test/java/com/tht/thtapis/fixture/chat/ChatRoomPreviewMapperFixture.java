@@ -1,6 +1,6 @@
 package com.tht.thtapis.fixture.chat;
 
-import com.tht.infra.EntityState;
+import com.tht.enums.EntityState;
 import com.tht.infra.chat.mapper.ChatRoomPreviewMapper;
 
 import java.time.LocalDateTime;

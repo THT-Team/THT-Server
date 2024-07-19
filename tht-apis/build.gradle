@@ -16,8 +16,8 @@ jar { enabled = true }
 
 dependencies {
     implementation project(':tht-common-utils')
-    implementation project(':tht-core:domain')
     implementation project(':tht-core:infra')
+    implementation project(':tht-core:enums')
 
     testImplementation testFixtures(project(':tht-core:infra'))
     testImplementation project(':tht-core:infra')

@@ -2,7 +2,7 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.tht.infra.dailyfalling.DailyFallingType;
+import com.tht.enums.dailyfalling.DailyFallingType;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.controller.config.WithCustomMockUser;
 import com.tht.thtapis.facade.main.DailyFallingFacade;

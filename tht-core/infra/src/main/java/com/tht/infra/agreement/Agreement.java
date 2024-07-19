@@ -1,5 +1,7 @@
 package com.tht.infra.agreement;
 
+import com.tht.enums.agreement.AgreementCategory;
+import com.tht.enums.agreement.AgreementCategoryConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

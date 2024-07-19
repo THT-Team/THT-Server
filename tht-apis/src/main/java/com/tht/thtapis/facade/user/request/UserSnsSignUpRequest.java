@@ -2,7 +2,7 @@ package com.tht.thtapis.facade.user.request;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.tht.infra.user.enums.SNSType;
+import com.tht.enums.user.SNSType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

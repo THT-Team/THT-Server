@@ -1,6 +1,6 @@
 package com.tht.thtapis.fixture.main;
 
-import com.tht.infra.dailyfalling.DailyFallingType;
+import com.tht.enums.dailyfalling.DailyFallingType;
 import com.tht.thtapis.facade.main.response.DailyFallingResponse;
 import com.tht.thtapis.facade.main.response.DailyFallingTopicResponse;
 
