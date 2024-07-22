@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 @Component
 public class TokenProvider {
 
-    private long tokenValidityInMilliseconds =  1000L * 60 * 60 * 8; //8시간
+    private final long tokenValidityInMilliseconds;
     private final Key jwtSecretKey;
     private final AdministratorService administratorService;
 
