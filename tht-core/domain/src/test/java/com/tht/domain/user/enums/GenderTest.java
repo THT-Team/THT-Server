@@ -1,6 +1,7 @@
 package com.tht.domain.user.enums;
 
-import com.tht.domain.exception.EnumStateNotFoundException;
+import com.tht.enums.EnumStateNotFoundException;
+import com.tht.enums.user.Gender;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
