@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.chat.group;
 
-import com.tht.infra.chat.ChatHistory;
+import com.tht.domain.entity.chat.ChatHistory;
 
 import java.util.List;
 import java.util.Optional;

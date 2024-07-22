@@ -1,17 +1,17 @@
 package com.tht.thtapis.facade.main;
 
-import com.tht.infra.dailyfalling.DailyFallingActiveInfo;
-import com.tht.infra.dailyfalling.mapper.DailyFallingTimeMapper;
-import com.tht.infra.user.User;
+import com.tht.domain.entity.dailyfalling.DailyFallingActiveInfo;
+import com.tht.domain.entity.dailyfalling.mapper.DailyFallingTimeMapper;
+import com.tht.domain.entity.user.User;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.main.response.DailyFallingResponse;
 import com.tht.thtapis.facade.main.response.DailyFallingTopicResponse;
 import com.tht.thtapis.facade.main.response.DailyTopicChooseResponse;
 import com.tht.thtapis.facade.main.response.TalkKeywordResponse;
-import com.tht.infra.dailyfalling.service.DailyFallingActiveService;
-import com.tht.infra.dailyfalling.service.DailyFallingService;
-import com.tht.infra.talkkeyword.TalkKeywordService;
-import com.tht.infra.user.service.UserDailyFallingService;
+import com.tht.domain.entity.dailyfalling.service.DailyFallingActiveService;
+import com.tht.domain.entity.dailyfalling.service.DailyFallingService;
+import com.tht.domain.entity.talkkeyword.TalkKeywordService;
+import com.tht.domain.entity.user.service.UserDailyFallingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

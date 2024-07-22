@@ -1,3 +1,0 @@
-[submodule "tht-core/infra/src/main/resources/security"]
-	path = tht-core/infra/src/main/resources/security
-	url = https://github.com/THT-Team/Server-Security.git

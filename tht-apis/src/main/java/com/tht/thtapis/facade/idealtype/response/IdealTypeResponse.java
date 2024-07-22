@@ -1,8 +1,8 @@
 package com.tht.thtapis.facade.idealtype.response;
 
 
-import com.tht.infra.idealtype.IdealType;
-import com.tht.infra.idealtype.IdealTypeMapper;
+import com.tht.domain.entity.idealtype.IdealType;
+import com.tht.domain.entity.idealtype.IdealTypeMapper;
 
 public record IdealTypeResponse(
     Integer idx,

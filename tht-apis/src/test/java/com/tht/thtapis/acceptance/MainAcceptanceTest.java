@@ -7,7 +7,7 @@ import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_�
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.tht.infra.like.UserLikeRepository;
+import com.tht.domain.entity.like.UserLikeRepository;
 import com.tht.enums.user.Gender;
 import com.tht.thtapis.acceptance.config.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;

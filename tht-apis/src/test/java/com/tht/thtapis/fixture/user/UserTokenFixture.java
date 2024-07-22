@@ -1,6 +1,6 @@
 package com.tht.thtapis.fixture.user;
 
-import com.tht.infra.user.UserToken;
+import com.tht.domain.entity.user.UserToken;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 

@@ -1,6 +1,6 @@
 package com.tht.thtapis.ui;
 
-import com.tht.infra.user.User;
+import com.tht.domain.entity.user.User;
 import com.tht.thtapis.facade.like.LikeFacade;
 import com.tht.thtapis.facade.like.response.LikeListResponse;
 import com.tht.thtapis.facade.like.response.LikeReceiveResponse;

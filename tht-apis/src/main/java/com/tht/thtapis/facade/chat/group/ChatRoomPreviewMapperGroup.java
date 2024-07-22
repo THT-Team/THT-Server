@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.chat.group;
 
-import com.tht.infra.chat.mapper.ChatRoomPreviewMapper;
+import com.tht.domain.entity.chat.mapper.ChatRoomPreviewMapper;
 
 import java.util.List;
 

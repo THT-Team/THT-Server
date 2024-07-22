@@ -7,7 +7,7 @@ dependencies {
     implementation project(':tht-core:domain')
     implementation project(':tht-common-utils')
 
-    testImplementation testFixtures(project(':tht-core:infra'))
+    testImplementation testFixtures(project(':tht-core:domain'))
     testImplementation project(':tht-core:domain')
 
     //security
@@ -17,7 +17,7 @@ dependencies {
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    
+
     //h2
     implementation 'com.h2database:h2'
 

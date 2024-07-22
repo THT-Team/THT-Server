@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.meta;
 
 
-import com.tht.infra.idealtype.IdealTypeMapper;
+import com.tht.domain.entity.idealtype.IdealTypeMapper;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 
 public class IdealTypeFixture {

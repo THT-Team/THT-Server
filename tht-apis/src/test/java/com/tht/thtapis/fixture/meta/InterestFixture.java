@@ -1,6 +1,6 @@
 package com.tht.thtapis.fixture.meta;
 
-import com.tht.infra.interesst.InterestMapper;
+import com.tht.domain.entity.interesst.InterestMapper;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 
 public class InterestFixture {

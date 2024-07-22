@@ -1,6 +1,6 @@
 package com.tht.thtapis.ui;
 
-import com.tht.infra.user.User;
+import com.tht.domain.entity.user.User;
 import com.tht.enums.user.Gender;
 import com.tht.thtapis.facade.user.UserFacade;
 import com.tht.thtapis.facade.user.request.*;

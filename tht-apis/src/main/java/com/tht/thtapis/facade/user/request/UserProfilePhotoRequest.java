@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.user.request;
 
 
-import com.tht.infra.user.UserProfilePhoto;
+import com.tht.domain.entity.user.UserProfilePhoto;
 
 public record UserProfilePhotoRequest(
     String url,

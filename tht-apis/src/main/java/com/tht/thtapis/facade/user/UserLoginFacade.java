@@ -1,16 +1,16 @@
 package com.tht.thtapis.facade.user;
 
-import com.tht.infra.user.User;
-import com.tht.infra.user.UserToken;
+import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.UserToken;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.user.request.UserLoginRequest;
 import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
 import com.tht.thtapis.security.TokenProvider;
 import com.tht.thtapis.security.TokenDto;
-import com.tht.infra.user.service.UserDeviceKeyService;
-import com.tht.infra.user.service.UserService;
-import com.tht.infra.user.service.UserSnsService;
-import com.tht.infra.user.service.UserTokenService;
+import com.tht.domain.entity.user.service.UserDeviceKeyService;
+import com.tht.domain.entity.user.service.UserService;
+import com.tht.domain.entity.user.service.UserSnsService;
+import com.tht.domain.entity.user.service.UserTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

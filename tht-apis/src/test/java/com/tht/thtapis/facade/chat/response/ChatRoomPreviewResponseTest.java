@@ -3,7 +3,7 @@ package com.tht.thtapis.facade.chat.response;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.mock;
 
-import com.tht.infra.chat.ChatHistory;
+import com.tht.domain.entity.chat.ChatHistory;
 import fixture.chat.ChatRoomPreviewMapperFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

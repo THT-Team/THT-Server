@@ -1,7 +1,7 @@
 package com.tht.thtapis.security;
 
-import com.tht.infra.user.User;
-import com.tht.infra.user.service.UserService;
+import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.service.UserService;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;

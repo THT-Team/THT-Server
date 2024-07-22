@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import com.tht.infra.user.UserProfilePhoto;
+import com.tht.domain.entity.user.UserProfilePhoto;
 import com.tht.thtapis.fixture.user.UserSignUpRequestFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

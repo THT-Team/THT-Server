@@ -2,7 +2,7 @@ package com.tht.thtapis.controller.config;
 
 import java.util.List;
 
-import com.tht.infra.user.User;
+import com.tht.domain.entity.user.User;
 import fixture.user.UserFixture;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

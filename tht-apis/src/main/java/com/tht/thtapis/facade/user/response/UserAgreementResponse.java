@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.user.response;
 
 
-import com.tht.infra.user.UserAgreement;
+import com.tht.domain.entity.user.UserAgreement;
 
 public record UserAgreementResponse(
         boolean serviceUseAgree,

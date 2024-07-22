@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.request;
 
-import com.tht.infra.user.UserAgreement;
+import com.tht.domain.entity.user.UserAgreement;
 import jakarta.validation.constraints.AssertTrue;
 
 public record UserAgreementRequest(

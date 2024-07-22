@@ -1,8 +1,8 @@
 package com.tht.thtapis.facade.user;
 
-import com.tht.infra.user.User;
-import com.tht.infra.user.exception.UserCustomException;
-import com.tht.infra.user.service.*;
+import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.exception.UserCustomException;
+import com.tht.domain.entity.user.service.*;
 import com.tht.thtapis.facade.user.request.UserSignUpRequest;
 import com.tht.thtapis.facade.user.request.UserSnsSignUpRequest;
 import com.tht.thtapis.fixture.TokenDtoFixture;

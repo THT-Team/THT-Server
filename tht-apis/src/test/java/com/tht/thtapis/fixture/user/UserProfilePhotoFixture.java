@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.user;
 
 
-import com.tht.infra.user.mapper.UserProfilePhotoMapper;
+import com.tht.domain.entity.user.mapper.UserProfilePhotoMapper;
 import com.tht.thtapis.facade.user.response.UserProfilePhotoResponse;
 
 public class UserProfilePhotoFixture {

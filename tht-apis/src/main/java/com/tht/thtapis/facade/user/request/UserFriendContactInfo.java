@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.request;
 
-import com.tht.infra.user.service.ContactDto;
+import com.tht.domain.entity.user.service.ContactDto;
 
 public record UserFriendContactInfo(
     String name,

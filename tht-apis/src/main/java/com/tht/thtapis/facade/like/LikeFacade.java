@@ -1,13 +1,13 @@
 package com.tht.thtapis.facade.like;
 
-import com.tht.infra.like.UserLike;
+import com.tht.domain.entity.like.UserLike;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.like.response.LikeReceiveResponse;
 import com.tht.thtapis.facade.like.response.LikeResponse;
-import com.tht.infra.chat.service.ChatRoomService;
-import com.tht.infra.chat.service.ChatRoomUserService;
-import com.tht.infra.user.service.UserLikeService;
-import com.tht.infra.user.service.UserService;
+import com.tht.domain.entity.chat.service.ChatRoomService;
+import com.tht.domain.entity.chat.service.ChatRoomUserService;
+import com.tht.domain.entity.user.service.UserLikeService;
+import com.tht.domain.entity.user.service.UserService;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;

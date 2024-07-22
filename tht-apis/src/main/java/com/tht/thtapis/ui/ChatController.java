@@ -2,7 +2,7 @@ package com.tht.thtapis.ui;
 
 import java.util.List;
 
-import com.tht.infra.user.User;
+import com.tht.domain.entity.user.User;
 import com.tht.thtapis.facade.chat.ChatFacade;
 import com.tht.thtapis.facade.chat.response.ChatResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;

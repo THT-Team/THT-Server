@@ -1,7 +1,7 @@
 package com.tht.thtadmin.security;
 
-import com.tht.domain.administrator.Administrator;
-import com.tht.domain.administrator.AdministratorService;
+import com.tht.domain.entity.administrator.Administrator;
+import com.tht.domain.entity.administrator.AdministratorService;
 import com.tht.thtadmin.exception.TokenNotValidateException;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import io.jsonwebtoken.*;
@@ -45,13 +45,13 @@ public class TokenProvider {
         final String accessToken = Jwts.builder()
             .setSubject("auth")
             .claim("role", userInfo.getRole())
-            .claim("uuid", userInfo.getUserUuid())
+            .claim("name", userInfo.getUsername())
             .setIssuedAt(now)
             .setExpiration(accessTokenExpireIn)
             .signWith(jwtSecretKey, SignatureAlgorithm.HS256)
             .compact();
 
-        return TokenDto.of(accessToken,accessTokenExpireIn.getTime(), userInfo.getUserUuid());
+        return TokenDto.of(accessToken,accessTokenExpireIn.getTime(), userInfo.getUsername());
     }
 
     public boolean validateToken(final String token) {
@@ -91,10 +91,10 @@ public class TokenProvider {
             .map(SimpleGrantedAuthority::new)
             .toList();
 
-        final String userUuid = claims.get("uuid").toString();
-        final Administrator user = administratorService.getAdministratorByUuid(userUuid);
+        final String name = claims.get("name").toString();
+        final Administrator user = administratorService.getAdministratorByName(name);
 
-        return new UsernamePasswordAuthenticationToken(user, userUuid, authorities);
+        return new UsernamePasswordAuthenticationToken(user, name, authorities);
     }
 
     private Claims parseClaims(final String accessToken) {
