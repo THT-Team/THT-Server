@@ -1,0 +1,25 @@
+bootJar { enabled = true }
+jar { enabled = true }
+
+
+dependencies {
+    implementation project(':tht-core:enums')
+    implementation project(':tht-core:domain')
+    implementation project(':tht-common-utils')
+
+    testImplementation testFixtures(project(':tht-core:infra'))
+    testImplementation project(':tht-core:domain')
+
+    //security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.security:spring-security-test'
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+    
+    //h2
+    implementation 'com.h2database:h2'
+
+}
+
