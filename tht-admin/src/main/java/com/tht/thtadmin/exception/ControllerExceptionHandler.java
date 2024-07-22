@@ -1,5 +1,6 @@
 package com.tht.thtadmin.exception;
 
+import com.tht.domain.exception.EntityStateException;
 import com.tht.enums.EnumStateNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -92,4 +93,12 @@ public class ControllerExceptionHandler {
         );
     }
 
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final EntityStateException e,
+                                                          final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+            ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
+        );
+    }
 }

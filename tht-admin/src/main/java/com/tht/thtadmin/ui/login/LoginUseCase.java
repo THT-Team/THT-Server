@@ -18,4 +18,9 @@ public class LoginUseCase {
         final Administrator loginInfo = administratorService.getLoginInfo(id, password);
         return tokenProvider.generateJWT(loginInfo);
     }
+
+    public TokenDto create(final String id, final String password, final String userName) {
+        final Administrator admin = administratorService.createAdmin(id, password, userName);
+        return tokenProvider.generateJWT(admin);
+    }
 }

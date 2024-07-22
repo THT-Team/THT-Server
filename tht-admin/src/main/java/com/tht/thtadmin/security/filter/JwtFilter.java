@@ -1,5 +1,6 @@
-package com.tht.thtadmin.security;
+package com.tht.thtadmin.security.filter;
 
+import com.tht.thtadmin.security.TokenProvider;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

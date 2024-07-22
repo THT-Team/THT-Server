@@ -22,4 +22,17 @@ public class AdministratorService {
             () -> EntityStateException.doNotExistOf(String.format("administrator : id(%s), password(%s)",id, password)
             ));
     }
+
+    public Administrator createAdmin(final String id, final String password, final String userName) {
+
+        if (repository.findByUsername(userName).isPresent()) {
+            throw EntityStateException.duplicateColumnOf("admin", userName);
+        }
+
+        if (repository.findById(id).isPresent()) {
+            throw EntityStateException.duplicateColumnOf("admin", id);
+        }
+
+        return repository.save(new Administrator(id, password, userName));
+    }
 }

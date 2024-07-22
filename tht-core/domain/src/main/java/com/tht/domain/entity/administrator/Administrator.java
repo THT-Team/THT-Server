@@ -14,7 +14,6 @@ public class Administrator {
     @Column
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx;
-
     @Column
     private String id;
     @Column
@@ -23,4 +22,11 @@ public class Administrator {
     private String username;
     @Column
     private UserRole role;
+
+    public Administrator(String id, String password, String username) {
+        this.id = id;
+        this.password = password;
+        this.username = username;
+        this.role = UserRole.ADMIN;
+    }
 }

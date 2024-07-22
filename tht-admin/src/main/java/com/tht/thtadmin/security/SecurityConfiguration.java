@@ -1,5 +1,7 @@
 package com.tht.thtadmin.security;
 
+import com.tht.thtadmin.security.filter.ExceptionHandlerFilter;
+import com.tht.thtadmin.security.filter.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -29,7 +31,9 @@ public class SecurityConfiguration {
             .authorizeHttpRequests(
                 authorize -> authorize
                     .requestMatchers(PathRequest.toH2Console()).permitAll()
+                    .requestMatchers("/error").permitAll()
                     .requestMatchers("login").permitAll()
+                    .requestMatchers("create").permitAll()
                     .anyRequest().hasRole("ADMIN")
 
                     .and()

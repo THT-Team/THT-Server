@@ -1,4 +1,4 @@
-package com.tht.thtadmin.exception;
+package com.tht.thtadmin.security;
 
 import io.jsonwebtoken.JwtException;
 import lombok.Getter;

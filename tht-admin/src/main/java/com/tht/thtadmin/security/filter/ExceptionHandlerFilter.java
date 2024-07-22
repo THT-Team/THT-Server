@@ -1,7 +1,7 @@
-package com.tht.thtadmin.security;
+package com.tht.thtadmin.security.filter;
 
 import com.tht.thtadmin.exception.ErrorResponse;
-import com.tht.thtadmin.exception.TokenNotValidateException;
+import com.tht.thtadmin.security.TokenNotValidateException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

@@ -2,7 +2,6 @@ package com.tht.thtadmin.security;
 
 import com.tht.domain.entity.administrator.Administrator;
 import com.tht.domain.entity.administrator.AdministratorService;
-import com.tht.thtadmin.exception.TokenNotValidateException;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
