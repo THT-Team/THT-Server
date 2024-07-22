@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.main.response;
 
 
-import com.tht.infra.talkkeyword.TalkKeyword;
+import com.tht.domain.entity.talkkeyword.TalkKeyword;
 
 public record TalkKeywordResponse(
     int idx,

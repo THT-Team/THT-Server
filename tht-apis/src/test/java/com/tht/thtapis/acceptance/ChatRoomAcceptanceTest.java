@@ -10,7 +10,7 @@ import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저계정_탈퇴_
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import com.tht.infra.dailyfalling.DailyFalling;
+import com.tht.domain.entity.dailyfalling.DailyFalling;
 import com.tht.thtapis.acceptance.config.mongo.AcceptanceTestWithMongo;
 import java.util.HashMap;
 import java.util.List;

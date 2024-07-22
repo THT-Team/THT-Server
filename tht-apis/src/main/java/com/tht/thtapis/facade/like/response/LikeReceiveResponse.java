@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.like.response;
 
-import com.tht.infra.like.LikeReceiveMapper;
+import com.tht.domain.entity.like.LikeReceiveMapper;
 import com.tht.thtcommonutils.utils.ConvertAgeUtils;
 
 import java.time.LocalDateTime;

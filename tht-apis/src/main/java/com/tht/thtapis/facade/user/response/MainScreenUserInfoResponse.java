@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.response;
 
-import com.tht.infra.user.mapper.MainScreenUserInfoMapper;
+import com.tht.domain.entity.user.mapper.MainScreenUserInfoMapper;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 import com.tht.thtcommonutils.utils.ConvertAgeUtils;

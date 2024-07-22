@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.chat.response;
 
-import com.tht.infra.chat.ChatHistory;
+import com.tht.domain.entity.chat.ChatHistory;
 
 import java.time.LocalDateTime;
 

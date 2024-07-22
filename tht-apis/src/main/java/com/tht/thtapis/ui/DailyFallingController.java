@@ -1,6 +1,6 @@
 package com.tht.thtapis.ui;
 
-import com.tht.infra.user.User;
+import com.tht.domain.entity.user.User;
 import com.tht.thtapis.facade.main.DailyFallingFacade;
 import com.tht.thtapis.facade.main.response.DailyFallingResponse;
 import com.tht.thtapis.facade.main.response.DailyTopicChooseResponse;

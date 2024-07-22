@@ -1,15 +1,18 @@
 package com.tht.thtapis.facade.user;
 
-import com.tht.infra.dailyfalling.mapper.DailyFallingTimeMapper;
-import com.tht.infra.idealtype.IdealTypeMapper;
-import com.tht.infra.interesst.InterestMapper;
-import com.tht.infra.user.User;
-import com.tht.infra.user.UserAgreement;
-import com.tht.infra.user.UserLocationInfo;
-import com.tht.infra.user.UserProfilePhoto;
 import com.tht.enums.user.Gender;
-import com.tht.infra.user.mapper.MainScreenUserInfoMapper;
-import com.tht.infra.user.service.*;
+import com.tht.domain.entity.chat.service.ChatRoomUserService;
+import com.tht.domain.entity.dailyfalling.mapper.DailyFallingTimeMapper;
+import com.tht.domain.entity.idealtype.IdealTypeMapper;
+import com.tht.domain.entity.idealtype.IdealTypeService;
+import com.tht.domain.entity.interesst.InterestMapper;
+import com.tht.domain.entity.interesst.InterestService;
+import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.UserAgreement;
+import com.tht.domain.entity.user.UserLocationInfo;
+import com.tht.domain.entity.user.UserProfilePhoto;
+import com.tht.domain.entity.user.mapper.MainScreenUserInfoMapper;
+import com.tht.domain.entity.user.service.*;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.user.request.*;
 import com.tht.thtapis.facade.user.response.MainScreenResponse;
@@ -17,15 +20,11 @@ import com.tht.thtapis.facade.user.response.MainScreenUserInfoResponse;
 import com.tht.thtapis.facade.user.response.UserDetailResponse;
 import com.tht.thtapis.security.TokenDto;
 import com.tht.thtapis.security.TokenProvider;
-import com.tht.infra.chat.service.ChatRoomUserService;
-import com.tht.infra.idealtype.IdealTypeService;
-import com.tht.infra.interesst.InterestService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-
-import lombok.RequiredArgsConstructor;
-import org.springframework.transaction.annotation.Transactional;
 
 @Facade
 @Transactional(readOnly = true)

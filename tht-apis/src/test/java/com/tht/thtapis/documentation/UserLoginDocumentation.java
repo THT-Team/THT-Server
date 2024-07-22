@@ -2,7 +2,7 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
-import com.tht.infra.user.exception.UserTokenException;
+import com.tht.domain.entity.user.exception.UserTokenException;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.fixture.TokenDtoFixture;
 import com.tht.thtapis.fixture.user.UserLoginRequestFixture;

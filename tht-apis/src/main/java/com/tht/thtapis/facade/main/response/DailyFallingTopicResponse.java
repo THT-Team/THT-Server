@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.main.response;
 
 
-import com.tht.infra.dailyfalling.mapper.DailyFallingMapper;
+import com.tht.domain.entity.dailyfalling.mapper.DailyFallingMapper;
 
 public record DailyFallingTopicResponse(
 

@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.request;
 
-import com.tht.infra.user.UserLocationInfo;
+import com.tht.domain.entity.user.UserLocationInfo;
 import jakarta.validation.constraints.NotNull;
 
 public record UserLocationRequest(

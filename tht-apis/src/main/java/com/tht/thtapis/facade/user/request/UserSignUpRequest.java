@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user.request;
 
-import com.tht.infra.user.*;
+import com.tht.domain.entity.user.*;
 import com.tht.enums.user.Gender;
 import com.tht.enums.user.SNSType;
 import com.tht.enums.user.UserFrequency;

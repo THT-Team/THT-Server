@@ -1,8 +1,8 @@
 package com.tht.thtapis.facade.interest.response;
 
 
-import com.tht.infra.interesst.Interest;
-import com.tht.infra.interesst.InterestMapper;
+import com.tht.domain.entity.interesst.Interest;
+import com.tht.domain.entity.interesst.InterestMapper;
 
 public record InterestResponse (Integer idx, String name, String emojiCode){
 

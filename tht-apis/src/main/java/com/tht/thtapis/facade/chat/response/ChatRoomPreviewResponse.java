@@ -1,7 +1,7 @@
 package com.tht.thtapis.facade.chat.response;
 
-import com.tht.infra.chat.ChatHistory;
-import com.tht.infra.chat.mapper.ChatRoomPreviewMapper;
+import com.tht.domain.entity.chat.ChatHistory;
+import com.tht.domain.entity.chat.mapper.ChatRoomPreviewMapper;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

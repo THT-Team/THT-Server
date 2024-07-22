@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.chat;
 
-import com.tht.infra.chat.group.ChatRoomMapperGroup;
+import com.tht.domain.entity.chat.group.ChatRoomMapperGroup;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.chat.group.ChatHistoryGroup;
 import com.tht.thtapis.facade.chat.group.ChatRoomPreviewMapperGroup;
@@ -10,9 +10,9 @@ import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomResponse;
 import java.util.List;
 
-import com.tht.infra.chat.service.ChatRoomService;
-import com.tht.infra.chat.service.ChatRoomUserService;
-import com.tht.infra.chat.service.ChatService;
+import com.tht.domain.entity.chat.service.ChatRoomService;
+import com.tht.domain.entity.chat.service.ChatRoomUserService;
+import com.tht.domain.entity.chat.service.ChatService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
 

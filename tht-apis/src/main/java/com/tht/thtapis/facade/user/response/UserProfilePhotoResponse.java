@@ -1,8 +1,8 @@
 package com.tht.thtapis.facade.user.response;
 
 
-import com.tht.infra.user.UserProfilePhoto;
-import com.tht.infra.user.mapper.UserProfilePhotoMapper;
+import com.tht.domain.entity.user.UserProfilePhoto;
+import com.tht.domain.entity.user.mapper.UserProfilePhotoMapper;
 
 public record UserProfilePhotoResponse(
     String url,

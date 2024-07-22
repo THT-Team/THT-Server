@@ -2,7 +2,7 @@ package com.tht.thtapis.facade.user;
 
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.user.response.AgreementMainCategoryResponse;
-import com.tht.infra.agreement.AgreementService;
+import com.tht.domain.entity.agreement.AgreementService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 

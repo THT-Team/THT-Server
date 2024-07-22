@@ -1,16 +1,16 @@
 package com.tht.thtapis.acceptance.config;
 
-import com.tht.infra.dailyfalling.DailyFalling;
-import com.tht.infra.dailyfalling.DailyFallingActiveInfo;
+import com.tht.domain.entity.dailyfalling.DailyFalling;
+import com.tht.domain.entity.dailyfalling.DailyFallingActiveInfo;
 import com.tht.enums.dailyfalling.DailyFallingType;
-import com.tht.infra.dailyfalling.repository.DailyFallingActiveTimeTableRepository;
-import com.tht.infra.dailyfalling.repository.DailyFallingRepository;
-import com.tht.infra.idealtype.IdealType;
-import com.tht.infra.idealtype.IdealTypeRepository;
-import com.tht.infra.interesst.Interest;
-import com.tht.infra.interesst.InterestRepository;
-import com.tht.infra.talkkeyword.TalkKeyword;
-import com.tht.infra.talkkeyword.TalkKeywordRepository;
+import com.tht.domain.entity.dailyfalling.repository.DailyFallingActiveTimeTableRepository;
+import com.tht.domain.entity.dailyfalling.repository.DailyFallingRepository;
+import com.tht.domain.entity.idealtype.IdealType;
+import com.tht.domain.entity.idealtype.IdealTypeRepository;
+import com.tht.domain.entity.interesst.Interest;
+import com.tht.domain.entity.interesst.InterestRepository;
+import com.tht.domain.entity.talkkeyword.TalkKeyword;
+import com.tht.domain.entity.talkkeyword.TalkKeywordRepository;
 import com.tht.thtapis.security.TokenProvider;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;

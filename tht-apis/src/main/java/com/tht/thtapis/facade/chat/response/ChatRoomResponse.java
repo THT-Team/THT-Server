@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.chat.response;
 
-import com.tht.infra.chat.mapper.ChatRoomMapper;
+import com.tht.domain.entity.chat.mapper.ChatRoomMapper;
 
 import java.time.format.DateTimeFormatter;
 

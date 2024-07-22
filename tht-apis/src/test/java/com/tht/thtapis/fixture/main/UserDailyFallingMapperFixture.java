@@ -1,7 +1,7 @@
 package com.tht.thtapis.fixture.main;
 
 
-import com.tht.infra.dailyfalling.mapper.UserDailyFallingMapper;
+import com.tht.domain.entity.dailyfalling.mapper.UserDailyFallingMapper;
 
 public class UserDailyFallingMapperFixture {
 

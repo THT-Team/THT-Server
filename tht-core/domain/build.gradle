@@ -2,9 +2,42 @@ bootJar { enabled = false }
 jar { enabled = true }
 
 dependencies {
-
     implementation project(':tht-common-utils')
-    implementation project(':tht-core:infra')
     implementation project(':tht-core:enums')
 
+    testFixturesImplementation project(':tht-core:enums')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation 'com.querydsl:querydsl-core:5.0.0'
+    implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
+    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+
+    //JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
+
+}
+
+// querydsl QClass 파일 생성 위치를 지정
+//def querydslDir = "src/main/generated"
+def querydslDir = layout.buildDirectory.dir("generated/querydsl").get().asFile
+
+sourceSets {
+    main.java.srcDirs += [querydslDir]
+}
+
+configurations {
+    querydsl.extendsFrom compileClasspath
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.getGeneratedSourceOutputDirectory().set(file(querydslDir))
+}
+
+clean.doLast {
+    file(querydslDir).deleteDir()
 }

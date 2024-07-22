@@ -6,7 +6,7 @@ import static org.mockito.BDDMockito.when;
 import java.util.Optional;
 
 import com.tht.thtapis.facade.main.response.DailyFallingResponse;
-import com.tht.infra.dailyfalling.service.DailyFallingActiveService;
+import com.tht.domain.entity.dailyfalling.service.DailyFallingActiveService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
