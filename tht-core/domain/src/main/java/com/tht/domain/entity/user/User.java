@@ -85,7 +85,7 @@ public class User extends Auditable {
     private UserReligion religion;
 
     @Column
-    private Boolean login;
+    private Boolean isLogin;
 
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
@@ -108,7 +108,7 @@ public class User extends Auditable {
         this.drinking = drinking;
         this.smoking = smoking;
         this.religion = religion;
-        this.login = true;
+        this.isLogin = true;
     }
 
     public static User createNewUser(final String username, final LocalDate birthDay,
@@ -187,5 +187,13 @@ public class User extends Auditable {
 
     public void accountWithdrawal() {
         this.state = EntityState.DELETED;
+    }
+
+    public void logout() {
+        this.isLogin = false;
+    }
+
+    public void login() {
+        this.isLogin = true;
     }
 }
