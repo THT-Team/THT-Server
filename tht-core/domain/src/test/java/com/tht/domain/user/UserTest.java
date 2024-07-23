@@ -22,8 +22,16 @@ class UserTest {
     }
 
     @Test
+    @DisplayName("유저 생성 시 login true")
+    void loginMethod() {
+        User newUser = UserFixture.make();
+        assertThat(newUser.getLogin()).isTrue();
+    }
+
+    @Test
     @DisplayName("유저 번호 수정")
     void updatePhoneNumber() {
+
         User newUser = UserFixture.make();
 
         String updateNumber = "123456780";
