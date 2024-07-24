@@ -3,6 +3,7 @@ package com.tht.thtapis.exception;
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
+import com.tht.domain.entity.inquiry.UserInquiryException;
 import com.tht.domain.exception.AligoException;
 import com.tht.domain.exception.EntityStateException;
 import com.tht.enums.EnumStateNotFoundException;
@@ -155,6 +156,15 @@ public class ControllerExceptionHandler {
 
         return ResponseEntity.badRequest().body(
                 ErrorResponse.of(BAD_REQUEST, e.getMessage(), request)
+        );
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorResponse> handlerException(final UserInquiryException e,
+        final HttpServletRequest request) {
+
+        return ResponseEntity.badRequest().body(
+                ErrorResponse.of(e.getHttpStatus(), e.getMessage(), request)
         );
     }
 

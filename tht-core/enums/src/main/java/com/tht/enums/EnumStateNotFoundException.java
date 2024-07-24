@@ -2,6 +2,7 @@ package com.tht.enums;
 
 import com.tht.enums.agreement.AgreementCategory;
 import com.tht.enums.dailyfalling.DailyFallingType;
+import com.tht.enums.inquiry.InquiryStatus;
 import com.tht.enums.user.UserFrequency;
 import com.tht.enums.user.UserReligion;
 import lombok.AccessLevel;
@@ -53,7 +54,11 @@ public class EnumStateNotFoundException extends RuntimeException {
         return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 약관동의 카테고리 타입입니다. (ex) %s", agreementCategoryName, getEnumValueList(AgreementCategory.class)));
     }
 
-    public static EnumStateNotFoundException ofDailyFallingType(String type) {
+    public static EnumStateNotFoundException ofDailyFallingType(final String type) {
         return new EnumStateNotFoundException(String.format("%s는 유효하지 않은 약관동의 카테고리 타입입니다. (ex) %s", type, getEnumValueList(DailyFallingType.class)));
+    }
+
+    public static EnumStateNotFoundException ofInquiryStatus(final String inquiryName) {
+        return new EnumStateNotFoundException(String.format("%s는 유효하지 문의 진행 상황 타입입니다. (ex) %s", inquiryName, getEnumValueList(InquiryStatus.class)));
     }
 }
