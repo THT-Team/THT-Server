@@ -1,4 +1,4 @@
-package com.tht.domain.entity.config;
+package com.tht.domain.config;
 
 import com.querydsl.jpa.JPQLTemplates;
 import com.querydsl.jpa.impl.JPAQueryFactory;

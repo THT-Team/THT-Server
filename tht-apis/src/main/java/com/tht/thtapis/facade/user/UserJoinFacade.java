@@ -1,6 +1,6 @@
 package com.tht.thtapis.facade.user;
 
-import com.tht.domain.entity.config.aligo.AligoUtils;
+import com.tht.domain.config.aligo.AligoUtils;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.exception.UserCustomException;
 import com.tht.domain.entity.user.service.*;

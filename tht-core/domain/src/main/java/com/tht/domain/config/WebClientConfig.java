@@ -1,4 +1,4 @@
-package com.tht.domain.entity.config;
+package com.tht.domain.config;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package com.tht.domain.entity.config;
+package com.tht.domain.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -27,7 +27,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.label.name, 'app')
+    if: contains(github.event.pull_request.labels.*.name, 'app')
 
     permissions:
       contents: read

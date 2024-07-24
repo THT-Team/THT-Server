@@ -1,4 +1,4 @@
-package com.tht.domain.entity.config;
+package com.tht.domain.config;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,10 +1,10 @@
-package com.tht.domain.entity.config.aligo;
+package com.tht.domain.config.aligo;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tht.domain.entity.config.MultiValueMapConverter;
-import com.tht.domain.entity.config.WebClientConfig;
-import com.tht.domain.entity.config.aligo.request.SmsAuthNumberRequest;
+import com.tht.domain.config.MultiValueMapConverter;
+import com.tht.domain.config.WebClientConfig;
+import com.tht.domain.config.aligo.request.SmsAuthNumberRequest;
 import com.tht.domain.exception.AligoException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

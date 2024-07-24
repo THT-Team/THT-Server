@@ -1,4 +1,4 @@
-package com.tht.domain.entity.config.aligo;
+package com.tht.domain.config.aligo;
 
 import org.springframework.context.annotation.Configuration;
 

@@ -56,5 +56,4 @@ public class ErrorResponse {
     public String convertToJson() throws JsonProcessingException {
         return objectMapper.writeValueAsString(this);
     }
-
 }

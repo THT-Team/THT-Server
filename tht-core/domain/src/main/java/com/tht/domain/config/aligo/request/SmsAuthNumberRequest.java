@@ -1,7 +1,7 @@
-package com.tht.domain.entity.config.aligo.request;
+package com.tht.domain.config.aligo.request;
 
 
-import com.tht.domain.entity.config.aligo.AligoConst;
+import com.tht.domain.config.aligo.AligoConst;
 
 public record SmsAuthNumberRequest(String key, String user_id, String sender, String receiver, String msg) {
 
