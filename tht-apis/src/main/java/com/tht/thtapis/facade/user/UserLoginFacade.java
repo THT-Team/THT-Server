@@ -30,6 +30,7 @@ public class UserLoginFacade {
 
         final User user = userService.findByPhoneNumber(request.phoneNumber());
         deviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        user.login();
 
         return getGenerateJWT(user);
     }
@@ -47,6 +48,7 @@ public class UserLoginFacade {
 
         final String userUuid = userSnsService.findUserUuidBySnsIdKey(request.snsType(), request.snsUniqueId());
         final User user = userService.findByUserUuidForAuthToken(userUuid);
+        user.login();
 
         return getGenerateJWT(user);
     }

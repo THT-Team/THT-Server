@@ -84,6 +84,9 @@ public class User extends Auditable {
     @Convert(converter = UserReligionConverter.class)
     private UserReligion religion;
 
+    @Column
+    private Boolean isLogin;
+
     @Builder(access = AccessLevel.PRIVATE)
     public User(final Long idx, final String userUuid, final String username,
                 final LocalDate birthDay, final String phoneNumber,
@@ -105,6 +108,7 @@ public class User extends Auditable {
         this.drinking = drinking;
         this.smoking = smoking;
         this.religion = religion;
+        this.isLogin = true;
     }
 
     public static User createNewUser(final String username, final LocalDate birthDay,
@@ -183,5 +187,13 @@ public class User extends Auditable {
 
     public void accountWithdrawal() {
         this.state = EntityState.DELETED;
+    }
+
+    public void logout() {
+        this.isLogin = false;
+    }
+
+    public void login() {
+        this.isLogin = true;
     }
 }

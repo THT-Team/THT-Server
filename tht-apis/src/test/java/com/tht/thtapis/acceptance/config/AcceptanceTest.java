@@ -2,6 +2,8 @@ package com.tht.thtapis.acceptance.config;
 
 import com.tht.domain.entity.dailyfalling.DailyFalling;
 import com.tht.domain.entity.dailyfalling.DailyFallingActiveInfo;
+import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.repository.UserRepository;
 import com.tht.enums.dailyfalling.DailyFallingType;
 import com.tht.domain.entity.dailyfalling.repository.DailyFallingActiveTimeTableRepository;
 import com.tht.domain.entity.dailyfalling.repository.DailyFallingRepository;
@@ -47,6 +49,9 @@ public abstract class AcceptanceTest {
     @Autowired
     TokenProvider tokenProvider;
 
+    @Autowired
+    UserRepository userRepository;
+
     @LocalServerPort
     private int port;
 
@@ -82,4 +87,12 @@ public abstract class AcceptanceTest {
     public String getUserUuid(String accessToken) {
         return tokenProvider.getAuthentication(accessToken).getCredentials().toString();
     }
+
+    public User 유저정보조회(String phoneNumber) {
+        return userRepository.findByPhoneNumber(phoneNumber)
+            .orElseThrow(
+                () -> new RuntimeException(phoneNumber + " 유저 없음")
+            );
+    }
+
 }

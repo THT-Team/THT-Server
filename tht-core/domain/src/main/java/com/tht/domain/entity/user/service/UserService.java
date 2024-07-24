@@ -100,4 +100,10 @@ public class UserService {
         userWithDrawLogRepository.save(UserWithDrawLog.of(user.getUserUuid(), reason, feedBack));
         save(user);
     }
+
+    public void logout(final User user) {
+
+        user.logout();
+        save(user);
+    }
 }
