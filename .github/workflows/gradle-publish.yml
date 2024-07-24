@@ -9,10 +9,7 @@ name: THT API SERVER
 run-name: ${{ github.actor }} is learning GitHub Actions
 
 on:
-  issues:
-    types:
-      - labeled
-  push:
+  pull_request:
     branches:
       - main
 env:
