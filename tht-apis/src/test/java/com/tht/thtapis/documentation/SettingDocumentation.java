@@ -60,7 +60,7 @@ class SettingDocumentation extends ControllerTestConfig {
                 ))
         );
 
-        resultActions.andExpect(status().isOk());
+        resultActions.andExpect(status().isCreated());
 
     }
 }

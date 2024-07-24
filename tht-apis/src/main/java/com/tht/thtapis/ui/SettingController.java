@@ -5,6 +5,7 @@ import com.tht.thtapis.facade.setting.InquiryRequest;
 import com.tht.thtapis.facade.setting.SettingFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,6 +23,6 @@ public class SettingController {
                                           @RequestBody @Valid InquiryRequest request) {
 
         settingFacade.inquiry(user.getUserUuid(), request);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
