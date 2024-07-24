@@ -9,7 +9,7 @@ import static com.tht.thtapis.acceptance.UserLogoutAcceptanceStep.로그아웃_�
 import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserLogoutAcceptance extends AcceptanceTest {
+class UserLogoutAcceptanceTest extends AcceptanceTest {
 
     @Test
     @DisplayName("유저 로그아웃 성공 인수테스트")
