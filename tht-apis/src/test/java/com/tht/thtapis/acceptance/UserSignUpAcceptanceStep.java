@@ -79,17 +79,23 @@ public class UserSignUpAcceptanceStep {
     public static ExtractableResponse<Response> SNS_유저_생성(final String phoneNumber, final String email, final SNSType snsType,
                                                           final String snsUniqueId, final String deviceKey) {
 
-        RestAssured.given().log().all()
+        return RestAssured.given().log().all()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
             .body(createSNSUserJoinRequest(phoneNumber, email, snsType, snsUniqueId, deviceKey))
             .when().post("/users/join/signup")
             .then().log().all().extract();
 
+
+    }
+
+    public static ExtractableResponse<Response> SNS_유저_통합(final String phoneNumber, final String email, final SNSType snsType,
+                                                          final String snsUniqueId, final String deviceKey) {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("email", email);
         requestBody.put("snsType", snsType.name());
         requestBody.put("snsUniqueId", snsUniqueId);
         requestBody.put("deviceKey", deviceKey);
+        requestBody.put("phoneNumber", phoneNumber);
 
         return RestAssured.given().log().all()
             .contentType(MediaType.APPLICATION_JSON_VALUE)
