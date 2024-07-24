@@ -12,6 +12,14 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'tht-apis/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'tht-apis/**'
+
 env:
   AWS_CODE_DEPLOY_APPLICATION: THT-ApiServer-GitAction
   AWS_CODE_DEPLOY_GROUP: THT-ApiServer-GitAction-SingleServer
