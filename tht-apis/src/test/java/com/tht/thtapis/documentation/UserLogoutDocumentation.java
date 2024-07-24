@@ -34,7 +34,7 @@ class UserLogoutDocumentation extends ControllerTestConfig {
             .accept(MediaType.APPLICATION_JSON)
             .header(SecurityConst.AUTH_HEADER_NAME, "Bearer {ACCESS_TOKEN}")
         ).andDo(
-            document("로으가웃 api docs",
+            document("로그아웃 api docs",
                 resource(
                     ResourceSnippetParameters.builder()
                         .tag("유저 - 로그아웃")
