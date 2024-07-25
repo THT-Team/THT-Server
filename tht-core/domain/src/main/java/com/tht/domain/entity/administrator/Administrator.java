@@ -1,6 +1,7 @@
 package com.tht.domain.entity.administrator;
 
 import com.tht.enums.user.UserRole;
+import com.tht.enums.user.converter.UserRoleConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +22,7 @@ public class Administrator {
     @Column
     private String username;
     @Column
+    @Convert(converter = UserRoleConverter.class)
     private UserRole role;
 
     public Administrator(String id, String password, String username) {

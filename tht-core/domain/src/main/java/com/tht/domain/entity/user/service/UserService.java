@@ -9,6 +9,8 @@ import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.UserWithDrawLog;
 import com.tht.domain.entity.user.repository.UserWithDrawLogRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -105,5 +107,9 @@ public class UserService {
 
         user.logout();
         save(user);
+    }
+
+    public Page<User> getSimpleUserPageList(final String search, final Pageable pageable) {
+        return userRepository.getUserListForPage(search, pageable);
     }
 }
