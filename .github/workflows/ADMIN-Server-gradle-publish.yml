@@ -5,20 +5,15 @@
 # This workflow will build a package using Gradle and then publish it to GitHub packages when a release is created
 # For more information see: https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Publishing-using-gradle
 
-name: THT API SERVER
+name: THT ADMIN SERVER
 run-name: ${{ github.actor }} is learning GitHub Actions
 
 on:
   pull_request:
+    types:
+      - closed
     branches:
       - main
-    paths:
-      - 'tht-apis/**'
-  push:
-    branches:
-      - main
-    paths:
-      - 'tht-apis/**'
 
 env:
   AWS_CODE_DEPLOY_APPLICATION: THT-ApiServer-GitAction
@@ -27,7 +22,7 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: contains(github.event.pull_request.labels.*.name, 'app')
+    if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'admin')
 
     permissions:
       contents: read
@@ -70,7 +65,7 @@ jobs:
             ${{ github.repository }}-gradle-
           
       - name: Build with Gradle
-        run: ./gradlew clean tht-apis:clean tht-apis:build
+        run: ./gradlew clean tht-admin:clean tht-admin:build
 
       - name: make env now date
         id: now
@@ -80,16 +75,3 @@ jobs:
         id: file
         run: zip -qq -r ./deployfile-${{ steps.now.outputs.date }}.zip .
         shell: bash
-
-      - name: AWS credential
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-region: ${{ secrets.AWS_REGION }}
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Upload to AWS S3
-        run: aws s3 cp ./deployfile-${{ steps.now.outputs.date }}.zip s3://${{ secrets.S3_DEPLOY_BUCKET }}/deployfile-${{ steps.now.outputs.date }}.zip
-
-      - name: Deploy EC2
-        run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=${{ secrets.S3_DEPLOY_BUCKET }},key=deployfile-${{ steps.now.outputs.date }}.zip,bundleType=zip
