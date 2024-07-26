@@ -19,11 +19,10 @@ springdoc:
     default-produces-media-type: application/json;charset=UTF-8
     swagger-ui:
         url: /docs/open-api-3.0.1.json
-        path: /
+        path: /docs
 
 logging:
     level:
-        p6spy: info
         org:
             hibernate:
                 SQL: DEBUG

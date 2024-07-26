@@ -19,6 +19,13 @@ public class SecurityConfiguration {
     private final JwtFilter jwtFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
 
+    private static final String[] SWAGGER_URL_ARRAY = {
+        /* swagger v3 */
+        "/v3/api-docs/**",
+        "/swagger-ui/**",
+        "docs/**",
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 
@@ -34,6 +41,7 @@ public class SecurityConfiguration {
                     .requestMatchers("/error").permitAll()
                     .requestMatchers("login").permitAll()
                     .requestMatchers("create").permitAll()
+                    .requestMatchers(SWAGGER_URL_ARRAY).permitAll()
                     .anyRequest().hasAuthority("ADMIN")
 
                     .and()
