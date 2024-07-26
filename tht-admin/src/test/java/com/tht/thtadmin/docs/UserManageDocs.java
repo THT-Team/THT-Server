@@ -58,7 +58,7 @@ class UserManageDocs extends ControllerTestConfig {
                 resource(ResourceSnippetParameters.builder()
                     .tag("회원 관리")
                     .description("전체 회원 리스트 조회 및 검색")
-                    .pathParameters(
+                    .queryParameters(
                         parameterWithName("search").optional().description("검색 이름"),
                         parameterWithName("size").optional().description("페이지 사이즈"),
                         parameterWithName("page").optional().description("검색할 페이지"),
