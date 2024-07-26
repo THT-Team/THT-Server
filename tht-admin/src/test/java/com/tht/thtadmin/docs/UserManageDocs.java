@@ -4,9 +4,11 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.thtadmin.docs.config.ControllerTestConfig;
 import com.tht.thtadmin.docs.config.WithCustomMockUser;
+import com.tht.thtadmin.fixture.user.UserDetailResponseFixture;
 import com.tht.thtadmin.fixture.user.UserSimpleListResponseFixture;
 import com.tht.thtadmin.ui.user.UserManageController;
 import com.tht.thtadmin.ui.user.UserManageUseCase;
+import com.tht.thtadmin.ui.user.response.UserDetailResponse;
 import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +46,7 @@ class UserManageDocs extends ControllerTestConfig {
         when(userManageUseCase.getUserList(anyString(), any()))
             .thenReturn(new PageImpl<>(List.of(response), PageRequest.of(0, 10), 1));
 
-        ResultActions resultActions = ControllerTestConfig.mockMvc.perform(
+        ResultActions resultActions = mockMvc.perform(
                 get("/users?page=0&size=10&search=")
                     .accept(MediaType.APPLICATION_JSON)
                     .contentType(MediaType.APPLICATION_JSON)
@@ -54,7 +56,7 @@ class UserManageDocs extends ControllerTestConfig {
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(ResourceSnippetParameters.builder()
-                    .tag("회원관리")
+                    .tag("회원 관리")
                     .description("전체 회원 리스트 조회 및 검색")
                     .pathParameters(
                         parameterWithName("search").optional().description("검색 이름"),
@@ -93,5 +95,40 @@ class UserManageDocs extends ControllerTestConfig {
             ));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("회원 상세 조회")
+    void getUser() throws Exception {
+
+        final String userUuid = "user-uuid";
+        UserDetailResponse response = UserDetailResponseFixture.make();
+
+        when(userManageUseCase.getUserDetail(anyString())).thenReturn(response);
+
+        //then
+        mockMvc.perform(
+            get("/user/{user-uuid}", userUuid)
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+
+        ).andDo(document("회원 정보 상세 조회 api",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(ResourceSnippetParameters.builder()
+                    .tag("회원 관리")
+                    .description("회원 정보 상세 조회")
+                    .pathParameters(
+                        parameterWithName("user-uuid").description("유저 고유 넘버")
+                        )
+                    .requestFields()
+                    .responseFields(
+                    )
+                    .responseSchema(Schema.schema("UserDetailResponse"))
+                    .build())
+            )
+        );
     }
 }

@@ -2,6 +2,7 @@ package com.tht.thtadmin.ui.user;
 
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.service.UserService;
+import com.tht.thtadmin.ui.user.response.UserDetailResponse;
 import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,5 +35,9 @@ public class UserManageUseCase {
             .toList();
 
         return new PageImpl<>(responses, pageable, pageResult.getTotalElements());
+    }
+
+    public UserDetailResponse getUserDetail(final String userUuid) {
+        return null;
     }
 }
