@@ -2,6 +2,10 @@ package com.tht.thtadmin.docs;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.tht.enums.EnumDocsUtils;
+import com.tht.enums.user.Gender;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtadmin.docs.config.ControllerTestConfig;
 import com.tht.thtadmin.docs.config.WithCustomMockUser;
 import com.tht.thtadmin.fixture.user.UserDetailResponseFixture;
@@ -65,7 +69,6 @@ class UserManageDocs extends ControllerTestConfig {
                         parameterWithName("sort").optional().ignored().description("정렬 타입"),
                         parameterWithName("direction").optional().ignored().description("정렬 방식")
                     )
-                    .requestFields()
                     .responseFields(
                         fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
                         fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
@@ -122,10 +125,26 @@ class UserManageDocs extends ControllerTestConfig {
                     .description("회원 정보 상세 조회")
                     .pathParameters(
                         parameterWithName("user-uuid").description("유저 고유 넘버")
-                        )
-                    .requestFields()
-                    .responseFields(
                     )
+                    .requestFields(
+                        fieldWithPath("phoneNumber").description("회원 전화번호"),
+                        fieldWithPath("username").description("회원 닉네임"),
+                        fieldWithPath("birthDay").description("생년월일"),
+                        fieldWithPath("email").description("이메일"),
+                        fieldWithPath("snsSignUpList").description("SNS 통합 회원가입 리스트"),
+                        fieldWithPath("serviceAgreeList").description("서비스 이용약관 동의 리스트"),
+                        fieldWithPath("gender").description(String.format("성별 [%s]", EnumDocsUtils.getTypesFieldList(Gender.class))),
+                        fieldWithPath("preferGender").description(String.format("선호성별 [%s]", EnumDocsUtils.getTypesFieldList(Gender.class))),
+                        fieldWithPath("profileUrl").description("회원 프로필 사진"),
+                        fieldWithPath("tall").description("키"),
+                        fieldWithPath("drinkStatus").description(String.format("음주 여부 [%s]", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
+                        fieldWithPath("religion").description(String.format("종교 [%s]", EnumDocsUtils.getTypesFieldList(UserReligion.class))),
+                        fieldWithPath("smokingStatus").description(String.format("흡연 여부 [%s]", UserFrequency.class)),
+                        fieldWithPath("userLocation").description("유저 집주소"),
+                        fieldWithPath("interests").description("유저가 선택한 관심사 목록"),
+                        fieldWithPath("idealTypes").description("유저가 선택한 이상형 목록")
+                    )
+                    .responseFields()
                     .responseSchema(Schema.schema("UserDetailResponse"))
                     .build())
             )
