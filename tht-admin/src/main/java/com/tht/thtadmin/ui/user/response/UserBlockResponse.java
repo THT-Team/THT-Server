@@ -16,8 +16,3 @@ public record UserBlockResponse(
 ) {
 }
 
-record BlockedUserInfoDto(
-   String userUuid,
-   String blockedUserName,
-   String blockDateTime
-) { }

@@ -32,9 +32,10 @@ public class UserManageController {
 
     //차단 회원 리스트
     @GetMapping("/users/block")
-    public ResponseEntity<Page<UserBlockResponse>> getBlockList() {
+    public ResponseEntity<Page<UserBlockResponse>> getBlockList(@PageableDefault(size = 100) Pageable pageable) {
 
-        return null;
+        final Page<UserBlockResponse> responses = userManageUseCase.getBlockUserList(pageable);
+        return ResponseEntity.ok(responses);
     }
 
     //신고 회원 리스트
