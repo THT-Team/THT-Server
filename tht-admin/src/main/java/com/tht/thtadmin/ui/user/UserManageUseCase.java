@@ -30,6 +30,7 @@ public class UserManageUseCase {
             .stream()
             .map(user -> UserSimpleListResponse.of(
                 user.getUsername(),
+                user.getUserUuid(),
                 user.getCreatedAt(),
                 user.getState())
             )

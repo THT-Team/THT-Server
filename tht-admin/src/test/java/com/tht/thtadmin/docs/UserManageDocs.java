@@ -71,6 +71,7 @@ class UserManageDocs extends ControllerTestConfig {
                     )
                     .responseFields(
                         fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                        fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
                         fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
                         fieldWithPath("content[].userSate").type(JsonFieldType.STRING).description("유저 활동 상태"),
                         fieldWithPath("pageable.sort.empty").description("정렬이 비어있는지 여부"),

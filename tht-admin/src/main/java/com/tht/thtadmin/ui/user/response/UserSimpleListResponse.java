@@ -7,13 +7,14 @@ import java.time.LocalDateTime;
 
 public record UserSimpleListResponse(
     String username,
+    String userUuid,
     String createdAt,
     EntityState userSate
 ) {
 
-    public static UserSimpleListResponse of(final String username, final LocalDateTime createdAt, final EntityState userSate) {
+    public static UserSimpleListResponse of(final String username, final String uuid, final LocalDateTime createdAt, final EntityState userSate) {
 
         final String convertCreateAt = createdAt.format(CustomDateFormatUtils.getDateTimeInstance());
-        return new UserSimpleListResponse(username, convertCreateAt, userSate);
+        return new UserSimpleListResponse(username, uuid, convertCreateAt, userSate);
     }
 }

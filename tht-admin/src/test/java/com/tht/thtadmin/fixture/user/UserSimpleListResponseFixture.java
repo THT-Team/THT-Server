@@ -9,10 +9,11 @@ import java.time.LocalDateTime;
 public class UserSimpleListResponseFixture {
 
         private static final String username = "유저 닉네밈";
+        private static final String uuid = "user uuid";
         private static final String createdAt = LocalDateTime.now().format(CustomDateFormatUtils.getDateTimeInstance());
         private static final EntityState sate = EntityState.ACTIVE;
 
     public static UserSimpleListResponse make() {
-        return new UserSimpleListResponse(username, createdAt, sate);
+        return new UserSimpleListResponse(username, uuid, createdAt, sate);
     }
 }
