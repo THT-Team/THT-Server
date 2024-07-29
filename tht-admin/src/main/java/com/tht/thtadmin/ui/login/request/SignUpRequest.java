@@ -1,4 +1,4 @@
-package com.tht.thtadmin.ui.login;
+package com.tht.thtadmin.ui.login.request;
 
 import jakarta.validation.constraints.NotEmpty;
 

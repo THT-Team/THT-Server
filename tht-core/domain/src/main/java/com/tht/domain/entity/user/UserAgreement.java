@@ -1,5 +1,6 @@
 package com.tht.domain.entity.user;
 
+import com.tht.enums.agreement.AgreementCategory;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -74,5 +75,15 @@ public class UserAgreement {
 
     public void modifyMarketingAgree(final boolean marketingAlarm) {
         this.marketingAgree = marketingAlarm;
+    }
+
+    public boolean getAgreementStatus(final AgreementCategory category) {
+        return switch (category) {
+            case SERVICE_USE_AGREE -> serviceUseAgree;
+            case PERSONAL_PRIVACY_INFO_AGREE -> personalPrivacyInfoAgree;
+            case LOCATION_SERVICE_AGREE -> locationServiceAgree;
+            case MARKETING_AGREE -> marketingAgree;
+            default -> throw new IllegalArgumentException("Unknown AgreementCategory: " + category);
+        };
     }
 }

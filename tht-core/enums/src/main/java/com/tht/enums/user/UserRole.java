@@ -1,7 +1,6 @@
 package com.tht.enums.user;
 
 
-
 import com.tht.enums.EnumStateNotFoundException;
 
 import java.util.Arrays;

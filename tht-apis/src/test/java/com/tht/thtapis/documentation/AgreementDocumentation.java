@@ -1,6 +1,7 @@
 package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
+import com.tht.enums.EnumDocsUtils;
 import com.tht.enums.agreement.AgreementCategory;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.controller.config.WithCustomMockUser;

@@ -1,6 +1,8 @@
 package com.tht.thtadmin.ui.login;
 
 import com.tht.thtadmin.security.TokenDto;
+import com.tht.thtadmin.ui.login.request.LoginRequest;
+import com.tht.thtadmin.ui.login.request.SignUpRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -2,6 +2,7 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.tht.enums.EnumDocsUtils;
 import com.tht.enums.user.Gender;
 import com.tht.enums.user.UserFrequency;
 import com.tht.enums.user.UserReligion;

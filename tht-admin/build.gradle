@@ -1,3 +1,14 @@
+buildscript {
+    ext {
+        restdocsApiSpecVersion = '0.18.2' // restdocsApiSpecVersion 버전 변수 설정
+    }
+}
+
+plugins{
+    id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
+    id 'org.hidetake.swagger.generator' version '2.18.2'
+}
+
 bootJar { enabled = true }
 jar { enabled = true }
 
@@ -21,5 +32,48 @@ dependencies {
     //h2
     implementation 'com.h2database:h2'
 
+    //spring rest docs
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:' + restdocsApiSpecVersion
+
+    // Swagger ui
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+
+}
+
+openapi3 {
+    server = "http://localhost:8080"
+    title = "THT ADMIN API 문서"
+    description = "Spring REST Docs with SwaggerUI."
+    version = "0.0.1"
+    outputFileNamePrefix = 'open-api-3.0.1'
+    format = 'json'
+
+    // src/main/resources/static/docs/open-api-3.0.1.json 생성
+    outputDirectory = 'build/resources/main/static/docs'
+}
+
+// Task 및 설정 추가
+// GenerateSwaggerUI 태스크가, openapi3 task 를 의존하도록 설정
+tasks.withType(GenerateSwaggerUI).configureEach {
+    dependsOn 'openapi3'
+}
+
+tasks.named('test') {
+    finalizedBy 'openapi3' // added
+}
+
+//openAPI 작성 자동화를 위해 패키징 전에 openapi3 테스크 선실행을 유발
+bootJar{
+    dependsOn(':tht-admin:openapi3')
+
+    delete file('src/main/resources/static/docs/')
+    copy {
+        from "build/resources/main/static/docs"
+        into "src/main/resources/static/docs/"
+
+    }
 }
 

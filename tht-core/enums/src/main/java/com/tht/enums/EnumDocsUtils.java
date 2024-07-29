@@ -1,7 +1,5 @@
-package com.tht.thtapis.documentation;
+package com.tht.enums;
 
-
-import com.tht.enums.EnumModel;
 
 import java.util.Arrays;
 
