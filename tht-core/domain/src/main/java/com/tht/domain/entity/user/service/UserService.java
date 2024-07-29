@@ -1,5 +1,6 @@
 package com.tht.domain.entity.user.service;
 
+import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
 import com.tht.enums.EntityState;
 import com.tht.enums.user.Gender;
 import com.tht.domain.entity.user.exception.UserCustomException;
@@ -14,6 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -112,4 +115,16 @@ public class UserService {
     public Page<User> getSimpleUserPageList(final String search, final Pageable pageable) {
         return userRepository.getUserListForPage(search, pageable);
     }
+
+    public UserDetailDto getDetailForAdmin(final String userUuid) {
+        final List<UserDetailMapper> detailInfo = userRepository.getDetailInfo(userUuid);
+
+        if (detailInfo.isEmpty()) {
+            throw UserCustomException.notExistUuid(userUuid);
+        }
+
+        return UserDetailDto.ofMapper(detailInfo);
+
+    }
+
 }

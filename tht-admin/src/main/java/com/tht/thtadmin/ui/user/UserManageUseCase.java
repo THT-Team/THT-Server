@@ -1,6 +1,7 @@
 package com.tht.thtadmin.ui.user;
 
 import com.tht.domain.entity.user.User;
+import com.tht.domain.entity.user.service.UserDetailDto;
 import com.tht.domain.entity.user.service.UserService;
 import com.tht.thtadmin.ui.user.response.UserDetailResponse;
 import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
@@ -38,6 +39,8 @@ public class UserManageUseCase {
     }
 
     public UserDetailResponse getUserDetail(final String userUuid) {
-        return null;
+        final UserDetailDto dto = userService.getDetailForAdmin(userUuid);
+        return UserDetailResponse.toResponse(dto);
     }
+
 }

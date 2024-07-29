@@ -126,16 +126,24 @@ class UserManageDocs extends ControllerTestConfig {
                     .pathParameters(
                         parameterWithName("user-uuid").description("유저 고유 넘버")
                     )
-                    .requestFields(
+                    .requestFields()
+                    .responseFields(
                         fieldWithPath("phoneNumber").description("회원 전화번호"),
                         fieldWithPath("username").description("회원 닉네임"),
                         fieldWithPath("birthDay").description("생년월일"),
                         fieldWithPath("email").description("이메일"),
                         fieldWithPath("snsSignUpList").description("SNS 통합 회원가입 리스트"),
                         fieldWithPath("serviceAgreeList").description("서비스 이용약관 동의 리스트"),
+                        fieldWithPath("serviceAgreeList.PERSONAL_PRIVACY_INFO_AGREE").description("개인정보 이용약관 동의 여부"),
+                        fieldWithPath("serviceAgreeList.LOCATION_SERVICE_AGREE").description("위치정보 이용약관 동의 여부"),
+                        fieldWithPath("serviceAgreeList.SERVICE_USE_AGREE").description("서비스 이용약관 동의 여부"),
+                        fieldWithPath("serviceAgreeList.MARKETING_AGREE").description("마케팅 정보 이용약관 동의 여부"),
                         fieldWithPath("gender").description(String.format("성별 [%s]", EnumDocsUtils.getTypesFieldList(Gender.class))),
                         fieldWithPath("preferGender").description(String.format("선호성별 [%s]", EnumDocsUtils.getTypesFieldList(Gender.class))),
                         fieldWithPath("profileUrl").description("회원 프로필 사진"),
+                        fieldWithPath("profileUrl.1").description("대표 사진"),
+                        fieldWithPath("profileUrl.2").description("사진 1"),
+                        fieldWithPath("profileUrl.3").description("사진 2"),
                         fieldWithPath("tall").description("키"),
                         fieldWithPath("drinkStatus").description(String.format("음주 여부 [%s]", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
                         fieldWithPath("religion").description(String.format("종교 [%s]", EnumDocsUtils.getTypesFieldList(UserReligion.class))),
@@ -144,7 +152,6 @@ class UserManageDocs extends ControllerTestConfig {
                         fieldWithPath("interests").description("유저가 선택한 관심사 목록"),
                         fieldWithPath("idealTypes").description("유저가 선택한 이상형 목록")
                     )
-                    .responseFields()
                     .responseSchema(Schema.schema("UserDetailResponse"))
                     .build())
             )

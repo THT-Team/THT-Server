@@ -25,7 +25,7 @@ class UserTest {
     @DisplayName("유저 생성 시 login true")
     void loginMethod() {
         User newUser = UserFixture.make();
-        assertThat(newUser.getLogin()).isTrue();
+        assertThat(newUser.getIsLogin()).isTrue();
     }
 
     @Test

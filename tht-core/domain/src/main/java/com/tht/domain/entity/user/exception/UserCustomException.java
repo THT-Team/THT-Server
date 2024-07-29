@@ -56,11 +56,15 @@ public class UserCustomException extends RuntimeException {
     }
 
     public static UserCustomException noneValidUuidToAuth(final String userUuid) {
+        return new UserCustomException(userUuid + " 는 존재하지 않는 회원번호 입니다.", HttpStatus.UNAUTHORIZED);
+    }
+
+    public static UserCustomException notExistUuid(final String userUuid) {
         return new UserCustomException(userUuid + " 는 존재하지 않는 회원번호 입니다.");
     }
 
     public static UserCustomException noneValidPhoneNumberToAuth(final String phoneNumber) {
-        return new UserCustomException(phoneNumber + " 는 유효하지 않은 회원 전화번호 입니다.");
+        return new UserCustomException(phoneNumber + " 는 유효하지 않은 회원 전화번호 입니다.", HttpStatus.UNAUTHORIZED);
     }
 
 }
