@@ -1,5 +1,6 @@
 package com.tht.thtadmin.ui.user;
 
+import com.tht.domain.entity.block.UserBlockService;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.service.UserDetailDto;
 import com.tht.domain.entity.user.service.UserService;
@@ -21,6 +22,7 @@ import java.util.List;
 public class UserManageUseCase {
 
     private final UserService userService;
+    private final UserBlockService userBlockService;
 
     public Page<UserSimpleListResponse> getUserList(final String search, final Pageable pageable) {
 
@@ -46,6 +48,6 @@ public class UserManageUseCase {
     }
 
     public Page<UserBlockResponse> getBlockUserList(final Pageable pageable) {
-        return null;
+        return userBlockService.getBlockList(pageable);
     }
 }

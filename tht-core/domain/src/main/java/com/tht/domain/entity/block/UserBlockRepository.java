@@ -1,6 +1,5 @@
-package com.tht.domain.entity.user.repository;
+package com.tht.domain.entity.block;
 
-import com.tht.domain.entity.user.UserBlock;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserBlockRepository extends JpaRepository<UserBlock, Long> {
