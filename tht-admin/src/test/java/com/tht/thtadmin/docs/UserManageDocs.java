@@ -10,11 +10,13 @@ import com.tht.thtadmin.docs.config.ControllerTestConfig;
 import com.tht.thtadmin.docs.config.WithCustomMockUser;
 import com.tht.thtadmin.fixture.user.UserBlockResponseFixture;
 import com.tht.thtadmin.fixture.user.UserDetailResponseFixture;
+import com.tht.thtadmin.fixture.user.UserReportResponseFixture;
 import com.tht.thtadmin.fixture.user.UserSimpleListResponseFixture;
 import com.tht.thtadmin.ui.user.UserManageController;
 import com.tht.thtadmin.ui.user.UserManageUseCase;
 import com.tht.thtadmin.ui.user.response.UserBlockResponse;
 import com.tht.thtadmin.ui.user.response.UserDetailResponse;
+import com.tht.thtadmin.ui.user.response.UserReportResponse;
 import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,11 +25,12 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.List;
+import java.util.*;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -72,29 +75,12 @@ class UserManageDocs extends ControllerTestConfig {
                         parameterWithName("direction").optional().ignored().description("정렬 방식")
                     )
                     .responseFields(
-                        fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
-                        fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
-                        fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
-                        fieldWithPath("content[].userSate").type(JsonFieldType.STRING).description("유저 활동 상태"),
-                        fieldWithPath("pageable.sort.empty").description("정렬이 비어있는지 여부"),
-                        fieldWithPath("pageable.sort.sorted").description("내용이 정렬되었는지 여부"),
-                        fieldWithPath("pageable.sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
-                        fieldWithPath("pageable.offset").description("현재 페이지의 오프셋"),
-                        fieldWithPath("pageable.pageNumber").description("현재 페이지 번호"),
-                        fieldWithPath("pageable.pageSize").description("페이지당 항목 수"),
-                        fieldWithPath("pageable.paged").description("페이지 매김이 활성화되었는지 여부"),
-                        fieldWithPath("pageable.unpaged").description("페이지 매김이 비활성화되었는지 여부"),
-                        fieldWithPath("last").description("마지막 페이지인지 여부"),
-                        fieldWithPath("totalElements").description("전체 요소 수"),
-                        fieldWithPath("totalPages").description("전체 페이지 수"),
-                        fieldWithPath("first").description("첫 번째 페이지인지 여부"),
-                        fieldWithPath("size").description("페이지 크기"),
-                        fieldWithPath("number").description("현재 페이지 번호"),
-                        fieldWithPath("sort.empty").description("정렬이 비어있는지 여부"),
-                        fieldWithPath("sort.sorted").description("내용이 정렬되었는지 여부"),
-                        fieldWithPath("sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
-                        fieldWithPath("numberOfElements").description("현재 페이지의 요소 수"),
-                        fieldWithPath("empty").description("현재 페이지가 비어 있는지 여부")
+                        getPagingFieldDescriptors(List.of(
+                            fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                            fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
+                            fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
+                            fieldWithPath("content[].userSate").type(JsonFieldType.STRING).description("유저 활동 상태")
+                        ))
                     )
                     .responseSchema(Schema.schema("UserSimpleListResponse"))
                     .build())
@@ -190,38 +176,95 @@ class UserManageDocs extends ControllerTestConfig {
                     parameterWithName("direction").optional().ignored().description("정렬 방식")
                 )
                 .responseFields(
-                    fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
-                    fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
-                    fieldWithPath("content[].currentBlockDate").type(JsonFieldType.STRING).description("가장 최근 차단 시간"),
-                    fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
-                    fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
-                    fieldWithPath("content[].blockCount").type(JsonFieldType.NUMBER).description("총 받은 차단 횟수"),
 
-                    fieldWithPath("pageable.sort.empty").description("정렬이 비어있는지 여부"),
-                    fieldWithPath("pageable.sort.sorted").description("내용이 정렬되었는지 여부"),
-                    fieldWithPath("pageable.sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
-                    fieldWithPath("pageable.offset").description("현재 페이지의 오프셋"),
-                    fieldWithPath("pageable.pageNumber").description("현재 페이지 번호"),
-                    fieldWithPath("pageable.pageSize").description("페이지당 항목 수"),
-                    fieldWithPath("pageable.paged").description("페이지 매김이 활성화되었는지 여부"),
-                    fieldWithPath("pageable.unpaged").description("페이지 매김이 비활성화되었는지 여부"),
-                    fieldWithPath("last").description("마지막 페이지인지 여부"),
-                    fieldWithPath("totalElements").description("전체 요소 수"),
-                    fieldWithPath("totalPages").description("전체 페이지 수"),
-                    fieldWithPath("first").description("첫 번째 페이지인지 여부"),
-                    fieldWithPath("size").description("페이지 크기"),
-                    fieldWithPath("number").description("현재 페이지 번호"),
-                    fieldWithPath("sort.empty").description("정렬이 비어있는지 여부"),
-                    fieldWithPath("sort.sorted").description("내용이 정렬되었는지 여부"),
-                    fieldWithPath("sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
-                    fieldWithPath("numberOfElements").description("현재 페이지의 요소 수"),
-                    fieldWithPath("empty").description("현재 페이지가 비어 있는지 여부")
+                    getPagingFieldDescriptors(List.of(
+                        fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                        fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
+                        fieldWithPath("content[].currentBlockDate").type(JsonFieldType.STRING).description("가장 최근 차단 시간"),
+                        fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
+                        fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
+                        fieldWithPath("content[].blockCount").type(JsonFieldType.NUMBER).description("총 받은 차단 횟수")
+                    ))
                 )
                 .responseSchema(Schema.schema("UserBlockResponse"))
                 .build())
         ));
 
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 신고 목록 리스트")
+    @WithCustomMockUser
+    void reportUsers() throws Exception {
+
+        UserReportResponse response = UserReportResponseFixture.make();
+        PageImpl<UserReportResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0, 10), 1);
+
+        when(userManageUseCase.getReportUserList(any())).thenReturn(page);
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            get("/users/report")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+        ).andDo(document("회원 신고 목록 리스트",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            resource(ResourceSnippetParameters.builder()
+                .tag("회원 관리")
+                .description("회원 신고 목록 리스트")
+                .queryParameters(
+                    parameterWithName("size").optional().description("페이지 사이즈"),
+                    parameterWithName("page").optional().description("검색할 페이지"),
+                    parameterWithName("sort").optional().ignored().description("정렬 타입"),
+                    parameterWithName("direction").optional().ignored().description("정렬 방식")
+                )
+                .responseFields(getPagingFieldDescriptors(List.of(
+                    fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                    fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
+                    fieldWithPath("content[].reportDate").type(JsonFieldType.STRING).description("가장 최근 신고당한 시간"),
+                    fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
+                    fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
+                    fieldWithPath("content[].preferGender").type(JsonFieldType.STRING).description("선호 성별"),
+                    fieldWithPath("content[].reportCount").type(JsonFieldType.NUMBER).description("총 받은 신고 횟수"),
+                    fieldWithPath("content[].reportedUserName").type(JsonFieldType.STRING).description("신고한 유저 이름"),
+                    fieldWithPath("content[].reason").type(JsonFieldType.STRING).description("신고한 이유")
+                )))
+                .responseSchema(Schema.schema("UserBlockResponse"))
+                .build())
+        ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    private static FieldDescriptor[] getPagingFieldDescriptors(List<FieldDescriptor> apiFieldDescriptors) {
+
+        List<FieldDescriptor> fieldDescriptors = new ArrayList<>(List.of(
+            fieldWithPath("pageable.sort.empty").description("정렬이 비어있는지 여부"),
+            fieldWithPath("pageable.sort.sorted").description("내용이 정렬되었는지 여부"),
+            fieldWithPath("pageable.sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
+            fieldWithPath("pageable.offset").description("현재 페이지의 오프셋"),
+            fieldWithPath("pageable.pageNumber").description("현재 페이지 번호"),
+            fieldWithPath("pageable.pageSize").description("페이지당 항목 수"),
+            fieldWithPath("pageable.paged").description("페이지 매김이 활성화되었는지 여부"),
+            fieldWithPath("pageable.unpaged").description("페이지 매김이 비활성화되었는지 여부"),
+            fieldWithPath("last").description("마지막 페이지인지 여부"),
+            fieldWithPath("totalElements").description("전체 요소 수"),
+            fieldWithPath("totalPages").description("전체 페이지 수"),
+            fieldWithPath("first").description("첫 번째 페이지인지 여부"),
+            fieldWithPath("size").description("페이지 크기"),
+            fieldWithPath("number").description("현재 페이지 번호"),
+            fieldWithPath("sort.empty").description("정렬이 비어있는지 여부"),
+            fieldWithPath("sort.sorted").description("내용이 정렬되었는지 여부"),
+            fieldWithPath("sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
+            fieldWithPath("numberOfElements").description("현재 페이지의 요소 수"),
+            fieldWithPath("empty").description("현재 페이지가 비어 있는지 여부")
+        ));
+
+        fieldDescriptors.addAll(apiFieldDescriptors);
+        return fieldDescriptors.toArray(FieldDescriptor[]::new);
     }
 
 }

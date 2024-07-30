@@ -40,9 +40,10 @@ public class UserManageController {
 
     //신고 회원 리스트
     @GetMapping("/users/report")
-    public ResponseEntity<Page<UserReportResponse>> getUserReport() {
+    public ResponseEntity<Page<UserReportResponse>> getUserReport(@PageableDefault(size = 100) Pageable pageable) {
 
-        return null;
+        final Page<UserReportResponse> responses = userManageUseCase.getReportUserList(pageable);
+        return ResponseEntity.ok(responses);
     }
 
     //탈퇴 요청 회원 리스트

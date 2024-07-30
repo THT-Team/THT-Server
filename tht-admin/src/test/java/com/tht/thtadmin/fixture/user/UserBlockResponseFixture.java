@@ -11,7 +11,7 @@ public class UserBlockResponseFixture {
     private static final Gender gender = Gender.MALE;
     private static final EntityState userStatus = EntityState.ACTIVE;
     private static final int blockCount = 10;
-    private static final String currentBlockDate = "2024.05.16";
+    private static final String currentBlockDate = "2024-07-30 15:29:16";
 
     public static UserBlockResponse make() {
         return new UserBlockResponse(userUuid, username, gender, userStatus, blockCount, currentBlockDate);

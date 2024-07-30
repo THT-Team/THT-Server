@@ -7,6 +7,7 @@ import com.tht.domain.entity.user.service.UserDetailDto;
 import com.tht.domain.entity.user.service.UserService;
 import com.tht.thtadmin.ui.user.response.UserBlockResponse;
 import com.tht.thtadmin.ui.user.response.UserDetailResponse;
+import com.tht.thtadmin.ui.user.response.UserReportResponse;
 import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -53,5 +54,9 @@ public class UserManageUseCase {
         final List<UserBlockResponse> responses = blockList.getContent().stream().map(UserBlockResponse::ofDto).toList();
 
         return new PageImpl<>(responses, pageable, blockList.getTotalElements());
+    }
+
+    public Page<UserReportResponse> getReportUserList(final Pageable pageable) {
+        return null;
     }
 }
