@@ -1,16 +1,20 @@
 package com.tht.domain.entity.user.service;
 
-import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
-import com.tht.enums.EntityState;
-import com.tht.enums.user.Gender;
-import com.tht.domain.entity.user.exception.UserCustomException;
-import com.tht.domain.entity.user.repository.UserRepository;
-import com.tht.domain.exception.EntityStateException;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.UserWithDrawLog;
+import com.tht.domain.entity.user.exception.UserCustomException;
+import com.tht.domain.entity.user.repository.UserRepository;
 import com.tht.domain.entity.user.repository.UserWithDrawLogRepository;
+import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
+import com.tht.domain.entity.user.repository.querydsl.mapper.UserWithDrawLogMapper;
+import com.tht.domain.entity.user.service.dto.UserDetailDto;
+import com.tht.domain.entity.user.service.dto.WithDrawUserDto;
+import com.tht.domain.exception.EntityStateException;
+import com.tht.enums.EntityState;
+import com.tht.enums.user.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -104,6 +108,13 @@ public class UserService {
         user.accountWithdrawal();
         userWithDrawLogRepository.save(UserWithDrawLog.of(user.getUserUuid(), reason, feedBack));
         save(user);
+    }
+
+    public Page<WithDrawUserDto> getWithDrawUserLog(final Pageable pageable) {
+
+        final Page<UserWithDrawLogMapper> mappers = userWithDrawLogRepository.findAllWithDrawLogList(pageable);
+        final List<WithDrawUserDto> result = mappers.getContent().stream().map(WithDrawUserDto::ofMapper).toList();
+        return new PageImpl<>(result, pageable, mappers.getTotalElements());
     }
 
     public void logout(final User user) {

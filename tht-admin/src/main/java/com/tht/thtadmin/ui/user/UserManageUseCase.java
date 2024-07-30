@@ -1,10 +1,14 @@
 package com.tht.thtadmin.ui.user;
 
+import com.tht.domain.entity.block.UserBlockService;
+import com.tht.domain.entity.block.dto.UserBlockDto;
+import com.tht.domain.entity.report.dto.UserReportDto;
 import com.tht.domain.entity.user.User;
-import com.tht.domain.entity.user.service.UserDetailDto;
+import com.tht.domain.entity.user.service.dto.UserDetailDto;
+import com.tht.domain.entity.report.UserReportService;
 import com.tht.domain.entity.user.service.UserService;
-import com.tht.thtadmin.ui.user.response.UserDetailResponse;
-import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
+import com.tht.domain.entity.user.service.dto.WithDrawUserDto;
+import com.tht.thtadmin.ui.user.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -20,6 +24,8 @@ import java.util.List;
 public class UserManageUseCase {
 
     private final UserService userService;
+    private final UserBlockService userBlockService;
+    private final UserReportService userReportService;
 
     public Page<UserSimpleListResponse> getUserList(final String search, final Pageable pageable) {
 
@@ -44,4 +50,27 @@ public class UserManageUseCase {
         return UserDetailResponse.toResponse(dto);
     }
 
+    public Page<UserBlockResponse> getBlockUserList(final Pageable pageable) {
+        final Page<UserBlockDto> blockList = userBlockService.getBlockList(pageable);
+        final List<UserBlockResponse> responses = blockList.getContent().stream().map(UserBlockResponse::ofDto).toList();
+
+        return new PageImpl<>(responses, pageable, blockList.getTotalElements());
+    }
+
+    public Page<UserReportResponse> getReportUserList(final Pageable pageable) {
+
+        final Page<UserReportDto> reportList = userReportService.getReportList(pageable);
+        final List<UserReportResponse> responses = reportList.getContent().stream().map(UserReportResponse::ofDto).toList();
+
+        return new PageImpl<>(responses, pageable, reportList.getTotalElements());
+    }
+
+    public Page<WithDrawUserResponse> getWithDrawList(final Pageable pageable) {
+
+        final Page<WithDrawUserDto> reportList = userService.getWithDrawUserLog(pageable);
+        final List<WithDrawUserResponse> responses = reportList.getContent().stream().map(WithDrawUserResponse::ofDto).toList();
+
+        return new PageImpl<>(responses, pageable, reportList.getTotalElements());
+
+    }
 }

@@ -4,6 +4,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.group.GroupBy;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.tht.domain.entity.block.QUserBlock;
 import com.tht.enums.EntityState;
 import com.tht.domain.entity.dailyfalling.QDailyFalling;
 import com.tht.domain.entity.dailyfalling.QDailyFallingActiveInfo;

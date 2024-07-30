@@ -1,4 +1,4 @@
-package com.tht.domain.entity.user;
+package com.tht.domain.entity.report;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Table
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor
-public class UserBlock {
+public class UserReport {
 
     @Id
     @Column
@@ -26,26 +26,33 @@ public class UserBlock {
     private String userUuid;
 
     @Column
-    private String blockUserUuid;
+    private String reportUserUuid;
+
+    @Column
+    private String reason;
 
     @CreatedDate
     @Column
     private LocalDateTime createdAt;
 
     @Builder(access = AccessLevel.PRIVATE)
-    private UserBlock(final Long idx, final String userUuid, final String blockUserUuid,
-        final LocalDateTime createdAt) {
+    private UserReport(final Long idx, final String userUuid, final String reportUserUuid,
+        final String reason, final LocalDateTime createdAt) {
 
         this.idx = idx;
         this.userUuid = userUuid;
-        this.blockUserUuid = blockUserUuid;
+        this.reportUserUuid = reportUserUuid;
+        this.reason = reason;
         this.createdAt = createdAt;
     }
 
-    public static UserBlock create(final String userUuid, final String blockUserUuid) {
-        return UserBlock.builder()
+    public static UserReport create(final String userUuid, final String reportUserUuid,
+        final String reason) {
+
+        return UserReport.builder()
             .userUuid(userUuid)
-            .blockUserUuid(blockUserUuid)
+            .reportUserUuid(reportUserUuid)
+            .reason(reason)
             .build();
     }
 }

@@ -1,7 +1,6 @@
 package com.tht.thtadmin.ui.user;
 
-import com.tht.thtadmin.ui.user.response.UserDetailResponse;
-import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
+import com.tht.thtadmin.ui.user.response.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +28,27 @@ public class UserManageController {
     public ResponseEntity<UserDetailResponse> getUser(@PathVariable(value = "user-uuid") String userUuid) {
 
         return ResponseEntity.ok(userManageUseCase.getUserDetail(userUuid));
+    }
+
+    @GetMapping("/users/block")
+    public ResponseEntity<Page<UserBlockResponse>> getBlockList(@PageableDefault(size = 100) Pageable pageable) {
+
+        final Page<UserBlockResponse> responses = userManageUseCase.getBlockUserList(pageable);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/users/report")
+    public ResponseEntity<Page<UserReportResponse>> getUserReport(@PageableDefault(size = 100) Pageable pageable) {
+
+        final Page<UserReportResponse> responses = userManageUseCase.getReportUserList(pageable);
+        return ResponseEntity.ok(responses);
+    }
+
+    @GetMapping("/users/withdraw")
+    public ResponseEntity<Page<WithDrawUserResponse>> getWithDrawUser(@PageableDefault(size = 100) Pageable pageable) {
+
+        final Page<WithDrawUserResponse> responses = userManageUseCase.getWithDrawList(pageable);
+        return ResponseEntity.ok(responses);
     }
 
 }

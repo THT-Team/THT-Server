@@ -1,4 +1,4 @@
-package com.tht.domain.entity.user.service;
+package com.tht.domain.entity.user.service.dto;
 
 import com.tht.domain.entity.user.UserAgreement;
 import com.tht.domain.entity.user.UserProfilePhoto;

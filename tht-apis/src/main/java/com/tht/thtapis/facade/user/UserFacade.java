@@ -1,5 +1,7 @@
 package com.tht.thtapis.facade.user;
 
+import com.tht.domain.entity.block.UserBlockService;
+import com.tht.domain.entity.report.UserReportService;
 import com.tht.enums.user.Gender;
 import com.tht.domain.entity.chat.service.ChatRoomUserService;
 import com.tht.domain.entity.dailyfalling.mapper.DailyFallingTimeMapper;
