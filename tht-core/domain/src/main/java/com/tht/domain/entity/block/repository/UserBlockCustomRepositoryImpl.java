@@ -18,18 +18,18 @@ public class UserBlockCustomRepositoryImpl implements UserBlockCustomRepository 
     private static final QUserBlock userBlock = QUserBlock.userBlock;
     private static final QUser user = QUser.user;
 
-    private final JPAQueryFactory queueFactory;
+    private final JPAQueryFactory queryFactory;
 
     @Override
     public Page<UserBlockMapper> findAllBlockList(Pageable pageable) {
 
         final QUser blockedUser = QUser.user;
 
-        final long totalCount = queueFactory.select(userBlock.idx)
+        final long totalCount = queryFactory.select(userBlock.idx)
             .from(userBlock)
             .stream().count();
 
-        final List<UserBlockMapper> result = queueFactory.select(
+        final List<UserBlockMapper> result = queryFactory.select(
                 new QUserBlockMapper(
                     userBlock.blockUserUuid,
                     user.username,

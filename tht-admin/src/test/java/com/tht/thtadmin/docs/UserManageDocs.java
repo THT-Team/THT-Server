@@ -227,7 +227,6 @@ class UserManageDocs extends ControllerTestConfig {
                     fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
                     fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
                     fieldWithPath("content[].preferGender").type(JsonFieldType.STRING).description("선호 성별"),
-                    fieldWithPath("content[].reportCount").type(JsonFieldType.NUMBER).description("총 받은 신고 횟수"),
                     fieldWithPath("content[].reportedUserName").type(JsonFieldType.STRING).description("신고한 유저 이름"),
                     fieldWithPath("content[].reason").type(JsonFieldType.STRING).description("신고한 이유")
                 )))

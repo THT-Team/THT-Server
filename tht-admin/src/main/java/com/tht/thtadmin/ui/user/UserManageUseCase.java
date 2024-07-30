@@ -2,8 +2,10 @@ package com.tht.thtadmin.ui.user;
 
 import com.tht.domain.entity.block.UserBlockService;
 import com.tht.domain.entity.block.dto.UserBlockDto;
+import com.tht.domain.entity.report.dto.UserReportDto;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.service.UserDetailDto;
+import com.tht.domain.entity.report.UserReportService;
 import com.tht.domain.entity.user.service.UserService;
 import com.tht.thtadmin.ui.user.response.UserBlockResponse;
 import com.tht.thtadmin.ui.user.response.UserDetailResponse;
@@ -13,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +28,7 @@ public class UserManageUseCase {
 
     private final UserService userService;
     private final UserBlockService userBlockService;
+    private final UserReportService userReportService;
 
     public Page<UserSimpleListResponse> getUserList(final String search, final Pageable pageable) {
 
@@ -57,6 +61,10 @@ public class UserManageUseCase {
     }
 
     public Page<UserReportResponse> getReportUserList(final Pageable pageable) {
-        return null;
+
+        final Page<UserReportDto> reportList = userReportService.getReportList(pageable);
+        final List<UserReportResponse> responses = reportList.getContent().stream().map(UserReportResponse::ofDto).toList();
+
+        return new PageImpl<>(responses, pageable, reportList.getTotalElements());
     }
 }
