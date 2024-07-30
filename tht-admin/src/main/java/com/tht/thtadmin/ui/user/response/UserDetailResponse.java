@@ -2,7 +2,7 @@ package com.tht.thtadmin.ui.user.response;
 
 import com.tht.domain.entity.user.UserAgreement;
 import com.tht.domain.entity.user.UserProfilePhoto;
-import com.tht.domain.entity.user.service.UserDetailDto;
+import com.tht.domain.entity.user.service.dto.UserDetailDto;
 import com.tht.enums.agreement.AgreementCategory;
 import com.tht.enums.user.Gender;
 import com.tht.enums.user.SNSType;

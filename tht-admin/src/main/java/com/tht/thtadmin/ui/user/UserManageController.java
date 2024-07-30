@@ -30,7 +30,6 @@ public class UserManageController {
         return ResponseEntity.ok(userManageUseCase.getUserDetail(userUuid));
     }
 
-    //차단 회원 리스트
     @GetMapping("/users/block")
     public ResponseEntity<Page<UserBlockResponse>> getBlockList(@PageableDefault(size = 100) Pageable pageable) {
 
@@ -38,7 +37,6 @@ public class UserManageController {
         return ResponseEntity.ok(responses);
     }
 
-    //신고 회원 리스트
     @GetMapping("/users/report")
     public ResponseEntity<Page<UserReportResponse>> getUserReport(@PageableDefault(size = 100) Pageable pageable) {
 
@@ -46,10 +44,11 @@ public class UserManageController {
         return ResponseEntity.ok(responses);
     }
 
-    //탈퇴 요청 회원 리스트
     @GetMapping("/users/withdraw")
-    public ResponseEntity<Page<WithDrawUserResponse>> getWithDrawUser() {
-        return null;
+    public ResponseEntity<Page<WithDrawUserResponse>> getWithDrawUser(@PageableDefault(size = 100) Pageable pageable) {
+
+        final Page<WithDrawUserResponse> responses = userManageUseCase.getWithDrawList(pageable);
+        return ResponseEntity.ok(responses);
     }
 
 }

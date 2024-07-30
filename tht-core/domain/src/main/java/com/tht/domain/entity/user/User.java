@@ -186,7 +186,7 @@ public class User extends Auditable {
     }
 
     public void accountWithdrawal() {
-        this.state = EntityState.DELETED;
+        this.state = EntityState.WITHDRAW_REQUEST;
     }
 
     public void logout() {

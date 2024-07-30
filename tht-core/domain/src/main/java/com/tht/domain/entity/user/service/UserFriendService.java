@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tht.domain.entity.user.UserFriend;
 import com.tht.domain.entity.user.repository.UserFriendRepository;
+import com.tht.domain.entity.user.service.dto.ContactDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

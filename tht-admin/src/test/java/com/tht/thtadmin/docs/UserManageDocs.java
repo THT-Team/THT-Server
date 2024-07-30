@@ -8,16 +8,14 @@ import com.tht.enums.user.UserFrequency;
 import com.tht.enums.user.UserReligion;
 import com.tht.thtadmin.docs.config.ControllerTestConfig;
 import com.tht.thtadmin.docs.config.WithCustomMockUser;
+import com.tht.thtadmin.fixture.user.WithDrawUserResponseFixture;
 import com.tht.thtadmin.fixture.user.UserBlockResponseFixture;
 import com.tht.thtadmin.fixture.user.UserDetailResponseFixture;
 import com.tht.thtadmin.fixture.user.UserReportResponseFixture;
 import com.tht.thtadmin.fixture.user.UserSimpleListResponseFixture;
 import com.tht.thtadmin.ui.user.UserManageController;
 import com.tht.thtadmin.ui.user.UserManageUseCase;
-import com.tht.thtadmin.ui.user.response.UserBlockResponse;
-import com.tht.thtadmin.ui.user.response.UserDetailResponse;
-import com.tht.thtadmin.ui.user.response.UserReportResponse;
-import com.tht.thtadmin.ui.user.response.UserSimpleListResponse;
+import com.tht.thtadmin.ui.user.response.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -229,6 +227,49 @@ class UserManageDocs extends ControllerTestConfig {
                     fieldWithPath("content[].preferGender").type(JsonFieldType.STRING).description("선호 성별"),
                     fieldWithPath("content[].reportedUserName").type(JsonFieldType.STRING).description("신고한 유저 이름"),
                     fieldWithPath("content[].reason").type(JsonFieldType.STRING).description("신고한 이유")
+                )))
+                .responseSchema(Schema.schema("UserBlockResponse"))
+                .build())
+        ));
+
+        resultActions.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    @DisplayName("탈퇴 회원 목록 리스트")
+    @WithCustomMockUser
+    void getWithDrawUsers() throws Exception {
+
+        WithDrawUserResponse response = WithDrawUserResponseFixture.make();
+        PageImpl<WithDrawUserResponse> page = new PageImpl<>(List.of(response), PageRequest.of(0, 10), 1);
+
+        when(userManageUseCase.getWithDrawList(any())).thenReturn(page);
+
+        //then
+        ResultActions resultActions = mockMvc.perform(
+            get("/users/withdraw")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+        ).andDo(document("탈퇴 요청 회원 목록 리스트",
+            preprocessRequest(prettyPrint()),
+            preprocessResponse(prettyPrint()),
+            resource(ResourceSnippetParameters.builder()
+                .tag("회원 관리")
+                .description("회원 신고 목록 리스트")
+                .queryParameters(
+                    parameterWithName("size").optional().description("페이지 사이즈"),
+                    parameterWithName("page").optional().description("검색할 페이지"),
+                    parameterWithName("sort").optional().ignored().description("정렬 타입"),
+                    parameterWithName("direction").optional().ignored().description("정렬 방식")
+                )
+                .responseFields(getPagingFieldDescriptors(List.of(
+                    fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                    fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
+                    fieldWithPath("content[].requestDate").type(JsonFieldType.STRING).description("탈퇴 요청 시간"),
+                    fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
+                    fieldWithPath("content[].feedBack").type(JsonFieldType.STRING).description("피드백"),
+                    fieldWithPath("content[].reason").type(JsonFieldType.STRING).description("탈퇴 이유")
                 )))
                 .responseSchema(Schema.schema("UserBlockResponse"))
                 .build())
