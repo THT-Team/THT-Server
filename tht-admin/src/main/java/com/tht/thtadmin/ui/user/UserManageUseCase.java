@@ -1,6 +1,7 @@
 package com.tht.thtadmin.ui.user;
 
 import com.tht.domain.entity.block.UserBlockService;
+import com.tht.domain.entity.block.dto.UserBlockDto;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.service.UserDetailDto;
 import com.tht.domain.entity.user.service.UserService;
@@ -48,6 +49,9 @@ public class UserManageUseCase {
     }
 
     public Page<UserBlockResponse> getBlockUserList(final Pageable pageable) {
-        return userBlockService.getBlockList(pageable);
+        final Page<UserBlockDto> blockList = userBlockService.getBlockList(pageable);
+        final List<UserBlockResponse> responses = blockList.getContent().stream().map(UserBlockResponse::ofDto).toList();
+
+        return new PageImpl<>(responses, pageable, blockList.getTotalElements());
     }
 }

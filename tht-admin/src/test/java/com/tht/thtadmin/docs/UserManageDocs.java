@@ -197,11 +197,6 @@ class UserManageDocs extends ControllerTestConfig {
                     fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
                     fieldWithPath("content[].blockCount").type(JsonFieldType.NUMBER).description("총 받은 차단 횟수"),
 
-                    fieldWithPath("content[].blockedUserList").type(JsonFieldType.ARRAY).description("해당 회원을 차단한 유저"),
-                    fieldWithPath("content[].blockedUserList[].userUuid").type(JsonFieldType.STRING).description("치딘유저 고유 번호"),
-                    fieldWithPath("content[].blockedUserList[].blockedUserName").type(JsonFieldType.STRING).description("차단유저 닉네임"),
-                    fieldWithPath("content[].blockedUserList[].blockDateTime").type(JsonFieldType.STRING).description("차단 시간"),
-
                     fieldWithPath("pageable.sort.empty").description("정렬이 비어있는지 여부"),
                     fieldWithPath("pageable.sort.sorted").description("내용이 정렬되었는지 여부"),
                     fieldWithPath("pageable.sort.unsorted").description("내용이 정렬되지 않았는지 여부"),
