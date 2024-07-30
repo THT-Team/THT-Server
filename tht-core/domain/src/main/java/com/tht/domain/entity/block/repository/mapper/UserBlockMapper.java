@@ -12,7 +12,7 @@ public record UserBlockMapper(
     Gender gender,
     EntityState userStatus,
     LocalDateTime currentBlockDate,
-    long blockCount
+    String blockedUserName
 ) {
 
     @QueryProjection

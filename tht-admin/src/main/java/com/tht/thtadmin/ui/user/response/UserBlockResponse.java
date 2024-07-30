@@ -9,8 +9,8 @@ public record UserBlockResponse(
     String username,
     Gender gender,
     EntityState userStatus,
-    long blockCount,
-    String currentBlockDate
+    String currentBlockDate,
+    String blockedUserName
 ) {
     public static UserBlockResponse ofDto(final UserBlockDto dto) {
         return new UserBlockResponse(
@@ -18,8 +18,8 @@ public record UserBlockResponse(
             dto.username(),
             dto.gender(),
             dto.userStatus(),
-            dto.blockCount(),
-            dto.currentBlockDate()
+            dto.currentBlockDate(),
+            dto.blockedUserName()
         );
     }
 }

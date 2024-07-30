@@ -10,8 +10,8 @@ public record  UserBlockDto(
     String username,
     Gender gender,
     EntityState userStatus,
-    long blockCount,
-    String currentBlockDate
+    String currentBlockDate,
+    String blockedUserName
 ) {
     public static UserBlockDto ofMapper(UserBlockMapper mapper) {
         return new UserBlockDto(
@@ -19,8 +19,8 @@ public record  UserBlockDto(
             mapper.username(),
             mapper.gender(),
             mapper.userStatus(),
-            mapper.blockCount(),
-            mapper.currentBlockDate().format(CustomDateFormatUtils.getDateTimeInstance())
+            mapper.currentBlockDate().format(CustomDateFormatUtils.getDateTimeInstance()),
+            mapper.blockedUserName()
         );
     }
 }

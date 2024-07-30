@@ -183,7 +183,7 @@ class UserManageDocs extends ControllerTestConfig {
                         fieldWithPath("content[].currentBlockDate").type(JsonFieldType.STRING).description("가장 최근 차단 시간"),
                         fieldWithPath("content[].userStatus").type(JsonFieldType.STRING).description("유저 활동 상태"),
                         fieldWithPath("content[].gender").type(JsonFieldType.STRING).description("유저 성별"),
-                        fieldWithPath("content[].blockCount").type(JsonFieldType.NUMBER).description("총 받은 차단 횟수")
+                        fieldWithPath("content[].blockedUserName").type(JsonFieldType.STRING).description("신고한 유저 이름")
                     ))
                 )
                 .responseSchema(Schema.schema("UserBlockResponse"))

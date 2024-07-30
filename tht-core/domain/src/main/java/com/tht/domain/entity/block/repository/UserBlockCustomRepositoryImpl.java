@@ -23,9 +23,10 @@ public class UserBlockCustomRepositoryImpl implements UserBlockCustomRepository 
     @Override
     public Page<UserBlockMapper> findAllBlockList(Pageable pageable) {
 
+        final QUser blockedUser = QUser.user;
+
         final long totalCount = queueFactory.select(userBlock.idx)
             .from(userBlock)
-            .groupBy(userBlock.blockUserUuid)
             .stream().count();
 
         final List<UserBlockMapper> result = queueFactory.select(
@@ -34,13 +35,13 @@ public class UserBlockCustomRepositoryImpl implements UserBlockCustomRepository 
                     user.username,
                     user.gender,
                     user.state,
-                    userBlock.createdAt.max(),
-                    userBlock.idx.count()
+                    userBlock.createdAt,
+                    blockedUser.username
                 )
             ).from(userBlock)
             .innerJoin(user).on(user.userUuid.eq(userBlock.blockUserUuid))
-            .groupBy(userBlock.blockUserUuid)
-            .orderBy(userBlock.createdAt.max().desc())
+            .innerJoin(blockedUser).on(blockedUser.userUuid.eq(userBlock.userUuid))
+            .orderBy(userBlock.idx.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())
             .fetch();
