@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,7 +31,7 @@ public class JwtFilter extends OncePerRequestFilter  {
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
-        final HttpServletResponse response, final FilterChain filterChain)
+                                    final HttpServletResponse response, final FilterChain filterChain)
         throws ServletException, IOException {
 
         final String token = resolveToken(request);
@@ -42,8 +43,7 @@ public class JwtFilter extends OncePerRequestFilter  {
             securityContext.setAuthentication(auth);
 
             log.debug("Security Context에 '{}' 인증 정보를 저장했습니다, uri: {}", auth.getName(), requestURI);
-        }
-        else {
+        } else {
             log.debug("유효한 JWT 토큰이 없습니다, uri: {}", requestURI);
         }
 
