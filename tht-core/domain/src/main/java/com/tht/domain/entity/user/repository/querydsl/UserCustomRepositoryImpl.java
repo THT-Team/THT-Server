@@ -5,6 +5,8 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.tht.domain.entity.idealtype.QIdealType;
 import com.tht.domain.entity.interesst.QInterest;
 import com.tht.domain.entity.user.*;
+import com.tht.domain.entity.user.mapper.QUserListMapper;
+import com.tht.domain.entity.user.mapper.UserListMapper;
 import com.tht.domain.entity.user.repository.querydsl.mapper.QUserDetailMapper;
 import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
 import lombok.RequiredArgsConstructor;
@@ -31,10 +33,21 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<User> getUserListForPage(final String search, final Pageable pageable) {
+    public Page<UserListMapper> getUserListForPage(final String search, final Pageable pageable) {
 
-        final List<User> results = queryFactory
-            .selectFrom(user)
+        final int profile = 1;
+
+        final List<UserListMapper> results = queryFactory
+            .select(new QUserListMapper(
+                user.username,
+                userProfilePhoto.url,
+                user.userUuid,
+                user.createdAt,
+                user.state
+            ))
+            .from(user)
+            .innerJoin(userProfilePhoto)
+            .on(userProfilePhoto.userUuid.eq(user.userUuid).and(userProfilePhoto.priority.eq(profile)))
             .where(searchText(search))
             .orderBy(user.createdAt.desc())
             .offset(pageable.getOffset())

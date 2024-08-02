@@ -75,6 +75,7 @@ class UserManageDocs extends ControllerTestConfig {
                     .responseFields(
                         getPagingFieldDescriptors(List.of(
                             fieldWithPath("content[].username").type(JsonFieldType.STRING).description("유저 이름"),
+                            fieldWithPath("content[].profilePhotoUrl").type(JsonFieldType.STRING).description("유저 프로필 사진 url"),
                             fieldWithPath("content[].userUuid").type(JsonFieldType.STRING).description("유저 고유 번호"),
                             fieldWithPath("content[].createdAt").type(JsonFieldType.STRING).description("생성 시간"),
                             fieldWithPath("content[].userSate").type(JsonFieldType.STRING).description("유저 활동 상태")

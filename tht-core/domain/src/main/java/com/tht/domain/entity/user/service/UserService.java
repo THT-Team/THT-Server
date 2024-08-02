@@ -3,11 +3,13 @@ package com.tht.domain.entity.user.service;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.UserWithDrawLog;
 import com.tht.domain.entity.user.exception.UserCustomException;
+import com.tht.domain.entity.user.mapper.UserListMapper;
 import com.tht.domain.entity.user.repository.UserRepository;
 import com.tht.domain.entity.user.repository.UserWithDrawLogRepository;
 import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
 import com.tht.domain.entity.user.repository.querydsl.mapper.UserWithDrawLogMapper;
 import com.tht.domain.entity.user.service.dto.UserDetailDto;
+import com.tht.domain.entity.user.service.dto.UserListDto;
 import com.tht.domain.entity.user.service.dto.WithDrawUserDto;
 import com.tht.domain.exception.EntityStateException;
 import com.tht.enums.EntityState;
@@ -123,8 +125,10 @@ public class UserService {
         save(user);
     }
 
-    public Page<User> getSimpleUserPageList(final String search, final Pageable pageable) {
-        return userRepository.getUserListForPage(search, pageable);
+    public Page<UserListDto> getSimpleUserPageList(final String search, final Pageable pageable) {
+        final Page<UserListMapper> userListForPage = userRepository.getUserListForPage(search, pageable);
+        final List<UserListDto> result = userListForPage.getContent().stream().map(UserListDto::ofMapper).toList();
+        return new PageImpl<>(result, pageable, userListForPage.getTotalElements());
     }
 
     public UserDetailDto getDetailForAdmin(final String userUuid) {

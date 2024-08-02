@@ -2,11 +2,11 @@ package com.tht.thtadmin.ui.user;
 
 import com.tht.domain.entity.block.UserBlockService;
 import com.tht.domain.entity.block.dto.UserBlockDto;
-import com.tht.domain.entity.report.dto.UserReportDto;
-import com.tht.domain.entity.user.User;
-import com.tht.domain.entity.user.service.dto.UserDetailDto;
 import com.tht.domain.entity.report.UserReportService;
+import com.tht.domain.entity.report.dto.UserReportDto;
 import com.tht.domain.entity.user.service.UserService;
+import com.tht.domain.entity.user.service.dto.UserDetailDto;
+import com.tht.domain.entity.user.service.dto.UserListDto;
 import com.tht.domain.entity.user.service.dto.WithDrawUserDto;
 import com.tht.thtadmin.ui.user.response.*;
 import lombok.RequiredArgsConstructor;
@@ -29,16 +29,18 @@ public class UserManageUseCase {
 
     public Page<UserSimpleListResponse> getUserList(final String search, final Pageable pageable) {
 
-        final Page<User> pageResult = userService.getSimpleUserPageList(search, pageable);
+        final Page<UserListDto> pageResult = userService.getSimpleUserPageList(search, pageable);
 
         final List<UserSimpleListResponse> responses = pageResult
             .getContent()
             .stream()
-            .map(user -> UserSimpleListResponse.of(
-                user.getUsername(),
-                user.getUserUuid(),
-                user.getCreatedAt(),
-                user.getState())
+            .map(dto -> UserSimpleListResponse.of(
+                    dto.username(),
+                    dto.profilePhotoUrl(),
+                    dto.userUuid(),
+                    dto.createdAt(),
+                    dto.userSate()
+                )
             )
             .toList();
 
