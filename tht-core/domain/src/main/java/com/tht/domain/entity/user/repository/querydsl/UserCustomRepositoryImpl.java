@@ -54,7 +54,10 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
             .limit(pageable.getPageSize())
             .fetch();
 
-        long count = queryFactory.select(user.idx).from(user).stream().count();
+        long count = queryFactory.select(user.idx)
+            .from(user)
+            .where(searchText(search))
+            .stream().count();
 
         return new PageImpl<>(results, pageable, count);
     }
