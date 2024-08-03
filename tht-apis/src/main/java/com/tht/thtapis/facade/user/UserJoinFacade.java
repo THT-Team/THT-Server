@@ -69,7 +69,8 @@ public class UserJoinFacade {
 
     private TokenDto getUserSignUpResponse(User user) {
         final TokenDto tokenDto = tokenProvider.generateJWT(user);
-        userTokenService.create(user.getUserUuid(), tokenDto.accessToken());
+
+        userTokenService.generateUserToken(user.getUserUuid(), tokenDto.accessToken());
 
         return tokenDto;
     }

@@ -38,7 +38,7 @@ public class UserLoginFacade {
     private TokenDto getGenerateJWT(final User user) {
 
         final TokenDto tokenDto = tokenProvider.generateJWT(user);
-        userTokenService.findByUserUuid(user.getUserUuid()).refresh(tokenDto.accessToken());
+        userTokenService.refresh(user.getUserUuid(), tokenDto.accessToken());
 
         return tokenDto;
     }
