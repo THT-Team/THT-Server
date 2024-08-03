@@ -63,4 +63,17 @@ public class UserInquiry extends Auditable {
             .inquiryStatus(InquiryStatus.RECEPTION)
             .build();
     }
+
+    public static UserInquiry createForAnonymous(final String contents, final String userEmail, final boolean emailAgree) {
+        if (!emailAgree) {
+            throw UserInquiryException.isFalseEmailAgree();
+        }
+
+        return UserInquiry.builder()
+            .contents(contents)
+            .userEmail(userEmail)
+            .isEmailAgree(emailAgree)
+            .inquiryStatus(InquiryStatus.RECEPTION)
+            .build();
+    }
 }
