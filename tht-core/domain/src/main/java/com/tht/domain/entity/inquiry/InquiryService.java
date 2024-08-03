@@ -17,4 +17,9 @@ public class InquiryService {
         repository.save(userInquiry);
     }
 
+    @Transactional
+    public void beforeLogin(final String contents, final String userEmail, final boolean emailAgree) {
+        final UserInquiry anonymous = UserInquiry.createForAnonymous(contents, userEmail, emailAgree);
+        repository.save(anonymous);
+    }
 }
