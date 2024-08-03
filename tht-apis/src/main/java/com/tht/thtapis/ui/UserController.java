@@ -111,9 +111,9 @@ public class UserController {
     @PatchMapping("/user/introduction")
     public ResponseEntity<Object> updateSelfIntroduce(
             @AuthenticationPrincipal final User user,
-            @RequestBody final String introduction) {
+            @RequestBody final ModifiedIntroductionRequest request) {
 
-        userFacade.updateIntroduction(user, introduction);
+        userFacade.updateIntroduction(user, request.introduction());
         return ResponseEntity.ok().build();
     }
 
