@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -27,7 +29,23 @@ public class UserTokenService {
     }
 
 
-    public void create(final String userUuid, final String accessToken) {
+
+    public void refresh(final String userUuid, final String accessToken) {
+        UserToken userToken = findByUserUuid(userUuid);
+        userToken.refresh(accessToken);
+    }
+
+    public void generateUserToken(final String userUuid, final String accessToken) {
+        final Optional<UserToken> userToken = userTokenRepository.findByUserUuid(userUuid);
+
+        if(userToken.isPresent()) {
+            userToken.get().refresh(accessToken);
+            return;
+        }
+        create(userUuid, accessToken);
+    }
+
+    private void create(final String userUuid, final String accessToken) {
         userTokenRepository.save(UserToken.create(userUuid, accessToken));
     }
 }
