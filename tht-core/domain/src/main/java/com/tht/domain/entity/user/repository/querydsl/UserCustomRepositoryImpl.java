@@ -9,6 +9,7 @@ import com.tht.domain.entity.user.mapper.QUserListMapper;
 import com.tht.domain.entity.user.mapper.UserListMapper;
 import com.tht.domain.entity.user.repository.querydsl.mapper.QUserDetailMapper;
 import com.tht.domain.entity.user.repository.querydsl.mapper.UserDetailMapper;
+import com.tht.enums.user.SNSType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -71,7 +72,7 @@ public class UserCustomRepositoryImpl implements UserCustomRepository{
                     user.username,
                     user.birthDay,
                     user.email,
-                    userSns.snsType,
+                    userSns.snsType.coalesce(SNSType.NORMAL).as("sns_type"),
                     userAgreement,
                     user.gender,
                     user.preferGender,
