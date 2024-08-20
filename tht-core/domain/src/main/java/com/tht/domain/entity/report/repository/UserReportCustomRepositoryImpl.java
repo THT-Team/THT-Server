@@ -23,7 +23,7 @@ public class UserReportCustomRepositoryImpl implements UserReportCustomRepositor
     @Override
     public Page<UserReportMapper> findAllReportList(final Pageable pageable) {
 
-        final QUser reportedUser = QUser.user;
+        final QUser reportedUser = new QUser("reportedUser");
 
         final long totalCount = queryFactory.select(userReport.idx)
             .from(userReport)
@@ -42,7 +42,7 @@ public class UserReportCustomRepositoryImpl implements UserReportCustomRepositor
                 )
             ).from(userReport)
             .innerJoin(user).on(user.userUuid.eq(userReport.reportUserUuid))
-            .innerJoin(reportedUser).on(reportedUser.userUuid.eq(reportedUser.userUuid))
+            .innerJoin(reportedUser).on(reportedUser.userUuid.eq(userReport.userUuid))
             .orderBy(userReport.idx.desc())
             .offset(pageable.getOffset())
             .limit(pageable.getPageSize())

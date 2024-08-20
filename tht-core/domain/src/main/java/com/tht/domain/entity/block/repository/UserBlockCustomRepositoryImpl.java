@@ -23,7 +23,7 @@ public class UserBlockCustomRepositoryImpl implements UserBlockCustomRepository 
     @Override
     public Page<UserBlockMapper> findAllBlockList(Pageable pageable) {
 
-        final QUser blockedUser = QUser.user;
+        final QUser blockedUser = new QUser("blockedUser");
 
         final long totalCount = queryFactory.select(userBlock.idx)
             .from(userBlock)
