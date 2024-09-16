@@ -760,4 +760,37 @@ class UserDocumentation extends ControllerTestConfig {
             )
             .andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    @WithCustomMockUser
+    @DisplayName("유저 디바이스 키 갱싱 api docs")
+    void docsDeviceKey() throws Exception {
+
+        UserDeviceKeyRequest request = new UserDeviceKeyRequest("device-key");
+        String requestBody = ControllerTestConfig.objectMapper.writeValueAsString(request);
+
+        //given
+        mockMvc.perform(
+            patch("/user/device-key")
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(requestBody)
+        ).andDo(
+                document("유저 디바이스키 갱신 api docs",
+                    preprocessRequest(prettyPrint()),
+                    preprocessResponse(prettyPrint()),
+                    resource(
+                        ResourceSnippetParameters.builder()
+                            .tag("회원가입")
+                            .description("유저 디바이스 키 갱신")
+                            .requestFields(
+                                fieldWithPath("deviceKey").description("유저 디바이스 키")
+                            )
+                            .build()
+                    )
+                )
+            )
+            .andExpect(MockMvcResultMatchers.status().isCreated());
+    }
 }
