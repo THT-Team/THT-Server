@@ -22,17 +22,8 @@ public class UserTokenService {
         );
     }
 
-    public UserToken findByUserUuid(final String userUuid) {
-        return userTokenRepository.findByUserUuid(userUuid).orElseThrow(
-            UserTokenException::notFoundOfUserUuid
-        );
-    }
-
-
-
     public void refresh(final String userUuid, final String accessToken) {
-        UserToken userToken = findByUserUuid(userUuid);
-        userToken.refresh(accessToken);
+        generateUserToken(userUuid, accessToken);
     }
 
     public void generateUserToken(final String userUuid, final String accessToken) {

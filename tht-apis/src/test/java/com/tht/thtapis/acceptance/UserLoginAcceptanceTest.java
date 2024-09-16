@@ -1,16 +1,17 @@
 package com.tht.thtapis.acceptance;
 
+import com.tht.enums.user.Gender;
 import com.tht.enums.user.SNSType;
 import com.tht.thtapis.acceptance.config.AcceptanceTest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static com.tht.thtapis.acceptance.UserAcceptanceStep.유저계정_탈퇴_요청;
 import static com.tht.thtapis.acceptance.UserLoginAcceptanceStep.*;
-import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.SNS_유저_생성;
-import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.신규유저_생성_요청_후_토큰추출;
+import static com.tht.thtapis.acceptance.UserSignUpAcceptanceStep.*;
 import static java.lang.Thread.sleep;
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 class UserLoginAcceptanceTest extends AcceptanceTest {
 
@@ -72,5 +73,25 @@ class UserLoginAcceptanceTest extends AcceptanceTest {
 
         //then
         assertThat(result.jsonPath().getString("accessToken")).isNotEqualTo(token);
+    }
+
+    @Test
+    @DisplayName("탈퇴 후, 동일한 번호로 재가입 시 정상 로그인")
+    void signUpAfterWithdrawal() {
+
+        final String phoneNumber = "01012345678";
+        final String username = "유저";
+
+        final String token = 신규유저_생성_요청_후_토큰추출(username, phoneNumber);
+
+
+        //when
+        var 삭제요청결과 = 유저계정_탈퇴_요청(token);
+        var result = 신규유저_생성_요청(username, phoneNumber, Gender.MALE, Gender.FEMALE);
+
+        //then
+        assertThat(result.jsonPath().getString("accessToken")).isNotEqualTo(token);
+        assertThat(result.statusCode()).isEqualTo(201);
+
     }
 }
