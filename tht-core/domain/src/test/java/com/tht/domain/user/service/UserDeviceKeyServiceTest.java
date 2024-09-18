@@ -5,7 +5,9 @@ import static org.mockito.BDDMockito.anyString;
 import static org.mockito.BDDMockito.times;
 import static org.mockito.BDDMockito.verify;
 import static org.mockito.BDDMockito.when;
+import static org.mockito.Mockito.mock;
 
+import com.tht.domain.entity.user.UserDeviceKey;
 import com.tht.domain.entity.user.repository.UserDeviceKeyRepository;
 import com.tht.domain.entity.user.service.UserDeviceKeyService;
 import org.junit.jupiter.api.DisplayName;
@@ -14,6 +16,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.Optional;
 
 @ExtendWith(MockitoExtension.class)
 class UserDeviceKeyServiceTest {
@@ -26,22 +30,20 @@ class UserDeviceKeyServiceTest {
 
     @Test
     @DisplayName("유저 uuid 와 매핑되는 deviceKey 가 존재하지 않음 (생성)")
-    void createByUserUuidAndDeviceKey() {
-        when(userDeviceKeyRepository.existsByUserUuidAndDeviceKey(anyString(),
-            anyString())).thenReturn(false);
+    void updateByUserUuidAndDeviceKey() {
+        when(userDeviceKeyRepository.findByUserUuid(anyString())).thenReturn(Optional.empty());
 
-        deviceKeyService.create(anyString(), anyString());
+        deviceKeyService.update(anyString(), "device key");
 
         verify(userDeviceKeyRepository).save(any());
     }
 
     @Test
     @DisplayName("유저 uuid 와 매핑되는 deviceKey 가 존재 (미생성)")
-    void nonCreateByUserUuidAndDeviceKey() {
-        when(userDeviceKeyRepository.existsByUserUuidAndDeviceKey(anyString(),
-            anyString())).thenReturn(true);
+    void nonUpdateByUserUuidAndDeviceKey() {
+        when(userDeviceKeyRepository.findByUserUuid(anyString())).thenReturn(Optional.of(mock(UserDeviceKey.class)));
 
-        deviceKeyService.create(anyString(), anyString());
+        deviceKeyService.update(anyString(), "device key");
 
         verify(userDeviceKeyRepository, times(0)).save(any());
     }

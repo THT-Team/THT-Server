@@ -26,8 +26,6 @@ public class UserSignUpRequestFixture {
 
     private final static String introduction = "자기소개 ~~";
 
-    private final static String deviceKey = "device-key-value";
-
     private final static UserAgreementRequest agreement = UserAgreementRequestFixture.make();
 
     private final static UserLocationRequest locationRequest = UserLocationRequestFixture.make();
@@ -65,31 +63,31 @@ public class UserSignUpRequestFixture {
 
     public static UserSignUpRequest make() {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
-            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            introduction, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofInterest(final List<Integer> interestList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
-            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            introduction, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofIdealType(final List<Integer> idealTypeList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
-            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            introduction, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofPhoto(final List<String> photoList) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
-            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            introduction, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType.name(), snsUniqueId, tall, smoking, drinking, religion);
     }
 
     public static UserSignUpRequest ofSNSType(final String snsType) {
         return new UserSignUpRequest(phoneNumber, username, email, birthDay, gender, preferGender,
-            introduction, deviceKey, agreement, locationRequest, photoList, interestList,
+            introduction, agreement, locationRequest, photoList, interestList,
             idealTypeList, snsType, snsUniqueId, tall, smoking, drinking, religion);
     }
 }

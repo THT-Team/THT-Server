@@ -38,8 +38,6 @@ class UserJoinFacadeTest {
     @Mock
     UserIdealTypeService userIdealTypeService;
     @Mock
-    UserDeviceKeyService userDeviceKeyService;
-    @Mock
     UserSnsService userSnsService;
     @Mock
     TokenProvider tokenProvider;
@@ -80,8 +78,6 @@ class UserJoinFacadeTest {
         verify(userInterestsService).createOf(request.makeUserInterestsList(any()));
         //이상형
         verify(userIdealTypeService).createOf(request.makeUserIdealTypeList(any()));
-        //디바이스 키
-        verify(userDeviceKeyService).create(anyString(), anyString());
 
         verify(userSnsService, times(0)).create(anyString(), any(), anyString(), anyString());
 

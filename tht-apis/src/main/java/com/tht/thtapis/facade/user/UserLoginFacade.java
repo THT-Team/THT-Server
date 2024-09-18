@@ -29,7 +29,7 @@ public class UserLoginFacade {
     public TokenDto login(final UserLoginRequest request) {
 
         final User user = userService.findByPhoneNumber(request.phoneNumber());
-        deviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        deviceKeyService.update(user.getUserUuid(), request.deviceKey());
         user.login();
 
         return getGenerateJWT(user);

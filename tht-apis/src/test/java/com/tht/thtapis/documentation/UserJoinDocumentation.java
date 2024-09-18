@@ -160,7 +160,6 @@ class UserJoinDocumentation extends ControllerTestConfig {
                             fieldWithPath("introduction").description("자기소개"),
                             fieldWithPath("gender").description("성별"),
                             fieldWithPath("preferGender").description("선호 성별"),
-                            fieldWithPath("deviceKey").description("유저 디바이스 키"),
 
                             fieldWithPath("agreement").description("약관 동의 내역"),
                             fieldWithPath("agreement.serviceUseAgree").description("서비스 약관 동의"),
@@ -269,7 +268,6 @@ class UserJoinDocumentation extends ControllerTestConfig {
                         .description("유저 SNS 아이디 통합 회원 가입")
                         .requestFields(
                             fieldWithPath("phoneNumber").description("전화번호"),
-                            fieldWithPath("deviceKey").description("유저 디바이스 키"),
 
                             fieldWithPath("snsType").type(JsonFieldType.STRING)
                                 .description("회원가입 타입 - KAKAO, NAVER, GOOGLE"),
