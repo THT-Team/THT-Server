@@ -81,7 +81,7 @@ class UserJoinFacadeTest {
         //이상형
         verify(userIdealTypeService).createOf(request.makeUserIdealTypeList(any()));
         //디바이스 키
-        verify(userDeviceKeyService).create(anyString(), anyString());
+        verify(userDeviceKeyService).update(anyString(), anyString());
 
         verify(userSnsService, times(0)).create(anyString(), any(), anyString(), anyString());
 

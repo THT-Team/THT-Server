@@ -48,6 +48,7 @@ public class UserFacade {
     private final UserAgreementService userAgreementService;
     private final UserFriendService userFriendService;
     private final ChatRoomUserService chatRoomUserService;
+    private final UserDeviceKeyService userDeviceKeyService;
 
     public MainScreenResponse findAllToDayFallingUserList(final User user,
                                                           final MainScreenUserInfoRequest request) {
@@ -220,4 +221,9 @@ public class UserFacade {
         userAgreementService.updateSingleAgreement(user.getUserUuid(), request.agreementName(), request.value());
     }
 
+    @Transactional
+    public void updateDeviceKey(final String userUuid, final String deviceKey) {
+
+        userDeviceKeyService.update(userUuid, deviceKey);
+    }
 }

@@ -57,7 +57,7 @@ public class UserJoinFacade {
         userProfilePhotoService.createOf(request.makeUserProfilePhotoList(user.getUserUuid()));
         userInterestsService.createOf(request.makeUserInterestsList(user.getUserUuid()));
         userIdealTypeService.createOf(request.makeUserIdealTypeList(user.getUserUuid()));
-        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        userDeviceKeyService.update(user.getUserUuid(), request.deviceKey());
 
         if (request.snsType().isSns()) {
             userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
@@ -91,7 +91,7 @@ public class UserJoinFacade {
 
         userSnsService.create(user.getUserUuid(), request.snsType(), request.snsUniqueId(),
             request.email());
-        userDeviceKeyService.create(user.getUserUuid(), request.deviceKey());
+        userDeviceKeyService.update(user.getUserUuid(), request.deviceKey());
 
         return getUserSignUpResponse(user);
     }

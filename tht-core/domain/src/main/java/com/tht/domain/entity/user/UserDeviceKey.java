@@ -7,11 +7,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Entity
 @ToString
+@DynamicUpdate
 @NoArgsConstructor
-public final class UserDeviceKey extends Auditable {
+public class UserDeviceKey extends Auditable {
 
     @Id
     @Column
@@ -39,5 +41,9 @@ public final class UserDeviceKey extends Auditable {
             .userUuid(userUuid)
             .deviceKey(deviceKey)
             .build();
+    }
+
+    public void update(final String deviceKey) {
+        this.deviceKey = deviceKey;
     }
 }

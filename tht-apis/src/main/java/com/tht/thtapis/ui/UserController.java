@@ -183,7 +183,7 @@ public class UserController {
 
     @PatchMapping("/user/device-key")
     public ResponseEntity<Object> saveDeviceKey(@AuthenticationPrincipal final User user, @RequestBody @Valid final UserDeviceKeyRequest request) {
-
+        userFacade.updateDeviceKey(user.getUserUuid(), request.deviceKey());
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 

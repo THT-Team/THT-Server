@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
@@ -13,10 +15,14 @@ public class UserDeviceKeyService {
 
     private final UserDeviceKeyRepository userDeviceKeyRepository;
 
-    public void create(final String userUuid, final String deviceKey) {
+    public void update(final String userUuid, final String deviceKey) {
 
-        if (!userDeviceKeyRepository.existsByUserUuidAndDeviceKey(userUuid, deviceKey)) {
+        Optional<UserDeviceKey> userDeviceKey = userDeviceKeyRepository.findByUserUuidAndDeviceKey(userUuid, deviceKey);
+        if (userDeviceKey.isEmpty()) {
             userDeviceKeyRepository.save(UserDeviceKey.create(userUuid, deviceKey));
+            return;
         }
+
+        userDeviceKey.get().update(deviceKey);
     }
 }
