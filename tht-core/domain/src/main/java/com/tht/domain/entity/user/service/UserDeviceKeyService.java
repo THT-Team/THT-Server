@@ -17,7 +17,7 @@ public class UserDeviceKeyService {
 
     public void update(final String userUuid, final String deviceKey) {
 
-        Optional<UserDeviceKey> userDeviceKey = userDeviceKeyRepository.findByUserUuidAndDeviceKey(userUuid, deviceKey);
+        Optional<UserDeviceKey> userDeviceKey = userDeviceKeyRepository.findByUserUuid(userUuid);
         if (userDeviceKey.isEmpty()) {
             userDeviceKeyRepository.save(UserDeviceKey.create(userUuid, deviceKey));
             return;

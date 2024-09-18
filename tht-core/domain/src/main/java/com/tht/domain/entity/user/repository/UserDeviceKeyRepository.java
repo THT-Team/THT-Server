@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface UserDeviceKeyRepository extends JpaRepository<UserDeviceKey, Long> {
 
-    Optional<UserDeviceKey> findByUserUuidAndDeviceKey(final String userUuid, final String deviceKey);
+    Optional<UserDeviceKey> findByUserUuid(final String userUuid);
 }

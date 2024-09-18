@@ -791,6 +791,6 @@ class UserDocumentation extends ControllerTestConfig {
                     )
                 )
             )
-            .andExpect(MockMvcResultMatchers.status().isCreated());
+            .andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

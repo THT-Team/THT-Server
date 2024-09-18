@@ -31,10 +31,9 @@ class UserDeviceKeyServiceTest {
     @Test
     @DisplayName("유저 uuid 와 매핑되는 deviceKey 가 존재하지 않음 (생성)")
     void updateByUserUuidAndDeviceKey() {
-        when(userDeviceKeyRepository.findByUserUuidAndDeviceKey(anyString(),
-            anyString())).thenReturn(Optional.empty());
+        when(userDeviceKeyRepository.findByUserUuid(anyString())).thenReturn(Optional.empty());
 
-        deviceKeyService.update(anyString(), anyString());
+        deviceKeyService.update(anyString(), "device key");
 
         verify(userDeviceKeyRepository).save(any());
     }
@@ -42,10 +41,9 @@ class UserDeviceKeyServiceTest {
     @Test
     @DisplayName("유저 uuid 와 매핑되는 deviceKey 가 존재 (미생성)")
     void nonUpdateByUserUuidAndDeviceKey() {
-        when(userDeviceKeyRepository.findByUserUuidAndDeviceKey(anyString(),
-            anyString())).thenReturn(Optional.of(mock(UserDeviceKey.class)));
+        when(userDeviceKeyRepository.findByUserUuid(anyString())).thenReturn(Optional.of(mock(UserDeviceKey.class)));
 
-        deviceKeyService.update(anyString(), anyString());
+        deviceKeyService.update(anyString(), "device key");
 
         verify(userDeviceKeyRepository, times(0)).save(any());
     }
