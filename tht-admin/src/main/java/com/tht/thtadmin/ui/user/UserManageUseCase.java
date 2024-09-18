@@ -75,4 +75,16 @@ public class UserManageUseCase {
         return new PageImpl<>(responses, pageable, reportList.getTotalElements());
 
     }
+
+    @Transactional
+    public void activateUserStatus(final String userUuid) {
+
+        userService.changeActivateStatus(userUuid);
+    }
+
+    @Transactional
+    public void deactivateUserStatus(final String userUuid) {
+
+        userService.changeInActivateStatus(userUuid);
+    }
 }

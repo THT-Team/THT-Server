@@ -142,4 +142,20 @@ public class UserService {
 
     }
 
+    public void changeActivateStatus(final String userUuid) {
+
+        final User user = findByUuid(userUuid);
+        user.activate();
+    }
+
+    private User findByUuid(final String userUuid) {
+        return userRepository.findByUserUuid(userUuid).orElseThrow(
+            () -> UserCustomException.noneExistUuid(userUuid)
+        );
+    }
+
+    public void changeInActivateStatus(final String userUuid) {
+        final User user = findByUuid(userUuid);
+        user.inActivate();
+    }
 }

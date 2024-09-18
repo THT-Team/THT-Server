@@ -196,4 +196,12 @@ public class User extends Auditable {
     public void login() {
         this.isLogin = true;
     }
+
+    public void activate() {
+        this.state = EntityState.ACTIVE;
+    }
+
+    public void inActivate() {
+        this.state = EntityState.INACTIVE;
+    }
 }

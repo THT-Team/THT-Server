@@ -6,10 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -51,4 +48,17 @@ public class UserManageController {
         return ResponseEntity.ok(responses);
     }
 
+    @PatchMapping("/user/deactivate/{user-uuid}")
+    public ResponseEntity<Object> deactivateUser(@PathVariable(value = "user-uuid") String userUuid) {
+
+        userManageUseCase.deactivateUserStatus(userUuid);
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/user/activation/{user-uuid}")
+    public ResponseEntity<Object> activationUser(@PathVariable(value = "user-uuid") String userUuid) {
+
+        userManageUseCase.activateUserStatus(userUuid);
+        return ResponseEntity.ok().build();
+    }
 }

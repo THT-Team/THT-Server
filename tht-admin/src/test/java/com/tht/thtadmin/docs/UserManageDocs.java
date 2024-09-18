@@ -34,6 +34,7 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.tht.thtadmin.docs.config.DocsConst.getPagingFieldDescriptors;
 import static org.mockito.Mockito.*;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.patch;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
@@ -279,6 +280,45 @@ class UserManageDocs extends ControllerTestConfig {
         resultActions.andExpect(MockMvcResultMatchers.status().isOk());
     }
 
+    @Test
+    @DisplayName("유저 계정 활성화 docs")
+    void activateDocs() throws Exception {
 
+        mockMvc.perform(patch("/user/activation/{user-uuid}", "user-uuid")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+            )
+            .andDo(document("유저 계정 상태 활성화",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(ResourceSnippetParameters.builder()
+                    .tag("회원 관리")
+                    .description("회원 상태 변경 - ACTIVATE")
+                    .pathParameters(parameterWithName("user-uuid").description("유저 고유 번호"))
+                    .build())
+            ))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
+    @Test
+    @DisplayName("유저 계정 비활성화 docs")
+    void deactivateDocs() throws Exception {
+
+        mockMvc.perform(patch("/user/deactivate/{user-uuid}", "user-uuid")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("Authorization", "Bearer {ACCESS_TOKEN}")
+            )
+            .andDo(document("유저 계정 상태 비활성화",
+                preprocessRequest(prettyPrint()),
+                preprocessResponse(prettyPrint()),
+                resource(ResourceSnippetParameters.builder()
+                    .tag("회원 관리")
+                    .description("회원 상태 변경 - INACTIVATE")
+                    .pathParameters(parameterWithName("user-uuid").description("유저 고유 번호"))
+                    .build())
+            ))
+            .andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
