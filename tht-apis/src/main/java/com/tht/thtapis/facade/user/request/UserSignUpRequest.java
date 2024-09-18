@@ -24,7 +24,6 @@ public record UserSignUpRequest(
         Gender gender,
         Gender preferGender,
         @NotNull(message = "introduction 는 null 이어서는 안됩니다.") String introduction,
-        @NotBlank(message = "deviceKey 는 비어있을 수 없습니다.") String deviceKey,
         @NotNull(message = "agreement 는 null 이어서는 안됩니다.") @Valid UserAgreementRequest agreement,
         @NotNull(message = "locationRequest 는 null 이어서는 안됩니다.") @Valid UserLocationRequest locationRequest,
         @Size(min = 2, max = 3, message = "사진은 최소 2장, 최대 3장을 등록해야합니다.")
@@ -67,7 +66,7 @@ public record UserSignUpRequest(
 
     public UserSignUpRequest(final String phoneNumber, final String username, final String email,
                              final String birthDay, final String gender, final String preferGender,
-                             final String introduction, final String deviceKey,
+                             final String introduction,
                              final UserAgreementRequest agreement, final UserLocationRequest locationRequest,
                              final List<String> photoList, final List<Integer> interestList,
                              final List<Integer> idealTypeList, final String snsType, final String snsUniqueId,
@@ -81,7 +80,6 @@ public record UserSignUpRequest(
                 Gender.toConverter(gender),
                 Gender.toConverter(preferGender),
                 introduction,
-                deviceKey,
                 agreement,
                 locationRequest,
                 photoList,
