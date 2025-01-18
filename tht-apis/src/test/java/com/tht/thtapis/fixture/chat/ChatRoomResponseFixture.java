@@ -1,5 +1,8 @@
 package com.tht.thtapis.fixture.chat;
 
+import com.tht.domain.entity.chat.mapper.ChatRoomMapper;
+import com.tht.domain.entity.chat.mapper.ChatRoomUserMapper;
+import com.tht.enums.EntityState;
 import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomResponse;
 
@@ -29,6 +32,13 @@ public class ChatRoomResponseFixture {
     }
 
     public static ChatRoomResponse make() {
-        return new ChatRoomResponse(chatRoomIdx,talkSubject, talkIssue, startDate, isChatAble);
+        List<ChatRoomUserMapper> users = List.of(
+            new ChatRoomUserMapper("1번-user-uuid", "1번 참가자 이름", "1번 참가자 대표 사진"),
+            new ChatRoomUserMapper("2번-user-uuid", "2번 참가자 이름", "2번 참가자 대표 사진")
+        );
+
+        ChatRoomMapper chatRoomMapper = new ChatRoomMapper(chatRoomIdx, talkSubject, talkIssue, LocalDateTime.now(), EntityState.ACTIVE, EntityState.ACTIVE);
+
+        return ChatRoomResponse.of(chatRoomMapper, isChatAble, users);
     }
 }

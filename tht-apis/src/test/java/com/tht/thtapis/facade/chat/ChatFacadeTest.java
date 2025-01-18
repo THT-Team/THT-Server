@@ -1,6 +1,7 @@
 package com.tht.thtapis.facade.chat;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.anyInt;
 import static org.mockito.BDDMockito.anyLong;
