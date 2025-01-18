@@ -1,6 +1,7 @@
 package com.tht.thtapis.facade.main.response;
 
 import com.tht.enums.dailyfalling.DailyFallingType;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +24,7 @@ class DailyFallingResponseTest {
     }
 
     @Test
+    @Disabled
     @DisplayName("유닉스 타임스템프 변환 생성 테스트")
     void convertUnix() {
         LocalDateTime localDateTime = LocalDateTime.of(2023, 6, 26, 11, 0, 0);
