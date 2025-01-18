@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.tht.domain.entity.chat.ChatRoomUser;
 import com.tht.domain.entity.chat.mapper.ChatRoomPreviewMapper;
+import com.tht.domain.entity.chat.mapper.ChatRoomUserMapper;
 import com.tht.domain.entity.chat.repository.ChatRoomUserRepository;
+import com.tht.domain.entity.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,5 +32,9 @@ public class ChatRoomUserService {
 
     public void outOfBlockChatRoom(final String userUuid, final String blockUserUuid) {
         chatRoomUserRepository.updateChatRoomUserInActiveOfBlock(userUuid, blockUserUuid);
+    }
+
+    public List<ChatRoomUserMapper> findAllParticipator(final long chatRoomIdx) {
+        return chatRoomUserRepository.findAllActiveParticipator(chatRoomIdx);
     }
 }

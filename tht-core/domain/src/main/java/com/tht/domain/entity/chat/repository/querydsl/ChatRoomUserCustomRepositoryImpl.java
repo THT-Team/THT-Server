@@ -1,6 +1,9 @@
 package com.tht.domain.entity.chat.repository.querydsl;
 
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.tht.domain.entity.chat.mapper.ChatRoomUserMapper;
+import com.tht.domain.entity.chat.mapper.QChatRoomUserMapper;
+import com.tht.domain.entity.user.User;
 import com.tht.enums.EntityState;
 import com.tht.domain.entity.chat.QChatRoom;
 import com.tht.domain.entity.chat.QChatRoomUser;
@@ -70,7 +73,7 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
 
     @Override
     public void updateChatRoomUserInActiveOfBlock(final String userUuid,
-        final String blockUserUuid) {
+                                                  final String blockUserUuid) {
 
         final List<Long> blockUserChatRoomIdxList = queryFactory.select(chatRoomUser.chatRoomIdx)
             .from(chatRoomUser)
@@ -86,6 +89,27 @@ public class ChatRoomUserCustomRepositoryImpl implements ChatRoomUserCustomRepos
                 chatRoomUser.chatRoomIdx.in(blockUserChatRoomIdxList),
                 chatRoomUser.userUuid.eq(userUuid))
             .execute();
+    }
+
+    @Override
+    public List<ChatRoomUserMapper> findAllActiveParticipator(long chatRoomIdx) {
+
+        int representativePhoto = 1;
+        return queryFactory.select(
+                new QChatRoomUserMapper(
+                    user.userUuid,
+                    user.username,
+                    userProfilePhoto.url
+                )
+            )
+            .from(chatRoomUser)
+            .innerJoin(user).on(chatRoomUser.userUuid.eq(user.userUuid))
+            .innerJoin(userProfilePhoto).on(user.userUuid.eq(userProfilePhoto.userUuid).and(userProfilePhoto.priority.eq(representativePhoto)))
+            .where(
+                chatRoomUser.chatRoomIdx.eq(chatRoomIdx),
+                chatRoomUser.state.eq(EntityState.ACTIVE)
+            )
+            .fetch();
     }
 
 }

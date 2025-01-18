@@ -1,6 +1,8 @@
 package com.tht.thtapis.facade.chat;
 
 import com.tht.domain.entity.chat.group.ChatRoomMapperGroup;
+import com.tht.domain.entity.chat.mapper.ChatRoomUserMapper;
+import com.tht.domain.entity.user.User;
 import com.tht.thtapis.facade.Facade;
 import com.tht.thtapis.facade.chat.group.ChatHistoryGroup;
 import com.tht.thtapis.facade.chat.group.ChatRoomPreviewMapperGroup;
@@ -58,8 +60,9 @@ public class ChatFacade {
 
         chatRoomService.existBy(chatRoomIdx);
 
-        ChatRoomMapperGroup group = chatRoomService.findDetailInfoById(chatRoomIdx, userUuid);
+        final ChatRoomMapperGroup group = chatRoomService.findDetailInfoById(chatRoomIdx, userUuid);
+        final List<ChatRoomUserMapper> allParticipator = chatRoomUserService.findAllParticipator(chatRoomIdx);
 
-        return ChatRoomResponse.of(group.getBasic(), group.isChatAble());
+        return ChatRoomResponse.of(group.getBasic(), group.isChatAble(), allParticipator);
     }
 }

@@ -183,7 +183,11 @@ class ChatDocumentation extends ControllerTestConfig {
                             fieldWithPath("talkSubject").description("대화 주제"),
                             fieldWithPath("talkIssue").description("대화 주제 파생질문"),
                             fieldWithPath("startDate").description("재화 시작일"),
-                            fieldWithPath("isChatAble").description("채팅 가능여부")
+                            fieldWithPath("isChatAble").description("채팅 가능여부"),
+                            fieldWithPath("participants").description("채팅방 참가자 리스트"),
+                            fieldWithPath("participants[].userUuid").description("참가자 고유 번호"),
+                            fieldWithPath("participants[].userName").description("참가자 이름"),
+                            fieldWithPath("participants[].profileUrl").description("참가자 프로필 대표사진 url")
                         )
                         .build()
                 )
