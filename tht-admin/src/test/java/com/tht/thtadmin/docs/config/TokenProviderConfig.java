@@ -3,13 +3,13 @@ package com.tht.thtadmin.docs.config;
 import com.tht.domain.entity.administrator.AdministratorService;
 import com.tht.thtadmin.security.TokenProvider;
 import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.context.annotation.Bean;
 
 @TestConfiguration
 public class TokenProviderConfig {
 
-    @MockBean
+    @MockitoBean
     AdministratorService userService;
 
     @Bean

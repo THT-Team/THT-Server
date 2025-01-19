@@ -12,9 +12,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -28,9 +29,9 @@ import static org.mockito.Mockito.when;
 class UserJoinControllerTest extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/users/join";
-    @MockBean
+    @MockitoBean
     UserJoinFacade userJoinFacade;
-    @MockBean
+    @MockitoBean
     AgreementFacade agreementFacade;
 
     @Test
