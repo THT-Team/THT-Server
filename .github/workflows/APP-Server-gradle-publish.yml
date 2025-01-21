@@ -35,11 +35,11 @@ jobs:
           token: ${{ secrets.GIT_TOKEN }}
           submodules: true
 
-      - name: Set up JDK 17
+      - name: Set up JDK 21
         uses:
           actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
           settings-path: ${{ github.workspace }} # location for the settings.xml file
@@ -64,8 +64,11 @@ jobs:
           restore-keys: |
             ${{ github.repository }}-gradle-
           
-      - name: Build with Gradle
-        run: ./gradlew clean tht-apis:clean tht-apis:build
+      - name: Build with Gradle (NO TEST)
+        run: ./gradlew clean tht-apis:clean tht-apis:build -x test
+
+      - name: gradle run test
+        run: ./gradlew tht-apis:test
 
       - name: make env now date
         id: now

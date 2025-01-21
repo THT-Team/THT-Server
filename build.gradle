@@ -1,7 +1,34 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
+
+buildscript {
+    ext {
+        kotlinVersion = '2.1.0'
+        springBootVersion = '3.4.1'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
+    }
+}
+
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.0.5'
-    id 'io.spring.dependency-management' version '1.1.0'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version '1.1.3'
+
+    id 'org.jetbrains.kotlin.jvm' version "${kotlinVersion}"
+    id 'org.jetbrains.kotlin.plugin.spring' version "${kotlinVersion}"
+    id 'org.jetbrains.kotlin.plugin.jpa' version "${kotlinVersion}"
+    id 'org.jetbrains.kotlin.kapt' version "${kotlinVersion}"
+    id 'org.jetbrains.kotlin.plugin.lombok' version "${kotlinVersion}"
+    id 'io.freefair.lombok' version '8.1.0'
+    id 'idea'
 }
 
 bootJar {enabled = false}
@@ -10,8 +37,8 @@ jar {enabled = true}
 allprojects {
     group = 'com.tht'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '17'
-    targetCompatibility = '17'
+    sourceCompatibility = '21'
+    targetCompatibility = '21'
 
     repositories {
         mavenCentral()
@@ -31,15 +58,18 @@ subprojects {
     apply plugin: "io.spring.dependency-management"
     apply plugin: "java-test-fixtures"
 
-//    apply plugin: "com.epages.restdocs-api-spec"
-//    apply plugin: "org.hidetake.swagger.generator"
-
     test {
         useJUnitPlatform()
     }
 
     dependencies {
 
+        //kotlin
+        implementation 'org.jetbrains.kotlin:kotlin-reflect'
+        implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk8'
+        implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
+
+        //spring boot
         implementation 'org.springframework.boot:spring-boot-starter-web'
         implementation 'org.springframework.boot:spring-boot-starter-validation'
         implementation 'org.apache.commons:commons-lang3:3.12.0'
@@ -57,7 +87,7 @@ subprojects {
         implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 
         //in-memory-mongo
-        testImplementation 'de.bwaldvogel:mongo-java-server:1.44.0'
+        testImplementation 'de.bwaldvogel:mongo-java-server:1.46.0'
 
         // https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
         implementation 'com.mysql:mysql-connector-j:8.0.32'
@@ -69,8 +99,18 @@ subprojects {
         implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
         // https://mvnrepository.com/artifact/jakarta.persistence/jakarta.persistence-api
-        implementation 'jakarta.persistence:jakarta.persistence-api:3.2.0'
+        implementation 'jakarta.persistence:jakarta.persistence-api'
 
     }
 }
 
+kapt {
+    keepJavacAnnotationProcessors = true
+}
+
+tasks.withType(KotlinJvmCompile).configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_21)
+        freeCompilerArgs.add("-opt-in=kotlin.RequiresOptIn")
+    }
+}

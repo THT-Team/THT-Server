@@ -9,6 +9,7 @@ plugins{
     id 'com.epages.restdocs-api-spec' version "${restdocsApiSpecVersion}"
     //swagger generator 플러그인 추가
     id 'org.hidetake.swagger.generator' version '2.18.2'
+    id 'org.jetbrains.kotlin.jvm'
 }
 
 bootJar { enabled = true }
@@ -46,6 +47,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 }
 
 openapi3 {
@@ -80,4 +82,10 @@ bootJar{
         into "src/main/resources/static/docs/"
 
     }
+}
+repositories {
+    mavenCentral()
+}
+kotlin {
+    jvmToolchain(21)
 }

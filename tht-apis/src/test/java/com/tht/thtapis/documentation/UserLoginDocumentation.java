@@ -14,7 +14,7 @@ import com.tht.thtapis.facade.user.request.UserSNSLoginRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.ResultActions;
@@ -32,7 +32,7 @@ class UserLoginDocumentation extends ControllerTestConfig {
 
     private static final String DEFAULT_URL = "/users/login";
 
-    @MockBean
+    @MockitoBean
     UserLoginFacade userLoginFacade;
 
     @Test

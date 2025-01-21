@@ -18,9 +18,9 @@ import com.tht.thtapis.ui.UserController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -40,7 +40,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWit
 @WebMvcTest(UserController.class)
 class UserDocumentation extends ControllerTestConfig {
 
-    @MockBean
+    @MockitoBean
     UserFacade userFacade;
 
     @Test
