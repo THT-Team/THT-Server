@@ -99,7 +99,7 @@ class UserServiceTest {
 
         assertThatThrownBy(() -> userService.findByPhoneNumber(""))
             .isInstanceOf(UserCustomException.class)
-            .hasMessageContaining("존재하지 않는 유저 번호입니다.");
+            .hasMessageContaining(" 는 유효하지 않은 회원 전화번호 입니다.");
     }
 
     @Test
