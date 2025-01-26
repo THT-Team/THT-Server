@@ -9,9 +9,9 @@ name: THT ADMIN SERVER
 run-name: ${{ github.actor }} is learning GitHub Actions
 
 on:
-  push:
-    branches:
-      - main
+#  push:
+#    branches:
+#      - main
   pull_request:
     types:
       - closed
@@ -51,14 +51,14 @@ jobs:
         uses: gradle/actions/setup-gradle@ec92e829475ac0c2315ea8f9eced72db85bb337a # v3.0.0
 
       - name : set time zone
-        uses: szenius/set-timezone@v1.2
+        uses: szenius/set-timezone@v2
         with:
           timezoneLinux: "Asia/Seoul"
           timezoneMacos: "Asia/Seoul"
           timezoneWindows: "Seoul Standard Time"
           
       - name: Cache with Gradle
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: |
             ~/.gradle/caches
