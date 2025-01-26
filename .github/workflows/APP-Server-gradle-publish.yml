@@ -67,11 +67,11 @@ jobs:
           restore-keys: |
             ${{ github.repository }}-gradle-
 
-      - name: Build with Gradle (NO TEST)
-        run: ./gradlew clean tht-apis:clean tht-apis:build -x test
-
       - name: gradle run test
         run: ./gradlew tht-apis:test
+
+      - name: Build with Gradle
+        run: ./gradlew clean tht-apis:clean tht-apis:build
 
       - name: make env now date
         id: now
