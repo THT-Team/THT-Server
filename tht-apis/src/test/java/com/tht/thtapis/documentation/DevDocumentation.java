@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDocumentation;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -17,6 +18,7 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.docume
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.doNothing;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 
@@ -44,6 +46,9 @@ class DevDocumentation extends ControllerTestConfig {
             .andDo(document("유저 좋아요 싫어요 선택 데이터 초기화 api",
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
+                HeaderDocumentation.requestHeaders(
+                    headerWithName("Authorization").description("Bearer {ACCESS_TOKEN}")
+                ),
                 resource(ResourceSnippetParameters.builder()
                     .tag("개발용")
                     .description("유저 좋아요 싫어요 선택 데이터 전부 삭제")
@@ -68,6 +73,7 @@ class DevDocumentation extends ControllerTestConfig {
                 .header("Authorization", "Bearer {ACCESS_TOKEN}")
             )
             .andDo(document("유저가 선택한 그날의 주제어 초기화 api",
+
                 preprocessRequest(prettyPrint()),
                 preprocessResponse(prettyPrint()),
                 resource(ResourceSnippetParameters.builder()
