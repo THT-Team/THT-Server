@@ -9,11 +9,14 @@ name: THT API SERVER
 run-name: ${{ github.actor }} is learning GitHub Actions
 
 on:
-  pull_request:
-    types:
-      - closed
+  push:
     branches:
       - main
+#  pull_request:
+#    types:
+#      - closed
+#    branches:
+#      - main
 
 env:
   AWS_CODE_DEPLOY_APPLICATION: THT-ApiServer-GitAction
