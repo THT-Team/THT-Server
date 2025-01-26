@@ -12,11 +12,11 @@ on:
   push:
     branches:
       - main
-#  pull_request:
-#    types:
-#      - closed
-#    branches:
-#      - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
 
 env:
   AWS_CODE_DEPLOY_APPLICATION: THT-ApiServer-GitAction
