@@ -56,7 +56,7 @@ public class UserFacade {
         final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
             .findChooseTodayDailyFallingInfo(user.getUserUuid());
 
-        if(fallingInfo.isEmpty()) {
+        if (fallingInfo.isEmpty()) {
             return MainScreenResponse.empty();
         }
 
@@ -65,7 +65,7 @@ public class UserFacade {
 
         long fallingUsers = userDailyFallingService.getCountFallingUsers(dailyFallingIdx);
 
-        if(fallingUsers == 0) {
+        if (fallingUsers <= 1) {
             return MainScreenResponse.choiceUsersEmpty(dailyFallingIdx, dailyFallingTimeMapper.endDate());
         }
 
