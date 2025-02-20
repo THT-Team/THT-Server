@@ -210,6 +210,15 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 )));
     }
 
+    @Override
+    public long countByDailyFallingId(Long dailyFallingIdx) {
+        return queryFactory.select(userDailyFalling.idx)
+            .from(userDailyFalling)
+            .where(userDailyFalling.dailyFallingIdx.eq(dailyFallingIdx))
+            .stream()
+            .count();
+    }
+
     private BooleanExpression filterGender(Gender myGender, Gender myPreferGender) {
 
         if (myPreferGender.equals(Gender.BISEXUAL)) {

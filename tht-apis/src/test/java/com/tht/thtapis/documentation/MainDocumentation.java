@@ -1,14 +1,5 @@
 package com.tht.thtapis.documentation;
 
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
@@ -20,11 +11,18 @@ import com.tht.thtapis.ui.MainController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 
 @WebMvcTest(MainController.class)
 class MainDocumentation extends ControllerTestConfig {
@@ -68,6 +66,7 @@ class MainDocumentation extends ControllerTestConfig {
                             fieldWithPath("selectDailyFallingIdx").description("유저가 선택한 그날의 topic idx - 선택하지 않았다면 (-1)"),
                             fieldWithPath("topicExpirationUnixTime").description("유저 선택한 그날의 topic 만료시간 unix timestamp"),
                             fieldWithPath("isLast").description("리스트의 마지막인지 여부"),
+                            fieldWithPath("isUserEmpty").description("해당 토픽을 선택한 유저가 존재하는지 여부"),
                             fieldWithPath("userInfos[].username").description("유저 이름"),
                             fieldWithPath("userInfos[].userUuid").description("유저 uuid"),
                             fieldWithPath("userInfos[].age").description("나이"),

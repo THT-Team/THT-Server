@@ -1,18 +1,18 @@
 package com.tht.domain.entity.user.service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.tht.domain.entity.dailyfalling.UserDailyFalling;
 import com.tht.domain.entity.dailyfalling.UserDailyFallingException;
 import com.tht.domain.entity.dailyfalling.mapper.DailyFallingTimeMapper;
 import com.tht.domain.entity.dailyfalling.mapper.UserDailyFallingMapper;
-import com.tht.enums.user.Gender;
 import com.tht.domain.entity.user.mapper.MainScreenUserInfoMapper;
 import com.tht.domain.entity.user.repository.UserDailyFallingRepository;
+import com.tht.enums.user.Gender;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -48,5 +48,9 @@ public class UserDailyFallingService {
 
         return userDailyFallingRepository.findAllMatchingFallingUser(dailyFallingIdx,
             userDailyFallingCourserIdx, myUuid, myGender, myPreferGender, size);
+    }
+
+    public long getCountFallingUsers(final Long dailyFallingIdx) {
+        return userDailyFallingRepository.countByDailyFallingId(dailyFallingIdx);
     }
 }

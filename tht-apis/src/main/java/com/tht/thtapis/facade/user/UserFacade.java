@@ -56,9 +56,20 @@ public class UserFacade {
         final Optional<DailyFallingTimeMapper> fallingInfo = userDailyFallingService
             .findChooseTodayDailyFallingInfo(user.getUserUuid());
 
-        return fallingInfo
-            .map(dailyFallingTimeMapper -> getMainScreenResponse(user, request, dailyFallingTimeMapper))
-            .orElseGet(MainScreenResponse::empty);
+        if(fallingInfo.isEmpty()) {
+            return MainScreenResponse.empty();
+        }
+
+        final DailyFallingTimeMapper dailyFallingTimeMapper = fallingInfo.get();
+        final Long dailyFallingIdx = dailyFallingTimeMapper.dailyFallingIdx();
+
+        long fallingUsers = userDailyFallingService.getCountFallingUsers(dailyFallingIdx);
+
+        if(fallingUsers == 0) {
+            return MainScreenResponse.choiceUsersEmpty(dailyFallingIdx, dailyFallingTimeMapper.endDate());
+        }
+
+        return getMainScreenResponse(user, request, dailyFallingTimeMapper);
 
     }
 

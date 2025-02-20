@@ -18,4 +18,5 @@ public interface UserDailyFallingCustomRepository {
         final Long dailyFallingIdx, final Long userDailyFallingCourserIdx, final String userUuid,
         final Gender myGender, final Gender myPreferGender, final Integer size);
 
+    long countByDailyFallingId(Long dailyFallingIdx);
 }
