@@ -3,13 +3,11 @@ package com.tht.thtapis.facade.user.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.tht.domain.entity.idealtype.IdealTypeMapper;
 import com.tht.domain.entity.interesst.InterestMapper;
-import com.tht.enums.user.Gender;
-import com.tht.enums.user.UserFrequency;
-import com.tht.enums.user.UserReligion;
 import com.tht.domain.entity.user.User;
 import com.tht.domain.entity.user.UserAgreement;
 import com.tht.domain.entity.user.UserLocationInfo;
 import com.tht.domain.entity.user.UserProfilePhoto;
+import com.tht.enums.user.Gender;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 import com.tht.thtcommonutils.utils.ConvertAgeUtils;
@@ -30,9 +28,9 @@ public record UserDetailResponse(
         @JsonProperty("prefer_gender")
         Gender preferGender,
         int tall,
-        UserFrequency smoking,
-        UserFrequency drinking,
-        UserReligion religion,
+        String smoking,
+        String drinking,
+        String religion,
         List<IdealTypeResponse> idealTypeList,
         List<InterestResponse> interestsList,
         List<UserProfilePhotoResponse> userProfilePhotos,
@@ -59,9 +57,9 @@ public record UserDetailResponse(
                 user.getGender(),
                 user.getPreferGender(),
                 user.getTall(),
-                user.getSmoking(),
-                user.getDrinking(),
-                user.getReligion(),
+                user.getSmoking().getDesc(),
+                user.getDrinking().getDesc(),
+                user.getReligion().getDesc(),
                 idealTypeMappers.stream().map(IdealTypeResponse::of).toList(),
                 interestMappers.stream().map(InterestResponse::of).toList(),
                 profilePhotoMappers.stream().map(UserProfilePhotoResponse::of).toList(),
