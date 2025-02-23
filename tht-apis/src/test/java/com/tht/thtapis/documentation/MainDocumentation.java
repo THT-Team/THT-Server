@@ -2,6 +2,8 @@ package com.tht.thtapis.documentation;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.Schema;
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtapis.controller.config.ControllerTestConfig;
 import com.tht.thtapis.controller.config.WithCustomMockUser;
 import com.tht.thtapis.facade.user.UserFacade;
@@ -16,6 +18,8 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
+import java.util.Arrays;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -72,6 +76,13 @@ class MainDocumentation extends ControllerTestConfig {
                             fieldWithPath("userInfos[].age").description("나이"),
                             fieldWithPath("userInfos[].address").description("주소"),
                             fieldWithPath("userInfos[].isBirthDay").description("생일 여부"),
+                            fieldWithPath("userInfos[].smoking")
+                                .description(String.format("흡연 여부 - %s", Arrays.stream(UserFrequency.values())
+                                    .map(UserFrequency::getDesc).toList())),
+                            fieldWithPath("userInfos[].drinking").description(String.format("술 - %s",  Arrays.stream(UserFrequency.values())
+                                .map(UserFrequency::getDesc).toList())),
+                            fieldWithPath("userInfos[].religion").description(String.format("종교 - %s", Arrays.stream(UserReligion.values())
+                                .map(UserReligion::getDesc).toList())),
                             fieldWithPath("userInfos[].idealTypeResponseList").description("선택한 이상형 리스트"),
                             fieldWithPath("userInfos[].idealTypeResponseList[].idx").description("이상형 idx"),
                             fieldWithPath("userInfos[].idealTypeResponseList[].name").description("이상형 명칭"),

@@ -181,6 +181,9 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                     user.userUuid,
                     user.birthDay,
                     userLocationInfo.address,
+                    user.smoking,
+                    user.drinking,
+                    user.religion,
                     GroupBy.set(
                         new QIdealTypeMapper(
                             idealType.idx,

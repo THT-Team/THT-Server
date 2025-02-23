@@ -4,17 +4,20 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.tht.enums.EnumModel;
 import com.tht.enums.EnumStateNotFoundException;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Arrays;
 
 @AllArgsConstructor
 public enum UserFrequency implements EnumModel {
 
-    NONE("NONE"),
-    SOMETIMES("SOMETIMES"),
-    FREQUENTLY("FREQUENTLY");
+    NONE("NONE", "안 함"),
+    SOMETIMES("SOMETIMES", "가끔"),
+    FREQUENTLY("FREQUENTLY", "자주");
 
     private final String value;
+    @Getter
+    private final String desc;
 
     @JsonCreator
     public static UserFrequency toConverter(final String name) {

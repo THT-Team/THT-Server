@@ -1,5 +1,7 @@
 package com.tht.thtapis.fixture.main;
 
+import com.tht.enums.user.UserFrequency;
+import com.tht.enums.user.UserReligion;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 import com.tht.thtapis.facade.user.response.MainScreenUserInfoResponse;
@@ -17,6 +19,9 @@ public class MainScreenUserInfoResponseFixture {
     private static final int age = 24;
     private static final String address = "인천광역시 부평구 ";
     private static final boolean isBirthDay = true;
+    private final static UserFrequency smoking = UserFrequency.SOMETIMES;
+    private final static UserFrequency drinking = UserFrequency.SOMETIMES;
+    private final static UserReligion religion = UserReligion.CATHOLICISM;
     private static final List<IdealTypeResponse> idealTypeResponseList = List.of(
         IdealTypeFixture.responseMake());
     private static final List<InterestResponse> interestResponses = List.of(
@@ -35,6 +40,9 @@ public class MainScreenUserInfoResponseFixture {
             age,
             address,
             isBirthDay,
+            smoking.getDesc(),
+            drinking.getDesc(),
+            religion.getDesc(),
             idealTypeResponseList,
             interestResponses,
             userProfilePhotoResponses,

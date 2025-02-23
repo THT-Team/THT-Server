@@ -24,6 +24,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,10 +154,13 @@ class UserDocumentation extends ControllerTestConfig {
                             fieldWithPath("gender").description(String.format("성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
                             fieldWithPath("prefer_gender").description(String.format("선호 성별 - %s", EnumDocsUtils.getTypesFieldList(Gender.class))),
                             fieldWithPath("tall").description("키"),
-                            fieldWithPath("smoking").description(String.format("흡연 여부 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
-                            fieldWithPath("drinking").description(String.format("술 - %s", EnumDocsUtils.getTypesFieldList(UserFrequency.class))),
-                            fieldWithPath("religion").description(String.format("종교 - %s", EnumDocsUtils.getTypesFieldList(UserReligion.class))),
-
+                            fieldWithPath("smoking")
+                                .description(String.format("흡연 여부 - %s", Arrays.stream(UserFrequency.values())
+                                    .map(UserFrequency::getDesc).toList())),
+                            fieldWithPath("drinking").description(String.format("술 - %s",  Arrays.stream(UserFrequency.values())
+                                .map(UserFrequency::getDesc).toList())),
+                            fieldWithPath("religion").description(String.format("종교 - %s", Arrays.stream(UserReligion.values())
+                                .map(UserReligion::getDesc).toList())),
                             fieldWithPath("idealTypeList").description("선택한 이상형 리스트"),
                             fieldWithPath("idealTypeList[].idx").description("이상형 idx"),
                             fieldWithPath("idealTypeList[].name").description("이상형 명칭"),
@@ -771,12 +775,12 @@ class UserDocumentation extends ControllerTestConfig {
 
         //given
         mockMvc.perform(
-            patch("/user/device-key")
-                .header("Authorization", "Bearer {ACCESS_TOKEN}")
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
-                .content(requestBody)
-        ).andDo(
+                patch("/user/device-key")
+                    .header("Authorization", "Bearer {ACCESS_TOKEN}")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON)
+                    .content(requestBody)
+            ).andDo(
                 document("유저 디바이스키 갱신 api docs",
                     preprocessRequest(prettyPrint()),
                     preprocessResponse(prettyPrint()),
