@@ -13,17 +13,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class JwtFilter extends OncePerRequestFilter  {
+public class JwtFilter extends OncePerRequestFilter {
 
-    private static final String REFRESH_URL = "/users/login/refresh";
+    private static final List<String> IGNORE_URL = List.of(
+        "/users/login/refresh",
+        "/users/join/signup"
+    );
     private final TokenProvider tokenProvider;
 
     @Override
     protected void doFilterInternal(final HttpServletRequest request,
-        final HttpServletResponse response, final FilterChain filterChain)
+                                    final HttpServletResponse response, final FilterChain filterChain)
         throws ServletException, IOException {
 
         final String token = tokenProvider.getParseJwt(request.getHeader(SecurityConst.AUTH_HEADER_NAME));
@@ -40,6 +44,6 @@ public class JwtFilter extends OncePerRequestFilter  {
 
     private boolean isIgnoreRequestPass(final String requestUrl) {
 
-        return REFRESH_URL.equals(requestUrl);
+        return IGNORE_URL.contains(requestUrl);
     }
 }
