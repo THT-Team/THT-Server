@@ -2,8 +2,7 @@ package com.tht.domain.entity.like;
 
 import com.querydsl.core.annotations.QueryProjection;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record LikeReceiveMapper(
 
@@ -14,9 +13,9 @@ public record LikeReceiveMapper(
     String userUuid,
     String username,
     String profileUrl,
-    LocalDate birthDay,
+    Instant birthDay,
     String address,
-    LocalDateTime receivedTime
+    Instant receivedTime
 ) {
 
     @QueryProjection
