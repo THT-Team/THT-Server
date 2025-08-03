@@ -2,6 +2,7 @@ package com.tht.domain.entity.chat;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.Id;
+import java.time.Instant;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,8 +13,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Document(collection = "chat_history")
@@ -42,15 +41,15 @@ public class ChatHistory {
 
     @Field("created_at")
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @Field("updated_at")
     @LastModifiedDate
-    private LocalDateTime updatedAt;
+    private Instant updatedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
     private ChatHistory(String id, Long roomIdx, String senderName, String senderUuid, String msg,
-        String imgUrl, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        String imgUrl, Instant createdAt, Instant updatedAt) {
 
         this.id = id;
         this.roomIdx = roomIdx;

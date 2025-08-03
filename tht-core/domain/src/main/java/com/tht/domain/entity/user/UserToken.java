@@ -4,15 +4,19 @@ import com.tht.domain.entity.user.exception.UserTokenException;
 import com.tht.thtcommonutils.utils.LogWriteUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.time.Instant;
+import java.util.Date;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @Entity
@@ -42,7 +46,7 @@ public class UserToken {
 
     @LastModifiedDate
     @Column
-    private LocalDateTime lastModifiedAt;
+    private Instant lastModifiedAt;
 
     private UserToken(String userUuid, String accessToken) {
         this.userUuid = userUuid;

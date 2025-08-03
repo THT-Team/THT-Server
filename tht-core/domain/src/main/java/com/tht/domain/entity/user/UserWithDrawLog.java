@@ -1,11 +1,14 @@
 package com.tht.domain.entity.user;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import java.time.Instant;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
@@ -23,7 +26,7 @@ public class UserWithDrawLog {
     private String feedBack;
 
     @CreatedDate
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     private UserWithDrawLog(final String userUuid, final String reason, final String feedBack) {
         this.userUuid = userUuid;

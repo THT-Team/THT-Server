@@ -1,19 +1,18 @@
 package fixture.chat;
 
-import com.tht.enums.EntityState;
 import com.tht.domain.entity.chat.mapper.ChatRoomPreviewMapper;
-
-import java.time.LocalDateTime;
+import com.tht.enums.EntityState;
+import java.time.Instant;
 
 public class ChatRoomPreviewMapperFixture {
 
-    private final static Long chatRoomIdx = 1L;
-    private final static String partnerUuid = "uuid";
-    private final static String partnerName = "상대방 이름";
-    private final static String partnerProfileUrl = "profile_url";
-    private final static LocalDateTime chatRoomCreatedAt = LocalDateTime.now();
-    private final static EntityState entityState = EntityState.ACTIVE;
-    private final static EntityState userState = EntityState.ACTIVE;
+    private static final Long chatRoomIdx = 1L;
+    private static final String partnerUuid = "uuid";
+    private static final String partnerName = "상대방 이름";
+    private static final String partnerProfileUrl = "profile_url";
+    private static final Instant chatRoomCreatedAt = Instant.now();
+    private static final EntityState userState = EntityState.ACTIVE;
+    private static final EntityState entityState = EntityState.ACTIVE;
 
     public static ChatRoomPreviewMapper make(final Long roomIdx) {
 

@@ -1,8 +1,7 @@
 package com.tht.thtapis.facade.chat.response;
 
 import com.tht.domain.entity.chat.ChatHistory;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record ChatResponse(
     String chatIdx,
@@ -10,7 +9,7 @@ public record ChatResponse(
     String senderUuid,
     String msg,
     String imgUrl,
-    LocalDateTime dateTime
+    Instant dateTime
 ) {
 
     public static ChatResponse of(final ChatHistory entity) {

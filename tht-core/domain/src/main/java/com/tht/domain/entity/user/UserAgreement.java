@@ -1,14 +1,23 @@
 package com.tht.domain.entity.user;
 
 import com.tht.enums.agreement.AgreementCategory;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import java.time.Instant;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -41,11 +50,11 @@ public class UserAgreement {
 
     @CreatedDate
     @Column
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     @LastModifiedDate
     @Column
-    private LocalDateTime lastModifiedAt;
+    private Instant lastModifiedAt;
 
     @Builder(access = AccessLevel.PRIVATE)
     public UserAgreement(final Long idx, final String userUuid, final boolean serviceUseAgree,
@@ -83,7 +92,6 @@ public class UserAgreement {
             case PERSONAL_PRIVACY_INFO_AGREE -> personalPrivacyInfoAgree;
             case LOCATION_SERVICE_AGREE -> locationServiceAgree;
             case MARKETING_AGREE -> marketingAgree;
-            default -> throw new IllegalArgumentException("Unknown AgreementCategory: " + category);
         };
     }
 }

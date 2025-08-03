@@ -11,8 +11,7 @@ import com.tht.enums.user.Gender;
 import com.tht.thtapis.facade.idealtype.response.IdealTypeResponse;
 import com.tht.thtapis.facade.interest.response.InterestResponse;
 import com.tht.thtcommonutils.utils.ConvertAgeUtils;
-
-import java.time.Instant;
+import java.time.LocalDate;
 import java.util.List;
 
 public record UserDetailResponse(
@@ -23,7 +22,7 @@ public record UserDetailResponse(
         String address,
         String phoneNumber,
         String email,
-        Instant birthDay,
+        LocalDate birthDay,
         Gender gender,
         @JsonProperty("prefer_gender")
         Gender preferGender,

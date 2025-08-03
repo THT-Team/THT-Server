@@ -24,6 +24,8 @@ import com.tht.enums.user.Gender;
 import com.tht.enums.user.LikeState;
 import com.tht.domain.entity.user.mapper.QMainScreenUserInfoMapper;
 import com.tht.domain.entity.user.mapper.QUserProfilePhotoMapper;
+import java.time.Duration;
+import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.util.CollectionUtils;
 
@@ -94,8 +96,7 @@ public class UserDailyFallingCustomRepositoryImpl implements UserDailyFallingCus
                 .and(userFriend.state.eq(EntityState.ACTIVE)))
             .fetch();
 
-        final LocalDateTime disLikeDisableTime = LocalDateTime.now().minusDays(DISLIKE_HOLDING_DAY);
-
+        final Instant disLikeDisableTime = Instant.now().minus(Duration.ofDays(DISLIKE_HOLDING_DAY));
         final List<String> userDisLikeList = new ArrayList<>();
 
         final List<Tuple> tuples = queryFactory

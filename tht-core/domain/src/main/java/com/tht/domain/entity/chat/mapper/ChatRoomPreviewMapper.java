@@ -2,15 +2,14 @@ package com.tht.domain.entity.chat.mapper;
 
 import com.querydsl.core.annotations.QueryProjection;
 import com.tht.enums.EntityState;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record ChatRoomPreviewMapper(
     Long chatRoomIdx,
     String partnerUuid,
     String partnerName,
     String partnerProfileUrl,
-    LocalDateTime chatRoomCreatedAt,
+    Instant chatRoomCreatedAt,
     EntityState state,
     EntityState userState
 

@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
@@ -120,10 +120,10 @@ class LikeDocumentation extends ControllerTestConfig {
         //given
         when(likeFacade.getLikedPeopleList(anyString(), anyInt(), anyLong(), anyLong())).thenReturn(
             List.of(
-                LikeReceiveResponse.of(1, 1, "행복", "무엇을 할때 행복한가요?", "user-uuid-1", "유저1", "profile-url", 24, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(2, 3,"취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-2", "유저2", "profile-url", 32, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(3, 154, "평화", "돈많은 백수가 되고싶네요", "user-uuid-3","유저3", "profile-url", 64, "주소", LocalDateTime.now()),
-                LikeReceiveResponse.of(2, 893, "취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-4", "유저4", "profile-url", 27, "주소", LocalDateTime.now())
+                LikeReceiveResponse.of(1, 1, "행복", "무엇을 할때 행복한가요?", "user-uuid-1", "유저1", "profile-url", 24, "주소", Instant.now()),
+                LikeReceiveResponse.of(2, 3,"취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-2", "유저2", "profile-url", 32, "주소", Instant.now()),
+                LikeReceiveResponse.of(3, 154, "평화", "돈많은 백수가 되고싶네요", "user-uuid-3","유저3", "profile-url", 64, "주소", Instant.now()),
+                LikeReceiveResponse.of(2, 893, "취미", "침대에 누워있고 싶지 않으세요?", "user-uuid-4", "유저4", "profile-url", 27, "주소", Instant.now())
             ));
 
         ControllerTestConfig.mockMvc.perform(

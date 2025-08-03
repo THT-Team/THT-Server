@@ -1,22 +1,18 @@
 package com.tht.thtcommonutils.utils;
 
+import java.time.LocalDate;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConvertAgeUtils {
 
-    public static int covertBeforeBirthAge(final Instant birthDay) {
-        final LocalDate birthLocalDate = birthDay.atZone(ZoneId.systemDefault()).toLocalDate();
-        final LocalDate now = LocalDate.now();
+    public static int covertBeforeBirthAge(final LocalDate birthDay) {
+        final LocalDate today = LocalDate.now();
+        int age = today.getYear() - birthDay.getYear();
 
-        int age = now.getYear() - birthLocalDate.getYear();
-
-        if (now.getDayOfYear() < birthLocalDate.getDayOfYear()) {
+        if (today.getMonthValue() < birthDay.getMonthValue() ||
+            (today.getMonthValue() == birthDay.getMonthValue() && today.getDayOfMonth() < birthDay.getDayOfMonth())) {
             age--;
         }
 

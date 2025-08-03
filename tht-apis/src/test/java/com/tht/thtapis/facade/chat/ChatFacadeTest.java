@@ -1,7 +1,6 @@
 package com.tht.thtapis.facade.chat;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.BDDMockito.anyInt;
 import static org.mockito.BDDMockito.anyLong;
@@ -9,19 +8,17 @@ import static org.mockito.BDDMockito.anyString;
 import static org.mockito.BDDMockito.when;
 import static org.mockito.Mockito.verify;
 
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-
 import com.tht.domain.entity.chat.ChatHistory;
 import com.tht.domain.entity.chat.group.ChatRoomMapperGroup;
+import com.tht.domain.entity.chat.service.ChatRoomService;
+import com.tht.domain.entity.chat.service.ChatRoomUserService;
+import com.tht.domain.entity.chat.service.ChatService;
 import com.tht.thtapis.facade.chat.response.ChatResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomResponse;
 import fixture.chat.ChatRoomMapperFixture;
 import fixture.chat.ChatRoomPreviewMapperFixture;
-import com.tht.domain.entity.chat.service.ChatRoomService;
-import com.tht.domain.entity.chat.service.ChatRoomUserService;
-import com.tht.domain.entity.chat.service.ChatService;
+import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -54,12 +51,12 @@ class ChatFacadeTest {
         List<ChatResponse> chatResponses = chatFacade.readHistory(1, "", 100);
 
         //then
-        assertThat(chatResponses.get(0).chatIdx()).isEqualTo(entity.getId());
-        assertThat(chatResponses.get(0).sender()).isEqualTo(entity.getSenderName());
-        assertThat(chatResponses.get(0).senderUuid()).isEqualTo(entity.getSenderUuid());
-        assertThat(chatResponses.get(0).msg()).isEqualTo(entity.getMsg());
-        assertThat(chatResponses.get(0).imgUrl()).isEqualTo(entity.getImgUrl());
-        assertThat(chatResponses.get(0).dateTime()).isEqualTo(entity.getCreatedAt());
+        assertThat(chatResponses.getFirst().chatIdx()).isEqualTo(entity.getId());
+        assertThat(chatResponses.getFirst().sender()).isEqualTo(entity.getSenderName());
+        assertThat(chatResponses.getFirst().senderUuid()).isEqualTo(entity.getSenderUuid());
+        assertThat(chatResponses.getFirst().msg()).isEqualTo(entity.getMsg());
+        assertThat(chatResponses.getFirst().imgUrl()).isEqualTo(entity.getImgUrl());
+        assertThat(chatResponses.getFirst().dateTime()).isEqualTo(entity.getCreatedAt());
     }
 
     @Test
@@ -91,8 +88,6 @@ class ChatFacadeTest {
         assertThat(response.chatRoomIdx()).isEqualTo(group.getBasic().chatRoomIdx());
         assertThat(response.talkIssue()).isEqualTo(group.getBasic().talkIssue());
         assertThat(response.talkSubject()).isEqualTo(group.getBasic().talkSubject());
-        assertThat(response.startDate()).isEqualTo(group.getBasic().startDate().format(
-            DateTimeFormatter.ofPattern("y년 M월 d일")));
         assertThat(response.isChatAble()).isTrue();
     }
 

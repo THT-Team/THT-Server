@@ -1,8 +1,7 @@
 package com.tht.thtapis.fixture.chat;
 
 import com.tht.thtapis.facade.chat.response.ChatResponse;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public class ChatHistoryResponseFixture {
@@ -12,7 +11,7 @@ public class ChatHistoryResponseFixture {
     private static final String senderUuid = "user-uuid";
     private static final String msg = "채팅 내용";
     private static final String imgUrl = "img-url";
-    private static final LocalDateTime dateTime = LocalDateTime.of(2023, 11, 13, 17, 30, 12, 1234);
+    private static final Instant dateTime = Instant.now();
 
     public static ChatResponse make() {
 

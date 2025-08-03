@@ -5,8 +5,7 @@ import com.tht.domain.entity.chat.mapper.ChatRoomUserMapper;
 import com.tht.enums.EntityState;
 import com.tht.thtapis.facade.chat.response.ChatRoomPreviewResponse;
 import com.tht.thtapis.facade.chat.response.ChatRoomResponse;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 public class ChatRoomResponseFixture {
@@ -15,11 +14,11 @@ public class ChatRoomResponseFixture {
     private static final String partnerName = "채팅상대방이름";
     private static final String partnerProfileUrl = "상대방프로필 url";
     private static final String currentMessage = "최근 메세지";
-    private static final LocalDateTime messageTime = LocalDateTime.of(2023, 3, 21, 12, 13, 4, 1);
+    private static final Instant messageTime = Instant.now();
 
     private static final String talkSubject = "마음";
     private static final String talkIssue = "너의 마음은 어떠니?";
-    private static final String startDate = "2023년 3월 21일";
+    private static final Instant startDate = Instant.now();
     private static final boolean isChatAble = true;
 
     public static ChatRoomPreviewResponse makePreviewResponse() {
@@ -37,7 +36,7 @@ public class ChatRoomResponseFixture {
             new ChatRoomUserMapper("2번-user-uuid", "2번 참가자 이름", "2번 참가자 대표 사진")
         );
 
-        ChatRoomMapper chatRoomMapper = new ChatRoomMapper(chatRoomIdx, talkSubject, talkIssue, LocalDateTime.now(), EntityState.ACTIVE, EntityState.ACTIVE);
+        ChatRoomMapper chatRoomMapper = new ChatRoomMapper(chatRoomIdx, talkSubject, talkIssue, Instant.now(), EntityState.ACTIVE, EntityState.ACTIVE);
 
         return ChatRoomResponse.of(chatRoomMapper, isChatAble, users);
     }

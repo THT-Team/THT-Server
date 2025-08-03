@@ -2,8 +2,7 @@ package com.tht.thtapis.facade.chat.response;
 
 import com.tht.domain.entity.chat.ChatHistory;
 import com.tht.domain.entity.chat.mapper.ChatRoomPreviewMapper;
-
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Objects;
 
 public record ChatRoomPreviewResponse(
@@ -11,7 +10,7 @@ public record ChatRoomPreviewResponse(
     String partnerName,
     String partnerProfileUrl,
     String currentMessage,
-    LocalDateTime messageTime,
+    Instant messageTime,
     boolean isAvailableChat
 ) {
 
